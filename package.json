@@ -1,0 +1,80 @@
+{
+  "name": "cloud-graph",
+  "description": "Scan cloud data and query it with GraphQL",
+  "version": "0.0.1",
+  "author": "AutoCloud",
+  "bin": {
+    "cloud-graph": "./bin/run"
+  },
+  "bugs": "https://github.com/autocloud/cloud-graph/issues",
+  "dependencies": {
+    "@graphql-tools/load-files": "^6.3.2",
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^3",
+    "axios": "^0.21.1",
+    "cg-aws-provider": "file:.yalc/cg-aws-provider",
+    "cloud-graph-sdk": "file:.yalc/cloud-graph-sdk",
+    "cosmiconfig": "^7.0.0",
+    "glob": "^7.1.7",
+    "inquirer": "^8.1.1",
+    "live-plugin-manager": "^0.15.1",
+    "ora": "^5.4.1",
+    "tslib": "^1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@oclif/test": "^1",
+    "@types/chai": "^4",
+    "@types/inquirer": "^7.3.2",
+    "@types/mocha": "^5",
+    "@types/node": "^10",
+    "@types/pino": "^6.3.8",
+    "chai": "^4",
+    "eslint": "^5.13",
+    "eslint-config-oclif": "^3.1",
+    "eslint-config-oclif-typescript": "^0.1",
+    "globby": "^10",
+    "mocha": "^5",
+    "nyc": "^14",
+    "ts-node": "^8",
+    "typescript": "^3.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/autocloud/cloud-graph",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "cloud-graph",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "autocloud/cloud-graph",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md",
+    "run:init": "NODE_ENV=development ./bin/run init",
+    "run:init:aws": "NODE_ENV=development ./bin/run init aws",
+    "run:scan": "NODE_ENV=development ./bin/run scan",
+    "run:scan:aws": "NODE_ENV=development ./bin/run scan aws",
+    "run:load": "NODE_ENV=development ./bin/run load",
+    "run:load:aws": "NODE_ENV=development ./bin/run load aws"
+  },
+  "types": "lib/index.d.ts"
+}

@@ -1,0 +1,17 @@
+*-debug.log
+*-error.log
+/.nyc_output
+/dist
+/lib
+/package-lock.json
+/tmp
+node_modules
+.cloud-graphrc.json
+*.graphql
+aws_*.json
+/.vscode
+/.yalc
+yalc.lock
+/src/plugins
+/cg-*
+
