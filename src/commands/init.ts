@@ -1,11 +1,9 @@
 /* eslint-disable no-console */
 import {flags} from '@oclif/command'
-import {cosmiconfigSync} from 'cosmiconfig'
-// import axios from 'axios'
-import CloudGraph, {Opts} from 'cloud-graph-sdk'
+import {Opts} from 'cloud-graph-sdk'
 
 import Command from './base'
-import manager from '../manager'
+import {printWelcomeMessage} from '../utils'
 
 const fs = require('fs')
 const path = require('path')
@@ -54,12 +52,13 @@ Hi from AutoCloud! Lets setup your config
     })
   }
 
-  async getNewProviderConfig(plugin: any): Promise<{[key: string]: string}> {
+  async getNewProviderConfig(provider: string): Promise<{[key: string]: string}> {
     const {
       flags: {resources},
     } = this.parse(Init)
     const result: {[key: string]: string} = {}
-    const {enums: {regions, services}} = plugin
+    const {properties: {regions, services}} = await this.getProviderClient(provider)
+    // Only query for regions if this provider has a list of them
     if (regions) {
       const answers = await this.interface.prompt([
         {
@@ -76,6 +75,7 @@ Hi from AutoCloud! Lets setup your config
       result.regions = answers.regions.join(',')
       // eslint-disable-next-line max-depth
     }
+    // Only query for resorces if the flag is set, otherwise take them all.
     if (resources) {
       const answers = await this.interface.prompt([
         {
@@ -106,19 +106,43 @@ Hi from AutoCloud! Lets setup your config
     return result
   }
 
+  async getCloudGraphConfig() {
+    const {
+      flags: {dgraph},
+    } = this.parse(Init)
+    const result: {[key: string]: any} = {}
+    if (dgraph) {
+      result.dgraphHost = dgraph
+    } else {
+      const {dgraph} = await this.interface.prompt([
+        // TODO: validate url
+        {
+          type: 'input',
+          message: 'Enter your dgraph host url (or launch dgraph with "cloud-graph launch")',
+          name: 'dgraph',
+          default: 'http://localhost:8080',
+        },
+      ])
+      result.dgraphHost = dgraph
+    }
+    return result
+  }
+
   async run() {
+    if (!this.getCGConfig()) {
+      printWelcomeMessage()
+    }
     const {
       argv,
       flags: {debug, dev: devMode},
     } = this.parse(Init)
-    const opts: Opts = {logger: this.logger, debug, devMode}
+    // const opts: Opts = {logger: this.logger, debug, devMode}
     // First determine the provider if one has not been passed in args
     // if no provider is passed, they can select from a list of offically supported providers
     let allProviders: string[] = argv
     if (allProviders.length === 0) {
       allProviders = [await this.getProvider()]
     }
-    this.logger.log(allProviders)
     const configResult: { [key: string]: Record<string, any> } = {}
     for (const provider of allProviders) {
       /**
@@ -128,8 +152,8 @@ Hi from AutoCloud! Lets setup your config
       /**
        * First install and require the provider plugin
        */
-      const plugin = await this.getProviderPlugin(provider, opts)
-      if (!plugin) {
+      const client = await this.getProviderClient(provider)
+      if (!client) {
         this.logger.log(`There was an issue initializing ${provider} plugin, skipping...`)
         continue
       }
@@ -160,13 +184,14 @@ Hi from AutoCloud! Lets setup your config
         ])
         this.logger.log(answers, {verbose: true})
         if (answers.overwrite) {
-          configResult[provider] = await this.getNewProviderConfig(plugin)
+          configResult[provider] = await this.getNewProviderConfig(provider)
         } else {
           this.logger.log(`Init command for ${provider} aborted`)
           this.exit()
         }
       } else {
-        configResult[provider] = await this.getNewProviderConfig(plugin)
+        configResult[provider] = await this.getNewProviderConfig(provider)
+        configResult.cloudGraph = await this.getCloudGraphConfig()
       }
     }
     fs.writeFileSync(
