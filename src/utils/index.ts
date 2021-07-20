@@ -1,5 +1,8 @@
-import Logger from 'cloud-graph-sdk/dist/logger'
+import {Opts} from 'cloud-graph-sdk'
 
+const boxen = require('boxen')
+const CFonts = require('cfonts')
+const chalk = require('chalk')
 const fs = require('fs')
 const glob = require('glob')
 const path = require('path')
@@ -64,9 +67,51 @@ export function writeGraphqlSchemaToFile(schema: Array<string>, provider?: strin
   )
 }
 
+export function getConnectedEntity(service: any, {entities, connections: allConnections}: any, opts: Opts) {
+  opts.logger.log(`getting connected entity for id = ${service.id}`, {verbose: true})
+  const connections = allConnections[service.id]
+  const connectedEntity = {
+    ...service,
+  }
+  if (connections) {
+    for (const connection of connections) {
+      opts.logger.log(
+        `searching for ${connection.resourceType} entity data to make connection between ${service.id} && ${connection.resourceType}`
+        , {verbose: true})
+      const entityData = entities.find(
+        ({name}: {name: string}) => name === connection.resourceType
+      )
+      if (entityData && entityData.data) {
+        const entityForConnection = entityData.data.find(
+          ({id}: { id: string }) => connection.id === id
+        )
+        connectedEntity[connection.field] = entityForConnection
+      }
+    }
+  }
+  return connectedEntity
+}
+
+export async function printWelcomeMessage() {
+  CFonts.say('Welcome to|CloudGraph!', {
+    font: 'chrome',
+    colors: ['greenBright', 'greenBright', 'greenBright'],
+    lineHight: 3,
+    align: 'center',
+  })
+  console.log(boxen(chalk.italic.green('By AutoCloud'), {
+    borderColor: 'green',
+    align: 'center',
+    borderStyle: 'singleDouble',
+    float: 'center',
+    padding: 1,
+  }))
+}
+
 export const fileUtils = {
   mapFileNameToHumanReadable,
   mapFileSelectionToLocation,
   makeDirIfNotExists,
   writeGraphqlSchemaToFile,
 }
+

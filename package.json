@@ -13,8 +13,9 @@
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^3",
     "axios": "^0.21.1",
-    "cg-aws-provider": "file:.yalc/cg-aws-provider",
-    "cloud-graph-sdk": "file:.yalc/cloud-graph-sdk",
+    "boxen": "^5.0.1",
+    "cfonts": "^2.9.3",
+    "chalk": "^4.1.1",
     "cosmiconfig": "^7.0.0",
     "glob": "^7.1.7",
     "inquirer": "^8.1.1",
@@ -41,7 +42,7 @@
     "typescript": "^3.3"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=14.0.0"
   },
   "files": [
     "/bin",
@@ -64,17 +65,18 @@
   },
   "repository": "autocloud/cloud-graph",
   "scripts": {
+    "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
-    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif-dev readme && git add README.md",
     "run:init": "NODE_ENV=development ./bin/run init",
     "run:init:aws": "NODE_ENV=development ./bin/run init aws",
+    "run:load": "NODE_ENV=development ./bin/run load",
+    "run:load:aws": "NODE_ENV=development ./bin/run load aws",
     "run:scan": "NODE_ENV=development ./bin/run scan",
     "run:scan:aws": "NODE_ENV=development ./bin/run scan aws",
-    "run:load": "NODE_ENV=development ./bin/run load",
-    "run:load:aws": "NODE_ENV=development ./bin/run load aws"
+    "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
+    "version": "oclif-dev readme && git add README.md"
   },
   "types": "lib/index.d.ts"
 }
