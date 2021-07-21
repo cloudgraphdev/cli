@@ -11,7 +11,7 @@ const inquirer = require('inquirer')
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
     super(argv, config)
-    this.logger = new CloudGraph.Logger(false)
+    this.logger = CloudGraph.logger
     this.providers
   }
 
@@ -24,6 +24,8 @@ export default abstract class BaseCommand extends Command {
   storageEngine: StorageEngine | undefined
 
   providers: {[key: string]: any} = {}
+
+  storedConfig: {[key: string]: any} | undefined
 
   static flags = {
     // debug flag
@@ -43,7 +45,7 @@ export default abstract class BaseCommand extends Command {
   async init(): Promise<void> {
     // Initialize the logger and storage engine
     const {flags: {debug, dev: devMode, storage}} = this.parse(this.constructor as Input<{debug: boolean; dev: boolean; storage: string}>)
-    this.logger = new CloudGraph.Logger(debug)
+    // this.logger = new CloudGraph.Logger(debug)
     this.storageEngine = new EngineMap[storage]({host: this.getHost(), logger: this.logger})
   }
 
@@ -63,15 +65,19 @@ export default abstract class BaseCommand extends Command {
     if (storage === 'dgraph') {
       // first check for passed flag or env variable
       if (dgraphHost) {
+        this.logger.info(`Dgraph host set as: ${dgraphHost}`)
         return dgraphHost
       }
       // next check for value defined in config file
       const config = this.getCGConfig('cloudGraph')
       if (config && config.dgraphHost) {
+        this.logger.info(`Dgraph host set as: ${config.dgraphHost}`)
         return config.dgraphHost
       }
       // nothing found, return default location
-      return 'http://localhost:8080'
+      const defaultHost = 'http://localhost:8080'
+      this.logger.info(`Dgraph host set as: ${defaultHost}`)
+      return defaultHost
     }
     return 'http://localhost:8080'
   }
@@ -93,20 +99,24 @@ export default abstract class BaseCommand extends Command {
       this.providers[provider] = client
       return client
     } catch (error: any) {
-      this.logger.log(error, {level: 'error'})
-      this.logger.log(
-        `There was an error installing or requiring a plugin for ${provider}, does one exist?`,
-        {level: 'error'}
+      this.logger.error(error)
+      this.logger.warn(
+        `There was an error installing or requiring a plugin for ${provider}, does one exist?`
       )
       return null
     }
   }
 
   getCGConfig(provider?: string) {
+    if (this.storedConfig) {
+      return provider ? this.storedConfig[provider] : this.storedConfig
+    }
     const config = cosmiconfigSync('cloud-graph').search()
     if (config) {
       const configResult = config.config
+      this.storedConfig = configResult
       if (provider) {
+        this.logger.info(`Found config for ${provider}, using...`)
         return configResult[provider]
       }
       return configResult

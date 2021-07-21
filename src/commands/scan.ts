@@ -41,14 +41,14 @@ Lets scan your AWS resources!
      * if we still have 0 providers, fail and exit.
      */
     if (allProviers.length >= 1) {
-      this.logger.log(`Scanning for providers: ${allProviers}`)
+      this.logger.info(`Scanning for providers: ${allProviers}`)
     } else {
-      this.logger.log('Scanning for providers found in config')
+      this.logger.info('Scanning for providers found in config')
       const config = this.getCGConfig()
       allProviers = Object.keys(config).filter((val: string) => val !== 'cloudGraph')
       if (allProviers.length === 0) {
-        this.logger.log(
-          'Error, there are no providers configured and none were passed to scan'
+        this.logger.error(
+          'There are no providers configured and none were passed to scan'
         )
         this.exit()
       }
@@ -62,9 +62,8 @@ Lets scan your AWS resources!
 
     // TODO: how to not loop through providers twice
     for (const provider of allProviers) {
-      this.logger.log(`uploading Schema for ${provider}`)
+      this.logger.info(`uploading Schema for ${provider}`)
       const client = await this.getProviderClient(provider)
-      // console.log(config)
       const {
         getSchema,
       } = client
@@ -80,13 +79,13 @@ Lets scan your AWS resources!
       try {
         await storageEngine.setSchema(schema)
       } catch (error: any) {
-        this.logger.log(error, {verbose: true, level: error})
-        this.logger.log(`There was an issue pushing schema for providers: ${allProviers.join(' | ')} to dgraph at ${this.storageEngine.host}`, {level: 'error'})
+        this.logger.debug(error)
+        this.logger.error(`There was an issue pushing schema for providers: ${allProviers.join(' | ')} to dgraph at ${storageEngine.host}`)
         this.exit()
       }
     }
     for (const provider of allProviers) {
-      this.logger.log(`Beginning SCAN for ${provider}`)
+      this.logger.info(`Beginning SCAN for ${provider}`)
       const client = await this.getProviderClient(provider)
       if (!client) {
         continue
@@ -105,7 +104,7 @@ Lets scan your AWS resources!
       }
       const creds: any = await getCredentials(opts)
       const {accountId} = await getIdentity({credentials: creds, opts})
-      this.logger.log(providerConfig)
+      this.logger.debug(providerConfig)
       const providerData = await getData({
         regions: providerConfig.regions,
         resources: providerConfig.resources,
@@ -146,31 +145,31 @@ Lets scan your AWS resources!
        */
       for (const serviceData of providerData) {
         const serviceClass = getService(serviceData.name)
-        // console.log(serviceClass)
-        // TODO: change to a loop through region names
-        const data = serviceData.data['us-east-1']
-        const entities = []
-        for (const serviceInstance of data) {
-          entities.push(
-            serviceClass.format({
-              service: serviceInstance,
-              region: 'us-east-1',
-              account: accountId,
-            })
-          )
-          if (typeof serviceClass.getConnections === 'function') {
-            result.connections = {
-              ...result.connections,
-              ...serviceClass.getConnections({
-                service: serviceInstance,
-                region: 'us-east-1',
+        const entities: any[] = []
+        for (const region of Object.keys(serviceData.data)) {
+          const data = serviceData.data[region]
+          data.forEach((service: any) => {
+            entities.push(
+              serviceClass.format({
+                service,
+                region,
                 account: accountId,
-                data: providerData,
-              }),
+              })
+            )
+            if (typeof serviceClass.getConnections === 'function') {
+              result.connections = {
+                ...result.connections,
+                ...serviceClass.getConnections({
+                  service,
+                  region,
+                  account: accountId,
+                  data: providerData,
+                }),
+              }
             }
-          }
+          })
+          result.entities.push({name: serviceData.name, data: entities})
         }
-        result.entities.push({name: serviceData.name, data: entities})
       }
       // TODO: if we are scanning multi providers, do we want to save as one giant file?
       fileUtils.makeDirIfNotExists(dataDir)
@@ -205,7 +204,7 @@ Lets scan your AWS resources!
       }
     }
     await Promise.all(promises)
-    this.logger.log(`Your data for ${allProviers.join(' | ')} is now being served at ${chalk.underline.green(storageEngine.host)}`, {level: 'success'})
+    this.logger.success(`Your data for ${allProviers.join(' | ')} is now being served at ${chalk.underline.green(storageEngine.host)}`)
     this.exit()
   }
 }

@@ -20,7 +20,7 @@ export default class DgraphEngine implements StorageEngine {
   //   }
   // }
   async healthCheck() {
-    this.logger.log(`running dgraph health check at ${this.host}`)
+    this.logger.info(`running dgraph health check at ${this.host}`)
     try {
       await axios({
         url: `${this.host}/health?all`,
@@ -31,8 +31,8 @@ export default class DgraphEngine implements StorageEngine {
       })
       return true
     } catch (error: any) {
-      this.logger.log(`dgraph at ${this.host} failed health check. Is dgraph running?`, {level: 'error'})
-      this.logger.log(error, {level: 'error'})
+      this.logger.warn(`dgraph at ${this.host} failed health check. Is dgraph running?`)
+      this.logger.debug(error)
       return false
     }
   }
@@ -68,7 +68,7 @@ export default class DgraphEngine implements StorageEngine {
       data,
     }).then(res => {
       if (res.data) {
-        this.logger.log(res.data)
+        this.logger.debug(res.data)
       }
     })
   }

@@ -46,7 +46,7 @@ Hi from AutoCloud! Lets setup your config
         },
       ])
       .then((res: { provider: string }) => {
-        console.log(res)
+        this.logger.debug(res.provider)
         resolve(res.provider)
       })
     })
@@ -71,7 +71,7 @@ Hi from AutoCloud! Lets setup your config
           })),
         },
       ])
-      this.logger.log(answers, {verbose: true})
+      this.logger.debug(answers)
       result.regions = answers.regions.join(',')
       // eslint-disable-next-line max-depth
     }
@@ -90,7 +90,7 @@ Hi from AutoCloud! Lets setup your config
           ),
         },
       ])
-      this.logger.log(answers, {verbose: true})
+      this.logger.debug(answers)
       if (answers.resources.length > 0) {
         result.resources = answers.resources.join(',')
       } else {
@@ -115,7 +115,7 @@ Hi from AutoCloud! Lets setup your config
       result.dgraphHost = dgraph
     } else {
       const {dgraph} = await this.interface.prompt([
-        // TODO: validate url
+        // TODO: validate has url structure with regex
         {
           type: 'input',
           message: 'Enter your dgraph host url (or launch dgraph with "cloud-graph launch")',
@@ -154,7 +154,7 @@ Hi from AutoCloud! Lets setup your config
        */
       const client = await this.getProviderClient(provider)
       if (!client) {
-        this.logger.log(`There was an issue initializing ${provider} plugin, skipping...`)
+        this.logger.warn(`There was an issue initializing ${provider} plugin, skipping...`)
         continue
       }
       /**
@@ -162,7 +162,7 @@ Hi from AutoCloud! Lets setup your config
        */
       const config = this.getCGConfig(provider)
       if (config) {
-        this.logger.log(`Config for ${provider} already exists`)
+        this.logger.debug(`Config for ${provider} already exists`)
         const answers = await this.interface.prompt([
           {
             type: 'expand',
@@ -182,11 +182,11 @@ Hi from AutoCloud! Lets setup your config
             ],
           },
         ])
-        this.logger.log(answers, {verbose: true})
+        this.logger.debug(answers)
         if (answers.overwrite) {
           configResult[provider] = await this.getNewProviderConfig(provider)
         } else {
-          this.logger.log(`Init command for ${provider} aborted`)
+          this.logger.warn(`Init command for ${provider} aborted`)
           this.exit()
         }
       } else {
