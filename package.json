@@ -75,6 +75,7 @@
     "run:load:aws": "NODE_ENV=development ./bin/run load aws",
     "run:scan": "NODE_ENV=development ./bin/run scan",
     "run:scan:aws": "NODE_ENV=development ./bin/run scan aws",
+    "run:launch": "NODE_ENV=development ./bin/run launch",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif-dev readme && git add README.md"
   },

@@ -42,6 +42,7 @@ Lets scan your AWS resources!
   async run() {
     const {flags: {debug, dev: devMode}} = this.parse(Launch)
     const dgraphHost = this.getHost()
+    const storageEngine = this.getStorageEngine()
     // TODO: not a huge fan of this pattern, rework how to do debug and devmode tasks (specifically how to use in providers)
     // const opts: Opts = {logger: this.logger, debug, devMode}
     const dockerCheck = ora('checking for Docker').start()
@@ -75,14 +76,14 @@ Lets scan your AWS resources!
     // TODO: smaller sleep time and exponential backoff for ~5 tries
     await new Promise(resolve => setTimeout(resolve, 10000))
     try {
-      await axios({
-        url: `${dgraphHost}/health?all`,
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      dgraphInit.succeed('Dgraph instance running')
+      const healthCheck = ora('Running health check on Dgraph').start()
+      const running = await storageEngine.healthCheck()
+      if (running) {
+        dgraphInit.succeed('Dgraph instance running')
+        healthCheck.succeed('Dgraph heath check passed')
+      } else {
+        throw new Error('Dgraph was unable to start')
+      }
     } catch (error: any) {
       dgraphInit.fail('Failed starting Dgraph instance')
       this.logger.debug(error)
