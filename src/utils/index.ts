@@ -1,4 +1,4 @@
-import {Opts} from 'cloud-graph-sdk'
+import CloudGraph, {Opts} from 'cloud-graph-sdk'
 
 const boxen = require('boxen')
 const CFonts = require('cfonts')
@@ -6,6 +6,8 @@ const chalk = require('chalk')
 const fs = require('fs')
 const glob = require('glob')
 const path = require('path')
+
+const logger = CloudGraph.logger
 
 export const getKeyByValue = (object: any, value: any) => {
   return Object.keys(object).find(key => object[key] === value)
@@ -68,16 +70,15 @@ export function writeGraphqlSchemaToFile(schema: Array<string>, provider?: strin
 }
 
 export function getConnectedEntity(service: any, {entities, connections: allConnections}: any, opts: Opts) {
-  opts.logger.log(`getting connected entity for id = ${service.id}`, {verbose: true})
+  logger.info(`getting connected entity for id = ${service.id}`)
   const connections = allConnections[service.id]
   const connectedEntity = {
     ...service,
   }
   if (connections) {
     for (const connection of connections) {
-      opts.logger.log(
-        `searching for ${connection.resourceType} entity data to make connection between ${service.id} && ${connection.resourceType}`
-        , {verbose: true})
+      logger.info(
+        `searching for ${connection.resourceType} entity data to make connection between ${service.id} && ${connection.resourceType}`)
       const entityData = entities.find(
         ({name}: {name: string}) => name === connection.resourceType
       )

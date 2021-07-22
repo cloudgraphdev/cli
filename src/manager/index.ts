@@ -43,7 +43,7 @@ export class Manager {
         plugin = this.pluginManager.require(`cg-${provider}-provider`)
       }
     } catch (error: any) {
-      this.logger.log(error, {level: 'error'})
+      this.logger.debug(error)
       checkSpinner.fail(`Manager failed to install plugin for ${provider}`)
       throw new Error('FAILED to find plugin!!')
     }

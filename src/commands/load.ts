@@ -30,7 +30,7 @@ Lets scan your AWS resources!
     const storageEngine = this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
     if (!storageRunning) {
-      this.logger.log(`Storage engine check at ${storageEngine.host} canceling LOAD`)
+      this.logger.error(`Storage engine check at ${storageEngine.host} FAILED canceling LOAD`)
       this.exit()
     }
     const opts: Opts = {logger: this.logger, debug, devMode}
@@ -45,14 +45,15 @@ Lets scan your AWS resources!
      * if we still have 0 providers, fail and exit.
      */
     if (allProviers.length >= 1) {
-      this.logger.log(`Loading data to Dgraph for providers: ${allProviers.join(' | ')}`)
+      this.logger.info(`Loading data to Dgraph for providers: ${allProviers.join(' | ')}`)
     } else {
-      this.logger.log('Searching config for initialized providers')
+      this.logger.info('Searching config for initialized providers')
       const config = this.getCGConfig()
       allProviers = Object.keys(config).filter((val: string) => val !== 'cloudGraph')
-      this.logger.log(`Found providers ${allProviers.join(' | ')} in cloud-graph config`)
+      // TODO: keep this log?
+      this.logger.info(`Found providers ${allProviers.join(' | ')} in cloud-graph config`)
       if (allProviers.length === 0) {
-        this.logger.log(
+        this.logger.error(
           'Error, there are no providers configured and none were passed to load, try "cloud-graph init" to set some up!'
         )
         this.exit()
@@ -61,14 +62,14 @@ Lets scan your AWS resources!
 
     const schema: any[] = []
     for (const provider of allProviers) {
-      this.logger.log(`uploading Schema for ${provider}`)
+      this.logger.info(`uploading Schema for ${provider}`)
       const client = await this.getProviderClient(provider)
       const {
         getSchema,
       } = client
       const providerSchema: any[] = getSchema()
       if (!providerSchema) {
-        this.logger.log(`No schema found for ${provider}, moving on`)
+        this.logger.warn(`No schema found for ${provider}, moving on`)
         continue
       }
       schema.push(...providerSchema)
@@ -82,8 +83,8 @@ Lets scan your AWS resources!
       try {
         storageEngine.setSchema(schema)
       } catch (error: any) {
-        this.logger.log(error, {verbose: true, level: error})
-        this.logger.log(`There was an issue pushing schema for providers: ${allProviers.join(' | ')} to dgraph at ${storageEngine.host}`, {level: 'error'})
+        this.logger.debug(error)
+        this.logger.error(`There was an issue pushing schema for providers: ${allProviers.join(' | ')} to dgraph at ${storageEngine.host}`)
       }
     }
     /**
@@ -91,7 +92,7 @@ Lets scan your AWS resources!
      */
     const promises: Promise<any>[] = []
     for (const provider of allProviers) {
-      this.logger.log(`Beginning LOAD for ${provider}`)
+      this.logger.info(`Beginning LOAD for ${provider}`)
       const client = await this.getProviderClient(provider)
       if (!client) {
         continue
@@ -105,7 +106,7 @@ Lets scan your AWS resources!
       try {
         files = getLatestProviderData(provider)
       } catch (error: any) {
-        this.logger.log(`Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`, {level: 'error'})
+        this.logger.error(`Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`)
         this.exit()
       }
       let file
@@ -120,7 +121,7 @@ Lets scan your AWS resources!
           },
         ])
         file = fileUtils.mapFileSelectionToLocation(answer.file[0])
-        this.logger.log(file, {verbose: true})
+        this.logger.debug(file)
       } else {
         file = files[0].name
       }
@@ -143,9 +144,9 @@ Lets scan your AWS resources!
       for (const entity of result.entities) {
         const {name, data} = entity
         const {mutation} = getService(name)
-        this.logger.log(`connecting service: ${name}`)
+        this.logger.info(`connecting service: ${name}`)
         const connectedData = data.map((service: any) => getConnectedEntity(service, result, opts))
-        this.logger.log(connectedData, {verbose: true})
+        this.logger.debug(connectedData)
         if (storageRunning) {
           const axoisPromise = storageEngine.push({
             query: mutation,
@@ -158,7 +159,7 @@ Lets scan your AWS resources!
       }
     }
     await Promise.all(promises)
-    this.logger.log(`Your data for ${allProviers.join(' | ')} is now being served at ${chalk.underline.green(storageEngine.host)}`, {level: 'success'})
+    this.logger.success(`Your data for ${allProviers.join(' | ')} is now being served at ${chalk.underline.green(storageEngine.host)}`)
     this.exit()
   }
 }

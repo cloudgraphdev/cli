@@ -50,7 +50,7 @@ Lets scan your AWS resources!
       dockerCheck.succeed('Docker found')
     } catch (error: any) {
       dockerCheck.fail('It appears Docker is not installed, please install it at: https://docs.docker.com/get-docker/', {level: 'error'})
-      this.logger.log(error, {level: 'error', verbose: true})
+      this.logger.error(error)
       this.exit()
     }
     const dgraphImgCheck = ora('pulling Dgraph Docker image').start()
@@ -60,7 +60,7 @@ Lets scan your AWS resources!
       dgraphImgCheck.succeed('Pulled Dgraph Docker image')
     } catch (error: any) {
       dgraphImgCheck.fail('Failed pulling Dgraph Docker image please check your docker installation', {level: 'error'})
-      this.logger.log(error, {level: 'error', verbose: true})
+      this.logger.error(error)
       this.exit()
     }
     const dgraphInit = ora('Spinning up new Dgraph instance').start()
@@ -68,7 +68,7 @@ Lets scan your AWS resources!
       await this.execCommand(`docker run -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 -v ${process.cwd()}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`)
     } catch (error: any) {
       dgraphInit.fail('Failed starting Dgraph instance')
-      this.logger.log(error, {level: 'error'})
+      this.logger.error(error)
       this.exit()
     }
 
@@ -85,12 +85,10 @@ Lets scan your AWS resources!
       dgraphInit.succeed('Dgraph instance running')
     } catch (error: any) {
       dgraphInit.fail('Failed starting Dgraph instance')
-      this.logger.log(error, {level: 'error'})
+      this.logger.debug(error)
     }
-    this.logger.log(`Access your dgraph instance at ${chalk.underline.green(dgraphHost)}`, {level: 'success'})
-    this.logger.log(`For more information on dgraph, see the dgrah docs at: ${chalk.underline.green('https://dgraph.io/docs/graphql/')}`)
+    this.logger.success(`Access your dgraph instance at ${chalk.underline.green(dgraphHost)}`)
+    this.logger.info(`For more information on dgraph, see the dgrah docs at: ${chalk.underline.green('https://dgraph.io/docs/graphql/')}`)
     this.exit()
-    // console.log(JSON.stringify(result.connections))
-    // console.log(JSON.stringify(res.data))
   }
 }
