@@ -64,10 +64,7 @@ Lets scan your AWS resources!
     for (const provider of allProviers) {
       this.logger.info(`uploading Schema for ${provider}`)
       const client = await this.getProviderClient(provider)
-      const {
-        getSchema,
-      } = client
-      const providerSchema: any[] = getSchema()
+      const providerSchema: any[] = client.getSchema()
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
         continue
@@ -97,9 +94,6 @@ Lets scan your AWS resources!
       if (!client) {
         continue
       }
-      const {
-        getService,
-      } = client
 
       const allTagData: any[] = []
       let files
@@ -143,7 +137,7 @@ Lets scan your AWS resources!
        */
       for (const entity of result.entities) {
         const {name, data} = entity
-        const {mutation} = getService(name)
+        const {mutation} = client.getService(name)
         this.logger.info(`connecting service: ${name}`)
         const connectedData = data.map((service: any) => getConnectedEntity(service, result, opts))
         this.logger.debug(connectedData)

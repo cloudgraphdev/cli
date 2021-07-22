@@ -91,10 +91,6 @@ Lets scan your AWS resources!
         continue
       }
       const {
-        getCredentials,
-        getService,
-        getIdentity,
-        getData,
         properties,
       } = client
       const config = this.getCGConfig(provider)
@@ -102,10 +98,10 @@ Lets scan your AWS resources!
         regions: properties.regions.join(','),
         resources: Object.values(properties.services).join(','),
       }
-      const creds: any = await getCredentials(opts)
-      const {accountId} = await getIdentity({credentials: creds, opts})
+      const creds: any = await client.getCredentials(opts)
+      const {accountId} = await client.getIdentity({credentials: creds, opts})
       this.logger.debug(providerConfig)
-      const providerData = await getData({
+      const providerData = await client.getData({
         regions: providerConfig.regions,
         resources: providerConfig.resources,
         credentials: creds,
@@ -144,7 +140,7 @@ Lets scan your AWS resources!
        * 4. push the array of formatted entities into result.entites
        */
       for (const serviceData of providerData) {
-        const serviceClass = getService(serviceData.name)
+        const serviceClass = client.getService(serviceData.name)
         const entities: any[] = []
         for (const region of Object.keys(serviceData.data)) {
           const data = serviceData.data[region]
@@ -190,7 +186,7 @@ Lets scan your AWS resources!
        */
       for (const entity of result.entities) {
         const {name, data} = entity
-        const {mutation} = getService(name)
+        const {mutation} = client.getService(name)
         const connectedData = data.map((service: any) => getConnectedEntity(service, result, opts))
         if (storageRunning) {
           const axiosPromise = storageEngine.push({

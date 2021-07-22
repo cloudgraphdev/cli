@@ -14,4 +14,4 @@ aws_*.json
 yalc.lock
 /src/plugins
 /cg-*
-
+/dgraph

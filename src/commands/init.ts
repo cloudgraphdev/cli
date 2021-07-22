@@ -162,12 +162,12 @@ Hi from AutoCloud! Lets setup your config
        */
       const config = this.getCGConfig(provider)
       if (config) {
-        this.logger.debug(`Config for ${provider} already exists`)
+        this.logger.info(`Config for ${provider} already exists`)
         const answers = await this.interface.prompt([
           {
             type: 'expand',
             message: `How would you like to change ${provider}'s config`,
-            name: 'overwrite',
+            name: 'nextStep',
             choices: [
               {
                 key: 'y',
@@ -183,7 +183,7 @@ Hi from AutoCloud! Lets setup your config
           },
         ])
         this.logger.debug(answers)
-        if (answers.overwrite) {
+        if (answers.nextStep === 'overwrite') {
           configResult[provider] = await this.getNewProviderConfig(provider)
         } else {
           this.logger.warn(`Init command for ${provider} aborted`)
