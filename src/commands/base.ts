@@ -59,24 +59,27 @@ export default abstract class BaseCommand extends Command {
     return engine
   }
 
-  getHost(): string {
+  getHost(showInitialStatus = true): string {
     const {flags: {dgraph: dgraphHost, storage}} = this.parse(this.constructor as Input<{debug: boolean; dev: boolean; dgraph: string; storage: string}>)
     // TODO: refactor this to handle multi storage solutions better
     if (storage === 'dgraph') {
       // first check for passed flag or env variable
       if (dgraphHost) {
-        this.logger.info(`Dgraph host set as: ${dgraphHost}`)
+        showInitialStatus &&
+          this.logger.info(`Dgraph host set as: ${dgraphHost}`)
         return dgraphHost
       }
       // next check for value defined in config file
       const config = this.getCGConfig('cloudGraph')
       if (config && config.dgraphHost) {
-        this.logger.info(`Dgraph host set as: ${config.dgraphHost}`)
+        showInitialStatus &&
+          this.logger.info(`Dgraph host set as: ${config.dgraphHost}`)
         return config.dgraphHost
       }
       // nothing found, return default location
       const defaultHost = 'http://localhost:8080'
-      this.logger.info(`Dgraph host set as: ${defaultHost}`)
+      showInitialStatus &&
+        this.logger.info(`Dgraph host set as: ${defaultHost}`)
       return defaultHost
     }
     return 'http://localhost:8080'
