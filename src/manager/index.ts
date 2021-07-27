@@ -25,30 +25,38 @@ export class Manager {
      * Determine if the user has passed a provider and prompt them if not
      */
     let plugin
-    if (this.plugins[provider]) {
-      return this.plugins[provider]
+    let providerNamespace = '@cloudgraph'
+    let providerName = provider
+
+    if (provider.includes('/')) {
+      [providerNamespace, providerName] = provider.split('/')
+      this.logger.info(`Installing community provider ${providerName} from namespace ${providerNamespace}`)
     }
-    const checkSpinner = ora(`Checking for ${provider} module...`).start()
+    if (this.plugins[providerName]) {
+      return this.plugins[providerName]
+    }
+    const checkSpinner = ora(`Checking for ${providerName} module...`).start()
     try {
+      const importPath = `${providerNamespace}/cg-provider-${providerName}`
       if (process.env.NODE_ENV === 'development' || this.devMode) {
         // TODO: this install doesnt work if it has a yalc-d package in it, how to resolve?
         // await this.manager.installFromPath(path.join(__dirname, `../../.yalc/${provider}-provider-plugin`), {force: true})
         // plugin = this.manager.require(`${provider}-provider-plugin`)
         // TODO: talk with live-plugin-manager maintainer on why above doesnt work but below does??
-        plugin = await import(`cg-${provider}-provider`)
+        plugin = await import(importPath)
       } else {
-        const installOra = ora(`Installing ${provider} plugin`).start()
-        await this.pluginManager.install(`cg-${provider}-provider`)
-        installOra.succeed(`${provider} plugin installed successfully!`)
-        plugin = this.pluginManager.require(`cg-${provider}-provider`)
+        const installOra = ora(`Installing ${providerName} plugin`).start()
+        await this.pluginManager.install(importPath)
+        installOra.succeed(`${providerName} plugin installed successfully!`)
+        plugin = this.pluginManager.require(importPath)
       }
     } catch (error: any) {
       this.logger.debug(error)
-      checkSpinner.fail(`Manager failed to install plugin for ${provider}`)
+      checkSpinner.fail(`Manager failed to install plugin for ${providerName}`)
       throw new Error('FAILED to find plugin!!')
     }
-    checkSpinner.succeed(`${provider} module check complete`)
-    this.plugins[provider] = plugin
+    checkSpinner.succeed(`${providerName} module check complete`)
+    this.plugins[providerName] = plugin
     return plugin
   }
 }
