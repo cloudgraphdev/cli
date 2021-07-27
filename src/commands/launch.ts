@@ -1,7 +1,4 @@
 /* eslint-disable no-console */
-import {flags} from '@oclif/command'
-import axios from 'axios'
-import {Opts} from 'cloud-graph-sdk'
 
 import Command from './base'
 import {fileUtils} from '../utils'
@@ -18,6 +15,8 @@ export default class Launch extends Command {
 Lets scan your AWS resources!
 `,
   ];
+
+  static dgraphContainerLabel = 'cloudgraph-cli-dgraph-standalone'
 
   static strict = false;
 
@@ -38,14 +37,14 @@ Lets scan your AWS resources!
     })
   }
 
+  // eslint-disable-next-line no-warning-comments
   // TODO: convert this func to handle any storage provider
   async run() {
-    const {flags: {debug, dev: devMode}} = this.parse(Launch)
-    const dgraphHost = this.getHost()
-    const storageEngine = this.getStorageEngine()
+    // const {flags: {debug, dev: devMode}} = this.parse(Launch)
+    // eslint-disable-next-line no-warning-comments
     // TODO: not a huge fan of this pattern, rework how to do debug and devmode tasks (specifically how to use in providers)
     // const opts: Opts = {logger: this.logger, debug, devMode}
-    const dockerCheck = ora('checking for Docker').start()
+    const dockerCheck = ora('Checking for Docker').start()
     try {
       await this.execCommand('docker -v')
       dockerCheck.succeed('Docker found')
@@ -54,41 +53,86 @@ Lets scan your AWS resources!
       this.logger.error(error)
       this.exit()
     }
-    const dgraphImgCheck = ora('pulling Dgraph Docker image').start()
+
+    const containerCheck = ora('Checking for an existing Dgraph docker instance').start()
+    let runningContainerId
     try {
-      fileUtils.makeDirIfNotExists(`${process.cwd()}/dgraph`)
-      await this.execCommand('docker pull dgraph/standalone')
-      dgraphImgCheck.succeed('Pulled Dgraph Docker image')
+      const stdout: any = await this.execCommand(`docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=running --quiet`)
+      const containerId = stdout.trim()
+      if (containerId) {
+        runningContainerId = containerId
+      }
     } catch (error: any) {
-      dgraphImgCheck.fail('Failed pulling Dgraph Docker image please check your docker installation', {level: 'error'})
       this.logger.error(error)
-      this.exit()
-    }
-    const dgraphInit = ora('Spinning up new Dgraph instance').start()
-    try {
-      await this.execCommand(`docker run -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 -v ${process.cwd()}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`)
-    } catch (error: any) {
-      dgraphInit.fail('Failed starting Dgraph instance')
-      this.logger.error(error)
-      this.exit()
     }
 
+    let exitedContainerId
+    if (!runningContainerId) {
+      try {
+        const stdout: any = await this.execCommand(`docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=exited --quiet`)
+        const containerId = stdout.trim()
+        if (containerId) {
+          exitedContainerId = containerId
+          containerCheck.succeed('Reusable container found!')
+        }
+      } catch (error: any) {
+        this.logger.error(error)
+      }
+    }
+
+    if (!exitedContainerId && !runningContainerId) {
+      containerCheck.succeed('No reusable instances found')
+      const dgraphImgCheck = ora('pulling Dgraph Docker image').start()
+      try {
+        fileUtils.makeDirIfNotExists(`${process.cwd()}/dgraph`)
+        await this.execCommand('docker pull dgraph/standalone')
+        dgraphImgCheck.succeed('Pulled Dgraph Docker image')
+      } catch (error: any) {
+        dgraphImgCheck.fail('Failed pulling Dgraph Docker image please check your docker installation', {level: 'error'})
+        this.logger.error(error)
+      }
+    }
+
+    let dgraphInit
+    if (runningContainerId) {
+      containerCheck.succeed('Reusable container found')
+    } else {
+      dgraphInit = ora(`Spinning up ${exitedContainerId ? 'existing' : 'new'} Dgraph instance`).start()
+      try {
+        if (exitedContainerId) {
+          await this.execCommand(`docker container start ${exitedContainerId}`)
+        } else {
+          await this.execCommand(`docker run -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 --label ${Launch.dgraphContainerLabel} -v ${process.cwd()}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`)
+        }
+        dgraphInit.succeed('Dgraph instance running')
+      } catch (error: any) {
+        dgraphInit.fail('Failed starting Dgraph instance')
+        this.logger.error(error)
+        throw new Error('Dgraph was unable to start')
+      }
+    }
+
+    await this.checkIfInstanceIsRunningReportStatus()
+  }
+
+  async checkIfInstanceIsRunningReportStatus() {
+    const healthCheck = ora('Running health check on Dgraph').start()
+    // eslint-disable-next-line no-warning-comments
     // TODO: smaller sleep time and exponential backoff for ~5 tries
     await new Promise(resolve => setTimeout(resolve, 10000))
     try {
-      const healthCheck = ora('Running health check on Dgraph').start()
-      const running = await storageEngine.healthCheck()
+      const storageEngine = this.getStorageEngine()
+      const running = await storageEngine.healthCheck(false)
       if (running) {
-        dgraphInit.succeed('Dgraph instance running')
-        healthCheck.succeed('Dgraph heath check passed')
+        healthCheck.succeed('Dgraph health check passed')
       } else {
         throw new Error('Dgraph was unable to start')
       }
     } catch (error: any) {
-      dgraphInit.fail('Failed starting Dgraph instance')
       this.logger.debug(error)
+      throw new Error('Dgraph was unable to start')
     }
-    this.logger.success(`Access your dgraph instance at ${chalk.underline.green(dgraphHost)}`)
+    this.logger.success(`Access your dgraph instance at ${chalk.underline.green(this.getHost(false))}`)
     this.logger.info(`For more information on dgraph, see the dgrah docs at: ${chalk.underline.green('https://dgraph.io/docs/graphql/')}`)
     this.exit()
   }
