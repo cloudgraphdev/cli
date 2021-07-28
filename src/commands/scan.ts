@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {Opts} from 'cloud-graph-sdk'
 
 import Command from './base'
@@ -7,8 +6,6 @@ import {fileUtils, getConnectedEntity} from '../utils'
 const chalk = require('chalk')
 const fs = require('fs')
 const path = require('path')
-
-const dataDir = 'cg-data'
 export default class Scan extends Command {
   static description = 'Scan provider data based on your config';
 
@@ -59,7 +56,13 @@ Lets scan your AWS resources!
      */
     const schema: any[] = []
     const promises: Promise<any>[] = []
-
+    fileUtils.makeDirIfNotExists(this.versionDirectory)
+    const folders = fileUtils.getVersionFolders(this.versionDirectory)
+    let dataFolder = 'version-1'
+    if (folders) {
+      dataFolder = `version-${folders.length + 1}`
+    }
+    fileUtils.makeDirIfNotExists(`${this.versionDirectory}/${dataFolder}`)
     // TODO: how to not loop through providers twice
     for (const provider of allProviers) {
       this.logger.info(`uploading Schema for ${provider}`)
@@ -69,10 +72,10 @@ Lets scan your AWS resources!
       } = client
       const providerSchema: any[] = getSchema()
       schema.push(...providerSchema)
-      fileUtils.writeGraphqlSchemaToFile(providerSchema, provider)
+      fileUtils.writeGraphqlSchemaToFile(`${this.versionDirectory}/${dataFolder}`, providerSchema, provider)
     }
     // Write combined schemas to Dgraph
-    fileUtils.writeGraphqlSchemaToFile(schema)
+    fileUtils.writeGraphqlSchemaToFile(`${this.versionDirectory}/${dataFolder}`, schema)
 
     // Push schema to dgraph if dgraph is running
     if (storageRunning) {
@@ -90,21 +93,11 @@ Lets scan your AWS resources!
       if (!client) {
         continue
       }
-      const {
-        properties,
-      } = client
       const config = this.getCGConfig(provider)
-      const providerConfig = config ? config : {
-        regions: properties.regions.join(','),
-        resources: Object.values(properties.services).join(','),
-      }
-      const creds: any = await client.getCredentials(opts)
-      const {accountId} = await client.getIdentity({credentials: creds, opts})
-      this.logger.debug(providerConfig)
+      // TODO: remove this and allow provider to config regions/resources itself
+      const {accountId} = await client.getIdentity()
+      this.logger.debug(config)
       const providerData = await client.getData({
-        regions: providerConfig.regions,
-        resources: providerConfig.resources,
-        credentials: creds,
         opts,
       })
       /**
@@ -167,12 +160,11 @@ Lets scan your AWS resources!
           result.entities.push({name: serviceData.name, data: entities})
         }
       }
-      // TODO: if we are scanning multi providers, do we want to save as one giant file?
-      fileUtils.makeDirIfNotExists(dataDir)
+
       fs.writeFileSync(
         path.join(
           process.cwd(),
-          `${dataDir}/${provider}_${accountId}_${Date.now()}.json`
+          `${this.versionDirectory}/${dataFolder}/${provider}_${accountId}_${Date.now()}.json`
         ),
         JSON.stringify(result, null, 2)
       )

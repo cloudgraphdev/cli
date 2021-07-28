@@ -5,6 +5,7 @@ import {cosmiconfigSync} from 'cosmiconfig'
 import Manager from '../manager'
 import EngineMap from '../storage'
 import {StorageEngine} from '../storage/types'
+import {printWelcomeMessage} from '../utils'
 
 const inquirer = require('inquirer')
 
@@ -16,6 +17,8 @@ export default abstract class BaseCommand extends Command {
   }
 
   interface = inquirer
+
+  versionDirectory = 'cg'
 
   logger: Logger
 
@@ -36,6 +39,8 @@ export default abstract class BaseCommand extends Command {
     dgraph: flags.string({char: 'd'}),
     // storage engine to use
     storage: flags.string({char: 's', default: 'dgraph', env: 'DGRAPH_HOST'}),
+    // dir to store cloud graph data versions in
+    directory: flags.string(),
   }
 
   static strict = false;
@@ -44,9 +49,19 @@ export default abstract class BaseCommand extends Command {
 
   async init(): Promise<void> {
     // Initialize the logger and storage engine
-    const {flags: {debug, dev: devMode, storage}} = this.parse(this.constructor as Input<{debug: boolean; dev: boolean; storage: string}>)
+    const {flags: {debug, dev: devMode, storage, directory}} = this.parse(this.constructor as Input<{debug: boolean; dev: boolean; storage: string; directory: string}>)
     // this.logger = new CloudGraph.Logger(debug)
     this.storageEngine = new EngineMap[storage]({host: this.getHost(), logger: this.logger})
+    const config = this.getCGConfig('cloudGraph')
+    if (!config) {
+      printWelcomeMessage()
+    }
+    if (config && config.directory) {
+      this.versionDirectory = config.directory
+    }
+    if (directory) {
+      this.versionDirectory = directory
+    }
   }
 
   getStorageEngine(): StorageEngine {

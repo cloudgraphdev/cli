@@ -1,9 +1,7 @@
-/* eslint-disable no-console */
 import {flags} from '@oclif/command'
 import {Opts} from 'cloud-graph-sdk'
 
 import Command from './base'
-import {printWelcomeMessage} from '../utils'
 
 const fs = require('fs')
 const path = require('path')
@@ -52,63 +50,9 @@ Hi from AutoCloud! Lets setup your config
     })
   }
 
-  async getNewProviderConfig(provider: string): Promise<{[key: string]: string}> {
-    const {
-      flags: {resources},
-    } = this.parse(Init)
-    const result: {[key: string]: string} = {}
-    const {properties: {regions, services}} = await this.getProviderClient(provider)
-    // Only query for regions if this provider has a list of them
-    if (regions) {
-      const answers = await this.interface.prompt([
-        {
-          type: 'checkbox',
-          message: 'Select regions to scan',
-          loop: false,
-          name: 'regions',
-          choices: regions.map((region: string) => ({
-            name: region,
-          })),
-        },
-      ])
-      this.logger.debug(answers)
-      result.regions = answers.regions.join(',')
-      // eslint-disable-next-line max-depth
-    }
-    // Only query for resorces if the flag is set, otherwise take them all.
-    if (resources) {
-      const answers = await this.interface.prompt([
-        {
-          type: 'checkbox',
-          message: 'Select services to scan',
-          loop: false,
-          name: 'resources',
-          choices: Object.values(services as {[key: string]: string}).map(
-            (service: string) => ({
-              name: service,
-            })
-          ),
-        },
-      ])
-      this.logger.debug(answers)
-      if (answers.resources.length > 0) {
-        result.resources = answers.resources.join(',')
-      } else {
-        result.resources = Object.values(
-          services
-        ).join(',')
-      }
-    } else {
-      result.resources = Object.values(
-        services
-      ).join(',')
-    }
-    return result
-  }
-
   async getCloudGraphConfig() {
     const {
-      flags: {dgraph},
+      flags: {dgraph, directory},
     } = this.parse(Init)
     const result: {[key: string]: any} = {}
     if (dgraph) {
@@ -125,15 +69,26 @@ Hi from AutoCloud! Lets setup your config
       ])
       result.dgraphHost = dgraph
     }
+    if (directory) {
+      result.directory = directory
+    } else {
+      const {directory} = await this.interface.prompt([
+        {
+          type: 'input',
+          message: 'What directory would you like CloudGraph to store data in?',
+          name: 'directory',
+          default: 'cg',
+        },
+      ])
+      result.directory = directory
+    }
     return result
   }
 
   async run() {
-    if (!this.getCGConfig()) {
-      printWelcomeMessage()
-    }
     const {
       argv,
+      flags,
       flags: {debug, dev: devMode},
     } = this.parse(Init)
     // const opts: Opts = {logger: this.logger, debug, devMode}
@@ -184,13 +139,13 @@ Hi from AutoCloud! Lets setup your config
         ])
         this.logger.debug(answers)
         if (answers.nextStep === 'overwrite') {
-          configResult[provider] = await this.getNewProviderConfig(provider)
+          configResult[provider] = await client.configure(flags)
         } else {
           this.logger.warn(`Init command for ${provider} aborted`)
           this.exit()
         }
       } else {
-        configResult[provider] = await this.getNewProviderConfig(provider)
+        configResult[provider] = await client.configure(flags)
         configResult.cloudGraph = await this.getCloudGraphConfig()
       }
     }

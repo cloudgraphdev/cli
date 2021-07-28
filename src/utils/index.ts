@@ -1,4 +1,5 @@
 import CloudGraph, {Opts} from 'cloud-graph-sdk'
+import {loadFilesSync} from '@graphql-tools/load-files'
 
 const boxen = require('boxen')
 const CFonts = require('cfonts')
@@ -22,24 +23,13 @@ export function moduleIsAvailable(path: string) {
   }
 }
 
-export function getLatestProviderData(provider: string) {
-  const fileGlob = path.join(process.cwd(), `cg-data/${provider}*.json`)
-  const files = glob.sync(fileGlob)
-  if (files && files.length > 0) {
-    return files
-    .map((name: string) => ({name, ctime: fs.statSync(name).ctime}))
-    .sort((a: {name: string; ctime: number}, b: {name: string; ctime: number}) => b.ctime - a.ctime)
+export function getProviderDataFile(dirPath: string, provider: string) {
+  const fileGlob = `${dirPath}${provider}*.json`
+  const fileArray = glob.sync(fileGlob)
+  if (fileArray && fileArray.length > 0) {
+    return fileArray[0]
   }
-  throw new Error('no data for provider')
 }
-
-// TODO: convert to a debug or verbose logger
-// export function getDebugLogger(debug: boolean): pino.Logger {
-//   if (!debug && process.env.NODE_ENV !== 'development') {
-//     return pino({enabled: false})
-//   }
-//   return pino({ name: 'cloud-graph', prettyPrint: process.env.NODE_ENV === 'development' })
-// }
 
 const mapFileNameToHumanReadable = (file: string): string => {
   const fileNameParts = file.split('/')
@@ -48,10 +38,17 @@ const mapFileNameToHumanReadable = (file: string): string => {
   return `${providerName} ${providerIdentity} ${new Date(Number(timestamp)).toISOString()}`
 }
 
-const mapFileSelectionToLocation = (file: string): string => {
-  const [providerName, providerIdentity, date] = file.split(' ')
-  const location = `${providerName}_${providerIdentity}_${Date.parse(date)}`
-  return path.join(process.cwd(), `cg-data/${location}.json`)
+// TODO: this could be refactored to go right to the correct version folder (avoid line 70)
+// if we extracted the version part of the url and passed to this func
+const findProviderFileLocation = (file: string, directory: string): string => {
+  const [providerName, providerIdentity, date] = file.trim().split(' ')
+  const fileName = `${providerName}_${providerIdentity}_${Date.parse(date)}`
+  const fileGlob = path.join(process.cwd(), `${directory}/version-*/${fileName}.json`)
+  const fileArray = glob.sync(fileGlob)
+  if (fileArray && fileArray.length > 0) {
+    return fileArray[0]
+  }
+  return ''
 }
 
 export function makeDirIfNotExists(dir: string) {
@@ -60,24 +57,23 @@ export function makeDirIfNotExists(dir: string) {
   }
 }
 
-export function writeGraphqlSchemaToFile(schema: Array<string>, provider?: string) {
-  const dir = 'cg-schemas'
-  makeDirIfNotExists(dir)
+export function writeGraphqlSchemaToFile(dirPath: string, schema: Array<string>, provider?: string) {
+  makeDirIfNotExists(dirPath)
   fs.writeFileSync(
-    path.join(process.cwd(), provider ? `${dir}/${provider}_schema.graphql` : `${dir}/schema.graphql`),
+    path.join(process.cwd(), provider ? `${dirPath}/${provider}_schema.graphql` : `${dirPath}/schema.graphql`),
     schema.join()
   )
 }
 
 export function getConnectedEntity(service: any, {entities, connections: allConnections}: any, opts: Opts) {
-  logger.info(`getting connected entity for id = ${service.id}`)
+  logger.debug(`getting connected entity for id = ${service.id}`)
   const connections = allConnections[service.id]
   const connectedEntity = {
     ...service,
   }
   if (connections) {
     for (const connection of connections) {
-      logger.info(
+      logger.debug(
         `searching for ${connection.resourceType} entity data to make connection between ${service.id} && ${connection.resourceType}`)
       const entityData = entities.find(
         ({name}: {name: string}) => name === connection.resourceType
@@ -95,8 +91,8 @@ export function getConnectedEntity(service: any, {entities, connections: allConn
 
 export async function printWelcomeMessage() {
   CFonts.say('Welcome to|CloudGraph!', {
-    font: 'chrome',
-    colors: ['greenBright', 'greenBright', 'greenBright'],
+    font: 'grid',
+    colors: ['#666EE8', '#B8FFBD', '#B8FFBD'],
     lineHight: 3,
     align: 'center',
   })
@@ -109,10 +105,38 @@ export async function printWelcomeMessage() {
   }))
 }
 
+export function getVersionFolders(directory: string, provider?: string) {
+  const folderGlob = path.join(process.cwd(), `${directory}/version-*/`)
+  const folders = glob.sync(folderGlob)
+  if (folders && folders.length > 0) {
+    return folders
+    .map((name: string) => ({name, ctime: fs.statSync(name).ctime}))
+    .filter(({name}: {name: string}) => {
+      if (provider) {
+        const filesInFolder = glob.sync(`${name}**/*`)
+        if (filesInFolder.find((val: string) => val.includes(`${provider}_schema.graphql`))) {
+          return true
+        }
+        return false
+      }
+      return true
+    })
+    .sort((a: {name: string; ctime: number}, b: {name: string; ctime: number}) => b.ctime - a.ctime)
+  }
+  return []
+}
+
+export function getSchemaFromFolder(dirPath: string, provider?: string) {
+  return loadFilesSync(path.join(dirPath, provider ? `${provider}*` : ''), {extensions: ['graphql']})
+}
+
 export const fileUtils = {
   mapFileNameToHumanReadable,
-  mapFileSelectionToLocation,
   makeDirIfNotExists,
   writeGraphqlSchemaToFile,
+  getVersionFolders,
+  findProviderFileLocation,
+  getSchemaFromFolder,
+  getProviderDataFile,
 }
 

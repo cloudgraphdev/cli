@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-import {getLatestProviderData} from '../utils'
 import {Opts} from 'cloud-graph-sdk'
 
 import Command from './base'
@@ -7,7 +5,6 @@ import {fileUtils, getConnectedEntity} from '../utils'
 
 const chalk = require('chalk')
 const fs = require('fs')
-
 export default class Load extends Command {
   static description = 'Scan provider data based on your config';
 
@@ -60,76 +57,92 @@ Lets scan your AWS resources!
       }
     }
 
-    const schema: any[] = []
-    for (const provider of allProviers) {
-      this.logger.info(`uploading Schema for ${provider}`)
-      const client = await this.getProviderClient(provider)
-      const providerSchema: any[] = client.getSchema()
-      if (!providerSchema) {
-        this.logger.warn(`No schema found for ${provider}, moving on`)
-        continue
-      }
-      schema.push(...providerSchema)
-      fileUtils.writeGraphqlSchemaToFile(providerSchema, provider)
-    }
-    // Write combined schemas to Dgraph
-    fileUtils.writeGraphqlSchemaToFile(schema)
-
-    // Push schema to dgraph if dgraph is running
-    if (storageRunning) {
-      try {
-        storageEngine.setSchema(schema)
-      } catch (error: any) {
-        this.logger.debug(error)
-        this.logger.error(`There was an issue pushing schema for providers: ${allProviers.join(' | ')} to dgraph at ${storageEngine.host}`)
-      }
-    }
     /**
      * loop through providers and attempt to scan each of them
      */
     const promises: Promise<any>[] = []
+    const schema: any[] = []
     for (const provider of allProviers) {
-      this.logger.info(`Beginning LOAD for ${provider}`)
+      this.logger.info(`Beginning ${chalk.green('LOAD')} for ${provider}`)
       const client = await this.getProviderClient(provider)
       if (!client) {
         continue
       }
 
       const allTagData: any[] = []
-      let files
+      // TODO: not in order?
+      const folders = fileUtils.getVersionFolders(this.versionDirectory, provider)
+      if (!folders) {
+        this.logger.error(`Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`)
+      }
+      // Get array of files for provider sorted by creation time
+      const files: {name: string; version: number; folder: string}[] = []
       try {
-        files = getLatestProviderData(provider)
+        folders.forEach(({name}: {name: string}) => {
+          const file = fileUtils.getProviderDataFile(name, provider)
+          const folderSplits = name.split('/')
+          const versionString = folderSplits.find((val: string) => val.includes('version'))
+          if (!versionString) {
+            return
+          }
+          const version = versionString.split('-')[1]
+          files.push({name: file, version: Number(version), folder: name}) // TODO: better to extract version from folder name here?
+        })
       } catch (error: any) {
         this.logger.error(`Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`)
         this.exit()
       }
-      let file
+      // If there is one file, just load it, otherwise prompt user to pick a version
+      let file: string
+      let version: string
       if (files.length > 1) {
-        const answer = await this.interface.prompt([
+        const answer: {file: string} = await this.interface.prompt([
           {
-            type: 'checkbox',
+            type: 'list',
             message: `Select ${provider} version to load into dgraph`,
             loop: false,
             name: 'file',
-            choices: files.map(({name: file}: {name: string}) => fileUtils.mapFileNameToHumanReadable(file)),
+            choices: files.map(({name: file, version}) => {
+              const fileName = fileUtils.mapFileNameToHumanReadable(file)
+              return `version ${version} ... ${fileName}`
+            }),
           },
         ])
-        file = fileUtils.mapFileSelectionToLocation(answer.file[0])
-        this.logger.debug(file)
+        try {
+          const [versionString, fileName]: string[] = answer.file.split('...')
+          version = versionString.split('-')[1]
+          file = fileUtils.findProviderFileLocation(fileName, this.versionDirectory)
+          const foundFile = files.find(val => val.name === file)
+          if (!foundFile) {
+            this.logger.error(`Unable to find file for ${provider} for ${versionString}`)
+            this.exit()
+          }
+          version = foundFile.folder
+          this.logger.debug(file)
+          this.logger.debug(version)
+        } catch (error: any) {
+          this.logger.error('Please choose a file to load')
+          this.exit()
+        }
       } else {
         file = files[0].name
+        version = files[0].folder
       }
       const result = JSON.parse(fs.readFileSync(file, 'utf8'))
-      /**
-       * Loop through the aws sdk data to format entities and build connections
-       * 1. Format data with provider service format function
-       * 2. build connections for data with provider service connections function
-       * 3. spread new connections over result.connections
-       * 4. push the array of formatted entities into result.entites
-       */
+      this.logger.info(`uploading Schema for ${provider}`)
+      const providerSchema = fileUtils.getSchemaFromFolder(version, provider)
+      if (!providerSchema) {
+        this.logger.warn(`No schema found for ${provider}, moving on`)
+        continue
+      }
+      schema.push(...providerSchema)
+      if (allProviers.indexOf(provider) === allProviers.length - 1) {
+        await storageEngine.setSchema(schema)
+      }
+
       /**
        * Loop through the result entities and for each entity:
-       * Look in result.connections for [key = entity.arn]
+       * Look in result.connections for [key = entity.id]
        * Loop through the connections for entity and determine its resource type
        * Find entity in result.entites that matches the id found in connections
        * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
