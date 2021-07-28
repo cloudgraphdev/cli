@@ -1,5 +1,6 @@
-import axios from "axios";
-import { StorageEngine } from "../types";
+import axios from 'axios'
+import {Logger} from 'cloud-graph-sdk'
+import {StorageEngine} from '../types'
 
 export default class DgraphEngine implements StorageEngine {
   constructor(config: any) {
@@ -9,7 +10,7 @@ export default class DgraphEngine implements StorageEngine {
 
   connectionHost: string;
 
-  logger: any;
+  logger: Logger
 
   // set host(host: string) {
   //   if (host) {

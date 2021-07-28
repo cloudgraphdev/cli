@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import Command from './base'
 import {fileUtils} from '../utils'
 
