@@ -74,8 +74,8 @@ Lets scan your AWS resources!
       this.logger.info(`uploading Schema for ${provider}`)
       const client = await this.getProviderClient(provider)
       const { getSchema } = client
-      const providerSchema: any[] = getSchema()
-      schema.push(...providerSchema)
+      const providerSchema: any = getSchema()
+      schema.push(providerSchema)
       fileUtils.writeGraphqlSchemaToFile(
         `${this.versionDirectory}/${dataFolder}`,
         providerSchema,
@@ -85,7 +85,7 @@ Lets scan your AWS resources!
     // Write combined schemas to Dgraph
     fileUtils.writeGraphqlSchemaToFile(
       `${this.versionDirectory}/${dataFolder}`,
-      schema
+      schema.join()
     )
 
     // Push schema to dgraph if dgraph is running
