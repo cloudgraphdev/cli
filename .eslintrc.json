@@ -1,0 +1,51 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "oclif",
+    "oclif-typescript",
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+
+  ],
+  "plugins": ["@typescript-eslint"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-await-in-loop": "off",
+    "prettier/prettier": 0,
+    "quotes": [2, "single", { "avoidEscape": true }],
+    "no-var": 2,
+    "arrow-parens": ["error", "as-needed"],
+    "no-console": "off",
+    "max-len": ["error", { "code": 140 }],
+    "@typescript-eslint/no-namespace": "error",
+    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/explicit-function-return-type": 1,
+    "no-unsafe-finally": 2,
+    "comma-dangle": 0,
+    "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
+    "@typescript-eslint/no-unused-vars": ["error", { "ignoreRestSiblings": true }],
+    "import/no-extraneous-dependencies": 0,
+    "import/extensions": 0,
+    "import/no-unresolved": 0,
+    "no-async-promise-executor": 0,
+    "no-restricted-syntax": "off",
+    "no-prototype-builtins": "warn",
+    "array-callback-return": "warn",
+    "camelcase": "off",
+    "consistent-return": "off",
+    "no-param-reassign": "warn",
+    "no-shadow": "warn",
+    "class-methods-use-this": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "ignorePatterns": ["node_modules/", "dist/", "src/plugins/", "*.js", "*.json", "*.d.ts"]
+}

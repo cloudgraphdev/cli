@@ -1,7 +1,7 @@
-import {PluginManager} from 'live-plugin-manager' // TODO: replace with homegrown solution
-import {Logger} from 'cloud-graph-sdk'
+import { PluginManager } from 'live-plugin-manager' // TODO: replace with homegrown solution
+import { Logger } from 'cloud-graph-sdk'
+import ora from 'ora'
 
-const ora = require('ora')
 export class Manager {
   constructor(config: any) {
     this.pluginManager = new PluginManager({

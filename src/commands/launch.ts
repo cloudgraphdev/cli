@@ -1,26 +1,26 @@
-import Command from './base'
-import {fileUtils} from '../utils'
+import chalk from 'chalk'
+import ora from 'ora'
+import { exec } from 'child_process'
 
-const chalk = require('chalk')
-const ora = require('ora')
-const {exec} = require('child_process')
+import Command from './base'
+import { fileUtils } from '../utils'
 
 export default class Launch extends Command {
-  static description = 'Scan provider data based on your config';
+  static description = 'Scan provider data based on your config'
 
   static examples = [
     `$ cloud-graph scan aws
 Lets scan your AWS resources!
 `,
-  ];
+  ]
 
   static dgraphContainerLabel = 'cloudgraph-cli-dgraph-standalone'
 
-  static strict = false;
+  static strict = false
 
   static flags = {
     ...Command.flags,
-  };
+  }
 
   static args = Command.args
 
@@ -30,7 +30,7 @@ Lets scan your AWS resources!
         if (error) {
           reject(error)
         }
-        resolve(stdout ? stdout : stderr)
+        resolve(stdout || stderr)
       })
     })
   }
@@ -47,15 +47,22 @@ Lets scan your AWS resources!
       await this.execCommand('docker -v')
       dockerCheck.succeed('Docker found')
     } catch (error: any) {
-      dockerCheck.fail('It appears Docker is not installed, please install it at: https://docs.docker.com/get-docker/', {level: 'error'})
+      dockerCheck.fail(
+        'It appears Docker is not installed, please install it at: https://docs.docker.com/get-docker/'
+        // { level: 'error' }
+      )
       this.logger.error(error)
       this.exit()
     }
 
-    const containerCheck = ora('Checking for an existing Dgraph docker instance').start()
+    const containerCheck = ora(
+      'Checking for an existing Dgraph docker instance'
+    ).start()
     let runningContainerId
     try {
-      const stdout: any = await this.execCommand(`docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=running --quiet`)
+      const stdout: any = await this.execCommand(
+        `docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=running --quiet`
+      )
       const containerId = stdout.trim()
       if (containerId) {
         runningContainerId = containerId
@@ -67,7 +74,9 @@ Lets scan your AWS resources!
     let exitedContainerId
     if (!runningContainerId) {
       try {
-        const stdout: any = await this.execCommand(`docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=exited --quiet`)
+        const stdout: any = await this.execCommand(
+          `docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=exited --quiet`
+        )
         const containerId = stdout.trim()
         if (containerId) {
           exitedContainerId = containerId
@@ -86,7 +95,10 @@ Lets scan your AWS resources!
         await this.execCommand('docker pull dgraph/standalone')
         dgraphImgCheck.succeed('Pulled Dgraph Docker image')
       } catch (error: any) {
-        dgraphImgCheck.fail('Failed pulling Dgraph Docker image please check your docker installation', {level: 'error'})
+        dgraphImgCheck.fail(
+          'Failed pulling Dgraph Docker image please check your docker installation'
+          // { level: 'error' }
+        )
         this.logger.error(error)
       }
     }
@@ -95,12 +107,18 @@ Lets scan your AWS resources!
     if (runningContainerId) {
       containerCheck.succeed('Reusable container found')
     } else {
-      dgraphInit = ora(`Spinning up ${exitedContainerId ? 'existing' : 'new'} Dgraph instance`).start()
+      dgraphInit = ora(
+        `Spinning up ${exitedContainerId ? 'existing' : 'new'} Dgraph instance`
+      ).start()
       try {
         if (exitedContainerId) {
           await this.execCommand(`docker container start ${exitedContainerId}`)
         } else {
-          await this.execCommand(`docker run -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 --label ${Launch.dgraphContainerLabel} -v ${process.cwd()}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`)
+          await this.execCommand(
+            `docker run -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 --label ${
+              Launch.dgraphContainerLabel
+            } -v ${process.cwd()}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`
+          )
         }
         dgraphInit.succeed('Dgraph instance running')
       } catch (error: any) {
@@ -130,8 +148,16 @@ Lets scan your AWS resources!
       this.logger.debug(error)
       throw new Error('Dgraph was unable to start')
     }
-    this.logger.success(`Access your dgraph instance at ${chalk.underline.green(this.getHost(false))}`)
-    this.logger.info(`For more information on dgraph, see the dgrah docs at: ${chalk.underline.green('https://dgraph.io/docs/graphql/')}`)
+    this.logger.success(
+      `Access your dgraph instance at ${chalk.underline.green(
+        this.getHost(false)
+      )}`
+    )
+    this.logger.info(
+      `For more information on dgraph, see the dgrah docs at: ${chalk.underline.green(
+        'https://dgraph.io/docs/graphql/'
+      )}`
+    )
     this.exit()
   }
 }

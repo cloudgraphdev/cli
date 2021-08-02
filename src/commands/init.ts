@@ -1,29 +1,32 @@
-import {flags} from '@oclif/command'
-import {Opts} from 'cloud-graph-sdk'
+import { flags } from '@oclif/command'
+// import { Opts } from 'cloud-graph-sdk'
+import fs from 'fs'
+import path from 'path'
 
 import Command from './base'
+// import { Opts } from 'cloud-graph-sdk'
 
-const fs = require('fs')
-const path = require('path')
-const ora = require('ora')
+// import { printWelcomeMessage } from '../utils'
+
+// const ora = require('ora')
 
 export default class Init extends Command {
   static description =
-    'Initialize your config to being scanning your cloud infrastructure';
+    'Initialize your config to being scanning your cloud infrastructure'
 
   static examples = [
     `$ cloud-graph init
 Hi from AutoCloud! Lets setup your config
 `,
-  ];
+  ]
 
   static flags = {
     ...Command.flags,
     // select resources flag
-    resources: flags.boolean({char: 'r'}),
-  };
+    resources: flags.boolean({ char: 'r' }),
+  }
 
-  static strict = false;
+  static strict = false
 
   static args = Command.args
 
@@ -35,34 +38,35 @@ Hi from AutoCloud! Lets setup your config
     }
     return new Promise(resolve => {
       this.interface
-      .prompt([
-        {
-          type: 'list',
-          name: 'provider',
-          message: 'Which cloud provider would you like to use?',
-          choices: ['aws'],
-        },
-      ])
-      .then((res: { provider: string }) => {
-        this.logger.debug(res.provider)
-        resolve(res.provider)
-      })
+        .prompt([
+          {
+            type: 'list',
+            name: 'provider',
+            message: 'Which cloud provider would you like to use?',
+            choices: ['aws'],
+          },
+        ])
+        .then((res: { provider: string }) => {
+          this.logger.debug(res.provider)
+          resolve(res.provider)
+        })
     })
   }
 
   async getCloudGraphConfig() {
     const {
-      flags: {dgraph, directory},
+      flags: { dgraph, directory },
     } = this.parse(Init)
-    const result: {[key: string]: any} = {}
+    const result: { [key: string]: any } = {}
     if (dgraph) {
       result.dgraphHost = dgraph
     } else {
-      const {dgraph} = await this.interface.prompt([
+      const { dgraph } = await this.interface.prompt([
         // TODO: validate has url structure with regex
         {
           type: 'input',
-          message: 'Enter your dgraph host url (or launch dgraph with "cloud-graph launch")',
+          message:
+            'Enter your dgraph host url (or launch dgraph with "cloud-graph launch")',
           name: 'dgraph',
           default: 'http://localhost:8080',
         },
@@ -72,7 +76,7 @@ Hi from AutoCloud! Lets setup your config
     if (directory) {
       result.directory = directory
     } else {
-      const {directory} = await this.interface.prompt([
+      const { directory } = await this.interface.prompt([
         {
           type: 'input',
           message: 'What directory would you like CloudGraph to store data in?',
@@ -86,11 +90,7 @@ Hi from AutoCloud! Lets setup your config
   }
 
   async run() {
-    const {
-      argv,
-      flags,
-      flags: {debug, dev: devMode},
-    } = this.parse(Init)
+    const { argv, flags } = this.parse(Init)
     // const opts: Opts = {logger: this.logger, debug, devMode}
     // First determine the provider if one has not been passed in args
     // if no provider is passed, they can select from a list of offically supported providers
@@ -109,8 +109,10 @@ Hi from AutoCloud! Lets setup your config
        */
       const client = await this.getProviderClient(provider)
       if (!client) {
-        this.logger.warn(`There was an issue initializing ${provider} plugin, skipping...`)
-        continue
+        this.logger.warn(
+          `There was an issue initializing ${provider} plugin, skipping...`
+        )
+        continue // eslint-disable-line no-continue
       }
       /**
        * Search in the config object for the provider to see if its already been configured

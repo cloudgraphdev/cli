@@ -1,19 +1,18 @@
-import Command, {flags} from '@oclif/command'
-import {Input} from '@oclif/parser'
-import CloudGraph, {Logger} from 'cloud-graph-sdk'
-import {cosmiconfigSync} from 'cosmiconfig'
+import Command, { flags } from '@oclif/command'
+import { Input } from '@oclif/parser'
+import CloudGraph, { Logger } from 'cloud-graph-sdk'
+import { cosmiconfigSync } from 'cosmiconfig'
+import inquirer from 'inquirer'
 import Manager from '../manager'
 import EngineMap from '../storage'
-import {StorageEngine} from '../storage/types'
-import {printWelcomeMessage} from '../utils'
-
-const inquirer = require('inquirer')
+import { StorageEngine } from '../storage/types'
+import { printWelcomeMessage } from '../utils'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
     super(argv, config)
     this.logger = CloudGraph.logger
-    this.providers
+    this.providers = {}
   }
 
   interface = inquirer
@@ -26,32 +25,45 @@ export default abstract class BaseCommand extends Command {
 
   storageEngine: StorageEngine | undefined
 
-  providers: {[key: string]: any} = {}
+  providers: { [key: string]: any }
 
-  storedConfig: {[key: string]: any} | undefined
+  storedConfig: { [key: string]: any } | undefined
 
   static flags = {
     // debug flag
-    debug: flags.boolean({env: 'DEBUG'}),
+    debug: flags.boolean({ env: 'DEBUG' }),
     // devMode flag
     dev: flags.boolean(),
     // dgraph host
-    dgraph: flags.string({char: 'd'}),
+    dgraph: flags.string({ char: 'd' }),
     // storage engine to use
-    storage: flags.string({char: 's', default: 'dgraph', env: 'DGRAPH_HOST'}),
+    storage: flags.string({ char: 's', default: 'dgraph', env: 'DGRAPH_HOST' }),
     // dir to store cloud graph data versions in
     directory: flags.string(),
   }
 
-  static strict = false;
+  static strict = false
 
-  static args = [{name: 'provider'}];
+  static args = [{ name: 'provider' }]
 
   async init(): Promise<void> {
     // Initialize the logger and storage engine
-    const {flags: {debug, dev: devMode, storage, directory}} = this.parse(this.constructor as Input<{debug: boolean; dev: boolean; storage: string; directory: string}>)
+    const {
+      // flags: { debug, dev: devMode, storage, directory },
+      flags: { storage, directory },
+    } = this.parse(
+      this.constructor as Input<{
+        debug: boolean
+        dev: boolean
+        storage: string
+        directory: string
+      }>
+    )
     // this.logger = new CloudGraph.Logger(debug)
-    this.storageEngine = new EngineMap[storage]({host: this.getHost(), logger: this.logger})
+    this.storageEngine = new EngineMap[storage]({
+      host: this.getHost(),
+      logger: this.logger,
+    })
     const config = this.getCGConfig('cloudGraph')
     if (!config) {
       printWelcomeMessage()
@@ -68,14 +80,35 @@ export default abstract class BaseCommand extends Command {
     if (this.storageEngine) {
       return this.storageEngine
     }
-    const {flags: {debug, dev: devMode, storage}} = this.parse(this.constructor as Input<{debug: boolean; dev: boolean; storage: string}>)
-    const engine = new EngineMap[storage]({host: this.getHost(), logger: this.logger})
+    const {
+      // flags: { debug, dev: devMode, storage },
+      flags: { storage },
+    } = this.parse(
+      this.constructor as Input<{
+        debug: boolean
+        dev: boolean
+        storage: string
+      }>
+    )
+    const engine = new EngineMap[storage]({
+      host: this.getHost(),
+      logger: this.logger,
+    })
     this.storageEngine = engine
     return engine
   }
 
   getHost(showInitialStatus = true): string {
-    const {flags: {dgraph: dgraphHost, storage}} = this.parse(this.constructor as Input<{debug: boolean; dev: boolean; dgraph: string; storage: string}>)
+    const {
+      flags: { dgraph: dgraphHost, storage },
+    } = this.parse(
+      this.constructor as Input<{
+        debug: boolean
+        dev: boolean
+        dgraph: string
+        storage: string
+      }>
+    )
     // TODO: refactor this to handle multi storage solutions better
     if (storage === 'dgraph') {
       // first check for passed flag or env variable
@@ -101,15 +134,17 @@ export default abstract class BaseCommand extends Command {
   }
 
   async getProviderClient(provider: string) {
-    const {flags: {dev: devMode}} = this.parse(this.constructor as Input<{debug: boolean; dev: boolean}>)
+    const {
+      flags: { dev: devMode },
+    } = this.parse(this.constructor as Input<{ debug: boolean; dev: boolean }>)
     try {
       if (!this.manager) {
-        this.manager = new Manager({logger: this.logger, devMode})
+        this.manager = new Manager({ logger: this.logger, devMode })
       }
       if (this.providers[provider]) {
         return this.providers[provider]
       }
-      const {default: Client} = await this.manager.getProviderPlugin(provider)
+      const { default: Client } = await this.manager.getProviderPlugin(provider)
       const client = new Client({
         logger: this.logger,
         provider: this.getCGConfig(provider),
@@ -142,7 +177,7 @@ export default abstract class BaseCommand extends Command {
     return null
   }
 
-  async catch(err) {
+  async catch(err: any) {
     // add any custom logic to handle errors from the command
     // or simply return the parent class error handling
     return super.catch(err)

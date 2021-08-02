@@ -32,14 +32,22 @@
     "@types/node": "^10",
     "@types/pino": "^6.3.8",
     "chai": "^4",
-    "eslint": "^5.13",
+    "eslint": "^7.2.0",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.1",
     "globby": "^10",
     "mocha": "^5",
     "nyc": "^14",
     "ts-node": "^8",
-    "typescript": "^3.3"
+    "typescript": "^3.3",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "husky": "^4.3.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "lint-staged": "^11.1.1"
   },
   "engines": {
     "node": ">=14.0.0"
@@ -67,7 +75,7 @@
   "scripts": {
     "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
-    "posttest": "eslint . --ext .ts --config .eslintrc",
+    "posttest": "eslint . --ext .ts --config .eslintrc.json",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "run:init": "NODE_ENV=development ./bin/run init",
     "run:init:aws": "NODE_ENV=development ./bin/run init aws",
@@ -77,7 +85,20 @@
     "run:scan:aws": "NODE_ENV=development ./bin/run scan aws",
     "run:launch": "NODE_ENV=development ./bin/run launch",
     "test": "nyc --extension .ts mocha --forbid-only \"test/**/*.test.ts\"",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "lint": "eslint --config .eslintrc.json --ext .js,.ts ./",
+    "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./"
   },
-  "types": "lib/index.d.ts"
+  "types": "lib/index.d.ts",
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,graphql,json}": [
+      "yarn lint:fix",
+      "git add --force"
+    ]
+  }
 }

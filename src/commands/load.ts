@@ -1,36 +1,44 @@
-import {Opts} from 'cloud-graph-sdk'
+// import { Opts } from 'cloud-graph-sdk'
+import chalk from 'chalk'
+import fs from 'fs'
 
 import Command from './base'
-import {fileUtils, getConnectedEntity} from '../utils'
+// import { getLatestProviderData, fileUtils, getConnectedEntity } from '../utils'
+import { fileUtils, getConnectedEntity } from '../utils'
 
-const chalk = require('chalk')
-const fs = require('fs')
+// import { Opts } from 'cloud-graph-sdk'
+
 export default class Load extends Command {
-  static description = 'Scan provider data based on your config';
+  static description = 'Scan provider data based on your config'
 
   static examples = [
     `$ cloud-graph scan aws
 Lets scan your AWS resources!
 `,
-  ];
+  ]
 
-  static strict = false;
+  static strict = false
 
   static flags = {
     ...Command.flags,
-  };
+  }
 
   static args = Command.args
 
   async run() {
-    const {argv, flags: {debug, dev: devMode}} = this.parse(Load)
+    const {
+      argv,
+      // flags: { debug, dev: devMode },
+    } = this.parse(Load)
     const storageEngine = this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
     if (!storageRunning) {
-      this.logger.error(`Storage engine check at ${storageEngine.host} FAILED canceling LOAD`)
+      this.logger.error(
+        `Storage engine check at ${storageEngine.host} FAILED canceling LOAD`
+      )
       this.exit()
     }
-    const opts: Opts = {logger: this.logger, debug, devMode}
+    // const opts: Opts = { logger: this.logger, debug, devMode }
     let allProviers = argv
     // if (!provider) {
     //   provider = await this.getProvider()
@@ -42,13 +50,19 @@ Lets scan your AWS resources!
      * if we still have 0 providers, fail and exit.
      */
     if (allProviers.length >= 1) {
-      this.logger.info(`Loading data to Dgraph for providers: ${allProviers.join(' | ')}`)
+      this.logger.info(
+        `Loading data to Dgraph for providers: ${allProviers.join(' | ')}`
+      )
     } else {
       this.logger.info('Searching config for initialized providers')
       const config = this.getCGConfig()
-      allProviers = Object.keys(config).filter((val: string) => val !== 'cloudGraph')
+      allProviers = Object.keys(config).filter(
+        (val: string) => val !== 'cloudGraph'
+      )
       // TODO: keep this log?
-      this.logger.info(`Found providers ${allProviers.join(' | ')} in cloud-graph config`)
+      this.logger.info(
+        `Found providers ${allProviers.join(' | ')} in cloud-graph config`
+      )
       if (allProviers.length === 0) {
         this.logger.error(
           'Error, there are no providers configured and none were passed to load, try "cloud-graph init" to set some up!'
@@ -66,43 +80,57 @@ Lets scan your AWS resources!
       this.logger.info(`Beginning ${chalk.green('LOAD')} for ${provider}`)
       const client = await this.getProviderClient(provider)
       if (!client) {
-        continue
+        continue // eslint-disable-line no-continue
       }
 
-      const allTagData: any[] = []
+      // const allTagData: any[] = []
       // TODO: not in order?
-      const folders = fileUtils.getVersionFolders(this.versionDirectory, provider)
+      const folders = fileUtils.getVersionFolders(
+        this.versionDirectory,
+        provider
+      )
       if (!folders) {
-        this.logger.error(`Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`)
+        this.logger.error(
+          `Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`
+        )
       }
       // Get array of files for provider sorted by creation time
-      const files: {name: string; version: number; folder: string}[] = []
+      const files: { name: string; version: number; folder: string }[] = []
       try {
-        folders.forEach(({name}: {name: string}) => {
+        folders.forEach(({ name }: { name: string }) => {
           const file = fileUtils.getProviderDataFile(name, provider)
           const folderSplits = name.split('/')
-          const versionString = folderSplits.find((val: string) => val.includes('version'))
+          const versionString = folderSplits.find((val: string) =>
+            val.includes('version')
+          )
           if (!versionString) {
             return
           }
           const version = versionString.split('-')[1]
-          files.push({name: file, version: Number(version), folder: name}) // TODO: better to extract version from folder name here?
+          // TODO: better to extract version from folder name here?
+          files.push({
+            name: file || '',
+            version: Number(version),
+            folder: name,
+          })
         })
       } catch (error: any) {
-        this.logger.error(`Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`)
+        this.logger.error(
+          `Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`
+        )
         this.exit()
       }
       // If there is one file, just load it, otherwise prompt user to pick a version
       let file: string
       let version: string
       if (files.length > 1) {
-        const answer: {file: string} = await this.interface.prompt([
+        const answer: { file: string } = await this.interface.prompt([
           {
             type: 'list',
             message: `Select ${provider} version to load into dgraph`,
             loop: false,
             name: 'file',
-            choices: files.map(({name: file, version}) => {
+            choices: files.map(({ name: file, version }) => {
               const fileName = fileUtils.mapFileNameToHumanReadable(file)
               return `version ${version} ... ${fileName}`
             }),
@@ -110,11 +138,16 @@ Lets scan your AWS resources!
         ])
         try {
           const [versionString, fileName]: string[] = answer.file.split('...')
-          version = versionString.split('-')[1]
-          file = fileUtils.findProviderFileLocation(fileName, this.versionDirectory)
+          version = versionString.split('-')[1] // eslint-disable-line prefer-destructuring
+          file = fileUtils.findProviderFileLocation(
+            fileName,
+            this.versionDirectory
+          )
           const foundFile = files.find(val => val.name === file)
           if (!foundFile) {
-            this.logger.error(`Unable to find file for ${provider} for ${versionString}`)
+            this.logger.error(
+              `Unable to find file for ${provider} for ${versionString}`
+            )
             this.exit()
           }
           version = foundFile.folder
@@ -133,7 +166,7 @@ Lets scan your AWS resources!
       const providerSchema = fileUtils.getSchemaFromFolder(version, provider)
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
-        continue
+        continue // eslint-disable-line no-continue
       }
       schema.push(...providerSchema)
       if (allProviers.indexOf(provider) === allProviers.length - 1) {
@@ -149,10 +182,12 @@ Lets scan your AWS resources!
        * Push connected entity into dgraph
        */
       for (const entity of result.entities) {
-        const {name, data} = entity
-        const {mutation} = client.getService(name)
+        const { name, data } = entity
+        const { mutation } = client.getService(name)
         this.logger.info(`connecting service: ${name}`)
-        const connectedData = data.map((service: any) => getConnectedEntity(service, result, opts))
+        const connectedData = data.map((service: any) =>
+          getConnectedEntity(service, result)
+        )
         this.logger.debug(connectedData)
         if (storageRunning) {
           const axoisPromise = storageEngine.push({
@@ -166,7 +201,11 @@ Lets scan your AWS resources!
       }
     }
     await Promise.all(promises)
-    this.logger.success(`Your data for ${allProviers.join(' | ')} is now being served at ${chalk.underline.green(storageEngine.host)}`)
+    this.logger.success(
+      `Your data for ${allProviers.join(
+        ' | '
+      )} is now being served at ${chalk.underline.green(storageEngine.host)}`
+    )
     this.exit()
   }
 }
