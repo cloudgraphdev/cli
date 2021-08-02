@@ -1,32 +1,36 @@
-import {Opts} from 'cloud-graph-sdk'
+import chalk from 'chalk'
+import fs from 'fs'
+import path from 'path'
+import { Opts } from 'cloud-graph-sdk'
 
 import Command from './base'
-import {fileUtils, getConnectedEntity} from '../utils'
+import { fileUtils, getConnectedEntity } from '../utils'
 
-const chalk = require('chalk')
-const fs = require('fs')
-const path = require('path')
+// const dataDir = 'cg-data'
 export default class Scan extends Command {
-  static description = 'Scan provider data based on your config';
+  static description = 'Scan provider data based on your config'
 
   static examples = [
     `$ cloud-graph scan aws
 Lets scan your AWS resources!
 `,
-  ];
+  ]
 
-  static strict = false;
+  static strict = false
 
   static flags = {
     ...Command.flags,
-  };
+  }
 
   static args = Command.args
 
   async run() {
-    const {argv, flags: {debug, dev: devMode}} = this.parse(Scan)
+    const {
+      argv,
+      flags: { debug, dev: devMode },
+    } = this.parse(Scan)
     // const dgraphHost = this.getDgraphHost()
-    const opts: Opts = {logger: this.logger, debug, devMode}
+    const opts: Opts = { logger: this.logger, debug, devMode }
     let allProviers = argv
 
     // Run dgraph health check
@@ -42,7 +46,9 @@ Lets scan your AWS resources!
     } else {
       this.logger.info('Scanning for providers found in config')
       const config = this.getCGConfig()
-      allProviers = Object.keys(config).filter((val: string) => val !== 'cloudGraph')
+      allProviers = Object.keys(config).filter(
+        (val: string) => val !== 'cloudGraph'
+      )
       if (allProviers.length === 0) {
         this.logger.error(
           'There are no providers configured and none were passed to scan'
@@ -67,15 +73,20 @@ Lets scan your AWS resources!
     for (const provider of allProviers) {
       this.logger.info(`uploading Schema for ${provider}`)
       const client = await this.getProviderClient(provider)
-      const {
-        getSchema,
-      } = client
+      const { getSchema } = client
       const providerSchema: any[] = getSchema()
       schema.push(...providerSchema)
-      fileUtils.writeGraphqlSchemaToFile(`${this.versionDirectory}/${dataFolder}`, providerSchema, provider)
+      fileUtils.writeGraphqlSchemaToFile(
+        `${this.versionDirectory}/${dataFolder}`,
+        providerSchema,
+        provider
+      )
     }
     // Write combined schemas to Dgraph
-    fileUtils.writeGraphqlSchemaToFile(`${this.versionDirectory}/${dataFolder}`, schema)
+    fileUtils.writeGraphqlSchemaToFile(
+      `${this.versionDirectory}/${dataFolder}`,
+      schema
+    )
 
     // Push schema to dgraph if dgraph is running
     if (storageRunning) {
@@ -83,7 +94,11 @@ Lets scan your AWS resources!
         await storageEngine.setSchema(schema)
       } catch (error: any) {
         this.logger.debug(error)
-        this.logger.error(`There was an issue pushing schema for providers: ${allProviers.join(' | ')} to dgraph at ${storageEngine.host}`)
+        this.logger.error(
+          `There was an issue pushing schema for providers: ${allProviers.join(
+            ' | '
+          )} to dgraph at ${storageEngine.host}`
+        )
         this.exit()
       }
     }
@@ -91,11 +106,11 @@ Lets scan your AWS resources!
       this.logger.info(`Beginning SCAN for ${provider}`)
       const client = await this.getProviderClient(provider)
       if (!client) {
-        continue
+        continue // eslint-disable-line no-continue
       }
       const config = this.getCGConfig(provider)
       // TODO: remove this and allow provider to config regions/resources itself
-      const {accountId} = await client.getIdentity()
+      const { accountId } = await client.getIdentity()
       this.logger.debug(config)
       const providerData = await client.getData({
         opts,
@@ -103,23 +118,29 @@ Lets scan your AWS resources!
       /**
        * Grab all AWS SDK data for the requested regions/resources
        */
-      // const awsSdkData = await getDataFromAwsSdk({regions: 'us-east-1', resources: '', credentials: creds, forceFetchAsgs: false, additionalResources: 'ec2_instance,alb,route53'})
+      // const awsSdkData =
+      // await getDataFromAwsSdk({regions: 'us-east-1', resources: '',
+      // credentials: creds, forceFetchAsgs: false, additionalResources: 'ec2_instance,alb,route53'})
       // console.log(JSON.stringify(awsSdkData))
       // eslint-disable-next-line no-console
       // step 1 grab the data with awsSdkData
-      // step 2 format the data for flat file (enterprise: needs to also format for sumerian ui data => this is used to make more connections between data)
+      // step 2 format the data for flat file
+      // (enterprise: needs to also format for sumerian ui data => this is used to make more connections between data)
       // step 2.1 we need to really understand what the best way to format the data for OS and enterprise
       // step 3 enterprise => how do we flip back and forth between dgraph and 3d ENV
       // do we need to flip from 3d to dgraph?
-      // converters: new flat data shape, from flat data to dgraph converter. from flat data to 3d converter. dgraph to 3d converter as well.
+      // converters: new flat data shape, from flat data to dgraph converter.
+      // from flat data to 3d converter. dgraph to 3d converter as well.
       // We need to know the schema, flat file needs entites AND all the connections
       // get all the data, make all the connection between data, format data for flat file
       // take the connections and build relations
       // graphql needs this at compile time ^
       // we have kmsRawData (what comes from the sdk and possible gets type from here) KmsKey
-      // is there a good valid reason to have "middle layer". other option is take raw data, build connections from that in another data obj, formats the non-connection keys from the type, make connections to build our schema types (KMSKey)
+      // is there a good valid reason to have "middle layer".
+      // other option is take raw data, build connections from that in another data obj,
+      // formats the non-connection keys from the type, make connections to build our schema types (KMSKey)
 
-      const allTagData: any[] = []
+      // const allTagData: any[] = []
       const result: { entities: { name: any; data: any }[]; connections: any } =
         {
           entities: [],
@@ -157,14 +178,16 @@ Lets scan your AWS resources!
               }
             }
           })
-          result.entities.push({name: serviceData.name, data: entities})
+          result.entities.push({ name: serviceData.name, data: entities })
         }
       }
 
       fs.writeFileSync(
         path.join(
           process.cwd(),
-          `${this.versionDirectory}/${dataFolder}/${provider}_${accountId}_${Date.now()}.json`
+          `${
+            this.versionDirectory
+          }/${dataFolder}/${provider}_${accountId}_${Date.now()}.json`
         ),
         JSON.stringify(result, null, 2)
       )
@@ -177,9 +200,12 @@ Lets scan your AWS resources!
        * Push connected entity into dgraph
        */
       for (const entity of result.entities) {
-        const {name, data} = entity
-        const {mutation} = client.getService(name)
-        const connectedData = data.map((service: any) => getConnectedEntity(service, result, opts))
+        const { name, data } = entity
+        const { mutation } = client.getService(name)
+        const connectedData = data.map((service: any) =>
+          // getConnectedEntity(service, result, opts)
+          getConnectedEntity(service, result)
+        )
         if (storageRunning) {
           const axiosPromise = storageEngine.push({
             query: mutation,
@@ -192,7 +218,11 @@ Lets scan your AWS resources!
       }
     }
     await Promise.all(promises)
-    this.logger.success(`Your data for ${allProviers.join(' | ')} is now being served at ${chalk.underline.green(storageEngine.host)}`)
+    this.logger.success(
+      `Your data for ${allProviers.join(
+        ' | '
+      )} is now being served at ${chalk.underline.green(storageEngine.host)}`
+    )
     this.exit()
   }
 }
