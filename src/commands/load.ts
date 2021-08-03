@@ -168,7 +168,7 @@ Lets scan your AWS resources!
         this.logger.warn(`No schema found for ${provider}, moving on`)
         continue // eslint-disable-line no-continue
       }
-      schema.push(...providerSchema)
+      schema.push(providerSchema)
       if (allProviers.indexOf(provider) === allProviers.length - 1) {
         await storageEngine.setSchema(schema)
       }

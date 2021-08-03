@@ -1,5 +1,5 @@
-// import CloudGraph, { Opts } from 'cloud-graph-sdk'
-import CloudGraph from 'cloud-graph-sdk'
+// import CloudGraph, { Opts } from '@cloudgraph/sdk'
+import CloudGraph from '@cloudgraph/sdk'
 import { loadFilesSync } from '@graphql-tools/load-files'
 import boxen from 'boxen'
 import CFonts from 'cfonts'
@@ -66,7 +66,7 @@ export function makeDirIfNotExists(dir: string) {
 
 export function writeGraphqlSchemaToFile(
   dirPath: string,
-  schema: Array<string>,
+  schema: string,
   provider?: string
 ) {
   makeDirIfNotExists(dirPath)
@@ -77,7 +77,7 @@ export function writeGraphqlSchemaToFile(
         ? `${dirPath}/${provider}_schema.graphql`
         : `${dirPath}/schema.graphql`
     ),
-    schema.join()
+    schema
   )
 }
 
@@ -150,9 +150,9 @@ export function getVersionFolders(directory: string, provider?: string) {
       })
       .sort(
         (
-          a: { name: string; ctime: number },
-          b: { name: string; ctime: number }
-        ) => b.ctime - a.ctime
+          a: { name: string; ctime: Date },
+          b: { name: string; ctime: Date }
+        ) => a.ctime.getTime() - b.ctime.getTime()
       )
   }
   return []
