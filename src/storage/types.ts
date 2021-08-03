@@ -1,4 +1,4 @@
-import {Logger} from 'cloud-graph-sdk'
+import {Logger} from '@cloudgraph/sdk'
 import {AxiosPromise} from 'axios'
 
 export interface StorageEngine {

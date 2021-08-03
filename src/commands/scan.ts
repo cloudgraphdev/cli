@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import { Opts } from 'cloud-graph-sdk'
+import { Opts } from '@cloudgraph/sdk'
 
 import Command from './base'
 import { fileUtils, getConnectedEntity } from '../utils'

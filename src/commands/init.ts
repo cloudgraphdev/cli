@@ -1,10 +1,10 @@
 import { flags } from '@oclif/command'
-// import { Opts } from 'cloud-graph-sdk'
+// import { Opts } from '@cloudgraph/sdk'
 import fs from 'fs'
 import path from 'path'
 
 import Command from './base'
-// import { Opts } from 'cloud-graph-sdk'
+// import { Opts } from '@cloudgraph/sdk'
 
 // import { printWelcomeMessage } from '../utils'
 
