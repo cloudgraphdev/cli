@@ -9,19 +9,20 @@ import { fileUtils, getConnectedEntity } from '../utils'
 // import { Opts } from 'cloud-graph-sdk'
 
 export default class Load extends Command {
-  static description = 'Scan provider data based on your config'
+  static description = 'Load a specific version of your CloudGraph data';
 
   static examples = [
-    `$ cloud-graph scan aws
-Lets scan your AWS resources!
-`,
-  ]
+    '$ cg load [Load data for all providers configured]',
+    '$ cg load aws [Load data for AWS]'
+  ];
 
   static strict = false
 
   static flags = {
     ...Command.flags,
   }
+
+  static hidden = false
 
   static args = Command.args
 

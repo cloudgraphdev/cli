@@ -6,13 +6,11 @@ import Command from './base'
 import { fileUtils } from '../utils'
 
 export default class Launch extends Command {
-  static description = 'Scan provider data based on your config'
+  static description = 'Launch an instance of Dgraph to store data';
 
   static examples = [
-    `$ cloud-graph scan aws
-Lets scan your AWS resources!
-`,
-  ]
+    '$ cg launch',
+  ];
 
   static dgraphContainerLabel = 'cloudgraph-cli-dgraph-standalone'
 
@@ -21,6 +19,8 @@ Lets scan your AWS resources!
   static flags = {
     ...Command.flags,
   }
+
+  static hidden = false
 
   static args = Command.args
 

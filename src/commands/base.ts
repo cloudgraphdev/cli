@@ -30,17 +30,28 @@ export default abstract class BaseCommand extends Command {
   storedConfig: { [key: string]: any } | undefined
 
   static flags = {
-    // debug flag
-    debug: flags.boolean({ env: 'DEBUG' }),
     // devMode flag
-    dev: flags.boolean(),
+    dev: flags.boolean({ description: 'Turn on developer mode' }),
     // dgraph host
-    dgraph: flags.string({ char: 'd' }),
+    dgraph: flags.string({
+      char: 'd',
+      env: 'DGRAPH_HOST',
+      description: 'Set where dgraph is running (default localhost:8080)',
+    }),
     // storage engine to use
-    storage: flags.string({ char: 's', default: 'dgraph', env: 'DGRAPH_HOST' }),
+    storage: flags.string({
+      char: 's',
+      description:
+        'Select a storage engine to use. Currently only supports Dgraph',
+    }),
     // dir to store cloud graph data versions in
-    directory: flags.string(),
+    directory: flags.string({
+      description:
+        'Set the folder where CloudGraph will store data. (default cg)',
+    }),
   }
+
+  static hidden = true
 
   static strict = false
 
@@ -49,17 +60,15 @@ export default abstract class BaseCommand extends Command {
   async init(): Promise<void> {
     // Initialize the logger and storage engine
     const {
-      // flags: { debug, dev: devMode, storage, directory },
-      flags: { storage, directory },
+      flags: { storage = 'dgraph', directory },
     } = this.parse(
       this.constructor as Input<{
-        debug: boolean
         dev: boolean
         storage: string
         directory: string
       }>
     )
-    // this.logger = new CloudGraph.Logger(debug)
+
     this.storageEngine = new EngineMap[storage]({
       host: this.getHost(),
       logger: this.logger,
@@ -81,15 +90,8 @@ export default abstract class BaseCommand extends Command {
       return this.storageEngine
     }
     const {
-      // flags: { debug, dev: devMode, storage },
-      flags: { storage },
-    } = this.parse(
-      this.constructor as Input<{
-        debug: boolean
-        dev: boolean
-        storage: string
-      }>
-    )
+      flags: { storage = 'dgraph' },
+    } = this.parse(this.constructor as Input<{ dev: boolean; storage: string }>)
     const engine = new EngineMap[storage]({
       host: this.getHost(),
       logger: this.logger,
@@ -103,7 +105,6 @@ export default abstract class BaseCommand extends Command {
       flags: { dgraph: dgraphHost, storage },
     } = this.parse(
       this.constructor as Input<{
-        debug: boolean
         dev: boolean
         dgraph: string
         storage: string
@@ -136,7 +137,7 @@ export default abstract class BaseCommand extends Command {
   async getProviderClient(provider: string) {
     const {
       flags: { dev: devMode },
-    } = this.parse(this.constructor as Input<{ debug: boolean; dev: boolean }>)
+    } = this.parse(this.constructor as Input<{ dev: boolean }>)
     try {
       if (!this.manager) {
         this.manager = new Manager({ logger: this.logger, devMode })
