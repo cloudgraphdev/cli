@@ -8,13 +8,14 @@ import { fileUtils, getConnectedEntity } from '../utils'
 
 // const dataDir = 'cg-data'
 export default class Scan extends Command {
-  static description = 'Scan provider data based on your config'
+  static description = 'Scan one or multiple providers data to be queried through Dgraph';
 
   static examples = [
-    `$ cloud-graph scan aws
-Lets scan your AWS resources!
-`,
-  ]
+    '$ cg scan',
+    '$ cg scan aws',
+    '$ cg scan aws --dgraph http://localhost:1000 [Save data in dgraph running on port 1000]',
+    '$ cg scan aws --no-serve [Do not start the query engine]'
+  ];
 
   static strict = false
 
@@ -22,15 +23,14 @@ Lets scan your AWS resources!
     ...Command.flags,
   }
 
+  static hidden = false
+
   static args = Command.args
 
   async run() {
-    const {
-      argv,
-      flags: { debug, dev: devMode },
-    } = this.parse(Scan)
+    const {argv, flags: {dev: devMode}} = this.parse(Scan)
     // const dgraphHost = this.getDgraphHost()
-    const opts: Opts = { logger: this.logger, debug, devMode }
+    const opts: Opts = {logger: this.logger, debug: true, devMode}
     let allProviers = argv
 
     // Run dgraph health check

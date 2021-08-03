@@ -12,19 +12,21 @@ import Command from './base'
 
 export default class Init extends Command {
   static description =
-    'Initialize your config to being scanning your cloud infrastructure'
+    'Set initial configuration for providers';
 
   static examples = [
-    `$ cloud-graph init
-Hi from AutoCloud! Lets setup your config
-`,
-  ]
+    '$ cg init',
+    '$ cg init aws [Initialize AWS provider]',
+    '$ cg init aws -r [Specify resources to crawl]'
+  ];
 
   static flags = {
     ...Command.flags,
     // select resources flag
     resources: flags.boolean({ char: 'r' }),
   }
+
+  static hidden = false
 
   static strict = false
 

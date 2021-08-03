@@ -1,6 +1,6 @@
 {
   "name": "cloud-graph",
-  "description": "Scan cloud data and query it with GraphQL",
+  "description": "Scan your cloud infrastructure data and query it with GraphQL",
   "version": "0.0.1",
   "author": "AutoCloud",
   "bin": {
