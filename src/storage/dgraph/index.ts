@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Logger } from 'cloud-graph-sdk'
+import { Logger } from '@cloudgraph/sdk'
 import { StorageEngine } from '../types'
 
 export default class DgraphEngine implements StorageEngine {

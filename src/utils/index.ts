@@ -1,5 +1,5 @@
-// import CloudGraph, { Opts } from 'cloud-graph-sdk'
-import CloudGraph from 'cloud-graph-sdk'
+// import CloudGraph, { Opts } from '@cloudgraph/sdk'
+import CloudGraph from '@cloudgraph/sdk'
 import { loadFilesSync } from '@graphql-tools/load-files'
 import boxen from 'boxen'
 import CFonts from 'cfonts'

@@ -1,5 +1,5 @@
 import { PluginManager } from 'live-plugin-manager' // TODO: replace with homegrown solution
-import { Logger } from 'cloud-graph-sdk'
+import { Logger } from '@cloudgraph/sdk'
 import ora from 'ora'
 
 export class Manager {

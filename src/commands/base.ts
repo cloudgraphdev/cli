@@ -1,6 +1,6 @@
 import Command, { flags } from '@oclif/command'
 import { Input } from '@oclif/parser'
-import CloudGraph, { Logger } from 'cloud-graph-sdk'
+import CloudGraph, { Logger } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
 import inquirer from 'inquirer'
 import Manager from '../manager'

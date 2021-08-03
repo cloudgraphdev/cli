@@ -1,4 +1,4 @@
-// import { Opts } from 'cloud-graph-sdk'
+// import { Opts } from '@cloudgraph/sdk'
 import chalk from 'chalk'
 import fs from 'fs'
 
@@ -6,7 +6,7 @@ import Command from './base'
 // import { getLatestProviderData, fileUtils, getConnectedEntity } from '../utils'
 import { fileUtils, getConnectedEntity } from '../utils'
 
-// import { Opts } from 'cloud-graph-sdk'
+// import { Opts } from '@cloudgraph/sdk'
 
 export default class Load extends Command {
   static description = 'Scan provider data based on your config'
