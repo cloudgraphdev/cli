@@ -2,6 +2,19 @@
 # yarn lockfile v1
 
 
+"@autocloud/eslint-config@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@autocloud/eslint-config/-/eslint-config-0.1.0.tgz#fe2bd8872bac45974dc1817153498ea3e5335b66"
+  integrity sha512-1zn5DKp1BWgpoQ1oxqatIRRUMHlOy46KhupUU/NOHjPCkTE1z/GjtD9f7przoFrLhL0uqw4/vw7aMCCAeDjyew==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^4.28.5"
+    "@typescript-eslint/parser" "^4.28.5"
+    eslint "^7.2.0"
+    eslint-config-airbnb-base "14.2.1"
+    eslint-config-prettier "^6.11.0"
+    eslint-plugin-import "^2.22.1"
+    eslint-plugin-prettier "^3.4.0"
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
