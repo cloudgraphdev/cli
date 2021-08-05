@@ -1,10 +1,10 @@
 {
-  "name": "cloud-graph",
+  "name": "@cloudgraph/cli",
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
   "version": "0.0.1",
   "author": "AutoCloud",
   "bin": {
-    "cloud-graph": "./bin/run"
+    "cg": "./bin/run"
   },
   "bugs": "https://github.com/autocloud/cloud-graph/issues",
   "dependencies": {
@@ -47,7 +47,7 @@
     "mocha": "^5",
     "nyc": "^14",
     "ts-node": "^8",
-    "typescript": "^3.3"
+    "typescript": "^4.3.5"
   },
   "engines": {
     "node": ">=14.0.0"
