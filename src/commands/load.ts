@@ -1,6 +1,7 @@
 // import { Opts } from '@cloudgraph/sdk'
 import chalk from 'chalk'
 import fs from 'fs'
+import ora from 'ora'
 
 import Command from './base'
 // import { getLatestProviderData, fileUtils, getConnectedEntity } from '../utils'
@@ -78,7 +79,9 @@ export default class Load extends Command {
     const promises: Promise<any>[] = []
     const schema: any[] = []
     for (const provider of allProviers) {
-      this.logger.info(`Beginning ${chalk.green('LOAD')} for ${provider}`)
+      this.logger.info(
+        `Beginning ${chalk.italic.green('LOAD')} for ${provider}`
+      )
       const client = await this.getProviderClient(provider)
       if (!client) {
         continue // eslint-disable-line no-continue
@@ -104,13 +107,13 @@ export default class Load extends Command {
           const versionString = folderSplits.find((val: string) =>
             val.includes('version')
           )
-          if (!versionString) {
+          if (!versionString || !file) {
             return
           }
           const version = versionString.split('-')[1]
           // TODO: better to extract version from folder name here?
           files.push({
-            name: file || '',
+            name: file,
             version: Number(version),
             folder: name,
           })
@@ -125,6 +128,7 @@ export default class Load extends Command {
       let file: string
       let version: string
       if (files.length > 1) {
+        // TODO: rework this using choices[].value to not need to do string manipulation to extract answer
         const answer: { file: string } = await this.interface.prompt([
           {
             type: 'list',
@@ -162,8 +166,11 @@ export default class Load extends Command {
         file = files[0].name
         version = files[0].folder
       }
+      const handleSchemaLoader = ora(
+        `updating ${chalk.italic.green('Schema')} for ${chalk.italic.green(
+          provider
+        )}`).start()
       const result = JSON.parse(fs.readFileSync(file, 'utf8'))
-      this.logger.info(`uploading Schema for ${provider}`)
       const providerSchema = fileUtils.getSchemaFromFolder(version, provider)
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
@@ -173,6 +180,11 @@ export default class Load extends Command {
       if (allProviers.indexOf(provider) === allProviers.length - 1) {
         await storageEngine.setSchema(schema)
       }
+      handleSchemaLoader.succeed(
+        `${chalk.italic.green(
+          'Schema'
+        )} loaded successfully for ${chalk.italic.green(provider)}`
+      )
 
       /**
        * Loop through the result entities and for each entity:
@@ -182,10 +194,12 @@ export default class Load extends Command {
        * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
        * Push connected entity into dgraph
        */
+       const connectionLoader = ora(
+        `Making service connections for ${chalk.italic.green(provider)}`
+      ).start()
       for (const entity of result.entities) {
         const { name, data } = entity
         const { mutation } = client.getService(name)
-        this.logger.info(`connecting service: ${name}`)
         const connectedData = data.map((service: any) =>
           getConnectedEntity(service, result)
         )
@@ -200,13 +214,19 @@ export default class Load extends Command {
           promises.push(axoisPromise)
         }
       }
+      connectionLoader.succeed(
+        `Connections made successfully for ${chalk.italic.green(provider)}`
+      )
     }
     await Promise.all(promises)
     this.logger.success(
       `Your data for ${allProviers.join(
         ' | '
-      )} is now being served at ${chalk.underline.green(storageEngine.host)}`
+      )} has been loaded to Dgraph. Query at ${chalk.underline.green(
+        `${storageEngine.host}/graphql`
+      )}`
     )
+    await this.startQueryEngine()
     this.exit()
   }
 }

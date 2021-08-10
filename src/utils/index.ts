@@ -23,7 +23,7 @@ export function moduleIsAvailable(path: string) {
   }
 }
 
-export function getProviderDataFile(dirPath: string, provider: string) {
+export function getProviderDataFile(dirPath: string, provider: string): string | void {
   const fileGlob = `${dirPath}${provider}*.json`
   const fileArray = glob.sync(fileGlob)
   if (fileArray && fileArray.length > 0) {
@@ -86,14 +86,14 @@ export function getConnectedEntity(
   { entities, connections: allConnections }: any
 ) {
   // opts: Opts
-  logger.info(`getting connected entity for id = ${service.id}`)
+  logger.debug(`getting connected entity for id = ${service.id}`)
   const connections = allConnections[service.id]
   const connectedEntity = {
     ...service,
   }
   if (connections) {
     for (const connection of connections) {
-      logger.info(
+      logger.debug(
         `searching for ${connection.resourceType} entity data to make connection between ${service.id} && ${connection.resourceType}`
       )
       const entityData = entities.find(
@@ -110,7 +110,7 @@ export function getConnectedEntity(
   return connectedEntity
 }
 
-export async function printWelcomeMessage() {
+export async function printWelcomeMessage(): void {
   CFonts.say('Welcome to|CloudGraph!', {
     font: 'grid',
     colors: ['#666EE8', '#B8FFBD', '#B8FFBD'],
@@ -164,6 +164,10 @@ export function getSchemaFromFolder(dirPath: string, provider?: string) {
   })
 }
 
+export function deleteFolder(dirPath: string) {
+  fs.rmSync(dirPath, {recursive: true})
+}
+
 export const fileUtils = {
   mapFileNameToHumanReadable,
   makeDirIfNotExists,
@@ -172,4 +176,5 @@ export const fileUtils = {
   findProviderFileLocation,
   getSchemaFromFolder,
   getProviderDataFile,
+  deleteFolder,
 }
