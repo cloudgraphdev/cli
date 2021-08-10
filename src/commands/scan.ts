@@ -1,4 +1,5 @@
 import chalk from 'chalk'
+import ora from 'ora'
 import fs from 'fs'
 import path from 'path'
 import { Opts } from '@cloudgraph/sdk'
@@ -42,9 +43,9 @@ export default class Scan extends Command {
      * if we still have 0 providers, fail and exit.
      */
     if (allProviers.length >= 1) {
-      this.logger.info(`Scanning for providers: ${allProviers}`)
+      this.logger.debug(`Scanning for providers: ${allProviers}`)
     } else {
-      this.logger.info('Scanning for providers found in config')
+      this.logger.debug('Scanning for providers found in config')
       const config = this.getCGConfig()
       allProviers = Object.keys(config).filter(
         (val: string) => val !== 'cloudGraph'
@@ -57,9 +58,7 @@ export default class Scan extends Command {
       }
     }
 
-    /**
-     * loop through providers and attempt to scan each of them
-     */
+    // Build folder structure for saving CloudGraph data by version
     const schema: any[] = []
     const promises: Promise<any>[] = []
     fileUtils.makeDirIfNotExists(this.versionDirectory)
@@ -69,76 +68,33 @@ export default class Scan extends Command {
       dataFolder = `version-${folders.length + 1}`
     }
     fileUtils.makeDirIfNotExists(`${this.versionDirectory}/${dataFolder}`)
-    // TODO: how to not loop through providers twice
-    for (const provider of allProviers) {
-      this.logger.info(`uploading Schema for ${provider}`)
-      const client = await this.getProviderClient(provider)
-      const { getSchema } = client
-      const providerSchema: any = getSchema()
-      schema.push(providerSchema)
-      fileUtils.writeGraphqlSchemaToFile(
-        `${this.versionDirectory}/${dataFolder}`,
-        providerSchema,
-        provider
-      )
-    }
-    // Write combined schemas to Dgraph
-    fileUtils.writeGraphqlSchemaToFile(
-      `${this.versionDirectory}/${dataFolder}`,
-      schema.join()
-    )
 
-    // Push schema to dgraph if dgraph is running
-    if (storageRunning) {
-      try {
-        await storageEngine.setSchema(schema)
-      } catch (error: any) {
-        this.logger.debug(error)
-        this.logger.error(
-          `There was an issue pushing schema for providers: ${allProviers.join(
-            ' | '
-          )} to dgraph at ${storageEngine.host}`
-        )
-        this.exit()
-      }
-    }
+    /**
+     * loop through providers and attempt to scan each of them
+     */
     for (const provider of allProviers) {
-      this.logger.info(`Beginning SCAN for ${provider}`)
+      this.logger.info(
+        `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
+      )
       const client = await this.getProviderClient(provider)
       if (!client) {
         continue // eslint-disable-line no-continue
       }
       const config = this.getCGConfig(provider)
-      // TODO: remove this and allow provider to config regions/resources itself
-      const { accountId } = await client.getIdentity()
       this.logger.debug(config)
+
+      const { accountId } = await client.getIdentity()
+      const providerDataLoader = ora(
+        `${chalk.italic.green('SCANING')} data for ${chalk.italic.green(
+          provider
+        )}`
+      ).start()
       const providerData = await client.getData({
         opts,
       })
-      /**
-       * Grab all AWS SDK data for the requested regions/resources
-       */
-      // const awsSdkData =
-      // await getDataFromAwsSdk({regions: 'us-east-1', resources: '',
-      // credentials: creds, forceFetchAsgs: false, additionalResources: 'ec2_instance,alb,route53'})
-      // console.log(JSON.stringify(awsSdkData))
-      // eslint-disable-next-line no-console
-      // step 1 grab the data with awsSdkData
-      // step 2 format the data for flat file
-      // (enterprise: needs to also format for sumerian ui data => this is used to make more connections between data)
-      // step 2.1 we need to really understand what the best way to format the data for OS and enterprise
-      // step 3 enterprise => how do we flip back and forth between dgraph and 3d ENV
-      // do we need to flip from 3d to dgraph?
-      // converters: new flat data shape, from flat data to dgraph converter.
-      // from flat data to 3d converter. dgraph to 3d converter as well.
-      // We need to know the schema, flat file needs entites AND all the connections
-      // get all the data, make all the connection between data, format data for flat file
-      // take the connections and build relations
-      // graphql needs this at compile time ^
-      // we have kmsRawData (what comes from the sdk and possible gets type from here) KmsKey
-      // is there a good valid reason to have "middle layer".
-      // other option is take raw data, build connections from that in another data obj,
-      // formats the non-connection keys from the type, make connections to build our schema types (KMSKey)
+      providerDataLoader.succeed(
+        `${chalk.italic.green(provider)} data scanned successfully`
+      )
 
       // const allTagData: any[] = []
       const result: { entities: { name: any; data: any }[]; connections: any } =
@@ -146,6 +102,50 @@ export default class Scan extends Command {
           entities: [],
           connections: {},
         }
+
+      // Handle schema, write provider and combined schema to file and store in Dgraph if running
+      const handleSchemaLoader = ora(
+        `updating ${chalk.italic.green('Schema')} for ${chalk.italic.green(
+          provider
+        )}`
+      ).start()
+      const providerSchema: string = client.getSchema()
+      if (!providerSchema) {
+        this.logger.warn(`No schema found for ${provider}, moving on`)
+        continue // eslint-disable-line no-continue
+      }
+      schema.push(providerSchema)
+      fileUtils.writeGraphqlSchemaToFile(
+        `${this.versionDirectory}/${dataFolder}`,
+        providerSchema,
+        provider
+      )
+      if (allProviers.indexOf(provider) === allProviers.length - 1) {
+        fileUtils.writeGraphqlSchemaToFile(
+          `${this.versionDirectory}/${dataFolder}`,
+          schema.join()
+        )
+        if (storageRunning) {
+          try {
+            await storageEngine.setSchema(schema)
+          } catch (error: any) {
+            this.logger.debug(error)
+            this.logger.error(
+              `There was an issue pushing schema for providers: ${allProviers.join(
+                ' | '
+              )} to dgraph at ${storageEngine.host}`
+            )
+            fileUtils.deleteFolder(`${this.versionDirectory}/${dataFolder}`)
+            this.exit()
+          }
+        }
+      }
+      handleSchemaLoader.succeed(
+        `${chalk.italic.green(
+          'Schema'
+        )} loaded successfully for ${chalk.italic.green(provider)}`
+      )
+
       /**
        * Loop through the aws sdk data to format entities and build connections
        * 1. Format data with provider service format function
@@ -153,6 +153,10 @@ export default class Scan extends Command {
        * 3. spread new connections over result.connections
        * 4. push the array of formatted entities into result.entites
        */
+       const formatDataLoader = ora(
+        `${chalk.italic.green('Formatting')} data for ${chalk.italic.green(
+          provider
+        )}`).start()
       for (const serviceData of providerData) {
         const serviceClass = client.getService(serviceData.name)
         const entities: any[] = []
@@ -181,16 +185,26 @@ export default class Scan extends Command {
           result.entities.push({ name: serviceData.name, data: entities })
         }
       }
-
-      fs.writeFileSync(
-        path.join(
-          process.cwd(),
-          `${
-            this.versionDirectory
-          }/${dataFolder}/${provider}_${accountId}_${Date.now()}.json`
-        ),
-        JSON.stringify(result, null, 2)
+      try {
+        fs.writeFileSync(
+          path.join(
+            process.cwd(),
+            `${
+              this.versionDirectory
+            }/${dataFolder}/${provider}_${accountId}_${Date.now()}.json`
+          ),
+          JSON.stringify(result, null, 2)
+        )
+      } catch (error: any) {
+        this.logger.error(`There was a problem saving data for ${provider}`)
+        this.logger.debug(error)
+        fileUtils.deleteFolder(`${this.versionDirectory}/${dataFolder}`)
+        this.exit()
+      }
+      formatDataLoader.succeed(
+        `Data formatted successfully for ${chalk.italic.green(provider)}`
       )
+
       /**
        * Loop through the result entities and for each entity:
        * Look in result.connections for [key = entity.arn]
@@ -199,6 +213,9 @@ export default class Scan extends Command {
        * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
        * Push connected entity into dgraph
        */
+      const connectionLoader = ora(
+        `Making service connections for ${chalk.italic.green(provider)}`
+      ).start()
       for (const entity of result.entities) {
         const { name, data } = entity
         const { mutation } = client.getService(name)
@@ -216,13 +233,19 @@ export default class Scan extends Command {
           promises.push(axiosPromise)
         }
       }
+      connectionLoader.succeed(
+        `Connections made successfully for ${chalk.italic.green(provider)}`
+      )
     }
     await Promise.all(promises)
     this.logger.success(
       `Your data for ${allProviers.join(
         ' | '
-      )} is now being served at ${chalk.underline.green(storageEngine.host)}`
+      )} has been saved to Dgraph. Query at ${chalk.underline.green(
+        `${storageEngine.host}/graphql`
+      )}`
     )
+    await this.startQueryEngine()
     this.exit()
   }
 }

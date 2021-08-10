@@ -3,10 +3,13 @@ import { Input } from '@oclif/parser'
 import CloudGraph, { Logger } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
 import inquirer from 'inquirer'
+import chalk from 'chalk'
+import open from 'open'
 import Manager from '../manager'
 import EngineMap from '../storage'
-import { StorageEngine } from '../storage/types'
-import { printWelcomeMessage } from '../utils'
+import QueryEngine from '../server'
+import {StorageEngine} from '../storage/types'
+import {printWelcomeMessage} from '../utils'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
@@ -49,6 +52,12 @@ export default abstract class BaseCommand extends Command {
       description:
         'Set the folder where CloudGraph will store data. (default cg)',
     }),
+    // serve query engine after scan/load
+    'no-serve': flags.boolean({default: false, description: 'Set to false to not serve a query engine'}),
+    // port for query engine
+    port: flags.integer({char: 'p', env: 'CG_QUERY_PORT', description: 'Set port to serve query engine'}),
+    // Query Engine to use
+    'query-engine': flags.string({char: 'q', description: 'Query engine to launch'}),
   }
 
   static hidden = true
@@ -77,12 +86,16 @@ export default abstract class BaseCommand extends Command {
     if (!config) {
       printWelcomeMessage()
     }
-    if (config && config.directory) {
-      this.versionDirectory = config.directory
+    const configDir = this.getCGConfigKey('directory') ?? 'cg'
+    this.versionDirectory = directory ?? configDir
+  }
+
+  getCGConfigKey(key: string) {
+    const config = this.getCGConfig('cloudGraph')
+    if (config?.[key]) {
+      return config[key]
     }
-    if (directory) {
-      this.versionDirectory = directory
-    }
+    return undefined
   }
 
   getStorageEngine(): StorageEngine {
@@ -98,6 +111,24 @@ export default abstract class BaseCommand extends Command {
     })
     this.storageEngine = engine
     return engine
+  }
+
+  getQueryEngine(): string {
+    const {flags: {'query-engine': queryEngine}} = this.parse(this.constructor as Input<{'query-engine': string}>)
+    const configEngine = this.getCGConfigKey('queryEngine') ?? 'playground'
+    return queryEngine ?? configEngine
+  }
+
+  async startQueryEngine(): Promise<void> {
+    const {flags: {port, 'no-serve': noServe}} = this.parse(this.constructor as Input<{port: string; 'no-serve': string}>)
+    if (!noServe) {
+      const configPort = this.getCGConfigKey('port') ?? 3000
+      const serverPort = port ?? configPort
+      const queryEngine = new QueryEngine(serverPort)
+      await queryEngine.startServer(this.getHost())
+      this.logger.success(`Serving query engine at ${chalk.underline.green(`http://localhost:${serverPort}`)}`)
+      await open(`http://localhost:${serverPort}/${this.getQueryEngine()}`, {wait: true})
+    }
   }
 
   getHost(showInitialStatus = true): string {

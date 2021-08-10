@@ -1,14 +1,9 @@
 import { flags } from '@oclif/command'
-// import { Opts } from '@cloudgraph/sdk'
 import fs from 'fs'
 import path from 'path'
+import QueryEngine from '../server'
 
 import Command from './base'
-// import { Opts } from '@cloudgraph/sdk'
-
-// import { printWelcomeMessage } from '../utils'
-
-// const ora = require('ora')
 
 export default class Init extends Command {
   static description =
@@ -55,9 +50,11 @@ export default class Init extends Command {
     })
   }
 
-  async getCloudGraphConfig() {
+  async getCloudGraphConfig(): Promise<{
+    [key: string]: string | Record<string, unknown>
+  }> {
     const {
-      flags: { dgraph, directory },
+      flags: { dgraph, directory, 'query-engine': queryEngine },
     } = this.parse(Init)
     const result: { [key: string]: any } = {}
     if (dgraph) {
@@ -78,15 +75,40 @@ export default class Init extends Command {
     if (directory) {
       result.directory = directory
     } else {
-      const { directory } = await this.interface.prompt([
+      const { inputDirectory } = await this.interface.prompt([
         {
           type: 'input',
           message: 'What directory would you like CloudGraph to store data in?',
-          name: 'directory',
+          name: 'inputDirectory',
           default: 'cg',
         },
       ])
-      result.directory = directory
+      result.directory = inputDirectory
+    }
+    if (queryEngine) {
+      result.queryEngine = QueryEngine
+    } else {
+      const { inputQueryEngine } = await this.interface.prompt([
+        {
+          type: 'list',
+          message: 'What tool would you like to query your data with?',
+          name: 'inputQueryEngine',
+          choices: [
+            {
+              name: 'GraphQL Playground (https://github.com/graphql/graphql-playground)',
+              value: 'playground',
+              short: 'GraphQL Playground',
+            },
+            {
+              name: 'Altair GraphQL Client (https://altair.sirmuel.design/)',
+              value: 'altair',
+              short: 'Altair GraphQL Client',
+            },
+          ],
+          default: 'playground',
+        },
+      ])
+      result.queryEngine = inputQueryEngine
     }
     return result
   }
@@ -146,12 +168,40 @@ export default class Init extends Command {
           configResult[provider] = await client.configure(flags)
         } else {
           this.logger.warn(`Init command for ${provider} aborted`)
-          this.exit()
+          configResult[provider] = config
         }
       } else {
         configResult[provider] = await client.configure(flags)
+      }
+    }
+    const cloudGraphConfig = this.getCGConfig('cloudGraph')
+    if (cloudGraphConfig) {
+      this.logger.info('CloudGraph config found...')
+      const answers = await this.interface.prompt([
+        {
+          type: 'expand',
+          message: 'How would you like to change CloudGraph config',
+          name: 'nextStep',
+          choices: [
+            {
+              key: 'y',
+              name: 'Overwrite',
+              value: 'overwrite',
+            },
+            {
+              key: 'x',
+              name: 'Abort',
+              value: 'abort',
+            },
+          ],
+        },
+      ])
+      this.logger.debug(answers)
+      if (answers.nextStep === 'overwrite') {
         configResult.cloudGraph = await this.getCloudGraphConfig()
       }
+    } else {
+      configResult.cloudGraph = await this.getCloudGraphConfig()
     }
     fs.writeFileSync(
       path.join(process.cwd(), '.cloud-graphrc.json'),

@@ -22,7 +22,7 @@ export default class DgraphEngine implements StorageEngine {
   // }
   async healthCheck(showInitialStatus = true) {
     showInitialStatus &&
-      this.logger.info(`running dgraph health check at ${this.host}`)
+      this.logger.debug(`running dgraph health check at ${this.host}`)
     try {
       await axios({
         url: `${this.host}/health?all`,
