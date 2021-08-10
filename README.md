@@ -1,7 +1,7 @@
-cloud-graph
+CloudGraph CLI
 ===========
 
-Scan cloud data and query it with GraphQL
+Scan cloud infrastructure and query it with GraphQL
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/cloud-graph.svg)](https://npmjs.org/package/cloud-graph)
@@ -9,47 +9,45 @@ Scan cloud data and query it with GraphQL
 [![License](https://img.shields.io/npm/l/cloud-graph.svg)](https://github.com/autocloud/cloud-graph/blob/master/package.json)
 
 <!-- toc -->
-* [Usage](#usage)
+* [Install](#install)
+* [Quick Start](#quick-start)
 * [Commands](#commands)
 <!-- tocstop -->
-# Usage
-<!-- usage -->
-```sh-session
-$ npm install -g cloud-graph
-$ cloud-graph COMMAND
-running command...
-$ cloud-graph (-v|--version|version)
-cloud-graph/0.0.1 darwin-x64 node-v14.15.0
-$ cloud-graph --help [COMMAND]
-USAGE
-  $ cloud-graph COMMAND
-...
+
+# Install
+<!-- install -->
+
+```bash
+npm install -g @cloudgraph/cli
 ```
-<!-- usagestop -->
+<!-- installstop -->
+# Quick Start
+<!-- quickstart -->
+Initialize CloudGraph configuration
+```bash
+cloud-graph init
+```
+
+Launch Dgraph instance
+```bash
+cloud-graph launch
+```
+
+Scan for infrastructure updates for all configured providers
+```bash
+cloud-graph scan
+```
+
+Visit http://localhost:8000 from your browser to access the [Ratel console](https://dgraph.io/docs/ratel/console/) to run queries, mutations and visualizations on all of your cloud infrastructure! 
+<!-- quickstartstop -->
+
 # Commands
 <!-- commands -->
-* [`cloud-graph hello [FILE]`](#cloud-graph-hello-file)
 * [`cloud-graph help [COMMAND]`](#cloud-graph-help-command)
-
-## `cloud-graph hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ cloud-graph hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ cloud-graph hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/hello.ts)_
+* [`cloud-graph init [PROVIDER]`](#cloud-graph-init-provider)
+* [`cloud-graph launch [PROVIDER]`](#cloud-graph-launch-provider)
+* [`cloud-graph load [PROVIDER]`](#cloud-graph-load-provider)
+* [`cloud-graph scan [PROVIDER]`](#cloud-graph-scan-provider)
 
 ## `cloud-graph help [COMMAND]`
 
@@ -67,4 +65,91 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+
+## `cloud-graph init [PROVIDER]`
+
+Set initial configuration for providers
+
+```
+USAGE
+  $ cloud-graph init [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph    Set where dgraph is running (default localhost:8080)
+  -r, --resources
+  -s, --storage=storage  Select a storage engine to use. Currently only supports Dgraph
+  --dev                  Turn on developer mode
+  --directory=directory  Set the folder where CloudGraph will store data. (default cg)
+
+EXAMPLES
+  $ cg init
+  $ cg init aws [Initialize AWS provider]
+  $ cg init aws -r [Specify resources to crawl]
+```
+
+_See code: [src/commands/init.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/init.ts)_
+
+## `cloud-graph launch [PROVIDER]`
+
+Launch an instance of Dgraph to store data
+
+```
+USAGE
+  $ cloud-graph launch [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph    Set where dgraph is running (default localhost:8080)
+  -s, --storage=storage  Select a storage engine to use. Currently only supports Dgraph
+  --dev                  Turn on developer mode
+  --directory=directory  Set the folder where CloudGraph will store data. (default cg)
+
+EXAMPLE
+  $ cg launch
+```
+
+_See code: [src/commands/launch.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/launch.ts)_
+
+## `cloud-graph load [PROVIDER]`
+
+Load a specific version of your CloudGraph data
+
+```
+USAGE
+  $ cloud-graph load [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph    Set where dgraph is running (default localhost:8080)
+  -s, --storage=storage  Select a storage engine to use. Currently only supports Dgraph
+  --dev                  Turn on developer mode
+  --directory=directory  Set the folder where CloudGraph will store data. (default cg)
+
+EXAMPLES
+  $ cg load [Load data for all providers configured]
+  $ cg load aws [Load data for AWS]
+```
+
+_See code: [src/commands/load.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/load.ts)_
+
+## `cloud-graph scan [PROVIDER]`
+
+Scan one or multiple providers data to be queried through Dgraph
+
+```
+USAGE
+  $ cloud-graph scan [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph    Set where dgraph is running (default localhost:8080)
+  -s, --storage=storage  Select a storage engine to use. Currently only supports Dgraph
+  --dev                  Turn on developer mode
+  --directory=directory  Set the folder where CloudGraph will store data. (default cg)
+
+EXAMPLES
+  $ cg scan
+  $ cg scan aws
+  $ cg scan aws --dgraph http://localhost:1000 [Save data in dgraph running on port 1000]
+  $ cg scan aws --no-serve [Do not start the query engine]
+```
+
+_See code: [src/commands/scan.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/scan.ts)_
 <!-- commandsstop -->
