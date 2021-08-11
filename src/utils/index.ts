@@ -110,7 +110,7 @@ export function getConnectedEntity(
   return connectedEntity
 }
 
-export async function printWelcomeMessage(): void {
+export async function printWelcomeMessage(): Promise<void> {
   CFonts.say('Welcome to|CloudGraph!', {
     font: 'grid',
     colors: ['#666EE8', '#B8FFBD', '#B8FFBD'],

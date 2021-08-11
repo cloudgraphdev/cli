@@ -75,11 +75,14 @@ USAGE
   $ cloud-graph init [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph    Set where dgraph is running (default localhost:8080)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -p, --port=port                  Set port to serve query engine
+  -q, --query-engine=query-engine  Query engine to launch
   -r, --resources
-  -s, --storage=storage  Select a storage engine to use. Currently only supports Dgraph
-  --dev                  Turn on developer mode
-  --directory=directory  Set the folder where CloudGraph will store data. (default cg)
+  -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
+  --dev                            Turn on developer mode
+  --directory=directory            Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                       Set to false to not serve a query engine
 
 EXAMPLES
   $ cg init
@@ -98,10 +101,13 @@ USAGE
   $ cloud-graph launch [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph    Set where dgraph is running (default localhost:8080)
-  -s, --storage=storage  Select a storage engine to use. Currently only supports Dgraph
-  --dev                  Turn on developer mode
-  --directory=directory  Set the folder where CloudGraph will store data. (default cg)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -p, --port=port                  Set port to serve query engine
+  -q, --query-engine=query-engine  Query engine to launch
+  -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
+  --dev                            Turn on developer mode
+  --directory=directory            Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                       Set to false to not serve a query engine
 
 EXAMPLE
   $ cg launch
@@ -118,10 +124,13 @@ USAGE
   $ cloud-graph load [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph    Set where dgraph is running (default localhost:8080)
-  -s, --storage=storage  Select a storage engine to use. Currently only supports Dgraph
-  --dev                  Turn on developer mode
-  --directory=directory  Set the folder where CloudGraph will store data. (default cg)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -p, --port=port                  Set port to serve query engine
+  -q, --query-engine=query-engine  Query engine to launch
+  -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
+  --dev                            Turn on developer mode
+  --directory=directory            Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                       Set to false to not serve a query engine
 
 EXAMPLES
   $ cg load [Load data for all providers configured]
@@ -139,10 +148,13 @@ USAGE
   $ cloud-graph scan [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph    Set where dgraph is running (default localhost:8080)
-  -s, --storage=storage  Select a storage engine to use. Currently only supports Dgraph
-  --dev                  Turn on developer mode
-  --directory=directory  Set the folder where CloudGraph will store data. (default cg)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -p, --port=port                  Set port to serve query engine
+  -q, --query-engine=query-engine  Query engine to launch
+  -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
+  --dev                            Turn on developer mode
+  --directory=directory            Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                       Set to false to not serve a query engine
 
 EXAMPLES
   $ cg scan
