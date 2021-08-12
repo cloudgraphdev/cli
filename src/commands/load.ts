@@ -67,7 +67,7 @@ export default class Load extends Command {
       )
       if (allProviers.length === 0) {
         this.logger.error(
-          'Error, there are no providers configured and none were passed to load, try "cloud-graph init" to set some up!'
+          'Error, there are no providers configured and none were passed to load, try "cg init" to set some up!'
         )
         this.exit()
       }
@@ -95,7 +95,7 @@ export default class Load extends Command {
       )
       if (!folders) {
         this.logger.error(
-          `Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`
+          `Unable to find saved data for ${provider}, run "cg scan aws" to fetch new data for ${provider}`
         )
       }
       // Get array of files for provider sorted by creation time
@@ -120,7 +120,7 @@ export default class Load extends Command {
         })
       } catch (error: any) {
         this.logger.error(
-          `Unable to find saved data for ${provider}, run "cloud-graph scan aws" to fetch new data for ${provider}`
+          `Unable to find saved data for ${provider}, run "cg scan aws" to fetch new data for ${provider}`
         )
         this.exit()
       }

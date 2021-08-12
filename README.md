@@ -25,17 +25,17 @@ npm install -g @cloudgraph/cli
 <!-- quickstart -->
 Initialize CloudGraph configuration
 ```bash
-cloud-graph init
+cg init
 ```
 
 Launch Dgraph instance
 ```bash
-cloud-graph launch
+cg launch
 ```
 
 Scan for infrastructure updates for all configured providers
 ```bash
-cloud-graph scan
+cg scan
 ```
 
 Visit http://localhost:8000 from your browser to access the [Ratel console](https://dgraph.io/docs/ratel/console/) to run queries, mutations and visualizations on all of your cloud infrastructure! 
@@ -43,19 +43,19 @@ Visit http://localhost:8000 from your browser to access the [Ratel console](http
 
 # Commands
 <!-- commands -->
-* [`cloud-graph help [COMMAND]`](#cloud-graph-help-command)
-* [`cloud-graph init [PROVIDER]`](#cloud-graph-init-provider)
-* [`cloud-graph launch [PROVIDER]`](#cloud-graph-launch-provider)
-* [`cloud-graph load [PROVIDER]`](#cloud-graph-load-provider)
-* [`cloud-graph scan [PROVIDER]`](#cloud-graph-scan-provider)
+* [`cg help [COMMAND]`](#cg-help-command)
+* [`cg init [PROVIDER]`](#cg-init-provider)
+* [`cg launch [PROVIDER]`](#cg-launch-provider)
+* [`cg load [PROVIDER]`](#cg-load-provider)
+* [`cg scan [PROVIDER]`](#cg-scan-provider)
 
-## `cloud-graph help [COMMAND]`
+## `cg help [COMMAND]`
 
-display help for cloud-graph
+display help for cg
 
 ```
 USAGE
-  $ cloud-graph help [COMMAND]
+  $ cg help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -66,13 +66,13 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
-## `cloud-graph init [PROVIDER]`
+## `cg init [PROVIDER]`
 
 Set initial configuration for providers
 
 ```
 USAGE
-  $ cloud-graph init [PROVIDER]
+  $ cg init [PROVIDER]
 
 OPTIONS
   -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
@@ -92,13 +92,13 @@ EXAMPLES
 
 _See code: [src/commands/init.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/init.ts)_
 
-## `cloud-graph launch [PROVIDER]`
+## `cg launch [PROVIDER]`
 
 Launch an instance of Dgraph to store data
 
 ```
 USAGE
-  $ cloud-graph launch [PROVIDER]
+  $ cg launch [PROVIDER]
 
 OPTIONS
   -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
@@ -115,13 +115,13 @@ EXAMPLE
 
 _See code: [src/commands/launch.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/launch.ts)_
 
-## `cloud-graph load [PROVIDER]`
+## `cg load [PROVIDER]`
 
 Load a specific version of your CloudGraph data
 
 ```
 USAGE
-  $ cloud-graph load [PROVIDER]
+  $ cg load [PROVIDER]
 
 OPTIONS
   -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
@@ -139,13 +139,13 @@ EXAMPLES
 
 _See code: [src/commands/load.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/load.ts)_
 
-## `cloud-graph scan [PROVIDER]`
+## `cg scan [PROVIDER]`
 
 Scan one or multiple providers data to be queried through Dgraph
 
 ```
 USAGE
-  $ cloud-graph scan [PROVIDER]
+  $ cg scan [PROVIDER]
 
 OPTIONS
   -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
