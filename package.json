@@ -71,7 +71,7 @@
   "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
-    "bin": "cloud-graph",
+    "bin": "cg",
     "plugins": [
       "@oclif/plugin-help"
     ]

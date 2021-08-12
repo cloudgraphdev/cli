@@ -65,7 +65,7 @@ export default class Init extends Command {
         {
           type: 'input',
           message:
-            'Enter your dgraph host url (or launch dgraph with "cloud-graph launch")',
+            'Enter your dgraph host url (or launch dgraph with "cg launch")',
           name: 'dgraph',
           default: 'http://localhost:8080',
         },

@@ -5,7 +5,7 @@ export default class Serve extends Command {
   static description = 'Scan provider data based on your config';
 
   static examples = [
-    `$ cloud-graph scan aws
+    `$ cg scan aws
 Lets scan your AWS resources!
 `,
   ];
