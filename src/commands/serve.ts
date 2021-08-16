@@ -2,15 +2,15 @@
 import Command from './base'
 
 export default class Serve extends Command {
-  static description = 'Scan provider data based on your config';
+  static description = 'Serve a GraphQL query tool to query your CloudGraph data.';
 
   static examples = [
-    `$ cg scan aws
-Lets scan your AWS resources!
-`,
+    '$ cg serve',
   ];
 
-  static strict = false;
+  static strict = false
+
+  static hidden = false
 
   static flags = {
     ...Command.flags,
