@@ -3,6 +3,7 @@
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
   "version": "0.0.1",
   "author": "AutoCloud",
+  "license": "MPL-2.0",
   "bin": {
     "cg": "./bin/run"
   },
