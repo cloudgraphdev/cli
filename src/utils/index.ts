@@ -103,7 +103,10 @@ export function getConnectedEntity(
         const entityForConnection = entityData.data.find(
           ({ id }: { id: string }) => connection.id === id
         )
-        connectedEntity[connection.field] = entityForConnection
+        if (!connectedEntity[connection.field]) {
+          connectedEntity[connection.field] = []
+        }
+        connectedEntity[connection.field].push(entityForConnection)
       }
     }
   }
