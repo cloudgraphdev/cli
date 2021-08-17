@@ -238,14 +238,14 @@ export default class Scan extends Command {
       )
     }
     await Promise.all(promises)
+    const resultLog = storageRunning ? `saved to Dgraph. Query at ${chalk.underline.green(
+      `${storageEngine.host}/graphql`)}` : 'saved to the versions directory'
     this.logger.success(
       `Your data for ${allProviers.join(
         ' | '
-      )} has been saved to Dgraph. Query at ${chalk.underline.green(
-        `${storageEngine.host}/graphql`
-      )}`
+      )} has been ${resultLog}`
     )
-    await this.startQueryEngine()
+    storageRunning && await this.startQueryEngine()
     this.exit()
   }
 }

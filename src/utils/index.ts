@@ -10,13 +10,13 @@ import path from 'path'
 
 const { logger } = CloudGraph
 
-export const getKeyByValue = (object: any, value: any) => {
+export const getKeyByValue = (object: Record<string, unknown>, value: any): string | undefined => {
   return Object.keys(object).find(key => object[key] === value)
 }
 
-export function moduleIsAvailable(path: string) {
+export function moduleIsAvailable(modulePath: string): boolean {
   try {
-    require.resolve(path)
+    require.resolve(modulePath)
     return true
   } catch (error) {
     return false
@@ -58,7 +58,7 @@ const findProviderFileLocation = (file: string, directory: string): string => {
   return ''
 }
 
-export function makeDirIfNotExists(dir: string) {
+export function makeDirIfNotExists(dir: string): void {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir)
   }
@@ -68,7 +68,7 @@ export function writeGraphqlSchemaToFile(
   dirPath: string,
   schema: string,
   provider?: string
-) {
+): void {
   makeDirIfNotExists(dirPath)
   fs.writeFileSync(
     path.join(
@@ -84,7 +84,7 @@ export function writeGraphqlSchemaToFile(
 export function getConnectedEntity(
   service: any,
   { entities, connections: allConnections }: any
-) {
+): Record<string, unknown> {
   // opts: Opts
   logger.debug(`getting connected entity for id = ${service.id}`)
   const connections = allConnections[service.id]
@@ -103,7 +103,10 @@ export function getConnectedEntity(
         const entityForConnection = entityData.data.find(
           ({ id }: { id: string }) => connection.id === id
         )
-        connectedEntity[connection.field] = entityForConnection
+        if (!connectedEntity[connection.field]) {
+          connectedEntity[connection.field] = []
+        }
+        connectedEntity[connection.field].push(entityForConnection)
       }
     }
   }
@@ -128,7 +131,7 @@ export function printWelcomeMessage(): void {
   )
 }
 
-export function getVersionFolders(directory: string, provider?: string) {
+export function getVersionFolders(directory: string, provider?: string): {name: string, ctime: Date}[] {
   const folderGlob = path.join(process.cwd(), `${directory}/version-*/`)
   const folders = glob.sync(folderGlob)
   if (folders && folders.length > 0) {
@@ -158,13 +161,13 @@ export function getVersionFolders(directory: string, provider?: string) {
   return []
 }
 
-export function getSchemaFromFolder(dirPath: string, provider?: string) {
+export function getSchemaFromFolder(dirPath: string, provider?: string): any[] {
   return loadFilesSync(path.join(dirPath, provider ? `${provider}*` : ''), {
     extensions: ['graphql'],
   })
 }
 
-export function deleteFolder(dirPath: string) {
+export function deleteFolder(dirPath: string): void {
   fs.rmSync(dirPath, {recursive: true})
 }
 

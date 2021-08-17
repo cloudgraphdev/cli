@@ -62,6 +62,10 @@ export default class DgraphEngine implements StorageEngine {
           schema: schema.join(),
         },
       },
+    }).then(res => {
+      if (res.data) {
+        this.logger.debug(JSON.stringify(res.data))
+      }
     })
   }
 
@@ -72,7 +76,7 @@ export default class DgraphEngine implements StorageEngine {
       data,
     }).then(res => {
       if (res.data) {
-        this.logger.debug(res.data)
+        this.logger.debug(JSON.stringify(res.data))
       }
     })
   }
