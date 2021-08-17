@@ -1,11 +1,12 @@
 import { PluginManager } from 'live-plugin-manager' // TODO: replace with homegrown solution
 import { Logger } from '@cloudgraph/sdk'
 import ora from 'ora'
+import path from 'path'
 
 export class Manager {
   constructor(config: any) {
     this.pluginManager = new PluginManager({
-      pluginsPath: './src/plugins',
+      pluginsPath: path.resolve(__dirname, '../plugins')
     })
     this.plugins = {}
     this.logger = config.logger
@@ -20,7 +21,7 @@ export class Manager {
 
   devMode: boolean
 
-  async getProviderPlugin(provider: string) {
+  async getProviderPlugin(provider: string): Promise<any> {
     /**
      * Determine if the user has passed a provider and prompt them if not
      */
@@ -40,7 +41,7 @@ export class Manager {
       const importPath = `${providerNamespace}/cg-provider-${providerName}`
       if (process.env.NODE_ENV === 'development' || this.devMode) {
         // TODO: this install doesnt work if it has a yalc-d package in it, how to resolve?
-        // await this.manager.installFromPath(path.join(__dirname, `../../.yalc/${provider}-provider-plugin`), {force: true})
+        // await thiscd .manager.installFromPath(path.join(__dirname, `../../.yalc/${provider}-provider-plugin`), {force: true})
         // plugin = this.manager.require(`${provider}-provider-plugin`)
         // TODO: talk with live-plugin-manager maintainer on why above doesnt work but below does??
         plugin = await import(importPath)
