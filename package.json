@@ -8,6 +8,7 @@
   },
   "bugs": "https://github.com/autocloud/cloud-graph/issues",
   "dependencies": {
+    "@cloudgraph/sdk": "^0.2.0",
     "@graphql-tools/load-files": "^6.3.2",
     "@oclif/command": "^1",
     "@oclif/config": "^1",
