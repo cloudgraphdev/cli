@@ -1,0 +1,30 @@
+---
+branches:
+  - name: master
+plugins:
+  - "@semantic-release/commit-analyzer"
+  - "@semantic-release/release-notes-generator"
+  - - "@semantic-release/changelog"
+    - changelogFile: CHANGELOG.md
+  - - "@semantic-release/git"
+    - assets:
+      - CHANGELOG.md
+      - package.json
+  - - "@semantic-release/npm"
+    - npmPublish: true
+  - "@semantic-release/gitlab"
+verifyConditions:
+  - "@semantic-release/changelog"
+  - "@semantic-release/gitlab"
+  - "@semantic-release/npm"
+prepare:
+  - "@semantic-release/changelog"
+  - "@semantic-release/npm"
+  - - "@semantic-release/git"
+    - message: "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
+publish:
+  - "@semantic-release/gitlab"
+  - "@semantic-release/npm"
+success: false
+fail: false
+tagFormat: "${version}"
