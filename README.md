@@ -48,6 +48,7 @@ Visit http://localhost:8000 from your browser to access the [Ratel console](http
 * [`cg launch [PROVIDER]`](#cg-launch-provider)
 * [`cg load [PROVIDER]`](#cg-load-provider)
 * [`cg scan [PROVIDER]`](#cg-scan-provider)
+* [`cg serve [PROVIDER]`](#cg-serve-provider)
 
 ## `cg help [COMMAND]`
 
@@ -64,7 +65,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
 ## `cg init [PROVIDER]`
 
@@ -90,7 +91,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.2/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -113,7 +114,7 @@ EXAMPLE
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.2/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -137,7 +138,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.2/src/commands/load.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -163,5 +164,28 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.1/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.2/src/commands/scan.ts)_
+
+## `cg serve [PROVIDER]`
+
+Serve a GraphQL query tool to query your CloudGraph data.
+
+```
+USAGE
+  $ cg serve [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -p, --port=port                  Set port to serve query engine
+  -q, --query-engine=query-engine  Query engine to launch
+  -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
+  --dev                            Turn on developer mode
+  --directory=directory            Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                       Set to false to not serve a query engine
+
+EXAMPLE
+  $ cg serve
+```
+
+_See code: [src/commands/serve.ts](https://github.com/autocloud/cloud-graph/blob/v0.0.2/src/commands/serve.ts)_
 <!-- commandsstop -->
