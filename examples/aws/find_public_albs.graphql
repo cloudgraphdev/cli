@@ -1,0 +1,8 @@
+query {
+  queryawsAlb (filter: { scheme: { eq: "internet-facing" } } }) {
+    id
+    arn
+    availabilityZone
+    encrypted
+  }
+}

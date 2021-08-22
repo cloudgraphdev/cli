@@ -1,0 +1,11 @@
+{
+  "aws": {
+    "regions": "us-east-1,us-east-2,us-west-1,us-west-2",
+    "resources": "alb,vpc,cloudwatch,eip,ebs,ec2Instance,elb,igw,kms,lambda,nat,sg,networkInterface,apiGatewayRestApi,apiGatewayResource,apiGatewayStage"
+  },
+  "cloudGraph": {
+    "dgraphHost": "http://localhost:8080",
+    "directory": "cg",
+    "queryEngine": "playground"
+  }
+}

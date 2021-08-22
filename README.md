@@ -1,54 +1,88 @@
 CloudGraph CLI
+
 ===========
 
-Scan cloud infrastructure and query it with GraphQL
+A type-safe way to query your cloud assets and configuration with **GraphQL**. Easily understand relationships and solve a host of complex **security**, **compliance**, and **governance** challenges with ease.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
+
 [![Version](https://img.shields.io/npm/v/cloud-graph.svg)](https://npmjs.org/package/cloud-graph)
+
 [![Downloads/week](https://img.shields.io/npm/dw/cloud-graph.svg)](https://npmjs.org/package/cloud-graph)
+
 [![License](https://img.shields.io/npm/l/cloud-graph.svg)](https://github.com/autocloud/cloud-graph/blob/master/package.json)
 
 <!-- toc -->
-* [Install](#install)
-* [Quick Start](#quick-start)
-* [Commands](#commands)
+
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Install
+
 <!-- install -->
 
 ```bash
 npm install -g @cloudgraph/cli
 ```
+
 <!-- installstop -->
+
 # Quick Start
+
 <!-- quickstart -->
+
 Initialize CloudGraph configuration
+
 ```bash
 cg init
 ```
 
 Launch Dgraph instance
+
 ```bash
 cg launch
 ```
 
 Scan for infrastructure updates for all configured providers
+
 ```bash
 cg scan
 ```
 
-Visit http://localhost:8000 from your browser to access the [Ratel console](https://dgraph.io/docs/ratel/console/) to run queries, mutations and visualizations on all of your cloud infrastructure! 
+The query tool you selected during the `INIT` command will be opened in your preferred browser to run queries, mutations and visualizations on all of your cloud infrastructure!
+You may also use any GraphQL query tool you would like by connecting it to http://localhost:8080/graphql.
+
+## Example Query
+
+Find Unencrypted EBS Volumes.
+
+```
+query {
+  queryawsEbs(filter: { isEncrypted: false }) {
+    id
+    arn
+    availabilityZone
+    encrypted
+  }
+}
+```
+
+You can find more example queries in the `examples` folder
+
 <!-- quickstartstop -->
 
 # Commands
+
 <!-- commands -->
-* [`cg help [COMMAND]`](#cg-help-command)
-* [`cg init [PROVIDER]`](#cg-init-provider)
-* [`cg launch [PROVIDER]`](#cg-launch-provider)
-* [`cg load [PROVIDER]`](#cg-load-provider)
-* [`cg scan [PROVIDER]`](#cg-scan-provider)
-* [`cg serve [PROVIDER]`](#cg-serve-provider)
+
+- [`cg help [COMMAND]`](#cg-help-command)
+- [`cg init [PROVIDER]`](#cg-init-provider)
+- [`cg launch [PROVIDER]`](#cg-launch-provider)
+- [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg scan [PROVIDER]`](#cg-scan-provider)
+- [`cg serve [PROVIDER]`](#cg-serve-provider)
 
 ## `cg help [COMMAND]`
 
@@ -188,4 +222,5 @@ EXAMPLE
 ```
 
 _See code: [src/commands/serve.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.0/src/commands/serve.ts)_
+
 <!-- commandsstop -->
