@@ -13,10 +13,9 @@ A type-safe way to query your cloud assets and configuration with **GraphQL**. E
 [![License](https://img.shields.io/npm/l/cloud-graph.svg)](https://github.com/autocloud/cloud-graph/blob/master/package.json)
 
 <!-- toc -->
-
-- [Install](#install)
-- [Quick Start](#quick-start)
-- [Commands](#commands)
+* [Install](#install)
+* [Quick Start](#quick-start)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # Install
@@ -76,13 +75,12 @@ You can find more example queries in the `examples` folder
 # Commands
 
 <!-- commands -->
-
-- [`cg help [COMMAND]`](#cg-help-command)
-- [`cg init [PROVIDER]`](#cg-init-provider)
-- [`cg launch [PROVIDER]`](#cg-launch-provider)
-- [`cg load [PROVIDER]`](#cg-load-provider)
-- [`cg scan [PROVIDER]`](#cg-scan-provider)
-- [`cg serve [PROVIDER]`](#cg-serve-provider)
+* [`cg help [COMMAND]`](#cg-help-command)
+* [`cg init [PROVIDER]`](#cg-init-provider)
+* [`cg launch [PROVIDER]`](#cg-launch-provider)
+* [`cg load [PROVIDER]`](#cg-load-provider)
+* [`cg scan [PROVIDER]`](#cg-scan-provider)
+* [`cg serve [PROVIDER]`](#cg-serve-provider)
 
 ## `cg help [COMMAND]`
 
@@ -125,7 +123,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.1/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -148,7 +146,7 @@ EXAMPLE
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.0/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.1/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -172,7 +170,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.0/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.1/src/commands/load.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -198,7 +196,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.0/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.1/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -221,6 +219,5 @@ EXAMPLE
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.0/src/commands/serve.ts)_
-
+_See code: [src/commands/serve.ts](https://github.com/autocloud/cloud-graph/blob/v0.1.1/src/commands/serve.ts)_
 <!-- commandsstop -->

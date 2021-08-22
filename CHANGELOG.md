@@ -1,3 +1,10 @@
+## [0.1.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.1.0...0.1.1) (2021-08-22)
+
+
+### Bug Fixes
+
+* **readme:** update readme with contribution guidelines. ([01410cf](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/01410cf3eed3aedc6ead635f955bff556d434476))
+
 # [0.1.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.0.1...0.1.0) (2021-08-22)
 
 
