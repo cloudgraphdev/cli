@@ -7,5 +7,5 @@
   "rules": {
     "no-console": "off"
   },
-  "ignorePatterns": ["src/plugins/"]
+  "ignorePatterns": ["src/plugins/", "examples"]
 }
