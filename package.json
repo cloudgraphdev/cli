@@ -14,7 +14,7 @@
   "bin": {
     "cg": "./bin/run"
   },
-  "bugs": "https://github.com/autocloud/cloud-graph/issues",
+  "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
     "@cloudgraph/sdk": "^0.2.0",
     "@graphql-tools/load-files": "^6.3.2",
@@ -77,7 +77,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/autocloud/cloud-graph",
+  "homepage": "https://www.cloudgraph.dev/",
   "keywords": [
     "cloudgraph"
   ],
@@ -89,7 +89,7 @@
       "@oclif/plugin-help"
     ]
   },
-  "repository": "autocloud/cloud-graph",
+  "repository": "github:cloudgraphdev/cli",
   "scripts": {
     "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
