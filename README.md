@@ -6,9 +6,9 @@ A type-safe way to query your cloud assets and configuration with **GraphQL**. E
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 
-[![Version](https://img.shields.io/npm/v/cloud-graph.svg)](https://npmjs.org/package/@cloudgraph/cli)
+[![Version](https://img.shields.io/npm/v/@cloudgraph/cli.svg)](https://npmjs.org/package/@cloudgraph/cli)
 
-[![Downloads/week](https://img.shields.io/npm/dw/cloud-graph.svg)](https://npmjs.org/package/@cloudgraph/cli)
+[![Downloads/week](https://img.shields.io/npm/dw/@cloudgraph/cli.svg)](https://npmjs.org/package/@cloudgraph/cli)
 
 [![License](https://img.shields.io/npm/l/cloud-graph.svg)](https://github.com/autocloud/cloud-graph/blob/master/package.json)
 
