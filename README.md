@@ -58,10 +58,10 @@ Find Unencrypted EBS Volumes.
 
 ```
 query {
-  queryawsEbs(filter: { isEncrypted: false }) {
-    id
-    arn
-    availabilityZone
+  queryawsEbs(filter: { encrypted: false }) {
+    id,
+    arn,
+    availabilityZone,
     encrypted
   }
 }

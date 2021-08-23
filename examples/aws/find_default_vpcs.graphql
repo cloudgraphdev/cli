@@ -1,5 +1,5 @@
 query {
-  queryawsVpc({ filter: { isDefault: true } }) {
+  queryawsVpc( filter: { defaultVpc: true } ) {
     id
     arn
     defaultVpc
