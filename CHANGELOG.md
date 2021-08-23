@@ -1,3 +1,11 @@
+## [0.2.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.2.0...0.2.1) (2021-08-23)
+
+
+### Bug Fixes
+
+* **package:** update Github references ([612461c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/612461cc5c6511bac2d496898fb0f43d8145bc9b))
+* update Github references ([23793dc](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/23793dca8ec274a6cfe9a9184a4b98966dfdad81))
+
 # [0.2.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.1.2...0.2.0) (2021-08-23)
 
 
