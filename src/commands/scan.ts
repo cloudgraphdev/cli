@@ -182,8 +182,8 @@ export default class Scan extends Command {
               }
             }
           })
-          result.entities.push({ name: serviceData.name, data: entities })
         }
+        result.entities.push({ name: serviceData.name, data: entities })
       }
       try {
         fs.writeFileSync(
