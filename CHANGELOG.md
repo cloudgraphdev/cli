@@ -1,3 +1,10 @@
+# [0.2.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.1.2...0.2.0) (2021-08-23)
+
+
+### Features
+
+* **provider:** rework the provider interface to simplify the needed functions ([ecaafc1](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ecaafc1dfdb9496150b4d36bab0920e5cbde28e4))
+
 ## [0.1.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.1.1...0.1.2) (2021-08-23)
 
 
