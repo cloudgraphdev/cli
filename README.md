@@ -1,5 +1,4 @@
 CloudGraph CLI
-
 ===========
 
 A type-safe way to query your cloud assets and configuration with **GraphQL**. Easily understand relationships and solve a host of complex **security**, **compliance**, and **governance** challenges with ease.
