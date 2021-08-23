@@ -1,7 +1,15 @@
 query {
-  queryawsTag(filter: { key: { eq: "Region" } and: { value: { eq: "us-east-1" } }) {
+  queryawsTag(filter: { key: { eq: "Region" } and: { value: { eq: "us-east-1" } } }) {
     kms {
       arn
+      enabled
+      enableKeyRotation
+      keyState
+      creationDate
+      tags {
+        key
+        value
+      }
     }
   }
 }
