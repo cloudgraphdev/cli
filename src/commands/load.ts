@@ -12,12 +12,12 @@ import { fileUtils, getConnectedEntity } from '../utils'
 // import { Opts } from '@cloudgraph/sdk'
 
 export default class Load extends Command {
-  static description = 'Load a specific version of your CloudGraph data';
+  static description = 'Load a specific version of your CloudGraph data'
 
   static examples = [
     '$ cg load [Load data for all providers configured]',
-    '$ cg load aws [Load data for AWS]'
-  ];
+    '$ cg load aws [Load data for AWS]',
+  ]
 
   static strict = false
 
@@ -44,7 +44,7 @@ export default class Load extends Command {
       this.exit()
     }
     // const opts: Opts = { logger: this.logger, debug, devMode }
-    let allProviers = argv
+    let allProviders = argv
     // if (!provider) {
     //   provider = await this.getProvider()
     // }
@@ -54,21 +54,21 @@ export default class Load extends Command {
      * try to scan for all providers found within the config file
      * if we still have 0 providers, fail and exit.
      */
-    if (allProviers.length >= 1) {
+    if (allProviders.length >= 1) {
       this.logger.info(
-        `Loading data to Dgraph for providers: ${allProviers.join(' | ')}`
+        `Loading data to Dgraph for providers: ${allProviders.join(' | ')}`
       )
     } else {
       this.logger.info('Searching config for initialized providers')
       const config = this.getCGConfig()
-      allProviers = Object.keys(config).filter(
+      allProviders = Object.keys(config).filter(
         (val: string) => val !== 'cloudGraph'
       )
       // TODO: keep this log?
       this.logger.info(
-        `Found providers ${allProviers.join(' | ')} in cloud-graph config`
+        `Found providers ${allProviders.join(' | ')} in cloud-graph config`
       )
-      if (allProviers.length === 0) {
+      if (allProviders.length === 0) {
         this.logger.error(
           'Error, there are no providers configured and none were passed to load, try "cg init" to set some up!'
         )
@@ -79,9 +79,8 @@ export default class Load extends Command {
     /**
      * loop through providers and attempt to scan each of them
      */
-    const promises: Promise<any>[] = []
     const schema: any[] = []
-    for (const provider of allProviers) {
+    for (const provider of allProviders) {
       this.logger.info(
         `Beginning ${chalk.italic.green('LOAD')} for ${provider}`
       )
@@ -172,7 +171,8 @@ export default class Load extends Command {
       const handleSchemaLoader = ora(
         `updating ${chalk.italic.green('Schema')} for ${chalk.italic.green(
           provider
-        )}`).start()
+        )}`
+      ).start()
       const result = JSON.parse(fs.readFileSync(file, 'utf8'))
       const providerSchema = fileUtils.getSchemaFromFolder(version, provider)
       if (!providerSchema) {
@@ -180,7 +180,7 @@ export default class Load extends Command {
         continue // eslint-disable-line no-continue
       }
       schema.push(providerSchema)
-      if (allProviers.indexOf(provider) === allProviers.length - 1) {
+      if (allProviders.indexOf(provider) === allProviders.length - 1) {
         await storageEngine.setSchema(schema)
       }
       handleSchemaLoader.succeed(
@@ -197,7 +197,7 @@ export default class Load extends Command {
        * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
        * Push connected entity into dgraph
        */
-       const connectionLoader = ora(
+      const connectionLoader = ora(
         `Making service connections for ${chalk.italic.green(provider)}`
       ).start()
       for (const entity of result.entities) {
@@ -207,22 +207,24 @@ export default class Load extends Command {
         )
         this.logger.debug(connectedData)
         if (storageRunning) {
-          const axoisPromise = storageEngine.push({
+          // Add service mutation to promises array
+          storageEngine.push({
             query: mutation,
             variables: {
               input: connectedData,
             },
           })
-          promises.push(axoisPromise)
         }
       }
       connectionLoader.succeed(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
     }
-    await Promise.all(promises)
+
+    // Execute services mutations promises
+    await storageEngine.run()
     this.logger.success(
-      `Your data for ${allProviers.join(
+      `Your data for ${allProviders.join(
         ' | '
       )} has been loaded to Dgraph. Query at ${chalk.underline.green(
         `${storageEngine.host}/graphql`

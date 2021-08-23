@@ -6,11 +6,14 @@ export default class DgraphEngine implements StorageEngine {
   constructor(config: any) {
     this.connectionHost = config.host
     this.logger = config.logger
+    this.axiosPromises = []
   }
 
   connectionHost: string
 
   logger: Logger
+
+  axiosPromises: (() => Promise<any>)[]
 
   // set host(host: string) {
   //   if (host) {
@@ -20,7 +23,7 @@ export default class DgraphEngine implements StorageEngine {
   //     return process.env.DGRAPH_HOST
   //   }
   // }
-  async healthCheck(showInitialStatus = true) {
+  async healthCheck(showInitialStatus = true): Promise<boolean> {
     showInitialStatus &&
       this.logger.debug(`running dgraph health check at ${this.host}`)
     try {
@@ -41,11 +44,11 @@ export default class DgraphEngine implements StorageEngine {
     }
   }
 
-  get host() {
+  get host(): string {
     return this.connectionHost
   }
 
-  async setSchema(schema: any) {
+  async setSchema(schema: string[]): Promise<void> {
     await axios({
       url: `${this.host}/admin`,
       method: 'post',
@@ -69,15 +72,37 @@ export default class DgraphEngine implements StorageEngine {
     })
   }
 
-  push(data: any) {
-    return axios({
-      url: `${this.host}/graphql`,
-      method: 'post',
-      data,
-    }).then(res => {
-      if (res.data) {
-        this.logger.debug(JSON.stringify(res.data))
-      }
-    })
+  /**
+   * Add Service Mutation to axiosPromises Array
+   */
+  push(data: { query: string; variables: { input: any } }): void {
+    this.axiosPromises.push(() =>
+      axios({
+        url: `${this.host}/graphql`,
+        method: 'post',
+        data,
+      })
+        .then(res => {
+          if (res.data) {
+            this.logger.debug(res.data)
+          }
+
+          if (res.data.errors) {
+            return Promise.reject(res.data.errors)
+          }
+
+          return res.data
+        })
+        .catch(error => Promise.reject(error))
+    )
+  }
+
+  /**
+   * Executes mutations sequentially into Dgraph
+   */
+  async run(): Promise<void> {
+    for (const mutation of this.axiosPromises) {
+      await mutation()
+    }
   }
 }
