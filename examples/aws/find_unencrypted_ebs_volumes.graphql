@@ -1,0 +1,8 @@
+query {
+  queryawsEbs(filter: { encrypted: false }) {
+    id,
+    arn,
+    availabilityZone,
+    encrypted
+  }
+}
