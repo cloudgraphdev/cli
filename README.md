@@ -114,7 +114,7 @@ OPTIONS
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
   --dev                            Turn on developer mode
   --directory=directory            Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                       Set to false to not serve a query engine
+  --no-serve                       Do not launch a query engine
 
 EXAMPLES
   $ cg init
@@ -139,7 +139,7 @@ OPTIONS
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
   --dev                            Turn on developer mode
   --directory=directory            Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                       Set to false to not serve a query engine
+  --no-serve                       Do not launch a query engine
 
 EXAMPLE
   $ cg launch
@@ -162,7 +162,7 @@ OPTIONS
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
   --dev                            Turn on developer mode
   --directory=directory            Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                       Set to false to not serve a query engine
+  --no-serve                       Do not launch a query engine
 
 EXAMPLES
   $ cg load [Load data for all providers configured]
@@ -186,7 +186,7 @@ OPTIONS
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
   --dev                            Turn on developer mode
   --directory=directory            Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                       Set to false to not serve a query engine
+  --no-serve                       Do not launch a query engine
 
 EXAMPLES
   $ cg scan
@@ -212,7 +212,7 @@ OPTIONS
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
   --dev                            Turn on developer mode
   --directory=directory            Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                       Set to false to not serve a query engine
+  --no-serve                       Do not launch a query engine
 
 EXAMPLE
   $ cg serve

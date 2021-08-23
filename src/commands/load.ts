@@ -198,8 +198,7 @@ export default class Load extends Command {
         `Making service connections for ${chalk.italic.green(provider)}`
       ).start()
       for (const entity of result.entities) {
-        const { name, data } = entity
-        const { mutation } = client.getService(name)
+        const { mutation, data } = entity
         const connectedData = data.map((service: any) =>
           getConnectedEntity(service, result)
         )
