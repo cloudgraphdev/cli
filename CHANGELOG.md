@@ -1,3 +1,11 @@
+## [0.1.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.1.1...0.1.2) (2021-08-23)
+
+
+### Bug Fixes
+
+* **README:** update badge links ([609a59a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/609a59a29a4233d12ec7a2cb261fc3bd3c32949a))
+* **README:** update version/downloads badge url ([03586e6](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/03586e6f555a82d362ec05845aeb69f71687e9ee))
+
 ## [0.1.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.1.0...0.1.1) (2021-08-22)
 
 
