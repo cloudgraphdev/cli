@@ -7,7 +7,6 @@ import { Opts } from '@cloudgraph/sdk'
 import Command from './base'
 import { fileUtils, getConnectedEntity } from '../utils'
 
-// const dataDir = 'cg-data'
 export default class Scan extends Command {
   static description = 'Scan one or multiple providers data to be queried through Dgraph';
 
@@ -30,7 +29,6 @@ export default class Scan extends Command {
 
   async run() {
     const {argv, flags: {dev: devMode}} = this.parse(Scan)
-    // const dgraphHost = this.getDgraphHost()
     const opts: Opts = {logger: this.logger, debug: true, devMode}
     let allProviers = argv
 
@@ -96,13 +94,6 @@ export default class Scan extends Command {
         `${chalk.italic.green(provider)} data scanned successfully`
       )
 
-      // const allTagData: any[] = []
-      const result: { entities: { name: any; data: any }[]; connections: any } =
-        {
-          entities: [],
-          connections: {},
-        }
-
       // Handle schema, write provider and combined schema to file and store in Dgraph if running
       const handleSchemaLoader = ora(
         `updating ${chalk.italic.green('Schema')} for ${chalk.italic.green(
@@ -146,45 +137,6 @@ export default class Scan extends Command {
         )} loaded successfully for ${chalk.italic.green(provider)}`
       )
 
-      /**
-       * Loop through the aws sdk data to format entities and build connections
-       * 1. Format data with provider service format function
-       * 2. build connections for data with provider service connections function
-       * 3. spread new connections over result.connections
-       * 4. push the array of formatted entities into result.entites
-       */
-       const formatDataLoader = ora(
-        `${chalk.italic.green('Formatting')} data for ${chalk.italic.green(
-          provider
-        )}`).start()
-      for (const serviceData of providerData) {
-        const serviceClass = client.getService(serviceData.name)
-        const entities: any[] = []
-        for (const region of Object.keys(serviceData.data)) {
-          const data = serviceData.data[region]
-          data.forEach((service: any) => {
-            entities.push(
-              serviceClass.format({
-                service,
-                region,
-                account: accountId,
-              })
-            )
-            if (typeof serviceClass.getConnections === 'function') {
-              result.connections = {
-                ...result.connections,
-                ...serviceClass.getConnections({
-                  service,
-                  region,
-                  account: accountId,
-                  data: providerData,
-                }),
-              }
-            }
-          })
-          result.entities.push({ name: serviceData.name, data: entities })
-        }
-      }
       try {
         fs.writeFileSync(
           path.join(
@@ -193,7 +145,7 @@ export default class Scan extends Command {
               this.versionDirectory
             }/${dataFolder}/${provider}_${accountId}_${Date.now()}.json`
           ),
-          JSON.stringify(result, null, 2)
+          JSON.stringify(providerData, null, 2)
         )
       } catch (error: any) {
         this.logger.error(`There was a problem saving data for ${provider}`)
@@ -201,27 +153,14 @@ export default class Scan extends Command {
         fileUtils.deleteFolder(`${this.versionDirectory}/${dataFolder}`)
         this.exit()
       }
-      formatDataLoader.succeed(
-        `Data formatted successfully for ${chalk.italic.green(provider)}`
-      )
 
-      /**
-       * Loop through the result entities and for each entity:
-       * Look in result.connections for [key = entity.arn]
-       * Loop through the connections for entity and determine its resource type
-       * Find entity in result.entites that matches the id found in connections
-       * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
-       * Push connected entity into dgraph
-       */
       const connectionLoader = ora(
         `Making service connections for ${chalk.italic.green(provider)}`
       ).start()
-      for (const entity of result.entities) {
-        const { name, data } = entity
-        const { mutation } = client.getService(name)
+      for (const entity of providerData.entities) {
+        const { mutation, data } = entity
         const connectedData = data.map((service: any) =>
-          // getConnectedEntity(service, result, opts)
-          getConnectedEntity(service, result)
+          getConnectedEntity(service, providerData)
         )
         if (storageRunning) {
           const axiosPromise = storageEngine.push({
