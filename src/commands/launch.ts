@@ -4,14 +4,12 @@ import path from 'path'
 import { exec } from 'child_process'
 
 import Command from './base'
-import { fileUtils } from '../utils'
+import { sleep, fileUtils } from '../utils'
 
 export default class Launch extends Command {
-  static description = 'Launch an instance of Dgraph to store data';
+  static description = 'Launch an instance of Dgraph to store data'
 
-  static examples = [
-    '$ cg launch',
-  ];
+  static examples = ['$ cg launch']
 
   static dgraphContainerLabel = 'cloudgraph-cli-dgraph-standalone'
 
@@ -137,7 +135,7 @@ export default class Launch extends Command {
     const healthCheck = ora('Running health check on Dgraph').start()
     // eslint-disable-next-line no-warning-comments
     // TODO: smaller sleep time and exponential backoff for ~5 tries
-    await new Promise(resolve => setTimeout(resolve, 10000))
+    await sleep(10000)
     try {
       const storageEngine = this.getStorageEngine()
       const running = await storageEngine.healthCheck(false)

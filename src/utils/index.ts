@@ -8,9 +8,14 @@ import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
 
+import C from '../utils/constants'
+
 const { logger } = CloudGraph
 
-export const getKeyByValue = (object: Record<string, unknown>, value: any): string | undefined => {
+export const getKeyByValue = (
+  object: Record<string, unknown>,
+  value: any
+): string | undefined => {
   return Object.keys(object).find(key => object[key] === value)
 }
 
@@ -23,7 +28,10 @@ export function moduleIsAvailable(modulePath: string): boolean {
   }
 }
 
-export function getProviderDataFile(dirPath: string, provider: string): string | void {
+export function getProviderDataFile(
+  dirPath: string,
+  provider: string
+): string | void {
   const fileGlob = `${dirPath}${provider}*.json`
   const fileArray = glob.sync(fileGlob)
   if (fileArray && fileArray.length > 0) {
@@ -47,10 +55,7 @@ const mapFileNameToHumanReadable = (file: string): string => {
 const findProviderFileLocation = (directory: string, file: string): string => {
   const [providerName, providerIdentity, date] = file.trim().split(' ')
   const fileName = `${providerName}_${providerIdentity}_${Date.parse(date)}`
-  const fileGlob = path.join(
-    directory,
-    `/version-*/${fileName}.json`
-  )
+  const fileGlob = path.join(directory, `/version-*/${fileName}.json`)
   const fileArray = glob.sync(fileGlob)
   if (fileArray && fileArray.length > 0) {
     return fileArray[0]
@@ -73,9 +78,7 @@ export function writeGraphqlSchemaToFile(
   fs.writeFileSync(
     path.join(
       dirPath,
-      provider
-        ? `/${provider}_schema.graphql`
-        : '/schema.graphql'
+      provider ? `/${provider}_schema.graphql` : '/schema.graphql'
     ),
     schema
   )
@@ -131,7 +134,10 @@ export function printWelcomeMessage(): void {
   )
 }
 
-export function getVersionFolders(directory: string, provider?: string): {name: string, ctime: Date}[] {
+export function getVersionFolders(
+  directory: string,
+  provider?: string
+): { name: string; ctime: Date }[] {
   const folderGlob = path.join(directory, '/version-*/')
   const folders = glob.sync(folderGlob)
   if (folders && folders.length > 0) {
@@ -152,10 +158,8 @@ export function getVersionFolders(directory: string, provider?: string): {name: 
         return true
       })
       .sort(
-        (
-          a: { name: string; ctime: Date },
-          b: { name: string; ctime: Date }
-        ) => a.ctime.getTime() - b.ctime.getTime()
+        (a: { name: string; ctime: Date }, b: { name: string; ctime: Date }) =>
+          a.ctime.getTime() - b.ctime.getTime()
       )
   }
   return []
@@ -168,7 +172,21 @@ export function getSchemaFromFolder(dirPath: string, provider?: string): any[] {
 }
 
 export function deleteFolder(dirPath: string): void {
-  fs.rmSync(dirPath, {recursive: true})
+  fs.rmSync(dirPath, { recursive: true })
+}
+
+export const sleep = (ms: number): Promise<void> =>
+  new Promise(resolve => setTimeout(resolve, ms))
+
+export const calculateBackoff = (n: number): number => {
+  const temp = Math.min(
+    C.BASE_BACKOFF_CONSTANT ** n + Math.random(),
+    C.MAX_BACKOFF_DELAY
+  )
+  return (
+    temp / C.BASE_BACKOFF_CONSTANT +
+    Math.min(0, (Math.random() * temp) / C.BASE_BACKOFF_CONSTANT)
+  )
 }
 
 export const fileUtils = {
