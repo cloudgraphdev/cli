@@ -1,3 +1,18 @@
+# [0.3.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.2.1...0.3.0) (2021-08-24)
+
+
+### Bug Fixes
+
+* **config:** update getConfig to work when there is no existing config ([5d3a70b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5d3a70bd680e8e20c3445f1c72b806022c68846b))
+* **init:** update init to output where it has stored the config ([bbca608](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/bbca608a42fa1212f5a0a7d92c8ebf7681a49436))
+* **init:** update with log for where data will be stored ([e755b41](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e755b41e813ef22245838ab3097d99df04ff0903))
+* **launch:** Fix data path for dgraph data ([c72d4f5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c72d4f59c4dd34f9e30f981cd53c0fa4eab266db))
+
+
+### Features
+
+* **dir:** fix issues with dir access, remove console logs ([85a358e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/85a358efd38e809748fa857b28a9e02c81727447))
+
 ## [0.2.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.2.0...0.2.1) (2021-08-23)
 
 
