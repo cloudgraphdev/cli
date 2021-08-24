@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 import ora from 'ora'
+import path from 'path'
 import { exec } from 'child_process'
 
 import Command from './base'
@@ -43,6 +44,7 @@ export default class Launch extends Command {
     // TODO: not a huge fan of this pattern, rework how to do debug and devmode tasks (specifically how to use in providers)
     // const opts: Opts = {logger: this.logger, debug, devMode}
     const dockerCheck = ora('Checking for Docker').start()
+    const { dataDir } = this.config
     try {
       await this.execCommand('docker -v')
       dockerCheck.succeed('Docker found')
@@ -91,7 +93,7 @@ export default class Launch extends Command {
       containerCheck.succeed('No reusable instances found')
       const dgraphImgCheck = ora('pulling Dgraph Docker image').start()
       try {
-        fileUtils.makeDirIfNotExists(`${process.cwd()}/dgraph`)
+        fileUtils.makeDirIfNotExists(path.join(dataDir, '/dgraph'))
         await this.execCommand('docker pull dgraph/standalone')
         dgraphImgCheck.succeed('Pulled Dgraph Docker image')
       } catch (error: any) {

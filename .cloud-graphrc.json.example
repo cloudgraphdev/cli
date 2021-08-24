@@ -4,7 +4,7 @@
     "resources": "alb,vpc,cloudwatch,eip,ebs,ec2Instance,elb,igw,kms,lambda,nat,sg,networkInterface,apiGatewayRestApi,apiGatewayResource,apiGatewayStage"
   },
   "cloudGraph": {
-    "dgraphHost": "http://localhost:8080",
+    "dgraphHost": "http://localhost:8997",
     "directory": "cg",
     "queryEngine": "playground"
   }
