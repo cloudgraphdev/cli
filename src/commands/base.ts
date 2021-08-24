@@ -2,6 +2,7 @@ import Command, { flags } from '@oclif/command'
 import { Input } from '@oclif/parser'
 import CloudGraph, { Logger } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
+import path from 'path'
 import inquirer from 'inquirer'
 import chalk from 'chalk'
 import open from 'open'
@@ -38,8 +39,8 @@ export default abstract class BaseCommand extends Command {
     // dgraph host
     dgraph: flags.string({
       char: 'd',
-      env: 'DGRAPH_HOST',
-      description: 'Set where dgraph is running (default localhost:8080)',
+      env: 'CG_HOST_PORT',
+      description: 'Set where dgraph is running (default localhost:8997)',
     }),
     // storage engine to use
     storage: flags.string({
@@ -122,7 +123,7 @@ export default abstract class BaseCommand extends Command {
   async startQueryEngine(): Promise<void> {
     const {flags: {port, 'no-serve': noServe}} = this.parse(this.constructor as Input<{port: string; 'no-serve': string}>)
     if (!noServe) {
-      const configPort = this.getCGConfigKey('port') ?? 3000
+      const configPort = this.getCGConfigKey('port') ?? 5555
       const serverPort = port ?? configPort
       const queryEngine = new QueryEngine(serverPort)
       await queryEngine.startServer(this.getHost())
@@ -157,12 +158,12 @@ export default abstract class BaseCommand extends Command {
         return config.dgraphHost
       }
       // nothing found, return default location
-      const defaultHost = 'http://localhost:8080'
+      const defaultHost = 'http://localhost:8997'
       showInitialStatus &&
         this.logger.info(`Dgraph host set as: ${defaultHost}`)
       return defaultHost
     }
-    return 'http://localhost:8080'
+    return 'http://localhost:8997'
   }
 
   async getProviderClient(provider: string) {
@@ -193,20 +194,25 @@ export default abstract class BaseCommand extends Command {
   }
 
   getCGConfig(provider?: string) {
+    const { configDir } = this.config
     if (this.storedConfig) {
       return provider ? this.storedConfig[provider] : this.storedConfig
     }
-    const config = cosmiconfigSync('cloud-graph').search()
-    if (config) {
-      const configResult = config.config
-      this.storedConfig = configResult
-      if (provider) {
-        this.logger.info(`Found config for ${provider}, using...`)
-        return configResult[provider]
+    try {
+      const config = cosmiconfigSync('cloud-graph').load(path.join(configDir, '.cloud-graphrc.json'))
+      if (config) {
+        const configResult = config.config
+        this.storedConfig = configResult
+        if (provider) {
+          this.logger.info(`Found config for ${provider}, using...`)
+          return configResult[provider]
+        }
+        return configResult
       }
-      return configResult
+      return null
+    } catch (error: any) {
+      return null
     }
-    return null
   }
 
   async catch(err: any) {

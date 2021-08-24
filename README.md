@@ -50,7 +50,7 @@ cg scan
 ```
 
 The query tool you selected during the `INIT` command will be opened in your preferred browser to run queries, mutations and visualizations on all of your cloud infrastructure!
-You may also use any GraphQL query tool you would like by connecting it to http://localhost:8080/graphql.
+You may also use any GraphQL query tool you would like by connecting it to http://localhost:8997/graphql.
 
 ## Example Query
 
@@ -107,7 +107,7 @@ USAGE
   $ cg init [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8997)
   -p, --port=port                  Set port to serve query engine
   -q, --query-engine=query-engine  Query engine to launch
   -r, --resources
@@ -133,7 +133,7 @@ USAGE
   $ cg launch [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8997)
   -p, --port=port                  Set port to serve query engine
   -q, --query-engine=query-engine  Query engine to launch
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
@@ -156,7 +156,7 @@ USAGE
   $ cg load [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8997)
   -p, --port=port                  Set port to serve query engine
   -q, --query-engine=query-engine  Query engine to launch
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
@@ -180,7 +180,7 @@ USAGE
   $ cg scan [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8997)
   -p, --port=port                  Set port to serve query engine
   -q, --query-engine=query-engine  Query engine to launch
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph
@@ -206,7 +206,7 @@ USAGE
   $ cg serve [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8080)
+  -d, --dgraph=dgraph              Set where dgraph is running (default localhost:8997)
   -p, --port=port                  Set port to serve query engine
   -q, --query-engine=query-engine  Query engine to launch
   -s, --storage=storage            Select a storage engine to use. Currently only supports Dgraph

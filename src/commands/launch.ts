@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 import ora from 'ora'
+import path from 'path'
 import { exec } from 'child_process'
 
 import Command from './base'
@@ -43,6 +44,7 @@ export default class Launch extends Command {
     // TODO: not a huge fan of this pattern, rework how to do debug and devmode tasks (specifically how to use in providers)
     // const opts: Opts = {logger: this.logger, debug, devMode}
     const dockerCheck = ora('Checking for Docker').start()
+    const { dataDir } = this.config
     try {
       await this.execCommand('docker -v')
       dockerCheck.succeed('Docker found')
@@ -91,7 +93,7 @@ export default class Launch extends Command {
       containerCheck.succeed('No reusable instances found')
       const dgraphImgCheck = ora('pulling Dgraph Docker image').start()
       try {
-        fileUtils.makeDirIfNotExists(`${process.cwd()}/dgraph`)
+        fileUtils.makeDirIfNotExists(path.join(dataDir, '/dgraph'))
         await this.execCommand('docker pull dgraph/standalone')
         dgraphImgCheck.succeed('Pulled Dgraph Docker image')
       } catch (error: any) {
@@ -115,9 +117,9 @@ export default class Launch extends Command {
           await this.execCommand(`docker container start ${exitedContainerId}`)
         } else {
           await this.execCommand(
-            `docker run -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 --label ${
+            `docker run -d -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 --label ${
               Launch.dgraphContainerLabel
-            } -v ${process.cwd()}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`
+            } -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`
           )
         }
         dgraphInit.succeed('Dgraph instance running')

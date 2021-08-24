@@ -1,7 +1,9 @@
 import { flags } from '@oclif/command'
 import fs from 'fs'
 import path from 'path'
+import chalk from 'chalk'
 import QueryEngine from '../server'
+import { fileUtils } from '../utils'
 
 import Command from './base'
 
@@ -54,7 +56,7 @@ export default class Init extends Command {
     [key: string]: string | Record<string, unknown>
   }> {
     const {
-      flags: { dgraph, directory, 'query-engine': queryEngine },
+      flags: { dgraph, 'query-engine': queryEngine },
     } = this.parse(Init)
     const result: { [key: string]: any } = {}
     if (dgraph) {
@@ -67,23 +69,10 @@ export default class Init extends Command {
           message:
             'Enter your dgraph host url (or launch dgraph with "cg launch")',
           name: 'dgraph',
-          default: 'http://localhost:8080',
+          default: 'http://localhost:8997',
         },
       ])
       result.dgraphHost = dgraph
-    }
-    if (directory) {
-      result.directory = directory
-    } else {
-      const { inputDirectory } = await this.interface.prompt([
-        {
-          type: 'input',
-          message: 'What directory would you like CloudGraph to store data in?',
-          name: 'inputDirectory',
-          default: 'cg',
-        },
-      ])
-      result.directory = inputDirectory
     }
     if (queryEngine) {
       result.queryEngine = QueryEngine
@@ -115,6 +104,7 @@ export default class Init extends Command {
 
   async run() {
     const { argv, flags } = this.parse(Init)
+    const { configDir, dataDir } = this.config
     // const opts: Opts = {logger: this.logger, debug, devMode}
     // First determine the provider if one has not been passed in args
     // if no provider is passed, they can select from a list of offically supported providers
@@ -203,10 +193,13 @@ export default class Init extends Command {
     } else {
       configResult.cloudGraph = await this.getCloudGraphConfig()
     }
+    fileUtils.makeDirIfNotExists(configDir)
     fs.writeFileSync(
-      path.join(process.cwd(), '.cloud-graphrc.json'),
+      path.join(configDir, '.cloud-graphrc.json'),
       JSON.stringify(configResult, null, 2)
     )
+    this.logger.success(`Your config has been successfully stored at ${chalk.italic.green(path.join(configDir, '.cloud-graphrc.json'))}`)
+    this.logger.success(`Your data will be stored at ${chalk.italic.green(path.join(dataDir, this.versionDirectory))}`)
     this.exit()
   }
 }

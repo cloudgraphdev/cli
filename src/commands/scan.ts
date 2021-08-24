@@ -29,6 +29,7 @@ export default class Scan extends Command {
 
   async run() {
     const {argv, flags: {dev: devMode}} = this.parse(Scan)
+    const { dataDir } = this.config
     const opts: Opts = {logger: this.logger, debug: true, devMode}
     let allProviers = argv
 
@@ -59,13 +60,13 @@ export default class Scan extends Command {
     // Build folder structure for saving CloudGraph data by version
     const schema: any[] = []
     const promises: Promise<any>[] = []
-    fileUtils.makeDirIfNotExists(this.versionDirectory)
-    const folders = fileUtils.getVersionFolders(this.versionDirectory)
+    const folders = fileUtils.getVersionFolders(path.join(dataDir, this.versionDirectory))
     let dataFolder = 'version-1'
     if (folders) {
       dataFolder = `version-${folders.length + 1}`
     }
-    fileUtils.makeDirIfNotExists(`${this.versionDirectory}/${dataFolder}`)
+    const dataStorageLocation = path.join(dataDir, `${this.versionDirectory}/${dataFolder}`)
+    fileUtils.makeDirIfNotExists(dataStorageLocation)
 
     /**
      * loop through providers and attempt to scan each of them
@@ -107,13 +108,13 @@ export default class Scan extends Command {
       }
       schema.push(providerSchema)
       fileUtils.writeGraphqlSchemaToFile(
-        `${this.versionDirectory}/${dataFolder}`,
+        dataStorageLocation,
         providerSchema,
         provider
       )
       if (allProviers.indexOf(provider) === allProviers.length - 1) {
         fileUtils.writeGraphqlSchemaToFile(
-          `${this.versionDirectory}/${dataFolder}`,
+          dataStorageLocation,
           schema.join()
         )
         if (storageRunning) {
@@ -126,7 +127,7 @@ export default class Scan extends Command {
                 ' | '
               )} to dgraph at ${storageEngine.host}`
             )
-            fileUtils.deleteFolder(`${this.versionDirectory}/${dataFolder}`)
+            fileUtils.deleteFolder(dataStorageLocation)
             this.exit()
           }
         }
@@ -138,19 +139,17 @@ export default class Scan extends Command {
       )
 
       try {
+        const dataPath = path.join(
+          dataStorageLocation, `/${provider}_${accountId}_${Date.now()}.json`
+        )
         fs.writeFileSync(
-          path.join(
-            process.cwd(),
-            `${
-              this.versionDirectory
-            }/${dataFolder}/${provider}_${accountId}_${Date.now()}.json`
-          ),
+          dataPath,
           JSON.stringify(providerData, null, 2)
         )
       } catch (error: any) {
         this.logger.error(`There was a problem saving data for ${provider}`)
         this.logger.debug(error)
-        fileUtils.deleteFolder(`${this.versionDirectory}/${dataFolder}`)
+        fileUtils.deleteFolder(dataStorageLocation)
         this.exit()
       }
 
@@ -178,7 +177,7 @@ export default class Scan extends Command {
     }
     await Promise.all(promises)
     const resultLog = storageRunning ? `saved to Dgraph. Query at ${chalk.underline.green(
-      `${storageEngine.host}/graphql`)}` : 'saved to the versions directory'
+      `${storageEngine.host}/graphql`)}` : `saved to ${dataStorageLocation}`
     this.logger.success(
       `Your data for ${allProviers.join(
         ' | '

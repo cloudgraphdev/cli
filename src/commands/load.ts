@@ -2,6 +2,8 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import ora from 'ora'
+import path from 'path'
+import { isEmpty } from 'lodash'
 
 import Command from './base'
 // import { getLatestProviderData, fileUtils, getConnectedEntity } from '../utils'
@@ -32,6 +34,7 @@ export default class Load extends Command {
       argv,
       // flags: { debug, dev: devMode },
     } = this.parse(Load)
+    const { dataDir } = this.config
     const storageEngine = this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
     if (!storageRunning) {
@@ -90,10 +93,10 @@ export default class Load extends Command {
       // const allTagData: any[] = []
       // TODO: not in order?
       const folders = fileUtils.getVersionFolders(
-        this.versionDirectory,
+        path.join(dataDir, this.versionDirectory),
         provider
       )
-      if (!folders) {
+      if (isEmpty(folders)) {
         this.logger.error(
           `Unable to find saved data for ${provider}, run "cg scan aws" to fetch new data for ${provider}`
         )
@@ -145,8 +148,8 @@ export default class Load extends Command {
           const [versionString, fileName]: string[] = answer.file.split('...')
           version = versionString.split('-')[1] // eslint-disable-line prefer-destructuring
           file = fileUtils.findProviderFileLocation(
+            path.join(dataDir, this.versionDirectory),
             fileName,
-            this.versionDirectory
           )
           const foundFile = files.find(val => val.name === file)
           if (!foundFile) {
