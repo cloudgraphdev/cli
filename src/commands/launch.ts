@@ -119,7 +119,7 @@ export default class Launch extends Command {
           await this.execCommand(
             `docker run -d -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 --label ${
               Launch.dgraphContainerLabel
-            } -v ${process.cwd()}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`
+            } -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`
           )
         }
         dgraphInit.succeed('Dgraph instance running')
