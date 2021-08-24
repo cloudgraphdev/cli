@@ -1,6 +1,7 @@
 import { flags } from '@oclif/command'
 import fs from 'fs'
 import path from 'path'
+import chalk from 'chalk'
 import QueryEngine from '../server'
 import { fileUtils } from '../utils'
 
@@ -210,6 +211,7 @@ export default class Init extends Command {
       path.join(configDir, '.cloud-graphrc.json'),
       JSON.stringify(configResult, null, 2)
     )
+    this.logger.success(`Your config has been successfully stored at ${chalk.italic.green(path.join(configDir, '.cloud-graphrc.json'))}`)
     this.exit()
   }
 }
