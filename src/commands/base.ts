@@ -198,9 +198,7 @@ export default abstract class BaseCommand extends Command {
     if (this.storedConfig) {
       return provider ? this.storedConfig[provider] : this.storedConfig
     }
-    console.log('searching for config')
     const config = cosmiconfigSync('cloud-graph').load(path.join(configDir, '.cloud-graphrc.json'))
-    console.log(JSON.stringify(config))
     if (config) {
       const configResult = config.config
       this.storedConfig = configResult

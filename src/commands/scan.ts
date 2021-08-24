@@ -60,15 +60,12 @@ export default class Scan extends Command {
     // Build folder structure for saving CloudGraph data by version
     const schema: any[] = []
     const promises: Promise<any>[] = []
-    // fileUtils.makeDirIfNotExists(path.join(dataDir, this.versionDirectory))
-    console.log(`storing data in ${dataDir}`)
-    const folders = fileUtils.getVersionFolders(dataDir)
+    const folders = fileUtils.getVersionFolders(path.join(dataDir, this.versionDirectory))
     let dataFolder = 'version-1'
     if (folders) {
       dataFolder = `version-${folders.length + 1}`
     }
     const dataStorageLocation = path.join(dataDir, `${this.versionDirectory}/${dataFolder}`)
-    console.log(dataStorageLocation)
     fileUtils.makeDirIfNotExists(dataStorageLocation)
 
     /**
@@ -94,7 +91,6 @@ export default class Scan extends Command {
       const providerData = await client.getData({
         opts,
       })
-      console.log(JSON.stringify(providerData))
       providerDataLoader.succeed(
         `${chalk.italic.green(provider)} data scanned successfully`
       )
@@ -143,10 +139,11 @@ export default class Scan extends Command {
       )
 
       try {
+        const dataPath = path.join(
+          dataStorageLocation, `/${provider}_${accountId}_${Date.now()}.json`
+        )
         fs.writeFileSync(
-          path.join(
-            dataStorageLocation, `/${dataFolder}/${provider}_${accountId}_${Date.now()}.json`
-          ),
+          dataPath,
           JSON.stringify(providerData, null, 2)
         )
       } catch (error: any) {
