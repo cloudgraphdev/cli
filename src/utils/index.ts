@@ -44,12 +44,12 @@ const mapFileNameToHumanReadable = (file: string): string => {
 
 // TODO: this could be refactored to go right to the correct version folder (avoid line 70)
 // if we extracted the version part of the url and passed to this func
-const findProviderFileLocation = (file: string, directory: string): string => {
+const findProviderFileLocation = (directory: string, file: string): string => {
   const [providerName, providerIdentity, date] = file.trim().split(' ')
   const fileName = `${providerName}_${providerIdentity}_${Date.parse(date)}`
   const fileGlob = path.join(
-    process.cwd(),
-    `${directory}/version-*/${fileName}.json`
+    directory,
+    `/version-*/${fileName}.json`
   )
   const fileArray = glob.sync(fileGlob)
   if (fileArray && fileArray.length > 0) {
@@ -60,7 +60,7 @@ const findProviderFileLocation = (file: string, directory: string): string => {
 
 export function makeDirIfNotExists(dir: string): void {
   if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir)
+    fs.mkdirSync(dir, { recursive: true })
   }
 }
 
@@ -72,10 +72,10 @@ export function writeGraphqlSchemaToFile(
   makeDirIfNotExists(dirPath)
   fs.writeFileSync(
     path.join(
-      process.cwd(),
+      dirPath,
       provider
-        ? `${dirPath}/${provider}_schema.graphql`
-        : `${dirPath}/schema.graphql`
+        ? `/${provider}_schema.graphql`
+        : '/schema.graphql'
     ),
     schema
   )
@@ -132,7 +132,7 @@ export function printWelcomeMessage(): void {
 }
 
 export function getVersionFolders(directory: string, provider?: string): {name: string, ctime: Date}[] {
-  const folderGlob = path.join(process.cwd(), `${directory}/version-*/`)
+  const folderGlob = path.join(directory, '/version-*/')
   const folders = glob.sync(folderGlob)
   if (folders && folders.length > 0) {
     return folders

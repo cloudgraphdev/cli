@@ -32,6 +32,7 @@ export default class Load extends Command {
       argv,
       // flags: { debug, dev: devMode },
     } = this.parse(Load)
+    const { dataDir } = this.config
     const storageEngine = this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
     if (!storageRunning) {
@@ -90,7 +91,7 @@ export default class Load extends Command {
       // const allTagData: any[] = []
       // TODO: not in order?
       const folders = fileUtils.getVersionFolders(
-        this.versionDirectory,
+        dataDir,
         provider
       )
       if (!folders) {
@@ -145,8 +146,8 @@ export default class Load extends Command {
           const [versionString, fileName]: string[] = answer.file.split('...')
           version = versionString.split('-')[1] // eslint-disable-line prefer-destructuring
           file = fileUtils.findProviderFileLocation(
+            dataDir,
             fileName,
-            this.versionDirectory
           )
           const foundFile = files.find(val => val.name === file)
           if (!foundFile) {
