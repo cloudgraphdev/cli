@@ -1,3 +1,10 @@
+## [0.3.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.0...0.3.1) (2021-08-24)
+
+
+### Bug Fixes
+
+* Fixed RPC transaction errors using retry method ([54b054e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/54b054e42c795c2eee7aa2bd1431ded9696fcd54))
+
 # [0.3.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.2.1...0.3.0) (2021-08-24)
 
 
