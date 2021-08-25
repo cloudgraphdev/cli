@@ -1,3 +1,11 @@
+## [0.3.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.2...0.3.3) (2021-08-25)
+
+
+### Bug Fixes
+
+* **storage:** fixed error handling when pushing data ([425efae](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/425efae4ea89154f10464bb777fb37bcd635c112))
+* Fixed error handling when pushing data ([97cc8bb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/97cc8bb4f395ecf5fddaefc87a597aa99a480f48))
+
 ## [0.3.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.1...0.3.2) (2021-08-25)
 
 
