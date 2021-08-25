@@ -138,14 +138,14 @@
     "@babel/helper-validator-identifier" "^7.14.5"
     to-fast-properties "^2.0.0"
 
-"@cloudgraph/sdk@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.2.0.tgz#42117e8272671f845c2447f38c945edcdfc32f50"
-  integrity sha512-bZrm91qzo2gsBuxgtEUBmPp1yhf32d+Sm8/tladp7oK/kGtZl3gm1b6C34qQSx3HwKfHCTS0PMcUnqCxTGxf8w==
+"@cloudgraph/sdk@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.3.1.tgz#8ad0bd9f08f4925c184b25911343dc3df68d207d"
+  integrity sha512-RhICX7DqdmyCQO6Njs0L7UHFdKSc4Jl8Mj0xqKFKgi+AHTK2k1V4/dpWYfovHoDuBu1h8NsBuX/O97Ad6H2kKQ==
   dependencies:
     "@types/node" "^16.4.12"
-    consola "^2.15.3"
     inquirer "^8.1.2"
+    ora "^6.0.0"
     pino "^6.11.3"
     pino-pretty "^5.1.0"
     typescript "^4.3.5"
@@ -2151,11 +2151,6 @@ confusing-browser-globals@^1.0.10:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/confusing-browser-globals/-/confusing-browser-globals-1.0.10.tgz#30d1e7f3d1b882b25ec4933d1d1adac353d20a59"
   integrity sha512-gNld/3lySHwuhaVluJUKLePYirM3QNCKzVxqAdhJII9/WXKVX5PURzMVJspS1jTslSqjeuG4KMVTSouit5YPHA==
-
-consola@^2.15.3:
-  version "2.15.3"
-  resolved "https://registry.yarnpkg.com/consola/-/consola-2.15.3.tgz#2e11f98d6a4be71ff72e0bdf07bd23e12cb61550"
-  integrity sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==
 
 console-control-strings@^1.0.0, console-control-strings@^1.1.0, console-control-strings@~1.1.0:
   version "1.1.0"
