@@ -136,25 +136,14 @@ export default class Init extends Command {
         this.logger.info(`Config for ${provider} already exists`)
         const answers = await this.interface.prompt([
           {
-            type: 'expand',
-            message: `How would you like to change ${provider}'s config`,
-            name: 'nextStep',
-            choices: [
-              {
-                key: 'y',
-                name: 'Overwrite',
-                value: 'overwrite',
-              },
-              {
-                key: 'x',
-                name: 'Abort',
-                value: 'abort',
-              },
-            ],
+            type: 'confirm',
+            message: `Would you like to change ${provider}'s config`,
+            name: 'overwrite',
+            default: true
           },
         ])
         this.logger.debug(answers)
-        if (answers.nextStep === 'overwrite') {
+        if (answers.overwrite) {
           configResult[provider] = await client.configure(flags)
         } else {
           this.logger.warn(`Init command for ${provider} aborted`)
@@ -169,25 +158,14 @@ export default class Init extends Command {
       this.logger.info('CloudGraph config found...')
       const answers = await this.interface.prompt([
         {
-          type: 'expand',
-          message: 'How would you like to change CloudGraph config',
-          name: 'nextStep',
-          choices: [
-            {
-              key: 'y',
-              name: 'Overwrite',
-              value: 'overwrite',
-            },
-            {
-              key: 'x',
-              name: 'Abort',
-              value: 'abort',
-            },
-          ],
+          type: 'confirm',
+          message: 'Would you like to change CloudGraph config',
+          name: 'overwrite',
+          default: true
         },
       ])
       this.logger.debug(answers)
-      if (answers.nextStep === 'overwrite') {
+      if (answers.overwrite) {
         configResult.cloudGraph = await this.getCloudGraphConfig()
       }
     } else {
