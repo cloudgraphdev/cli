@@ -1,3 +1,10 @@
+## [0.3.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.1...0.3.2) (2021-08-25)
+
+
+### Bug Fixes
+
+* **README:** license badge, alignment ([6933533](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/69335330faf0709d61fda01e63baed0a77b99f17))
+
 ## [0.3.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.0...0.3.1) (2021-08-24)
 
 
