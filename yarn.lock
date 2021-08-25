@@ -138,14 +138,14 @@
     "@babel/helper-validator-identifier" "^7.14.5"
     to-fast-properties "^2.0.0"
 
-"@cloudgraph/sdk@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.3.1.tgz#8ad0bd9f08f4925c184b25911343dc3df68d207d"
-  integrity sha512-RhICX7DqdmyCQO6Njs0L7UHFdKSc4Jl8Mj0xqKFKgi+AHTK2k1V4/dpWYfovHoDuBu1h8NsBuX/O97Ad6H2kKQ==
+"@cloudgraph/sdk@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.3.2.tgz#40808c211de36ea28e41e5136856f329994bec5d"
+  integrity sha512-BUytNXhFAm1PxXFg6Jj2THkofuqpJnM+aQMD41Cyth4eBTHJ9BL4VEWY9jBUS4+jZQWLklTJ6uqrMsFPY9ORVA==
   dependencies:
     "@types/node" "^16.4.12"
     inquirer "^8.1.2"
-    ora "^6.0.0"
+    ora "^5.4.1"
     pino "^6.11.3"
     pino-pretty "^5.1.0"
     typescript "^4.3.5"
@@ -5771,7 +5771,7 @@ optionator@^0.9.1:
     type-check "^0.4.0"
     word-wrap "^1.2.3"
 
-ora@^5.3.0:
+ora@^5.3.0, ora@^5.4.1:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/ora/-/ora-5.4.1.tgz#1b2678426af4ac4a509008e5e4ac9e9959db9e18"
   integrity sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==
