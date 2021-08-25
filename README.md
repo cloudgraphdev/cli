@@ -1,7 +1,7 @@
 CloudGraph CLI
 ===========
 
-A type-safe way to query your cloud assets and configuration with **GraphQL**. Easily understand relationships and solve a host of complex **security**, **compliance**, and **governance** challenges with ease.
+A type-safe way to query your cloud assets and configuration with **GraphQL**. Easily understand relationships and solve a host of complex **security**, **compliance**, and **governance** challenges with ease. CloudGraph is and will always be a **READ ONLY** tool and makes **0** changes to your cloud infrastructure.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@cloudgraph/cli.svg)](https://npmjs.org/package/@cloudgraph/cli)
@@ -28,19 +28,26 @@ npm install -g @cloudgraph/cli
 
 <!-- quickstart -->
 
-Initialize CloudGraph configuration
+1. Initialize CloudGraph configuration
 
 ```bash
 cg init
 ```
 
-Launch Dgraph instance
+2. Launch an instance of [Dgraph](https://dgraph.io/), the graphdb CloudGraph uses to store data.
+There are 2 ways to launch an instance. **BOTH** of these require [Docker](https://www.docker.com/) to be installed. The preferred solution is to use our convience command.
 
 ```bash
 cg launch
 ```
 
-Scan for infrastructure updates for all configured providers
+If you do not want to use this command, for example if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
+
+```bash
+  docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0
+```
+
+3. Scan for infrastructure updates for all configured providers
 
 ```bash
 cg scan
