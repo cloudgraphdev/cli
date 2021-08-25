@@ -1,3 +1,14 @@
+## [0.3.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.4...0.3.5) (2021-08-25)
+
+
+### Bug Fixes
+
+* **deps:** update cloudgraph sdk dep to latest ([d90bb2d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d90bb2df380e2663353c29a695cc74afb6f7d273))
+* **deps:** update cloudgraph sdk dep to latest ([5e84d5a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5e84d5a83fd1f3ac0ed9e094cb937dece69e63e2))
+* **spinner:** add ora dependency resolve ERR_REQUIRE_ESM ([d8d1d0d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d8d1d0d6bd8b23df58733892f35511d312392603))
+* **spinner:** remove unused ora dependency ([5d337a0](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5d337a0f55adf644718a920dcb31d8700f927589))
+* **spinner:** use Ora ([1aa24a3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1aa24a3f1c97c6579ec9dd16e2fce9f73f206b0d))
+
 ## [0.3.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.3...0.3.4) (2021-08-25)
 
 
