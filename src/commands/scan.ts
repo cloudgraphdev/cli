@@ -184,7 +184,7 @@ export default class Scan extends Command {
       ? `saved to Dgraph. Query at ${chalk.underline.green(
           `${storageEngine.host}/graphql`
         )}`
-      : `saved to ${dataStorageLocation}`
+      : `saved to ${chalk.italic.green(dataStorageLocation)}`
     this.logger.success(
       `Your data for ${allProviders.join(' | ')} has been ${resultLog}`
     )
