@@ -102,7 +102,11 @@ export default class DgraphEngine implements StorageEngine {
    */
   async run(): Promise<void> {
     for (const mutation of this.axiosPromises) {
-      await mutation()
+      try {
+        await mutation()
+      } catch (error) {
+        this.logger.debug(error)
+      }
     }
   }
 }
