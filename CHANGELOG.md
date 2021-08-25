@@ -1,3 +1,11 @@
+## [0.3.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.6...0.3.7) (2021-08-25)
+
+
+### Bug Fixes
+
+* **types:** fix build failure due to TS warning ([4210136](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4210136d1848ec86696632c3e42c93fc03f4397f))
+* **voyager:** add graphql-voyager dep ([5621bdd](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5621bddce062427be830e1401fb5d22699c36998))
+
 ## [0.3.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.5...0.3.6) (2021-08-25)
 
 
