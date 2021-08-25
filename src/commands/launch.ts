@@ -1,5 +1,4 @@
 import chalk from 'chalk'
-import ora from 'ora'
 import path from 'path'
 import { exec } from 'child_process'
 
@@ -41,7 +40,7 @@ export default class Launch extends Command {
     // eslint-disable-next-line no-warning-comments
     // TODO: not a huge fan of this pattern, rework how to do debug and devmode tasks (specifically how to use in providers)
     // const opts: Opts = {logger: this.logger, debug, devMode}
-    const dockerCheck = ora('Checking for Docker').start()
+    const dockerCheck = this.logger.startSpinner('Checking for Docker')
     const { dataDir } = this.config
     try {
       await this.execCommand('docker -v')
@@ -55,9 +54,9 @@ export default class Launch extends Command {
       this.exit()
     }
 
-    const containerCheck = ora(
+    const containerCheck = this.logger.startSpinner(
       'Checking for an existing Dgraph docker instance'
-    ).start()
+    )
     let runningContainerId
     try {
       const stdout: any = await this.execCommand(
@@ -89,7 +88,7 @@ export default class Launch extends Command {
 
     if (!exitedContainerId && !runningContainerId) {
       containerCheck.succeed('No reusable instances found')
-      const dgraphImgCheck = ora('pulling Dgraph Docker image').start()
+      const dgraphImgCheck = this.logger.startSpinner('pulling Dgraph Docker image')
       try {
         fileUtils.makeDirIfNotExists(path.join(dataDir, '/dgraph'))
         await this.execCommand('docker pull dgraph/standalone')
@@ -107,9 +106,9 @@ export default class Launch extends Command {
     if (runningContainerId) {
       containerCheck.succeed('Reusable container found')
     } else {
-      dgraphInit = ora(
+      dgraphInit = this.logger.startSpinner(
         `Spinning up ${exitedContainerId ? 'existing' : 'new'} Dgraph instance`
-      ).start()
+      )
       try {
         if (exitedContainerId) {
           await this.execCommand(`docker container start ${exitedContainerId}`)
@@ -132,7 +131,7 @@ export default class Launch extends Command {
   }
 
   async checkIfInstanceIsRunningReportStatus() {
-    const healthCheck = ora('Running health check on Dgraph').start()
+    const healthCheck = this.logger.startSpinner('Running health check on Dgraph')
     // eslint-disable-next-line no-warning-comments
     // TODO: smaller sleep time and exponential backoff for ~5 tries
     await sleep(10000)
