@@ -1,3 +1,11 @@
+## [0.3.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.5...0.3.6) (2021-08-25)
+
+
+### Bug Fixes
+
+* **readme:** update readme with more info on dgraph ([237c029](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/237c0292cd89ea502d7f05cba6a3187fc6937986))
+* **readme:** update with PR comments ([90345f6](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/90345f6ddb97ea9c0ee71853063ba31412bfb9a0))
+
 ## [0.3.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.4...0.3.5) (2021-08-25)
 
 
