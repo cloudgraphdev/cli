@@ -33,6 +33,7 @@
     "inquirer": "^8.1.1",
     "live-plugin-manager": "^0.15.1",
     "open": "^8.2.1",
+    "ora": "^6.0.0",
     "tslib": "^1"
   },
   "devDependencies": {
