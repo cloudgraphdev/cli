@@ -69,7 +69,7 @@ function renderVoyagerPage(options: {endpointUrl: string}): string {
 }
 
 const voyagerMiddleware = (options: {endpointUrl: string}) => {
-  return (_req, res) => {
+  return (_req: any, res: any): void => {
     res.setHeader('Content-Type', 'text/html');
     res.write(renderVoyagerPage(options));
     res.end();
