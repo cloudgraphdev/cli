@@ -1,7 +1,6 @@
 // import { Opts } from '@cloudgraph/sdk'
 import chalk from 'chalk'
 import fs from 'fs'
-import ora from 'ora'
 import path from 'path'
 import { isEmpty } from 'lodash'
 
@@ -168,11 +167,11 @@ export default class Load extends Command {
         file = files[0].name
         version = files[0].folder
       }
-      const handleSchemaLoader = ora(
+      const handleSchemaLoader = this.logger.startSpinner(
         `updating ${chalk.italic.green('Schema')} for ${chalk.italic.green(
           provider
         )}`
-      ).start()
+      )
       const result = JSON.parse(fs.readFileSync(file, 'utf8'))
       const providerSchema = fileUtils.getSchemaFromFolder(version, provider)
       if (!providerSchema) {
@@ -197,9 +196,9 @@ export default class Load extends Command {
        * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
        * Push connected entity into dgraph
        */
-      const connectionLoader = ora(
+      const connectionLoader = this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
-      ).start()
+      )
       for (const entity of result.entities) {
         const { mutation, data } = entity
         const connectedData = data.map((service: any) =>

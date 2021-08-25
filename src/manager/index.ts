@@ -1,6 +1,5 @@
 import { PluginManager } from 'live-plugin-manager' // TODO: replace with homegrown solution
 import { Logger } from '@cloudgraph/sdk'
-import ora from 'ora'
 import path from 'path'
 
 export class Manager {
@@ -36,7 +35,7 @@ export class Manager {
     if (this.plugins[providerName]) {
       return this.plugins[providerName]
     }
-    const checkSpinner = ora(`Checking for ${providerName} module...`).start()
+    const checkSpinner = this.logger.startSpinner(`Checking for ${providerName} module...`)
     try {
       const importPath = `${providerNamespace}/cg-provider-${providerName}`
       if (process.env.NODE_ENV === 'development' || this.devMode) {
@@ -46,7 +45,7 @@ export class Manager {
         // TODO: talk with live-plugin-manager maintainer on why above doesnt work but below does??
         plugin = await import(importPath)
       } else {
-        const installOra = ora(`Installing ${providerName} plugin`).start()
+        const installOra = this.logger.startSpinner(`Installing ${providerName} plugin`)
         await this.pluginManager.install(importPath)
         installOra.succeed(`${providerName} plugin installed successfully!`)
         plugin = this.pluginManager.require(importPath)

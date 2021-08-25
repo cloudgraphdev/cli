@@ -1,5 +1,4 @@
 import chalk from 'chalk'
-import ora from 'ora'
 import fs from 'fs'
 import path from 'path'
 import { Opts } from '@cloudgraph/sdk'
@@ -91,11 +90,11 @@ export default class Scan extends Command {
       this.logger.debug(config)
 
       const { accountId } = await client.getIdentity()
-      const providerDataLoader = ora(
-        `${chalk.italic.green('SCANING')} data for ${chalk.italic.green(
+      const providerDataLoader = this.logger.startSpinner(
+        `${chalk.italic.green('SCANNING')} data for ${chalk.italic.green(
           provider
         )}`
-      ).start()
+      )
       const providerData = await client.getData({
         opts,
       })
@@ -104,11 +103,11 @@ export default class Scan extends Command {
       )
 
       // Handle schema, write provider and combined schema to file and store in Dgraph if running
-      const handleSchemaLoader = ora(
+      const handleSchemaLoader = this.logger.startSpinner(
         `updating ${chalk.italic.green('Schema')} for ${chalk.italic.green(
           provider
         )}`
-      ).start()
+      )
       const providerSchema: string = client.getSchema()
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
@@ -156,9 +155,9 @@ export default class Scan extends Command {
         this.exit()
       }
 
-      const connectionLoader = ora(
+      const connectionLoader = this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
-      ).start()
+      )
       for (const entity of providerData.entities) {
         const { mutation, data } = entity
         const connectedData = data.map((service: any) =>
