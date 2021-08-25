@@ -1,3 +1,10 @@
+## [0.3.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.3...0.3.4) (2021-08-25)
+
+
+### Bug Fixes
+
+* **init:** update init command for provider/cg config overwrite to be y/n ([4047199](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4047199686adc81399c88081d9c543486cfc5bcb))
+
 ## [0.3.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.2...0.3.3) (2021-08-25)
 
 
