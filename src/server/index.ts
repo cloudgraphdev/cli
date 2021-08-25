@@ -1,9 +1,8 @@
 import express from 'express'
 import {altairExpress} from 'altair-express-middleware'
 import expressPlayground from'graphql-playground-middleware-express'
-// import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 
-function renderVoyagerPage(options: {endpointUrl: string}) {
+function renderVoyagerPage(options: {endpointUrl: string}): string {
   const { endpointUrl } = options;
   const version = '1.0.0-rc.31'
   return `
@@ -69,7 +68,7 @@ function renderVoyagerPage(options: {endpointUrl: string}) {
 `;
 }
 
-const voyagerMiddleware = function expressMiddleware(options: {endpointUrl: string}) {
+const voyagerMiddleware = (options: {endpointUrl: string}) => {
   return (_req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.write(renderVoyagerPage(options));
