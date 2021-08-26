@@ -84,6 +84,7 @@ export default class Scan extends Command {
       )
       const client = await this.getProviderClient(provider)
       if (!client) {
+        this.logger.warn(`No valid client found for ${provider}, skipping...`)
         continue // eslint-disable-line no-continue
       }
       const config = this.getCGConfig(provider)
