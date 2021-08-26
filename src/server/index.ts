@@ -1,9 +1,9 @@
 import express from 'express'
-import {altairExpress} from 'altair-express-middleware'
-import expressPlayground from'graphql-playground-middleware-express'
+import { altairExpress } from 'altair-express-middleware'
+import expressPlayground from 'graphql-playground-middleware-express'
 
-function renderVoyagerPage(options: {endpointUrl: string}): string {
-  const { endpointUrl } = options;
+function renderVoyagerPage(options: { endpointUrl: string }): string {
+  const { endpointUrl } = options
   const version = '1.0.0-rc.31'
   return `
 <!DOCTYPE html>
@@ -65,15 +65,15 @@ function renderVoyagerPage(options: {endpointUrl: string}): string {
   </script>
 </body>
 </html>
-`;
+`
 }
 
-const voyagerMiddleware = (options: {endpointUrl: string}) => {
+const voyagerMiddleware = (options: { endpointUrl: string }) => {
   return (_req: any, res: any): void => {
-    res.setHeader('Content-Type', 'text/html');
-    res.write(renderVoyagerPage(options));
-    res.end();
-  };
+    res.setHeader('Content-Type', 'text/html')
+    res.write(renderVoyagerPage(options))
+    res.end()
+  }
 }
 export default class QueryEngine {
   constructor(port: string) {
@@ -86,15 +86,18 @@ export default class QueryEngine {
     return new Promise(resolve => {
       const app = express()
 
-      app.use('/altair', altairExpress({
-        endpointURL: `${host}/graphql`,
-        initialQuery: '{ queryaws_alb { arn }}',
-        initialSettings: {
-          addQueryDepthLimit: 3,
-        },
-      }))
+      app.use(
+        '/altair',
+        altairExpress({
+          endpointURL: `${host}/graphql`,
+          initialQuery: '{ queryawsAlb { arn }}',
+          initialSettings: {
+            addQueryDepthLimit: 3,
+          },
+        })
+      )
 
-      app.use('/voyager', voyagerMiddleware({ endpointUrl: `${host}/graphql` }));
+      app.use('/voyager', voyagerMiddleware({ endpointUrl: `${host}/graphql` }))
 
       // TODO: rework QueryEngine to do this better and only serve one
       app.get('/playground', expressPlayground({ endpoint: `${host}/graphql` }))
