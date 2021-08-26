@@ -44,7 +44,7 @@ cg launch
 If you do not want to use this command, for example if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
 ```bash
-  docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 -p 8000:8000 -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0
+  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0
 ```
 
 3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets.

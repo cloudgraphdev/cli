@@ -5,12 +5,12 @@ import { cosmiconfigSync } from 'cosmiconfig'
 import path from 'path'
 import inquirer from 'inquirer'
 import chalk from 'chalk'
-import open from 'open'
 import Manager from '../manager'
 import EngineMap from '../storage'
 import QueryEngine from '../server'
 import { StorageEngine } from '../storage/types'
 import { printWelcomeMessage } from '../utils'
+import openBrowser from '../utils/open'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
@@ -148,9 +148,9 @@ export default abstract class BaseCommand extends Command {
           `http://localhost:${serverPort}`
         )}`
       )
-      await open(`http://localhost:${serverPort}/${this.getQueryEngine()}`, {
-        wait: true,
-      })
+      await openBrowser(
+        `http://localhost:${serverPort}/${this.getQueryEngine()}`
+      )
     }
   }
 
@@ -221,7 +221,9 @@ export default abstract class BaseCommand extends Command {
       return provider ? this.storedConfig[provider] : this.storedConfig
     }
     try {
-      const config = cosmiconfigSync('cloud-graph').load(path.join(configDir, '.cloud-graphrc.json'))
+      const config = cosmiconfigSync('cloud-graph').load(
+        path.join(configDir, '.cloud-graphrc.json')
+      )
       if (config) {
         const configResult = config.config
         this.storedConfig = configResult
