@@ -1,3 +1,10 @@
+# [0.4.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.8...0.4.0) (2021-08-26)
+
+
+### Features
+
+* **dgraph-storage-engine:** refactor to surface data-schema push errors ([f59abef](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f59abeff1eda06b1570c84856d8cb82dab99cf47))
+
 ## [0.3.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.7...0.3.8) (2021-08-26)
 
 
