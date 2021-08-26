@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash'
 
 import Command from './base'
 // import { getLatestProviderData, fileUtils, getConnectedEntity } from '../utils'
-import { fileUtils, getConnectedEntity } from '../utils'
+import { fileUtils, processConnectionsBetweenEntities } from '../utils'
 
 // import { Opts } from '@cloudgraph/sdk'
 
@@ -172,7 +172,7 @@ export default class Load extends Command {
           provider
         )}`
       )
-      const result = JSON.parse(fs.readFileSync(file, 'utf8'))
+      const providerData = JSON.parse(fs.readFileSync(file, 'utf8'))
       const providerSchema = fileUtils.getSchemaFromFolder(version, provider)
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
@@ -189,32 +189,17 @@ export default class Load extends Command {
       )
 
       /**
-       * Loop through the result entities and for each entity:
-       * Look in result.connections for [key = entity.id]
+       * Loop through the providerData entities and for each entity:
+       * Look in providerData.connections for [key = entity.id]
        * Loop through the connections for entity and determine its resource type
-       * Find entity in result.entites that matches the id found in connections
+       * Find entity in providerData.entities that matches the id found in connections
        * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
        * Push connected entity into dgraph
        */
       const connectionLoader = this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
-      for (const entity of result.entities) {
-        const { mutation, data } = entity
-        const connectedData = data.map((service: any) =>
-          getConnectedEntity(service, result)
-        )
-        this.logger.debug(connectedData)
-        if (storageRunning) {
-          // Add service mutation to promises array
-          storageEngine.push({
-            query: mutation,
-            variables: {
-              input: connectedData,
-            },
-          })
-        }
-      }
+      processConnectionsBetweenEntities(providerData, storageEngine, storageRunning)
       connectionLoader.succeed(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )

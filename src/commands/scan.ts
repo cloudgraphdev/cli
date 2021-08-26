@@ -4,7 +4,8 @@ import path from 'path'
 import { Opts } from '@cloudgraph/sdk'
 
 import Command from './base'
-import { fileUtils, getConnectedEntity } from '../utils'
+import { fileUtils, processConnectionsBetweenEntities } from '../utils'
+import DgraphEngine from '../storage/dgraph'
 
 export default class Scan extends Command {
   static description =
@@ -123,14 +124,17 @@ export default class Scan extends Command {
         fileUtils.writeGraphqlSchemaToFile(dataStorageLocation, schema.join())
         if (storageRunning) {
           try {
+            if (storageEngine instanceof DgraphEngine) {
+              await storageEngine.validateSchema(schema, dataFolder)
+            }
             await storageEngine.setSchema(schema)
           } catch (error: any) {
-            this.logger.debug(error)
             this.logger.error(
               `There was an issue pushing schema for providers: ${allProviders.join(
                 ' | '
               )} to dgraph at ${storageEngine.host}`
             )
+            this.logger.debug(JSON.stringify(error))
             fileUtils.deleteFolder(dataStorageLocation)
             this.exit()
           }
@@ -158,21 +162,7 @@ export default class Scan extends Command {
       const connectionLoader = this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
-      for (const entity of providerData.entities) {
-        const { mutation, data } = entity
-        const connectedData = data.map((service: any) =>
-          getConnectedEntity(service, providerData)
-        )
-        if (storageRunning) {
-          // Add service mutation to promises array
-          storageEngine.push({
-            query: mutation,
-            variables: {
-              input: connectedData,
-            },
-          })
-        }
-      }
+      processConnectionsBetweenEntities(providerData, storageEngine, storageRunning)
       connectionLoader.succeed(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
