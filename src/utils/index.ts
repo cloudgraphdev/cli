@@ -8,7 +8,9 @@ import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
 
+import isEmpty from 'lodash/isEmpty'
 import C from '../utils/constants'
+import { StorageEngine } from '../storage/types'
 
 const { logger } = CloudGraph
 
@@ -86,19 +88,17 @@ export function writeGraphqlSchemaToFile(
 
 export function getConnectedEntity(
   service: any,
-  { entities, connections: allConnections }: any
+  { entities, connections: allConnections }: any,
+  initiatorServiceName: string
 ): Record<string, unknown> {
   // opts: Opts
-  logger.debug(`getting connected entity for id = ${service.id}`)
+  logger.debug(`Getting connected entities for ${chalk.green(initiatorServiceName)} id = ${chalk.green(service.id)}`)
   const connections = allConnections[service.id]
   const connectedEntity = {
     ...service,
   }
   if (connections) {
     for (const connection of connections) {
-      logger.debug(
-        `searching for ${connection.resourceType} entity data to make connection between ${service.id} && ${connection.resourceType}`
-      )
       const entityData = entities.find(
         ({ name }: { name: string }) => name === connection.resourceType
       )
@@ -106,14 +106,51 @@ export function getConnectedEntity(
         const entityForConnection = entityData.data.find(
           ({ id }: { id: string }) => connection.id === id
         )
-        if (!connectedEntity[connection.field]) {
-          connectedEntity[connection.field] = []
+        if (!isEmpty(entityForConnection)) {
+          if (!connectedEntity[connection.field]) {
+            connectedEntity[connection.field] = []
+          }
+          connectedEntity[connection.field].push(entityForConnection)
+          logger.debug(
+            `(${initiatorServiceName}) ${service.id} ${chalk.green('<----->')} ${
+              connection.id
+            } (${connection.resourceType})`
+          )
+        } else {
+          const error = `Malformed connection found between ${chalk.red(
+            initiatorServiceName
+          )} && ${chalk.red(connection.resourceType)} services.`
+          logger.warn(error)
+          logger.warn(
+            `(${initiatorServiceName}) ${service.id} ${chalk.red('<-///->')} ${
+              connection.id
+            } (${connection.resourceType})`
+          )
         }
-        connectedEntity[connection.field].push(entityForConnection)
       }
     }
   }
   return connectedEntity
+}
+
+export function processConnectionsBetweenEntities(
+  providerData: any,
+  storageEngine: StorageEngine,
+  storageRunning: boolean
+): void {
+  for (const entity of providerData.entities) {
+    const { mutation, data, name } = entity
+    const connectedData = data.map((service: any) =>
+      getConnectedEntity(service, providerData, name)
+    )
+    if (storageRunning) {
+      // Add service mutation to promises array
+      storageEngine.push({
+        query: mutation,
+        connectedData,
+      })
+    }
+  }
 }
 
 export function printWelcomeMessage(): void {

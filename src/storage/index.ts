@@ -1,7 +1,9 @@
 import DgraphEngine from './dgraph'
-import {StorageEngine} from './types'
+import { StorageEngine, StorageEngineConfig } from './types'
 
-const engineMap: {[key: string]: new (config: any) => StorageEngine} = {
+const engineMap: {
+  [key: string]: new (config: StorageEngineConfig) => StorageEngine
+} = {
   dgraph: DgraphEngine,
 }
 
