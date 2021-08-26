@@ -1,3 +1,10 @@
+## [0.3.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.7...0.3.8) (2021-08-26)
+
+
+### Bug Fixes
+
+* Reuse browser tab ([cda2383](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cda2383eacb97fa9c9778041190c0307ec53fc92))
+
 ## [0.3.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.6...0.3.7) (2021-08-25)
 
 
