@@ -23,6 +23,8 @@ export default abstract class BaseCommand extends Command {
 
   versionDirectory = 'cg'
 
+  versionLimit = 10
+
   logger: Logger
 
   manager: Manager | undefined
@@ -69,6 +71,11 @@ export default abstract class BaseCommand extends Command {
       char: 'q',
       description: 'Query engine to launch',
     }),
+    // version limit
+    'version-limit': flags.string({
+      char: 'l',
+      description: 'Limit the amount of version folders stored on the filesystem (default 10)',
+    }),
   }
 
   static hidden = true
@@ -99,6 +106,7 @@ export default abstract class BaseCommand extends Command {
     }
     const configDir = this.getCGConfigKey('directory') ?? 'cg'
     this.versionDirectory = directory ?? configDir
+    this.versionLimit = this.getCGConfigKey('versionLimit') ?? this.versionLimit
   }
 
   getCGConfigKey(key: string) {

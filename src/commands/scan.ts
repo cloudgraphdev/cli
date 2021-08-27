@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import { Opts } from '@cloudgraph/sdk'
+import { range } from 'lodash'
 
 import Command from './base'
 import { fileUtils, getConnectedEntity } from '../utils'
@@ -62,10 +63,26 @@ export default class Scan extends Command {
 
     // Build folder structure for saving CloudGraph data by version
     const schema: any[] = []
-    const folders = fileUtils.getVersionFolders(
+    let folders = fileUtils.getVersionFolders(
       path.join(dataDir, this.versionDirectory)
     )
     let dataFolder = 'version-1'
+
+    if (folders.length >= this.versionLimit) {
+      // version 1 gets deleted, version 2 becomes version 1 … new version gets created
+      const pathPrefix = path.join(dataDir, this.versionDirectory)
+      const versionPrefix = path.join(pathPrefix, 'version-')
+      for (const version of [1, ...range(this.versionLimit + 1, folders.length + 1)]) {
+        fs.rmSync(versionPrefix + version, {recursive: true})
+      }
+      for (const version of range(1, this.versionLimit)) {
+        fs.renameSync(versionPrefix + (version + 1), versionPrefix + version)
+      }
+      folders = fileUtils.getVersionFolders(
+        path.join(dataDir, this.versionDirectory)
+      )
+    }
+
     if (folders) {
       dataFolder = `version-${folders.length + 1}`
     }
