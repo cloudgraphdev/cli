@@ -62,7 +62,7 @@ export default class Init extends Command {
     if (dgraph) {
       result.dgraphHost = dgraph
     } else {
-      const { dgraph } = await this.interface.prompt([
+      const { dgraph, versionLimit } = await this.interface.prompt([
         // TODO: validate has url structure with regex
         {
           type: 'input',
@@ -71,8 +71,16 @@ export default class Init extends Command {
           name: 'dgraph',
           default: 'http://localhost:8997',
         },
+        {
+          type: 'input',
+          message:
+            'Enter the maximum number of scanned versions of your cloud data that you would like to store',
+          name: 'versionLimit',
+          default: 10,
+        },
       ])
       result.dgraphHost = dgraph
+      result.versionLimit = versionLimit
     }
     if (queryEngine) {
       result.queryEngine = QueryEngine

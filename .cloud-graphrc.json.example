@@ -6,6 +6,7 @@
   "cloudGraph": {
     "dgraphHost": "http://localhost:8997",
     "directory": "cg",
-    "queryEngine": "playground"
+    "queryEngine": "playground",
+    "versionLimit": 10
   }
 }
