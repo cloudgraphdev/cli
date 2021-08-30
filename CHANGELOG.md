@@ -1,3 +1,15 @@
+# [0.5.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.4.0...0.5.0) (2021-08-30)
+
+
+### Bug Fixes
+
+* **versionLimit:** add warn log for version limit, update version limit prompt ([bd9698e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/bd9698e9fa390c251494040e043daa7a42d7595d))
+
+
+### Features
+
+* **versionLimit:** add version limit flag/logic, update doc/example config ([5e6f585](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5e6f58519aa236ddc3072d4799f3f268ff203400))
+
 # [0.4.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.3.8...0.4.0) (2021-08-26)
 
 
