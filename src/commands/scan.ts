@@ -69,6 +69,9 @@ export default class Scan extends Command {
     let dataFolder = 'version-1'
 
     if (folders.length >= this.versionLimit) {
+      this.logger.warn(
+        `Maximum number of data versions has been reached, deleting version-1 and creating a new version-${this.versionLimit}`
+      )
       // version 1 gets deleted, version 2 becomes version 1 … new version gets created
       const pathPrefix = path.join(dataDir, this.versionDirectory)
       const versionPrefix = path.join(pathPrefix, 'version-')

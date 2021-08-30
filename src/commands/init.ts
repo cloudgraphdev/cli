@@ -74,7 +74,7 @@ export default class Init extends Command {
         {
           type: 'input',
           message:
-            'Enter the maximum amount of version folders stored on the filesystem',
+            'Enter the maximum number of scanned versions of your cloud data that you would like to store',
           name: 'versionLimit',
           default: 10,
         },
