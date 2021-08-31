@@ -1,6 +1,8 @@
 import { PluginManager } from 'live-plugin-manager' // TODO: replace with homegrown solution
 import { Logger } from '@cloudgraph/sdk'
+import { cosmiconfigSync } from 'cosmiconfig'
 import path from 'path'
+import fs from 'fs'
 import satisfies from 'semver/functions/satisfies'
 
 export class Manager {
@@ -47,20 +49,19 @@ export class Manager {
     try {
       const importPath = `${providerNamespace}/cg-provider-${providerName}`
       if (process.env.NODE_ENV === 'development' || this.devMode) {
-        // TODO: this install doesnt work if it has a yalc-d package in it, how to resolve?
-        // await thiscd .manager.installFromPath(path.join(__dirname, `../../.yalc/${provider}-provider-plugin`), {force: true})
-        // plugin = this.manager.require(`${provider}-provider-plugin`)
-        // TODO: talk with live-plugin-manager maintainer on why above doesnt work but below does??
         const isValidVersion = await this.checkRequiredVersion(importPath)
         if (!isValidVersion) {
           throw new Error('Version check failed')
         }
+        // TODO: talk with live-plugin-manager maintainer on why above doesnt work but below does??
         plugin = await import(importPath)
       } else {
         const installOra = this.logger.startSpinner(
           `Installing ${providerName} plugin`
         )
-        await this.pluginManager.install(importPath)
+        const providerVersion = this.getProviderVersionFromLock(provider)
+        this.logger.info(`Requiring ${provider} module version: ${providerVersion}`)
+        await this.pluginManager.install(importPath, providerVersion)
         const isValidVersion = await this.checkRequiredVersion(importPath)
         if (!isValidVersion) {
           throw new Error('Version check failed')
@@ -69,7 +70,7 @@ export class Manager {
         plugin = this.pluginManager.require(importPath)
       }
     } catch (error: any) {
-      this.logger.debug(error)
+      console.log(error)
       checkSpinner.fail(`Manager failed to install plugin for ${providerName}`)
       throw new Error('FAILED to find plugin!!')
     }
@@ -103,6 +104,35 @@ export class Manager {
       return false
     }
     return true
+  }
+
+  getProviderVersionFromLock(provider: string): string {
+    const lockPath = path.join(this.cliConfig.configDir, '.cloud-graph.lock.json')
+    let config
+    try {
+      config = cosmiconfigSync('cloud-graph').load(
+        lockPath
+      )
+    } catch (error: any) {
+      this.logger.info('No lock file found for Cloud Graph, creating one...')
+    }
+    if (!config?.config) {
+      const data = {
+        [provider]: 'latest'
+      }
+      fs.writeFileSync(lockPath, JSON.stringify(data, null, 2))
+      return 'latest'
+    }
+    const lockFile = config.config
+    if (!lockFile[provider]) {
+      const newLockFile = {
+        ...lockFile,
+        [provider]: 'latest'
+      }
+      fs.writeFileSync(lockPath, JSON.stringify(newLockFile, null, 2))
+      return 'latest'
+    }
+    return lockFile[provider]
   }
 }
 
