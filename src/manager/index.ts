@@ -2,6 +2,7 @@ import { PluginManager } from 'live-plugin-manager' // TODO: replace with homegr
 import { Logger } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
 import path from 'path'
+import chalk from 'chalk'
 import fs from 'fs'
 import satisfies from 'semver/functions/satisfies'
 
@@ -37,14 +38,14 @@ export class Manager {
     if (provider.includes('/')) {
       [providerNamespace, providerName] = provider.split('/')
       this.logger.info(
-        `Installing community provider ${providerName} from namespace ${providerNamespace}`
+        `Installing community provider ${chalk.green(providerName)} from namespace ${providerNamespace}`
       )
     }
     if (this.plugins[providerName]) {
       return this.plugins[providerName]
     }
     const checkSpinner = this.logger.startSpinner(
-      `Checking for ${providerName} module...`
+      `Checking for ${chalk.green(providerName)} module...`
     )
     try {
       const importPath = `${providerNamespace}/cg-provider-${providerName}`
@@ -57,26 +58,39 @@ export class Manager {
         plugin = await import(importPath)
       } else {
         const installOra = this.logger.startSpinner(
-          `Installing ${providerName} plugin`
+          `Installing ${chalk.green(providerName)} plugin`
         )
-        const providerVersion = this.getProviderVersionFromLock(provider)
-        this.logger.info(`Requiring ${provider} module version: ${providerVersion}`)
-        await this.pluginManager.install(importPath, providerVersion)
+        const providerLockVersion = this.getProviderVersionFromLock(provider)
+        this.logger.info(`Installing ${chalk.green(provider)} module version: ${chalk.green(providerLockVersion)}`)
+        await this.pluginManager.install(importPath, providerLockVersion)
         const isValidVersion = await this.checkRequiredVersion(importPath)
         if (!isValidVersion) {
           throw new Error('Version check failed')
         }
-        installOra.succeed(`${providerName} plugin installed successfully!`)
+        // If there is no lock file, we download latest and then update the lock file with latest version
+        if (providerLockVersion === 'latest') {
+          const version = this.getProviderVersion(importPath)
+          this.logger.info(`${chalk.green(provider)} version locked at: ${chalk.green(version)}`)
+          this.writeVersionToLockFile(provider, version)
+        }
+        installOra.succeed(`${chalk.green(providerName)} plugin installed successfully!`)
         plugin = this.pluginManager.require(importPath)
       }
     } catch (error: any) {
       console.log(error)
-      checkSpinner.fail(`Manager failed to install plugin for ${providerName}`)
+      checkSpinner.fail(`Manager failed to install plugin for ${chalk.green(providerName)}`)
       throw new Error('FAILED to find plugin!!')
     }
-    checkSpinner.succeed(`${providerName} module check complete`)
+    checkSpinner.succeed(`${chalk.green(providerName)} module check complete`)
     this.plugins[providerName] = plugin
     return plugin
+  }
+
+  getProviderVersion(importPath: string): string {
+    const providerInfo = this.pluginManager.require(
+      `${importPath}/package.json`
+    )
+    return providerInfo.version
   }
   
   async checkRequiredVersion(importPath: string): Promise<boolean> {
@@ -133,6 +147,23 @@ export class Manager {
       return 'latest'
     }
     return lockFile[provider]
+  }
+
+  writeVersionToLockFile(provider: string, version: string): void {
+    const lockPath = path.join(this.cliConfig.configDir, '.cloud-graph.lock.json')
+    try {
+      const test = cosmiconfigSync('cloud-graph').load(
+        lockPath
+      )
+      const lockFile = test?.config
+      const newLockFile = {
+        ...lockFile,
+        [provider]: version
+      }
+      fs.writeFileSync(lockPath, JSON.stringify(newLockFile, null, 2))
+    } catch (error: any) {
+      this.logger.error('There was an error writing latest version to the lock file')
+    }
   }
 }
 
