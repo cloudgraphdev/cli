@@ -1,3 +1,10 @@
+## [0.6.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.6.0...0.6.1) (2021-09-01)
+
+
+### Bug Fixes
+
+* **README.md:** Update README with information on query tools ([4cc90be](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4cc90be1da0fc656430e19f9aae2caf2cc4d74d7))
+
 # [0.6.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.5.0...0.6.0) (2021-09-01)
 
 
