@@ -12,6 +12,7 @@ A type-safe way to query your cloud assets and configuration with  **GraphQL**. 
 * [Install](#install)
 * [Quick Start](#quick-start)
 * [Commands](#commands)
+* [Query Tools](#query-tools)
 <!-- tocstop -->
 
 # Install
@@ -229,3 +230,23 @@ EXAMPLE
 
 _See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.6.0/src/commands/serve.ts)_
 <!-- commandsstop -->
+
+# Query Tools
+
+<!-- querytools -->
+
+CloudGraph comes shipped with 2 great query tools and a GraphQL schema explorer. Remember, you can use **ANY** GraphQL query tool if you would prefer another option, just connect it to your exposed `/graphql` endpoint!
+
+## [GraphQL Playground](https://github.com/graphql/graphql-playground)
+
+GraphQL playground has a fluid and engaging UX that is great for querying a GraphQL schema quickly and simply. To access playground, either select it as your preferred query tool in the `init` command OR visit `/playground` in the server CG spins up.
+
+## [Altair](https://github.com/altair-graphql/altair)
+
+Altair is another great GraphQL query tool that packs a ton of [features](https://github.com/altair-graphql/altair#features) for power users. Do things like autocomplete queries, dynamically add fragments, and export/import collections of queries. To access Altair, either select it as your preferred query tool in the `init` command OR visit `/altair` in the server CG spins up.
+
+## [Voyager](https://github.com/APIs-guru/graphql-voyager)
+
+GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers. It gives you a great bidirectional chart containing all your types and queries. You can click entities or arrows to discover connections, search for something specific, and get a deeper understanding of your schema. To access voyager, visit `/voyager` in the server CG spins up.
+
+<!-- querytoolsstop -->
