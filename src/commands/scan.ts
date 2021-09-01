@@ -105,6 +105,7 @@ export default class Scan extends Command {
       )
       const client = await this.getProviderClient(provider)
       if (!client) {
+        this.logger.warn(`No valid client found for ${provider}, skipping...`)
         continue // eslint-disable-line no-continue
       }
       const config = this.getCGConfig(provider)
@@ -190,14 +191,19 @@ export default class Scan extends Command {
 
     // Execute services mutations promises
     await storageEngine.run()
-    const resultLog = storageRunning
-      ? `saved to Dgraph. Query at ${chalk.underline.green(
+
+    this.logger.success(
+      `Your data for ${allProviders.join(' | ')} has been saved to ${chalk.italic.green(dataStorageLocation)}`
+    )
+    if (storageRunning) {
+      this.logger.success(
+        `Your data for ${allProviders.join(
+          ' | '
+        )} has been saved to Dgraph. Query at ${chalk.underline.green(
           `${storageEngine.host}/graphql`
         )}`
-      : `saved to ${chalk.italic.green(dataStorageLocation)}`
-    this.logger.success(
-      `Your data for ${allProviders.join(' | ')} has been ${resultLog}`
-    )
+      )
+    }
     storageRunning && (await this.startQueryEngine())
     this.exit()
   }

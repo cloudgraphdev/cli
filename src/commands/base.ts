@@ -202,7 +202,7 @@ export default abstract class BaseCommand extends Command {
     } = this.parse(this.constructor as Input<{ dev: boolean }>)
     try {
       if (!this.manager) {
-        this.manager = new Manager({ logger: this.logger, devMode })
+        this.manager = new Manager({ logger: this.logger, devMode, cliConfig: this.config })
       }
       if (this.providers[provider]) {
         return this.providers[provider]
