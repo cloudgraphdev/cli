@@ -77,7 +77,7 @@ export class Manager {
         plugin = this.pluginManager.require(importPath)
       }
     } catch (error: any) {
-      console.log(error)
+      this.logger.debug(JSON.stringify(error))
       checkSpinner.fail(`Manager failed to install plugin for ${chalk.green(providerName)}`)
       throw new Error('FAILED to find plugin!!')
     }
