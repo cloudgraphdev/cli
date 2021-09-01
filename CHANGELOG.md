@@ -1,3 +1,16 @@
+# [0.6.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.5.0...0.6.0) (2021-09-01)
+
+
+### Bug Fixes
+
+* **versions:** update handling of no lock file to use latest available version. Update some logs to be better ([7c8f2af](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7c8f2af1807d206c13addaae90c2ae1bcfb7c84e))
+
+
+### Features
+
+* **versioning:** Beginning work on versioning the cli and providers ([ae723c9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ae723c962157b97b3353500c2c0520620407ab1e))
+* **versioning:** Use lockfile to enable cloudgraph to always pull the same version of provider ([d63b394](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d63b39476169891f6906d7108e3a3ec27829b94a))
+
 # [0.5.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.4.0...0.5.0) (2021-08-30)
 
 
