@@ -1,70 +1,39 @@
-import { Logger } from '@cloudgraph/sdk'
-import axios from 'axios'
-import chalk from 'chalk'
-import { GraphQLError, ExecutionResult } from 'graphql'
-import isEmpty from 'lodash/isEmpty'
+import { ExecutionResult } from 'graphql'
 
-import {
-  GraphQLFormattedQuery,
-  GraphQLInputData,
-  StorageEngine,
-  StorageEngineConfig,
-} from '../types'
+import { GraphQLInputData, StorageEngine, StorageEngineConfig } from '../types'
+import DGraphClientWrapper from './base'
+import { processGQLExecutionResult, UPDATE_SCHEMA_QUERY } from './utils'
 
-const UPDATE_SCHEMA_QUERY = `
-mutation($schema: String!) {
-  updateGQLSchema(input: { set: { schema: $schema } }) {
-    gqlSchema {
-      schema
-    }
-  }
-}`
-
-export default class DgraphEngine implements StorageEngine {
+export default class DgraphEngine
+  extends DGraphClientWrapper
+  implements StorageEngine
+{
   constructor(config: StorageEngineConfig) {
-    this.connectionHost = config.host
-    this.logger = config.logger
+    super(config)
     this.axiosPromises = []
   }
 
-  connectionHost: string
-
-  logger: Logger
-
   axiosPromises: (() => Promise<void>)[]
 
-  // set host(host: string) {
-  //   if (host) {
-  //     return host
-  //   }
-  //   if (process.env.DGRAPH_HOST) {
-  //     return process.env.DGRAPH_HOST
-  //   }
-  // }
   async healthCheck(showInitialStatus = true): Promise<boolean> {
     showInitialStatus &&
       this.logger.debug(`running dgraph health check at ${this.host}`)
     try {
-      const healthCheck = await axios({
-        url: `${this.host}/health?all`,
-        method: 'post',
+      const healthCheck = await this.generateAxiosRequest({
+        path: '/health?all',
         headers: {
           'Content-Type': 'application/json',
         },
       })
-      this.logger.debug(JSON.stringify(healthCheck.data))
+      this.logger.debug(JSON.stringify(healthCheck.data, null, 2))
       return true
     } catch (error: any) {
       this.logger.warn(
         `dgraph at ${this.host} failed health check. Is dgraph running?`
       )
-      this.logger.debug(JSON.stringify(error))
+      this.logger.debug(JSON.stringify(error, null, 2))
       return false
     }
-  }
-
-  get host(): string {
-    return this.connectionHost
   }
 
   async validateSchema(schema: string[], versionString: string): Promise<void> {
@@ -72,9 +41,8 @@ export default class DgraphEngine implements StorageEngine {
     this.logger.debug(`Validating Schema for ${versionCaption}`)
     return new Promise<void>(async (resolve, reject) => {
       try {
-        await axios({
-          url: `${this.host}/admin/schema/validate`,
-          method: 'post',
+        await this.generateAxiosRequest({
+          path: '/admin/schema/validate',
           data: schema.join(),
           headers: {
             'Content-Type': 'text/plain',
@@ -104,6 +72,7 @@ export default class DgraphEngine implements StorageEngine {
   }
 
   async setSchema(schemas: string[]): Promise<void> {
+    await this.dropAll()
     const data = {
       query: UPDATE_SCHEMA_QUERY,
       variables: {
@@ -111,14 +80,17 @@ export default class DgraphEngine implements StorageEngine {
       },
     }
     try {
-      await axios({
-        url: `${this.host}/admin`,
-        method: 'post',
+      await this.generateAxiosRequest({
+        path: '/admin',
         data,
       })
         .then((res: ExecutionResult) => {
           const { data: resData, errors } = res
-          this.processGQLExecutionResult({ reqData: data, resData, errors })
+          processGQLExecutionResult({
+            reqData: data,
+            resData,
+            errors,
+          })
         })
         .catch(error => Promise.reject(error))
     } catch (error: any) {
@@ -130,7 +102,11 @@ export default class DgraphEngine implements StorageEngine {
         'There was an issue pushing the schema into the Dgraph db'
       )
       this.logger.debug(message)
-      this.processGQLExecutionResult({ reqData: data, resData, errors })
+      processGQLExecutionResult({
+        reqData: data,
+        resData,
+        errors,
+      })
     }
   }
 
@@ -146,14 +122,13 @@ export default class DgraphEngine implements StorageEngine {
       },
     }
     this.axiosPromises.push(() =>
-      axios({
-        url: `${this.host}/graphql`,
-        method: 'post',
+      this.generateAxiosRequest({
+        path: '/graphql',
         data: queryData,
       })
         .then((res: ExecutionResult) => {
           const { data: resData, errors } = res
-          this.processGQLExecutionResult({
+          processGQLExecutionResult({
             reqData: queryData,
             resData,
             errors,
@@ -166,7 +141,8 @@ export default class DgraphEngine implements StorageEngine {
   /**
    * Executes mutations sequentially into Dgraph
    */
-  async run(): Promise<void> {
+  async run(dropData = true): Promise<void> {
+    dropData && await this.dropData()
     for (const mutation of this.axiosPromises) {
       try {
         await mutation()
@@ -177,95 +153,8 @@ export default class DgraphEngine implements StorageEngine {
         } = error
         this.logger.error('There was an issue pushing data into the Dgraph db')
         this.logger.debug(message)
-        this.processGQLExecutionResult({ resData, errors })
+        processGQLExecutionResult({ resData, errors })
       }
     }
-  }
-
-  private processGQLExecutionResult({
-    errors: resErrors,
-    reqData = { query: '', variables: {} },
-    resData,
-  }: {
-    errors?: ReadonlyArray<GraphQLError>
-    reqData?: GraphQLFormattedQuery
-    resData?: { [key: string]: any } | null
-  }): void {
-    // Data interpolated to query. Works for both schema push and data load
-    const { variables } = reqData
-    if (resData && !resErrors) {
-      const { data: mutationResultData, errors: dataErrors } = resData
-      let executedMutationNames: string[] = []
-      if (!isEmpty(mutationResultData)) {
-        executedMutationNames = Object.keys(mutationResultData) || []
-        executedMutationNames.forEach(mutationName => {
-          if (mutationResultData[mutationName]) {
-            const { numUids } = mutationResultData[mutationName]
-            const numUidsString = numUids ? `numUids affected: ${numUids}` : ''
-            this.logger.debug(
-              `mutation ${chalk.green(
-                mutationName
-              )} completed successfully. ${numUidsString}`
-            )
-          }
-        })
-      }
-      this.processErrorArrayIfExists({
-        errors: dataErrors,
-        variables,
-        additionalInfo: { executedMutationNames },
-      })
-    }
-    // Data related errors
-    this.processErrorArrayIfExists({ errors: resErrors, variables })
-  }
-
-  private processErrorArrayIfExists({
-    errors,
-    variables,
-    additionalInfo,
-  }: {
-    errors?: ReadonlyArray<GraphQLError>
-    variables: any
-    additionalInfo?: { executedMutationNames?: string[] }
-  }): void {
-    if (errors) {
-      errors.forEach((err: GraphQLError) => {
-        const { path, locations, message, extensions = {} } = err
-        this.printErrorMessage(message, additionalInfo)
-        // Sometimes dgraph can provide extra information about an error
-        extensions.code &&
-          this.logger.debug(`Additional error info: ${extensions.code}`)
-        // Happens when data to load into Dgraph fails to pass the schema validation
-        path &&
-          this.logger.debug(`Additional path info: ${JSON.stringify(path)}`)
-        if (path?.[0] && path?.[1] && path?.[2]) {
-          if (path[0] === 'variable') {
-            if (path[1] === 'input') {
-              if (typeof path[2] === 'number') {
-                this.logger.debug(variables[path[1]][path[2]][path[3]])
-              }
-            }
-          }
-        }
-        // Errors that can be schema format/syntax errors
-        locations &&
-          this.logger.debug(
-            `Additional location info: ${JSON.stringify(locations)}`
-          )
-      })
-    }
-  }
-
-  // Look for mutation name and color it red
-  private printErrorMessage(message: string, additionalInfo: any): void {
-    let messageToShow = message
-    const found = additionalInfo?.executedMutationNames?.find((v: string) =>
-      message.includes(v)
-    )
-    if (found) {
-      messageToShow = message.replace(found, chalk.red(found))
-    }
-    messageToShow && this.logger.error(messageToShow)
   }
 }

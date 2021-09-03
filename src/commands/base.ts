@@ -8,9 +8,10 @@ import chalk from 'chalk'
 import Manager from '../manager'
 import EngineMap from '../storage'
 import QueryEngine from '../server'
-import { StorageEngine } from '../storage/types'
-import { printWelcomeMessage } from '../utils'
+import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
+import { getStorageEngineConnectionConfig, printWelcomeMessage } from '../utils'
 import openBrowser from '../utils/open'
+import { DEFAULT_CONFIG } from '../utils/constants'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
@@ -74,7 +75,8 @@ export default abstract class BaseCommand extends Command {
     // version limit
     'version-limit': flags.string({
       char: 'l',
-      description: 'Limit the amount of version folders stored on the filesystem (default 10)',
+      description:
+        'Limit the amount of version folders stored on the filesystem (default 10)',
     }),
   }
 
@@ -97,7 +99,8 @@ export default abstract class BaseCommand extends Command {
     )
 
     this.storageEngine = new EngineMap[storage]({
-      host: this.getHost(),
+      type: storage,
+      ...this.getConnectionSettings(),
       logger: this.logger,
     })
     const config = this.getCGConfig('cloudGraph')
@@ -109,7 +112,7 @@ export default abstract class BaseCommand extends Command {
     this.versionLimit = this.getCGConfigKey('versionLimit') ?? this.versionLimit
   }
 
-  getCGConfigKey(key: string) {
+  getCGConfigKey(key: string): any {
     const config = this.getCGConfig('cloudGraph')
     if (config?.[key]) {
       return config[key]
@@ -125,7 +128,8 @@ export default abstract class BaseCommand extends Command {
       flags: { storage = 'dgraph' },
     } = this.parse(this.constructor as Input<{ dev: boolean; storage: string }>)
     const engine = new EngineMap[storage]({
-      host: this.getHost(),
+      type: storage,
+      ...this.getConnectionSettings(),
       logger: this.logger,
     })
     this.storageEngine = engine
@@ -150,7 +154,7 @@ export default abstract class BaseCommand extends Command {
       const configPort = this.getCGConfigKey('port') ?? 5555
       const serverPort = port ?? configPort
       const queryEngine = new QueryEngine(serverPort)
-      await queryEngine.startServer(this.getHost())
+      await queryEngine.startServer(this.getHost(this.getConnectionSettings()))
       this.logger.success(
         `Serving query engine at ${chalk.underline.green(
           `http://localhost:${serverPort}`
@@ -162,7 +166,9 @@ export default abstract class BaseCommand extends Command {
     }
   }
 
-  getHost(showInitialStatus = true): string {
+  getConnectionSettings(
+    showInitialStatus = true
+  ): StorageEngineConnectionConfig {
     const {
       flags: { dgraph: dgraphHost, storage },
     } = this.parse(
@@ -178,31 +184,43 @@ export default abstract class BaseCommand extends Command {
       if (dgraphHost) {
         showInitialStatus &&
           this.logger.info(`Dgraph host set as: ${dgraphHost}`)
-        return dgraphHost
+        return getStorageEngineConnectionConfig(dgraphHost)
       }
       // next check for value defined in config file
       const config = this.getCGConfig('cloudGraph')
-      if (config && config.dgraphHost) {
+      if (config && config.storageConfig) {
         showInitialStatus &&
-          this.logger.info(`Dgraph host set as: ${config.dgraphHost}`)
-        return config.dgraphHost
+          this.logger.info(
+            `Dgraph host set as: ${this.getHost(config.storageConfig)}`
+          )
+        return config.storageConfig
       }
       // nothing found, return default location
-      const defaultHost = 'http://localhost:8997'
+
       showInitialStatus &&
-        this.logger.info(`Dgraph host set as: ${defaultHost}`)
-      return defaultHost
+        this.logger.info(
+          `Dgraph host set as: ${DEFAULT_CONFIG.scheme}://${DEFAULT_CONFIG.host}:${DEFAULT_CONFIG.port}`
+        )
+      return DEFAULT_CONFIG
     }
-    return 'http://localhost:8997'
+    return DEFAULT_CONFIG
   }
 
-  async getProviderClient(provider: string) {
+  getHost(config: StorageEngineConnectionConfig): string {
+    return `${config.scheme}://${config.host}:${config.port}`
+  }
+
+  async getProviderClient(provider: string): Promise<any> {
     const {
       flags: { dev: devMode },
     } = this.parse(this.constructor as Input<{ dev: boolean }>)
     try {
       if (!this.manager) {
-        this.manager = new Manager({ logger: this.logger, devMode, cliConfig: this.config })
+        this.manager = new Manager({
+          logger: this.logger,
+          devMode,
+          cliConfig: this.config,
+        })
       }
       if (this.providers[provider]) {
         return this.providers[provider]
@@ -223,7 +241,7 @@ export default abstract class BaseCommand extends Command {
     }
   }
 
-  getCGConfig(provider?: string) {
+  getCGConfig(provider?: string): any {
     const { configDir } = this.config
     if (this.storedConfig) {
       return provider ? this.storedConfig[provider] : this.storedConfig
@@ -247,7 +265,7 @@ export default abstract class BaseCommand extends Command {
     }
   }
 
-  async catch(err: any) {
+  async catch(err: any): Promise<any> {
     // add any custom logic to handle errors from the command
     // or simply return the parent class error handling
     return super.catch(err)

@@ -4,6 +4,7 @@ import { exec } from 'child_process'
 
 import Command from './base'
 import { sleep, fileUtils } from '../utils'
+import DgraphEngine from '../storage/dgraph'
 
 export default class Launch extends Command {
   static description = 'Launch an instance of Dgraph to store data'
@@ -130,7 +131,7 @@ export default class Launch extends Command {
     await this.checkIfInstanceIsRunningReportStatus()
   }
 
-  async checkIfInstanceIsRunningReportStatus() {
+  async checkIfInstanceIsRunningReportStatus(): Promise<void> {
     const healthCheck = this.logger.startSpinner('Running health check on Dgraph')
     // eslint-disable-next-line no-warning-comments
     // TODO: smaller sleep time and exponential backoff for ~5 tries
@@ -149,7 +150,7 @@ export default class Launch extends Command {
     }
     this.logger.success(
       `Access your dgraph instance at ${chalk.underline.green(
-        this.getHost(false)
+        this.getHost((this.getStorageEngine() as DgraphEngine).connectionConfig)
       )}`
     )
     this.logger.info(
