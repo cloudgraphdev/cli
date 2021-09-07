@@ -170,7 +170,7 @@ export default abstract class BaseCommand extends Command {
     showInitialStatus = true
   ): StorageEngineConnectionConfig {
     const {
-      flags: { dgraph: dgraphHost, storage },
+      flags: { dgraph: dgraphHost, storage = 'dgraph' },
     } = this.parse(
       this.constructor as Input<{
         dev: boolean
