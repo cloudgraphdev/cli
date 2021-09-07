@@ -189,8 +189,10 @@ export default class Scan extends Command {
       )
     }
 
-    // Execute services mutations promises
-    await storageEngine.run()
+    if (storageRunning) {
+      // Execute services mutations promises
+      await storageEngine.run()
+    }
 
     this.logger.success(
       `Your data for ${allProviders.join(' | ')} has been saved to ${chalk.italic.green(dataStorageLocation)}`
