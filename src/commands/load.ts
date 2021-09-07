@@ -206,7 +206,7 @@ export default class Load extends Command {
     }
 
     // Execute services mutations promises
-    await storageEngine.run()
+    await storageEngine.run(true)
     this.logger.success(
       `Your data for ${allProviders.join(
         ' | '

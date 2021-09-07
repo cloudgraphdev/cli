@@ -9,8 +9,8 @@ import glob from 'glob'
 import path from 'path'
 
 import isEmpty from 'lodash/isEmpty'
-import C from '../utils/constants'
-import { StorageEngine } from '../storage/types'
+import C, { DEFAULT_CONFIG } from '../utils/constants'
+import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
 
 const { logger } = CloudGraph
 
@@ -92,7 +92,11 @@ export function getConnectedEntity(
   initiatorServiceName: string
 ): Record<string, unknown> {
   // opts: Opts
-  logger.debug(`Getting connected entities for ${chalk.green(initiatorServiceName)} id = ${chalk.green(service.id)}`)
+  logger.debug(
+    `Getting connected entities for ${chalk.green(
+      initiatorServiceName
+    )} id = ${chalk.green(service.id)}`
+  )
   const connections = allConnections[service.id]
   const connectedEntity = {
     ...service,
@@ -112,9 +116,9 @@ export function getConnectedEntity(
           }
           connectedEntity[connection.field].push(entityForConnection)
           logger.debug(
-            `(${initiatorServiceName}) ${service.id} ${chalk.green('<----->')} ${
-              connection.id
-            } (${connection.resourceType})`
+            `(${initiatorServiceName}) ${service.id} ${chalk.green(
+              '<----->'
+            )} ${connection.id} (${connection.resourceType})`
           )
         } else {
           const error = `Malformed connection found between ${chalk.red(
@@ -224,6 +228,45 @@ export const calculateBackoff = (n: number): number => {
     temp / C.BASE_BACKOFF_CONSTANT +
     Math.min(0, (Math.random() * temp) / C.BASE_BACKOFF_CONSTANT)
   )
+}
+
+export const getPort = (
+  hostname: string,
+  scheme: string,
+  port?: string
+): string => {
+  if (hostname !== 'localhost' && !port) {
+    switch (scheme) {
+      case 'http':
+        return '80'
+      case 'https':
+        return '443'
+      default:
+        return '80'
+    }
+  }
+
+  if (port) {
+    return port
+  }
+
+  return DEFAULT_CONFIG.port
+}
+
+export const getStorageEngineConnectionConfig = (
+  fullUrl: string
+): StorageEngineConnectionConfig => {
+  const {
+    hostname: host = DEFAULT_CONFIG.host,
+    port = DEFAULT_CONFIG.port,
+    protocol = DEFAULT_CONFIG.scheme,
+  } = new URL(fullUrl)
+  const scheme = protocol.split(':')[0]
+  return {
+    host,
+    port: getPort(host, protocol, port),
+    scheme,
+  }
 }
 
 export const fileUtils = {

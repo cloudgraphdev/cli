@@ -3,19 +3,19 @@ import fs from 'fs'
 import path from 'path'
 import chalk from 'chalk'
 import QueryEngine from '../server'
-import { fileUtils } from '../utils'
+import { fileUtils, getStorageEngineConnectionConfig } from '../utils'
 
 import Command from './base'
+import { DEFAULT_CONFIG } from '../utils/constants'
 
 export default class Init extends Command {
-  static description =
-    'Set initial configuration for providers';
+  static description = 'Set initial configuration for providers'
 
   static examples = [
     '$ cg init',
     '$ cg init aws [Initialize AWS provider]',
-    '$ cg init aws -r [Specify resources to crawl]'
-  ];
+    '$ cg init aws -r [Specify resources to crawl]',
+  ]
 
   static flags = {
     ...Command.flags,
@@ -62,14 +62,13 @@ export default class Init extends Command {
     if (dgraph) {
       result.dgraphHost = dgraph
     } else {
-      const { dgraph, versionLimit } = await this.interface.prompt([
-        // TODO: validate has url structure with regex
+      const { fullUrl, versionLimit } = await this.interface.prompt([
         {
           type: 'input',
           message:
             'Enter your dgraph host url (or launch dgraph with "cg launch")',
-          name: 'dgraph',
-          default: 'http://localhost:8997',
+          name: 'fullUrl',
+          default: `${DEFAULT_CONFIG.scheme}://${DEFAULT_CONFIG.host}:${DEFAULT_CONFIG.port}`,
         },
         {
           type: 'input',
@@ -79,8 +78,10 @@ export default class Init extends Command {
           default: 10,
         },
       ])
-      result.dgraphHost = dgraph
+
       result.versionLimit = versionLimit
+
+      result.storageConfig = getStorageEngineConnectionConfig(fullUrl)
     }
     if (queryEngine) {
       result.queryEngine = QueryEngine
@@ -110,7 +111,7 @@ export default class Init extends Command {
     return result
   }
 
-  async run() {
+  async run(): Promise<any> {
     const { argv, flags } = this.parse(Init)
     const { configDir, dataDir } = this.config
     // const opts: Opts = {logger: this.logger, debug, devMode}
@@ -147,7 +148,7 @@ export default class Init extends Command {
             type: 'confirm',
             message: `Would you like to change ${provider}'s config`,
             name: 'overwrite',
-            default: true
+            default: true,
           },
         ])
         this.logger.debug(answers)
@@ -169,7 +170,7 @@ export default class Init extends Command {
           type: 'confirm',
           message: 'Would you like to change CloudGraph config',
           name: 'overwrite',
-          default: true
+          default: true,
         },
       ])
       this.logger.debug(answers)
@@ -184,8 +185,16 @@ export default class Init extends Command {
       path.join(configDir, '.cloud-graphrc.json'),
       JSON.stringify(configResult, null, 2)
     )
-    this.logger.success(`Your config has been successfully stored at ${chalk.italic.green(path.join(configDir, '.cloud-graphrc.json'))}`)
-    this.logger.success(`Your data will be stored at ${chalk.italic.green(path.join(dataDir, this.versionDirectory))}`)
+    this.logger.success(
+      `Your config has been successfully stored at ${chalk.italic.green(
+        path.join(configDir, '.cloud-graphrc.json')
+      )}`
+    )
+    this.logger.success(
+      `Your data will be stored at ${chalk.italic.green(
+        path.join(dataDir, this.versionDirectory)
+      )}`
+    )
     this.exit()
   }
 }
