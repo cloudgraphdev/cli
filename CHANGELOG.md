@@ -1,3 +1,10 @@
+## [0.7.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.1...0.7.2) (2021-09-07)
+
+
+### Bug Fixes
+
+* **scan:** added missing check before running dgraph mutations ([ed1239e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ed1239e6d1e18d9f460fa8c8e23a7b786ab58387))
+
 ## [0.7.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.0...0.7.1) (2021-09-07)
 
 
