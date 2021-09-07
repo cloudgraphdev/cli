@@ -1,3 +1,10 @@
+## [0.7.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.0...0.7.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* Set Dgraph database as default value ([3edb741](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3edb7414e395bbaab4d88ce741ccebda41bd11fe))
+
 # [0.7.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.6.1...0.7.0) (2021-09-07)
 
 
