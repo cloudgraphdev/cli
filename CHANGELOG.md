@@ -1,3 +1,10 @@
+# [0.7.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.6.1...0.7.0) (2021-09-07)
+
+
+### Features
+
+* **dgraph-storage-engine:** drop data and schema programatically ([638200b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/638200b1da19da1524d74f5a99986f53445e7659))
+
 ## [0.6.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.6.0...0.6.1) (2021-09-01)
 
 
