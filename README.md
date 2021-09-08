@@ -85,6 +85,7 @@ You can find more example queries in the `examples` folder
 * [`cg load [PROVIDER]`](#cg-load-provider)
 * [`cg scan [PROVIDER]`](#cg-scan-provider)
 * [`cg serve [PROVIDER]`](#cg-serve-provider)
+* [`cg provider [COMMAND]`](#cg-provider-command)
 
 ## `cg help [COMMAND]`
 
@@ -228,7 +229,74 @@ EXAMPLE
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.7.3/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.7.1/src/commands/serve.ts)_
+
+## `cg provider [COMMAND]`
+
+Manage provider modules with provider subcommands.
+
+### `cg provider list`
+
+List installed providers modules
+
+```
+USAGE
+  $ cg provider list [PROVIDER]
+
+EXAMPLE
+  $ cg provider list
+  $ cg provider list aws
+```
+
+### `cg provider add`
+
+Add new providers modules
+
+```
+USAGE
+  $ cg provider add [PROVIDER]
+
+EXAMPLE
+  $ cg provider add aws
+  $ cg provider add aws@0.12.0
+```
+
+### `cg provider update`
+
+Update providers modules
+
+```
+USAGE
+  $ cg provider update [PROVIDER]
+
+EXAMPLE
+  $ cg provider update
+  $ cg provider update aws
+```
+
+### `cg provider remove`
+
+Remove installed providers modules
+
+```
+USAGE
+  $ cg provider remove [PROVIDER]
+
+EXAMPLE
+  $ cg provider remove aws
+```
+
+### `cg provider install`
+
+Intall providers modules according to lock file
+
+```
+USAGE
+  $ cg provider install
+
+EXAMPLE
+  $ cg provider install
+```
 <!-- commandsstop -->
 
 # Query Tools

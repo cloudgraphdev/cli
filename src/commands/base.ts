@@ -59,7 +59,7 @@ export default abstract class BaseCommand extends Command {
     // serve query engine after scan/load
     'no-serve': flags.boolean({
       default: false,
-      description: 'Set to false to not serve a query engine',
+      description: 'Set to not serve a query engine',
     }),
     // port for query engine
     port: flags.integer({
@@ -210,22 +210,23 @@ export default abstract class BaseCommand extends Command {
     return `${config.scheme}://${config.host}:${config.port}`
   }
 
-  async getProviderClient(provider: string): Promise<any> {
+  getPluginManager(): Manager {
     const {
       flags: { dev: devMode },
     } = this.parse(this.constructor as Input<{ dev: boolean }>)
+    if (!this.manager) {
+      this.manager = new Manager({ logger: this.logger, devMode, cliConfig: this.config })
+    }
+    return this.manager
+  }
+
+  async getProviderClient(provider: string): Promise<any> {
     try {
-      if (!this.manager) {
-        this.manager = new Manager({
-          logger: this.logger,
-          devMode,
-          cliConfig: this.config,
-        })
-      }
+      const manager = this.getPluginManager()
       if (this.providers[provider]) {
         return this.providers[provider]
       }
-      const { default: Client } = await this.manager.getProviderPlugin(provider)
+      const { default: Client } = await manager.getProviderPlugin(provider)
       const client = new Client({
         logger: this.logger,
         provider: this.getCGConfig(provider),

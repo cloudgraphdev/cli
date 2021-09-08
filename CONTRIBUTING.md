@@ -17,14 +17,13 @@ To setup `CloudGraph` in development mode, first clone the CLI repo.
 **TODO:** update to correct url
 
 ```bash
-git clone https://github.com/sindresorhus/ora
+git clone https://github.com/cloudgraphdev/cli.git
 ```
 
 Next, if you are doing updates to an **existing** provider module, clone that as well. For example `cg-provider-aws`
-**TODO:** update to correct url
 
 ```bash
-git clone https://github.com/sindresorhus/ora
+git clone https://github.com/cloudgraphdev/cloudgraph-provider-aws.git
 ```
 
 `cd` into the provider repo and run the repos build command. For `cg-provider-aws` this would be:
@@ -118,7 +117,7 @@ getSchema(): string {
 
 The `getData` function is responsible for collecting and returning all the provider data that you would like to be query-able by the end user. `@cloudgraph/cli` creates **nodes** in the graph through the concept of `entities` and **edges** in the graph through the concept of `connections`. `entities` are the provider data objects themselves as described by the defined GraphQL schema for the provider. `connections` are objects that describe how the tool should make connections **between** entities in the provider data. The data structure returned by the `getData` function should match the `ProviderData` interface below:
 
-**Note**: Please see the [`@cloudgraph/cg-template-provider`](https://github.com/sindresorhus/ora) (**TODO**: update with real link) for an example on how to create entities and connections for a provider
+**Note**: Please see the [`@cloudgraph/cg-template-provider`](https://github.com/cloudgraphdev/cloudgraph-provider-aws.git) (**TODO**: update with link to actual template) for an example on how to create entities and connections for a provider
 
 ```
 export  interface  ServiceConnection {
