@@ -1,3 +1,10 @@
+## [0.7.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.2...0.7.3) (2021-09-08)
+
+
+### Bug Fixes
+
+* Replaced some logs due new parseContent method ([d183fbb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d183fbbcab391c167e683c76c8524d6d12f095b8))
+
 ## [0.7.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.1...0.7.2) (2021-09-07)
 
 
