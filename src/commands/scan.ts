@@ -76,8 +76,11 @@ export default class Scan extends Command {
       // version 1 gets deleted, version 2 becomes version 1 … new version gets created
       const pathPrefix = path.join(dataDir, this.versionDirectory)
       const versionPrefix = path.join(pathPrefix, 'version-')
-      for (const version of [1, ...range(this.versionLimit + 1, folders.length + 1)]) {
-        fs.rmSync(versionPrefix + version, {recursive: true})
+      for (const version of [
+        1,
+        ...range(this.versionLimit + 1, folders.length + 1),
+      ]) {
+        fs.rmSync(versionPrefix + version, { recursive: true })
       }
       for (const version of range(1, this.versionLimit)) {
         fs.renameSync(versionPrefix + (version + 1), versionPrefix + version)
@@ -155,7 +158,7 @@ export default class Scan extends Command {
                 ' | '
               )} to dgraph at ${storageEngine.host}`
             )
-            this.logger.debug(JSON.stringify(error))
+            this.logger.debug(error)
             fileUtils.deleteFolder(dataStorageLocation)
             this.exit()
           }
@@ -183,7 +186,11 @@ export default class Scan extends Command {
       const connectionLoader = this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
-      processConnectionsBetweenEntities(providerData, storageEngine, storageRunning)
+      processConnectionsBetweenEntities(
+        providerData,
+        storageEngine,
+        storageRunning
+      )
       connectionLoader.succeed(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
@@ -195,7 +202,9 @@ export default class Scan extends Command {
     }
 
     this.logger.success(
-      `Your data for ${allProviders.join(' | ')} has been saved to ${chalk.italic.green(dataStorageLocation)}`
+      `Your data for ${allProviders.join(
+        ' | '
+      )} has been saved to ${chalk.italic.green(dataStorageLocation)}`
     )
     if (storageRunning) {
       this.logger.success(

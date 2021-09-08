@@ -25,13 +25,13 @@ export default class DgraphEngine
           'Content-Type': 'application/json',
         },
       })
-      this.logger.debug(JSON.stringify(healthCheck.data, null, 2))
+      this.logger.debug(healthCheck.data)
       return true
     } catch (error: any) {
       this.logger.warn(
         `dgraph at ${this.host} failed health check. Is dgraph running?`
       )
-      this.logger.debug(JSON.stringify(error, null, 2))
+      this.logger.debug(error)
       return false
     }
   }
@@ -142,7 +142,7 @@ export default class DgraphEngine
    * Executes mutations sequentially into Dgraph
    */
   async run(dropData = true): Promise<void> {
-    dropData && await this.dropData()
+    dropData && (await this.dropData())
     for (const mutation of this.axiosPromises) {
       try {
         await mutation()
