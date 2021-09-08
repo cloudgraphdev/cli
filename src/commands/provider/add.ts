@@ -28,7 +28,7 @@ export default class Add extends Command {
     const manager = this.getPluginManager()
     for (let key of allProviders) {
       let version = 'latest'
-      if (key.indexOf('@') > -1) {
+      if (key.includes('@')) {
         [key, version] = key.split('@')
       }
       await manager.getProviderPlugin(key, version)

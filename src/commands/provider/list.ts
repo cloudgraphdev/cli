@@ -34,7 +34,7 @@ export default class List extends Command {
       this.exit()
     }
     const providersToList = allProviders.length >= 1 ? pickBy(lockFile, (_, key) => {
-      return allProviders.indexOf(key) > -1
+      return allProviders.includes(key)
     }) : lockFile
     for (const [key, value] of Object.entries(providersToList)) {
       this.logger.success(`Provider ${chalk.green(`${key}@${value}`)} is installed`)

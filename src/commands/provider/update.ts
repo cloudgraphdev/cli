@@ -2,7 +2,7 @@ import { pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
 
-const getProvider = (val: string): string => val.indexOf('@') > -1 ? val.split('@')[0] : val
+const getProvider = (val: string): string => val.includes('@') ? val.split('@')[0] : val
 
 export default class Update extends Command {
   static description = 'Update currently installed providers'
@@ -46,7 +46,7 @@ export default class Update extends Command {
     // Warn the user if they are trying to update providers they have not installed.
     const nonInstalledProviders = allProviders.filter(rawProvider => {
       const provider = getProvider(rawProvider)
-      return !!(Object.keys(lockFile).indexOf(provider) === -1)
+      return Object.keys(lockFile).includes(provider)
     })
     for (const provider of nonInstalledProviders) {
       this.logger.warn(
@@ -60,7 +60,7 @@ export default class Update extends Command {
     for (const [key] of Object.entries(providersToList)) {
       let version = 'latest'
       const rawProvider = allProviders.find(val => val.includes(key))
-      if (rawProvider && rawProvider.indexOf('@') > -1) {
+      if (rawProvider && rawProvider.includes('@')) {
         [, version] = rawProvider.split('@')
       }
       await manager.getProviderPlugin(key, version)
