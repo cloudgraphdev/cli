@@ -167,22 +167,10 @@ export class Manager {
     } catch (error: any) {
       this.logger.info('No lock file found for Cloud Graph, creating one...')
     }
-    if (!config?.config) {
-      const data = {
-        [provider]: 'latest',
-      }
-      fs.writeFileSync(lockPath, JSON.stringify(data, null, 2))
+    if (!config?.config?.[provider]) {
       return 'latest'
     }
     const lockFile = config.config
-    if (!lockFile[provider]) {
-      const newLockFile = {
-        ...lockFile,
-        [provider]: 'latest',
-      }
-      fs.writeFileSync(lockPath, JSON.stringify(newLockFile, null, 2))
-      return 'latest'
-    }
     return lockFile[provider]
   }
 
