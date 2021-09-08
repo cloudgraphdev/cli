@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { isEmpty } from 'lodash'
 import { flags } from '@oclif/command'
 import Command from '../base'

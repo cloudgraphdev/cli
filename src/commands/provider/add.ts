@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import Command from '../base'
 
 export default class Add extends Command {

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { isEmpty, pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
