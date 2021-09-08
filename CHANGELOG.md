@@ -1,3 +1,11 @@
+## [0.7.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.3...0.7.4) (2021-09-08)
+
+
+### Bug Fixes
+
+* **manager:** fix for calling provider commands without lock file ([322991c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/322991c03004bedc55b08cc8797df433ef92ebc0))
+* **manager:** fix how the manager saves locks ([2758b80](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/2758b80420bb5312d52371b1f5b1a63a47418347))
+
 ## [0.7.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.2...0.7.3) (2021-09-08)
 
 
