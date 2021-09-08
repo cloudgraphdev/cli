@@ -2,7 +2,11 @@ import { Logger } from '@cloudgraph/sdk'
 import axios, { AxiosPromise } from 'axios'
 import chalk from 'chalk'
 import { ExecutionResult } from 'graphql'
-import { RequestConfig, StorageEngineConfig, StorageEngineConnectionConfig } from '../types'
+import {
+  RequestConfig,
+  StorageEngineConfig,
+  StorageEngineConnectionConfig,
+} from '../types'
 
 export default class DGraphClientWrapper {
   constructor(config: StorageEngineConfig) {
@@ -49,12 +53,12 @@ export default class DGraphClientWrapper {
           path: '/alter',
           data: '{"drop_all": true}',
         })
-        this.logger.debug(JSON.stringify(result.data, null, 2))
+        this.logger.debug(result.data)
         this.logger.debug(`${chalk.green('dropAll')}: Operation successful`)
         resolve(result)
       } catch (error) {
         this.logger.error(`${chalk.red('dropAll')}: Operation failed`)
-        this.logger.debug(JSON.stringify(error, null, 2))
+        this.logger.debug(error)
         reject(error)
       }
     })
@@ -69,12 +73,12 @@ export default class DGraphClientWrapper {
           path: '/alter',
           data: '{"drop_op": "DATA"}',
         })
-        this.logger.debug(JSON.stringify(result.data, null, 2))
+        this.logger.debug(result.data)
         this.logger.debug(`${chalk.green('dropData')}: Operation successful.`)
         resolve(result)
       } catch (error) {
         this.logger.error(`${chalk.red('dropData')}: Operation failed.`)
-        this.logger.debug(JSON.stringify(error, null, 2))
+        this.logger.debug(error)
         reject(error)
       }
     })

@@ -145,10 +145,10 @@
     "@babel/helper-validator-identifier" "^7.14.5"
     to-fast-properties "^2.0.0"
 
-"@cloudgraph/sdk@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.3.3.tgz#b1402999a15aaf6585be2a6eab2acef1f54510b0"
-  integrity sha512-g3CIDdoYLSnJSo7rPhhHJ5XxYHnKcZtNfIzL/ufbu4bQqIgNnMQpD75qCEns/ivJddOkO2KV4l35ZLMIu7zK3w==
+"@cloudgraph/sdk@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.3.4.tgz#1e8e6d8f6988d737914af15e816e9087fdaec116"
+  integrity sha512-k6M2cQ3dDFiA1oCkpsqAufZFsAgw4vb1XtLEnNiOgDApgJqCXjR1WQU9wfDzeXVDg6bXAbLjCo2fKZBW7wmAZA==
   dependencies:
     "@types/node" "^16.4.12"
     inquirer "^8.1.2"
