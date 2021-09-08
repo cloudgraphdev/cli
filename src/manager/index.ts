@@ -203,12 +203,22 @@ export class Manager {
       this.cliConfig.configDir,
       '.cloud-graph.lock.json'
     )
+    let oldLock
     try {
-      const oldLock = cosmiconfigSync('cloud-graph').load(lockPath)
-      const lockFile = oldLock?.config
-      const newLockFile = {
-        ...lockFile,
-        [provider]: version,
+      oldLock = cosmiconfigSync('cloud-graph').load(lockPath)
+    } catch (error: any) {
+    }
+    try {
+      let newLockFile
+      if (oldLock?.config) {
+        newLockFile = {
+          ...oldLock.config,
+          [provider]: version,
+        }
+      } else {
+        newLockFile = {
+          [provider]: version,
+        }
       }
       fs.writeFileSync(lockPath, JSON.stringify(newLockFile, null, 2))
     } catch (error: any) {
