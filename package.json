@@ -21,6 +21,7 @@
     "@oclif/command": "^1",
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^3",
+    "@tiagonapoli/oclif-plugin-spaced-commands": "^1.0.1",
     "altair-express-middleware": "^4.0.8",
     "axios": "^0.21.1",
     "boxen": "^5.0.1",
@@ -86,7 +87,8 @@
     "bin": "cg",
     "dirname": "cloudgraph",
     "plugins": [
-      "@oclif/plugin-help"
+      "@oclif/plugin-help",
+      "@tiagonapoli/oclif-plugin-spaced-commands"
     ]
   },
   "repository": "github:cloudgraphdev/cli",
