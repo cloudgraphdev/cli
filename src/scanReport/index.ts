@@ -27,7 +27,14 @@ enum statusLevel {
   pass = 'pass',
 }
 
+// used for updating status of a service
+enum statusKeyWords {
+  data = 'data',
+  connections = 'connections'
+}
+
 const servicesToIgnore = ['tag']
+
 
 // TODO: come back and add tests once testing strategy is determined
 export class ScanReport {
@@ -64,10 +71,10 @@ export class ScanReport {
 
           // Handle status, we do not want to "upgrade" from a failed or warning status to pass
           let newStatus = status
-          if (oldStatus.includes('data')) {
+          if (oldStatus.includes(statusKeyWords.data)) {
             newStatus = oldStatus
           }
-          if (oldStatus.includes('connections') && !status.includes('data')) {
+          if (oldStatus.includes(statusKeyWords.connections) && !status.includes(statusKeyWords.data)) {
             newStatus = oldStatus
           }
           return { [service]: [`${count}`, newStatus] }
