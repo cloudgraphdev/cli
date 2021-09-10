@@ -2,6 +2,8 @@ import Table from 'cli-table'
 import chalk from 'chalk'
 import CloudGraph from '@cloudgraph/sdk'
 
+const { logger } = CloudGraph
+
 export enum scanResult {
   pass = 'pass',
   fail = 'fail',
@@ -19,13 +21,13 @@ interface pushDataParams {
   msg?: string
 }
 
-const { logger } = CloudGraph
-
 enum statusLevel {
   warn = 'warn',
   fail = 'fail',
   pass = 'pass',
 }
+
+const servicesToIgnore = ['tag']
 
 // TODO: come back and add tests once testing strategy is determined
 export class ScanReport {
@@ -39,13 +41,13 @@ export class ScanReport {
     chalk.green('Status'),
   ]
 
-  internalTable: { status: number; data: { [key: string]: string[] }[] } =
-    { status: -1, data: [{ total: ['0', 'N/A'] }] }
+  internalTable: { status: statusLevel; data: { [key: string]: string[] }[] } =
+    { status: statusLevel.pass, data: [{ total: ['0', 'N/A'] }] }
 
   table: Table
 
   pushData({ service, type, result }: pushDataParams): void {
-    if (service === 'tag') {
+    if (servicesToIgnore.includes(service)) {
       return
     }
     const status = this.getStatus(result)
@@ -76,7 +78,7 @@ export class ScanReport {
     } else {
       this.internalTable.data.push({ [service]: ['1', status] })
     }
-    if (type === scanDataType.count && service !== 'tag') {
+    if (type === scanDataType.count) {
       this.incrementTotalTable()
     }
   }
@@ -85,9 +87,11 @@ export class ScanReport {
     const totalIndex = this.internalTable.data.findIndex(val => {
       return Object.keys(val).includes('total')
     })
-    const [currentCount, status] = this.internalTable.data[0].total
-    const newCount = 1 + Number(currentCount)
-    this.internalTable.data[totalIndex] = { total: [String(newCount), status] }
+    if (this.internalTable?.data?.[totalIndex]?.total) {
+      const [currentCount, status] = this.internalTable.data[totalIndex].total
+      const newCount = 1 + Number(currentCount)
+      this.internalTable.data[totalIndex] = { total: [String(newCount), status] }
+    }
   }
 
   private getStatus(result: string): string {
@@ -95,22 +99,22 @@ export class ScanReport {
     switch (result) {
       case statusLevel.warn: {
         status = `${chalk.yellow(
-          String.fromCodePoint(0x26A0)
+          String.fromCodePoint(0x26A0) // warning symbol
         )} unable to make some connections`
-        if (this.internalTable.status !== 1) {
-          this.internalTable.status = 0
+        if (this.internalTable.status !== statusLevel.fail) {
+          this.internalTable.status = statusLevel.warn
         }
         break
       }
       case statusLevel.fail: {
         status = `${chalk.red(
-          String.fromCodePoint(0x1F6AB)
+          String.fromCodePoint(0x1F6AB) // failure symbol
         )} unable to store data in Dgraph`
-        this.internalTable.status = 1
+        this.internalTable.status = statusLevel.fail
         break
       }
       default: {
-        status = chalk.green(String.fromCodePoint(0x2714))
+        status = chalk.green(String.fromCodePoint(0x2714)) // checkmark symbol
       }
     }
     return status
@@ -140,10 +144,10 @@ export class ScanReport {
       })
     )
     console.log(this.table.toString())
-    if (this.internalTable.status > -1) {
+    if (this.internalTable.status !== statusLevel.pass) {
       logger.warn(
         `While CG ran successfully, there were some ${
-          this.internalTable.status === 1 ? 'major' : 'minor'
+          this.internalTable.status === statusLevel.fail ? 'major' : 'minor'
         } issues formatting and inserting your data into dGraph.`
       )
       logger.info(
