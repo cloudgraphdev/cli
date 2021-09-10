@@ -66,7 +66,7 @@ export default class Init extends Command {
         {
           type: 'input',
           message:
-            'Enter your dgraph host url (or launch dgraph with "cg launch")',
+            'Input your dgraph host url, if you are unsure, use the default by pressing ENTER',
           name: 'fullUrl',
           default: `${DEFAULT_CONFIG.scheme}://${DEFAULT_CONFIG.host}:${DEFAULT_CONFIG.port}`,
         },

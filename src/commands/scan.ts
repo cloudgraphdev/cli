@@ -7,6 +7,7 @@ import { range } from 'lodash'
 import Command from './base'
 import { fileUtils, processConnectionsBetweenEntities } from '../utils'
 import DgraphEngine from '../storage/dgraph'
+import scanReport from '../scanReport'
 
 export default class Scan extends Command {
   static description =
@@ -102,18 +103,24 @@ export default class Scan extends Command {
     /**
      * loop through providers and attempt to scan each of them
      */
+    const failedProviderList: string[] = []
     for (const provider of allProviders) {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
       const client = await this.getProviderClient(provider)
       if (!client) {
+        failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
         continue // eslint-disable-line no-continue
       }
       const config = this.getCGConfig(provider)
       this.logger.debug(config)
-
+      if (!config) {
+        failedProviderList.push(provider)
+        this.logger.warn(`No configuration found for ${provider}, run "cg init ${provider}" to create one`)
+        continue // eslint-disable-line no-continue
+      }
       const { accountId } = await client.getIdentity()
       const providerDataLoader = this.logger.startSpinner(
         `${chalk.italic.green('SCANNING')} data for ${chalk.italic.green(
@@ -196,11 +203,20 @@ export default class Scan extends Command {
       )
     }
 
+    // If every provider that has been passed is a failure, just exit
+    if (failedProviderList.length === allProviders.length) {
+      this.logger.warn(`No providers in list: [${allProviders.join(
+        ' | '
+      )}] have a valid module and config, exiting`)
+      this.exit()
+    }
+
     if (storageRunning) {
       // Execute services mutations promises
       await storageEngine.run()
     }
 
+    scanReport.print()
     this.logger.success(
       `Your data for ${allProviders.join(
         ' | '

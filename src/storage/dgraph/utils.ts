@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import { GraphQLError } from 'graphql'
 
 import { GraphQLFormattedQuery } from '../types'
+import scanReport, {scanDataType, scanResult } from '../../scanReport'
 
 const { logger } = CloudGraph
 
@@ -32,12 +33,16 @@ function processErrorArrayIfExists({
   errors,
   variables,
   additionalInfo,
+  service,
 }: {
   errors?: ReadonlyArray<GraphQLError>
   variables: any
   additionalInfo?: { executedMutationNames?: string[] }
+  service?: string
 }): void {
+  let result = scanResult.pass
   if (errors) {
+    result = scanResult.fail
     errors.forEach((err: GraphQLError) => {
       const { path, locations, message, extensions = {} } = err
       printErrorMessage(message, additionalInfo)
@@ -62,16 +67,21 @@ function processErrorArrayIfExists({
         )
     })
   }
+  if (service) {
+    scanReport.pushData({ service, result, type: scanDataType.status })
+  }
 }
 
 export function processGQLExecutionResult({
   errors: resErrors,
   reqData = { query: '', variables: {} },
   resData,
+  service,
 }: {
   errors?: ReadonlyArray<GraphQLError>
   reqData?: GraphQLFormattedQuery
   resData?: { [key: string]: any } | null
+  service?: string
 }): void {
   // Data interpolated to query. Works for both schema push and data load
   const { variables } = reqData
@@ -96,8 +106,9 @@ export function processGQLExecutionResult({
       errors: dataErrors,
       variables,
       additionalInfo: { executedMutationNames },
+      service,
     })
   }
   // Data related errors
-  processErrorArrayIfExists({ errors: resErrors, variables })
+  processErrorArrayIfExists({ errors: resErrors, variables, service })
 }
