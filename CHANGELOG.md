@@ -1,3 +1,16 @@
+# [0.8.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.4...0.8.0) (2021-09-10)
+
+
+### Bug Fixes
+
+* **scan:** Update scan report with PR feedback ([7ce7584](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7ce7584dc6118675a9f7b95e4afe09483a494a34))
+* **scan:** update to use enums for key words ([d2ec260](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d2ec260b49d3f9d5a00e0d42dec15e0db41d1cf7))
+
+
+### Features
+
+* **scan:** Create a scan report that outputs what was crawled, how many, and the status of trying to connect && push to db ([4ea3b0d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4ea3b0d016f4fcb0e4358ff634e63c28d7674bcd))
+
 ## [0.7.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.3...0.7.4) (2021-09-08)
 
 
