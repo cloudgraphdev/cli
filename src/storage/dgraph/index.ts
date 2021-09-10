@@ -132,6 +132,7 @@ export default class DgraphEngine
             reqData: queryData,
             resData,
             errors,
+            service: data.name
           })
         })
         .catch(error => Promise.reject(error))

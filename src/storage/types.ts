@@ -17,6 +17,7 @@ export interface GraphQLFormattedQuery {
 export interface GraphQLInputData {
   query: string
   connectedData: any
+  name: string
 }
 
 export interface StorageEngineConnectionConfig {

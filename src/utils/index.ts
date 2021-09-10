@@ -9,6 +9,7 @@ import glob from 'glob'
 import path from 'path'
 
 import isEmpty from 'lodash/isEmpty'
+import scanReport, {scanDataType, scanResult} from '../scanReport'
 import C, { DEFAULT_CONFIG } from '../utils/constants'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
 
@@ -101,6 +102,7 @@ export function getConnectedEntity(
   const connectedEntity = {
     ...service,
   }
+  let connectionsStatus = scanResult.pass
   if (connections) {
     for (const connection of connections) {
       const entityData = entities.find(
@@ -121,6 +123,7 @@ export function getConnectedEntity(
             )} ${connection.id} (${connection.resourceType})`
           )
         } else {
+          connectionsStatus = scanResult.warn
           const error = `Malformed connection found between ${chalk.red(
             initiatorServiceName
           )} && ${chalk.red(connection.resourceType)} services.`
@@ -134,6 +137,11 @@ export function getConnectedEntity(
       }
     }
   }
+  scanReport.pushData({
+    service: initiatorServiceName,
+    type: scanDataType.status,
+    result: connectionsStatus,
+  })
   return connectedEntity
 }
 
@@ -144,14 +152,16 @@ export function processConnectionsBetweenEntities(
 ): void {
   for (const entity of providerData.entities) {
     const { mutation, data, name } = entity
-    const connectedData = data.map((service: any) =>
-      getConnectedEntity(service, providerData, name)
-    )
+    const connectedData = data.map((service: any) => {
+      scanReport.pushData({ service: name, type: scanDataType.count, result: scanResult.pass })
+      return getConnectedEntity(service, providerData, name)
+    })
     if (storageRunning) {
       // Add service mutation to promises array
       storageEngine.push({
         query: mutation,
         connectedData,
+        name
       })
     }
   }
