@@ -1,7 +1,7 @@
 <br />
 
 <p align="center">
-  <a href="">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png">
     <img alt="CloudGraph" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png" width="75%" style="display: block; margin: auto" />
   </a>
 </p>
@@ -97,7 +97,7 @@ cg init
 1. This initializes CloudGraph's configuration. This command will ask you a series of questions about what providers you are using and how you would like CloudGraph configured.
 
 <p align="center">
-  <a href="">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png">
     <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="65%" style="display: block; margin: auto"/>
   </a>
 </p>
@@ -117,7 +117,7 @@ cg launch
 2. This command launches an instance of [Dgraph](https://dgraph.io/), the graphdb CloudGraph uses to store data under the hood. Note that there are 2 ways to launch an instance. **BOTH** of these require [Docker](https://www.docker.com/) to be installed and running. The preferred solution is to use our `cg launch` convenience command.
 
 <p align="center">
-  <a href="">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png">
     <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="65%" style="display: block; margin: auto"/>
   </a>
 </p>
@@ -141,7 +141,7 @@ cg scan
 3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our slack channel.
 
 <p align="center">
-  <a href="">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
     <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="65%" style="display: block; margin: auto"/>
   </a>
 </p>
@@ -554,7 +554,7 @@ GraphQL playground has a fluid and engaging UX that is great for querying a Grap
 <br />
 
 <p align="center">
-  <a href="">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png">
     <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="65%" style="display: block; margin: auto"/>
   </a>
 </p>
@@ -568,7 +568,7 @@ Altair is another great GraphQL query tool that packs a ton of [features](https:
 <br />
 
 <p align="center">
-  <a href="">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png">
     <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="65%" style="display: block; margin: auto"/>
   </a>
 </p>
@@ -582,7 +582,7 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 <br />
 
 <p align="center">
-  <a href="">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png">
     <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="65%" style="display: block; margin: auto"/>
   </a>
 </p>
