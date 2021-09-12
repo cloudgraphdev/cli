@@ -1,3 +1,12 @@
+## [0.8.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.0...0.8.1) (2021-09-12)
+
+
+### Bug Fixes
+
+* **MR feedback:** addressing MR feedback ([a6d7de4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a6d7de4223990061d74fe6c59d7caacd5b4f5f62))
+* **MR feedback:** addressing MR feedback ([f128c6d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f128c6d2eb9d91c955ead865159b09c1a5d4047f))
+* **MR feedback:** addressing MR feedback ([61f808c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/61f808ce04e82fb3c4d77826b3aad8f02eb5c31b))
+
 # [0.8.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.7.4...0.8.0) (2021-09-10)
 
 
