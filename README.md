@@ -329,7 +329,7 @@ query {
 
 <br />
 
-Get each `VPC`, the `ALB` and `Lambdas` in that `VPC`, and then a bunch of nested sub-data as well... you get the idea.
+Get each `VPC`, the `ALBs` and `Lambdas` in that `VPC`, and then a bunch of nested sub-data as well... you get the idea.
 
 ```graphql
 query {
