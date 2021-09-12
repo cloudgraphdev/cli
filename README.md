@@ -1,6 +1,6 @@
 <br />
 
-[<img src="docs/images/logo.png" width="75%"  style="display: block; margin:  auto"/>]('logo.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/logo.png" width="75%"  style="display: block; margin: auto"/>]('logo.png')
 
 <br />
 
@@ -14,17 +14,18 @@ An instant **GraphQL** API to query your cloud infrastructure and configuration 
 [![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/master/package.json)
 
 <!-- toc -->
-* [Why CloudGraph](#why-cloudgraph)
-* [How It Works](#how-it-works)
-* [Authentication](#authentication)
-* [Install](#install)
-* [Quick Start](#quick-start)
-* [Example Queries](#example-queries)
-* [Query Tools](#query-tools)
-* [Community](#community)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Deployment Options](#deployment-options)
-* [Commands](#commands)
+
+- [Why CloudGraph](#why-cloudgraph)
+- [How It Works](#how-it-works)
+- [Authentication](#authentication)
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Example Queries](#example-queries)
+- [Query Tools](#query-tools)
+- [Community](#community)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Deployment Options](#deployment-options)
+- [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -91,7 +92,7 @@ cg init
 
 1. This initializes CloudGraph's configuration. This command will ask you a series of questions about what providers you are using and how you would like CloudGraph configured.
 
-[<img src="docs/images/init.png" width="65%"  style="display: block; margin:  auto"/>]('init.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/init.png" width="65%"  style="display: block; margin:  auto"/>]('init.png')
 
 <br/>
 
@@ -107,7 +108,7 @@ cg launch
 
 2. This command launches an instance of [Dgraph](https://dgraph.io/), the graphdb CloudGraph uses to store data under the hood. Note that there are 2 ways to launch an instance. **BOTH** of these require [Docker](https://www.docker.com/) to be installed and running. The preferred solution is to use our `cg launch` convenience command.
 
-[<img src="docs/images/launch.png" width="65%"  style="display: block; margin:  auto"/>]('launch.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/launch.png" width="65%"  style="display: block; margin:  auto"/>]('launch.png')
 
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
@@ -127,7 +128,7 @@ cg scan
 
 3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our slack channel.
 
-[<img src="docs/images/scan.png" width="65%"  style="display: block; margin:  auto"/>]('scan.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/scan.png" width="65%"  style="display: block; margin:  auto"/>]('scan.png')
 
 That's it, you are all set to start querying! The query tool you selected during the `cg init` command will then be opened in your preferred browser to run queries, mutations, and visualizations on all of your cloud infrastructure!
 
@@ -352,6 +353,8 @@ query {
 }
 ```
 
+<br />
+
 Find all the KMS keys in "us-east-1"
 
 ```graphql
@@ -369,6 +372,8 @@ query {
 }
 ```
 
+<br />
+
 Find all the burstable instances
 
 ```graphql
@@ -382,6 +387,8 @@ query {
 }
 ```
 
+<br />
+
 Find the default VPCs
 
 ```graphql
@@ -394,6 +401,8 @@ query {
   }
 }
 ```
+
+<br />
 
 Find the public ALBs
 
@@ -411,6 +420,8 @@ query {
   }
 }
 ```
+
+<br />
 
 Find all of the EC2s, Lambdas, and VPCs that have a Tag value of "Production".
 
@@ -434,6 +445,8 @@ query {
   }
 }
 ```
+
+<br />
 
 Do the same thing but look for both a key and a value
 
@@ -459,6 +472,8 @@ query {
   }
 }
 ```
+
+<br />
 
 Do the same thing using getawsTag instead of `queryawsTag`. Note that when searching for tags using `getawsTag` your must specify **both** the `key` and `value` as the `id` like is done below with `"Environment:Production"`.
 
@@ -520,7 +535,7 @@ CloudGraph comes shipped with 2 awesome query tools and a GraphQL schema explore
 
 GraphQL playground has a fluid and engaging UX that is great for querying a GraphQL schema quickly and simply. It has built-in automatically generated documentation and auto-completion while you type. To access playground, either select it as your preferred query tool in the `init` command OR visit `/playground` in the server CG spins up.
 
-[<img src="docs/images/gqlPlayground.png" width="65%"  style="display: block; margin:  auto"/>]('gqlPlayground.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/gqlPlayground.png" width="65%"  style="display: block; margin:  auto"/>]('gqlPlayground.png')
 
 <br />
 
@@ -528,7 +543,7 @@ GraphQL playground has a fluid and engaging UX that is great for querying a Grap
 
 Altair is another great GraphQL query tool that packs a ton of [features](https://github.com/altair-graphql/altair#features) for power users. Do things like autocomplete queries, dynamically add fragments, and export/import collections of queries. To access Altair, either select it as your preferred query tool in the `init` command OR visit `/altair` in the server CG spins up.
 
-[<img src="docs/images/gqlAltair.png" width="65%"  style="display: block; margin:  auto"/>]('gqlAltair.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/gqlAltair.png" width="65%"  style="display: block; margin:  auto"/>]('gqlAltair.png')
 
 <br />
 
@@ -536,7 +551,7 @@ Altair is another great GraphQL query tool that packs a ton of [features](https:
 
 GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers. It gives you a great bidirectional chart containing all your types and queries. You can click entities or arrows to discover connections, search for something specific, and get a deeper understanding of your schema. To access voyager, visit `/voyager` in the server CG spins up.
 
-[<img src="docs/images/voyager.png" width="65%"  style="display: block; margin:  auto"/>]('voyager.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/voyager.png" width="65%"  style="display: block; margin:  auto"/>]('voyager.png')
 
 <!-- querytoolsstop -->
 
@@ -552,7 +567,7 @@ Comments, questions, or feedback? Please [Join Our Slack Channel](https://join.s
 
 # Contribution Guidelines
 
-If you're interested in contributing to CloudGraph please check out our [Contribution Guidelines](CONTRIBUTING.MD).
+If you're interested in contributing to CloudGraph please check out our [Contribution Guidelines](https://github.com/cloudgraphdev/cli/blob/master/CONTRIBUTING.md).
 
 <br />
 
@@ -565,18 +580,19 @@ You can either run CloudGraph locally, or you can deploy it to your cloud provid
 # Commands
 
 <!-- commands -->
-* [`cg help [COMMAND]`](#cg-help-command)
-* [`cg init [PROVIDER]`](#cg-init-provider)
-* [`cg launch [PROVIDER]`](#cg-launch-provider)
-* [`cg load [PROVIDER]`](#cg-load-provider)
-* [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-* [`cg scan [PROVIDER]`](#cg-scan-provider)
-* [`cg serve [PROVIDER]`](#cg-serve-provider)
+
+- [`cg help [COMMAND]`](#cg-help-command)
+- [`cg init [PROVIDER]`](#cg-init-provider)
+- [`cg launch [PROVIDER]`](#cg-launch-provider)
+- [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg provider [PROVIDER]`](#cg-provider-provider)
+- [`cg provider add [PROVIDER]`](#cg-provideradd-provider)
+- [`cg provider install [PROVIDER]`](#cg-providerinstall-provider)
+- [`cg provider list [PROVIDER]`](#cg-providerlist-provider)
+- [`cg provider remove [PROVIDER]`](#cg-providerremove-provider)
+- [`cg provider update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg scan [PROVIDER]`](#cg-scan-provider)
+- [`cg serve [PROVIDER]`](#cg-serve-provider)
 
 ## `cg help [COMMAND]`
 
@@ -692,7 +708,7 @@ OPTIONS
 
 _See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.1/src/commands/provider/index.ts)_
 
-## `cg provider:add [PROVIDER]`
+## `cg provider add [PROVIDER]`
 
 Add new providers
 
@@ -720,7 +736,7 @@ EXAMPLES
 
 _See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.1/src/commands/provider/add.ts)_
 
-## `cg provider:install [PROVIDER]`
+## `cg provider install [PROVIDER]`
 
 Install providers based on the lock file
 
@@ -890,4 +906,5 @@ EXAMPLE
 ```
 
 _See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.1/src/commands/serve.ts)_
+
 <!-- commandsstop -->
