@@ -1,6 +1,10 @@
 <br />
 
-<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/logo.png" width="75%" style="display: block; margin: auto"/>
+<p align="center">
+  <a href="">
+    <img alt="CloudGraph" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png" width="75%" style="display: block; margin: auto" />
+  </a>
+</p>
 
 <br />
 <br />
@@ -92,7 +96,11 @@ cg init
 
 1. This initializes CloudGraph's configuration. This command will ask you a series of questions about what providers you are using and how you would like CloudGraph configured.
 
-<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/init.png" width="65%" style="display: block; margin: auto"/>
+<p align="center">
+  <a href="">
+    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="65%" style="display: block; margin: auto"/>
+  </a>
+</p>
 
 <br/>
 
@@ -108,7 +116,11 @@ cg launch
 
 2. This command launches an instance of [Dgraph](https://dgraph.io/), the graphdb CloudGraph uses to store data under the hood. Note that there are 2 ways to launch an instance. **BOTH** of these require [Docker](https://www.docker.com/) to be installed and running. The preferred solution is to use our `cg launch` convenience command.
 
-<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/launch.png" width="65%" style="display: block; margin: auto"/>
+<p align="center">
+  <a href="">
+    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="65%" style="display: block; margin: auto"/>
+  </a>
+</p>
 
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
@@ -128,7 +140,11 @@ cg scan
 
 3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our slack channel.
 
-<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/scan.png" width="65%" style="display: block; margin: auto"/>
+<p align="center">
+  <a href="">
+    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="65%" style="display: block; margin: auto"/>
+  </a>
+</p>
 
 That's it, you are all set to start querying! The query tool you selected during the `cg init` command will then be opened in your preferred browser to run queries, mutations, and visualizations on all of your cloud infrastructure!
 
@@ -535,7 +551,13 @@ CloudGraph comes shipped with 2 awesome query tools and a GraphQL schema explore
 
 GraphQL playground has a fluid and engaging UX that is great for querying a GraphQL schema quickly and simply. It has built-in automatically generated documentation and auto-completion while you type. To access playground, either select it as your preferred query tool in the `init` command OR visit `/playground` in the server CG spins up.
 
-<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/gqlPlayground.png" width="65%" style="display: block; margin: auto"/>png')
+<br />
+
+<p align="center">
+  <a href="">
+    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="65%" style="display: block; margin: auto"/>
+  </a>
+</p>
 
 <br />
 
@@ -543,7 +565,13 @@ GraphQL playground has a fluid and engaging UX that is great for querying a Grap
 
 Altair is another great GraphQL query tool that packs a ton of [features](https://github.com/altair-graphql/altair#features) for power users. Do things like autocomplete queries, dynamically add fragments, and export/import collections of queries. To access Altair, either select it as your preferred query tool in the `init` command OR visit `/altair` in the server CG spins up.
 
-<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/gqlAltair.png" width="65%" style="display: block; margin: auto"/>
+<br />
+
+<p align="center">
+  <a href="">
+    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="65%" style="display: block; margin: auto"/>
+  </a>
+</p>
 
 <br />
 
@@ -551,7 +579,13 @@ Altair is another great GraphQL query tool that packs a ton of [features](https:
 
 GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers. It gives you a great bidirectional chart containing all your types and queries. You can click entities or arrows to discover connections, search for something specific, and get a deeper understanding of your schema. To access voyager, visit `/voyager` in the server CG spins up.
 
-<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/voyager.png" width="65%" style="display: block; margin: auto"/>
+<br />
+
+<p align="center">
+  <a href="">
+    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="65%" style="display: block; margin: auto"/>
+  </a>
+</p>
 
 <!-- querytoolsstop -->
 
@@ -762,7 +796,7 @@ EXAMPLE
 
 _See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.3/src/commands/provider/install.ts)_
 
-## `cg provider:list [PROVIDER]`
+## `cg provider list [PROVIDER]`
 
 List currently installed providers and versions
 
@@ -792,7 +826,7 @@ EXAMPLES
 
 _See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.3/src/commands/provider/list.ts)_
 
-## `cg provider:remove [PROVIDER]`
+## `cg provider remove [PROVIDER]`
 
 Remove currently installed provider
 
@@ -826,7 +860,7 @@ EXAMPLES
 
 _See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.3/src/commands/provider/remove.ts)_
 
-## `cg provider:update [PROVIDER]`
+## `cg provider update [PROVIDER]`
 
 Update currently installed providers
 
