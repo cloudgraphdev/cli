@@ -1,10 +1,11 @@
 <br />
 
-[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/logo.png" width="75%"  style="display: block; margin: auto"/>]('logo.png')
+<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/logo.png" width="75%" style="display: block; margin: auto"/>
 
 <br />
+<br />
 
-An instant **GraphQL** API to query your cloud infrastructure and configuration so that you can solve a host of complex **security**, **compliance**, and **governance** challenges 10x faster. Built and maintained with love by the team at [AutoCloud](https://www.autocloud.dev/)
+An instant **GraphQL** API to query your cloud infrastructure and configuration so that you can solve a host of complex **security**, **compliance**, and **governance** challenges 10x faster. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
 
 <br />
 
@@ -40,7 +41,7 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-CloudGraph gives anyone working with the cloud superpowers and makes it  lightning-fast  answer questions like, "What KMS keys do I have in us-east-1?", "Which VMs have unencrypted storage disks?", and "How much does this EC2 instance actually cost to run per month?". Ask any question about your cloud, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
+CloudGraph gives anyone working with the cloud superpowers and makes it 🌩️ lightning-fast 🌩️ answer questions like, "What KMS keys do I have in us-east-1?", "Which VMs have unencrypted storage disks?", and "How much does this EC2 instance actually cost to run per month?". Ask any question about your cloud, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
 
 # How It Works
 
@@ -92,7 +93,7 @@ cg init
 
 1. This initializes CloudGraph's configuration. This command will ask you a series of questions about what providers you are using and how you would like CloudGraph configured.
 
-[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/init.png" width="65%"  style="display: block; margin:  auto"/>]('init.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/init.png" width="65%" style="display: block; margin: auto"/>]('init.png')
 
 <br/>
 
@@ -108,7 +109,7 @@ cg launch
 
 2. This command launches an instance of [Dgraph](https://dgraph.io/), the graphdb CloudGraph uses to store data under the hood. Note that there are 2 ways to launch an instance. **BOTH** of these require [Docker](https://www.docker.com/) to be installed and running. The preferred solution is to use our `cg launch` convenience command.
 
-[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/launch.png" width="65%"  style="display: block; margin:  auto"/>]('launch.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/launch.png" width="65%" style="display: block; margin: auto"/>]('launch.png')
 
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
@@ -128,7 +129,7 @@ cg scan
 
 3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our slack channel.
 
-[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/scan.png" width="65%"  style="display: block; margin:  auto"/>]('scan.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/scan.png" width="65%" style="display: block; margin: auto"/>]('scan.png')
 
 That's it, you are all set to start querying! The query tool you selected during the `cg init` command will then be opened in your preferred browser to run queries, mutations, and visualizations on all of your cloud infrastructure!
 
@@ -535,7 +536,7 @@ CloudGraph comes shipped with 2 awesome query tools and a GraphQL schema explore
 
 GraphQL playground has a fluid and engaging UX that is great for querying a GraphQL schema quickly and simply. It has built-in automatically generated documentation and auto-completion while you type. To access playground, either select it as your preferred query tool in the `init` command OR visit `/playground` in the server CG spins up.
 
-[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/gqlPlayground.png" width="65%"  style="display: block; margin:  auto"/>]('gqlPlayground.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/gqlPlayground.png" width="65%" style="display: block; margin: auto"/>]('gqlPlayground.png')
 
 <br />
 
@@ -543,7 +544,7 @@ GraphQL playground has a fluid and engaging UX that is great for querying a Grap
 
 Altair is another great GraphQL query tool that packs a ton of [features](https://github.com/altair-graphql/altair#features) for power users. Do things like autocomplete queries, dynamically add fragments, and export/import collections of queries. To access Altair, either select it as your preferred query tool in the `init` command OR visit `/altair` in the server CG spins up.
 
-[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/gqlAltair.png" width="65%"  style="display: block; margin:  auto"/>]('gqlAltair.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/gqlAltair.png" width="65%" style="display: block; margin: auto"/>]('gqlAltair.png')
 
 <br />
 
@@ -551,7 +552,7 @@ Altair is another great GraphQL query tool that packs a ton of [features](https:
 
 GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers. It gives you a great bidirectional chart containing all your types and queries. You can click entities or arrows to discover connections, search for something specific, and get a deeper understanding of your schema. To access voyager, visit `/voyager` in the server CG spins up.
 
-[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/voyager.png" width="65%"  style="display: block; margin:  auto"/>]('voyager.png')
+[<img src="https://raw.githubusercontent.com/cloudgraphdev/cli/6682131f489f8dbeeb3c358979f7dba06fba31bb/docs/images/voyager.png" width="65%" style="display: block; margin: auto"/>]('voyager.png')
 
 <!-- querytoolsstop -->
 
