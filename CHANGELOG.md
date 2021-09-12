@@ -1,3 +1,10 @@
+## [0.8.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.2...0.8.3) (2021-09-12)
+
+
+### Bug Fixes
+
+* **broken links:** fixing broken links in README.md ([55bedde](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/55bedde34b803605262814af853a8b41bb84b650))
+
 ## [0.8.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.1...0.8.2) (2021-09-12)
 
 
