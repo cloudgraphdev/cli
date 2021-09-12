@@ -14,3 +14,4 @@ yalc.lock
 /src/plugins
 /cg
 /dgraph
+.DS_Store
