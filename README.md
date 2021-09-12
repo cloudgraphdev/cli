@@ -26,7 +26,6 @@ An instant **GraphQL** API to query your cloud infrastructure and configuration 
 - [Contribution Guidelines](#contribution-guidelines)
 - [Deployment Options](#deployment-options)
 - [Commands](#commands)
-
 <!-- tocstop -->
 
 <br />
@@ -573,11 +572,11 @@ You can either run CloudGraph locally, or you can deploy it to your cloud provid
 - [`cg launch [PROVIDER]`](#cg-launch-provider)
 - [`cg load [PROVIDER]`](#cg-load-provider)
 - [`cg provider [PROVIDER]`](#cg-provider-provider)
-- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg provider add [PROVIDER]`](#cg-provideradd-provider)
+- [`cg provider install [PROVIDER]`](#cg-providerinstall-provider)
+- [`cg provider list [PROVIDER]`](#cg-providerlist-provider)
+- [`cg provider remove [PROVIDER]`](#cg-providerremove-provider)
+- [`cg provider update [PROVIDER]`](#cg-providerupdate-provider)
 - [`cg scan [PROVIDER]`](#cg-scan-provider)
 - [`cg serve [PROVIDER]`](#cg-serve-provider)
 
@@ -587,13 +586,13 @@ display help for cg
 
 ```
 USAGE
-  $ cg help [COMMAND]
+  $ cg help [COMMAND]
 
 ARGUMENTS
-  COMMAND  command to show help for
+  COMMAND  command to show help for
 
 OPTIONS
-  --all  see all commands in CLI
+  --all  see all commands in CLI
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
@@ -604,23 +603,23 @@ Set initial configuration for providers
 
 ```
 USAGE
-  $ cg init [PROVIDER]
+  $ cg init [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -r, --resources
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -r, --resources
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 EXAMPLES
-  $ cg init
-  $ cg init aws [Initialize AWS provider]
-  $ cg init aws -r [Specify resources to crawl]
+  $ cg init
+  $ cg init aws [Initialize AWS provider]
+  $ cg init aws -r [Specify resources to crawl]
 ```
 
 _See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/init.ts)_
@@ -631,20 +630,20 @@ Launch an instance of Dgraph to store data
 
 ```
 USAGE
-  $ cg launch [PROVIDER]
+  $ cg launch [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 EXAMPLE
-  $ cg launch
+  $ cg launch
 ```
 
 _See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/launch.ts)_
@@ -655,21 +654,21 @@ Load a specific version of your CloudGraph data
 
 ```
 USAGE
-  $ cg load [PROVIDER]
+  $ cg load [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 EXAMPLES
-  $ cg load [Load data for all providers configured]
-  $ cg load aws [Load data for AWS]
+  $ cg load [Load data for all providers configured]
+  $ cg load aws [Load data for AWS]
 ```
 
 _See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/load.ts)_
@@ -680,165 +679,165 @@ Commands to manage provider modules, run $ cg provider for more info.
 
 ```
 USAGE
-  $ cg provider [PROVIDER]
+  $ cg provider [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 ```
 
 _See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/provider/index.ts)_
 
-## `cg provider:add [PROVIDER]`
+## `cg provider add [PROVIDER]`
 
 Add new providers
 
 ```
 USAGE
-  $ cg provider:add [PROVIDER]
+  $ cg provider add [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 ALIASES
-  $ cg add
+  $ cg add
 
 EXAMPLES
-  $ cg provider add aws
-  $ cg provider add aws@0.12.0
+  $ cg provider add aws
+  $ cg provider add aws@0.12.0
 ```
 
 _See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/provider/add.ts)_
 
-## `cg provider:install [PROVIDER]`
+## `cg provider install [PROVIDER]`
 
 Install providers based on the lock file
 
 ```
 USAGE
-  $ cg provider:install [PROVIDER]
+  $ cg provider install [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 ALIASES
-  $ cg install
+  $ cg install
 
 EXAMPLE
-  $ cg provider install
+  $ cg provider install
 ```
 
 _See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/provider/install.ts)_
 
-## `cg provider:list [PROVIDER]`
+## `cg provider list [PROVIDER]`
 
 List currently installed providers and versions
 
 ```
 USAGE
-  $ cg provider:list [PROVIDER]
+  $ cg provider list [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 ALIASES
-  $ cg provider:ls
-  $ cg list
-  $ cg ls
+  $ cg provider:ls
+  $ cg list
+  $ cg ls
 
 EXAMPLES
-  $ cg provider list
-  $ cg provider list aws
+  $ cg provider list
+  $ cg provider list aws
 ```
 
 _See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/provider/list.ts)_
 
-## `cg provider:remove [PROVIDER]`
+## `cg provider remove [PROVIDER]`
 
 Remove currently installed provider
 
 ```
 USAGE
-  $ cg provider:remove [PROVIDER]
+  $ cg provider remove [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-save                          Set to not alter lock file, just delete plugin
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-save                          Set to not alter lock file, just delete plugin
+  --no-serve                         Set to not serve a query engine
 
 ALIASES
-  $ cg remove
-  $ cg rm
-  $ cg del
-  $ cg provider:rm
-  $ cg provider:del
+  $ cg remove
+  $ cg rm
+  $ cg del
+  $ cg provider rm
+  $ cg provider del
 
 EXAMPLES
-  $ cg provider delete
-  $ cg provider delete aws
-  $ cg provider delete aws --no-save
+  $ cg provider delete
+  $ cg provider delete aws
+  $ cg provider delete aws --no-save
 ```
 
 _See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/provider/remove.ts)_
 
-## `cg provider:update [PROVIDER]`
+## `cg provider update [PROVIDER]`
 
 Update currently installed providers
 
 ```
 USAGE
-  $ cg provider:update [PROVIDER]
+  $ cg provider update [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 ALIASES
-  $ cg update
+  $ cg update
 
 EXAMPLES
-  $ cg provider update
-  $ cg provider update aws
-  $cg provider update aws@0.12.0
+  $ cg provider update
+  $ cg provider update aws
+  $cg provider update aws@0.12.0
 ```
 
 _See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/provider/update.ts)_
@@ -849,23 +848,23 @@ Scan one or multiple providers data to be queried through Dgraph
 
 ```
 USAGE
-  $ cg scan [PROVIDER]
+  $ cg scan [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 EXAMPLES
-  $ cg scan
-  $ cg scan aws
-  $ cg scan aws --dgraph http://localhost:1000 [Save data in dgraph running on port 1000]
-  $ cg scan aws --no-serve [Do not start the query engine]
+  $ cg scan
+  $ cg scan aws
+  $ cg scan aws --dgraph http://localhost:1000 [Save data in dgraph running on port 1000]
+  $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
 _See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/scan.ts)_
@@ -876,20 +875,20 @@ Serve a GraphQL query tool to query your CloudGraph data.
 
 ```
 USAGE
-  $ cg serve [PROVIDER]
+  $ cg serve [PROVIDER]
 
 OPTIONS
-  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                    Set port to serve query engine
-  -q, --query-engine=query-engine    Query engine to launch
-  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
-  --dev                              Turn on developer mode
-  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                         Set to not serve a query engine
+  -d, --dgraph=dgraph                Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                    Set port to serve query engine
+  -q, --query-engine=query-engine    Query engine to launch
+  -s, --storage=storage              Select a storage engine to use. Currently only supports Dgraph
+  --dev                              Turn on developer mode
+  --directory=directory              Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                         Set to not serve a query engine
 
 EXAMPLE
-  $ cg serve
+  $ cg serve
 ```
 
 _See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.0/src/commands/serve.ts)_
