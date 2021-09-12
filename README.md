@@ -139,7 +139,7 @@ cg scan
 
 <br/>
 
-3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our [Slack Channel](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
+3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
@@ -605,7 +605,7 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 
 <br />
 
-Comments, questions, or feedback? Please [Join Our Slack Channel](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ) we would love to hear from you.
+Comments, questions, or feedback? Please [Join Our Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ) we would love to hear from you.
 
 <br />
 
