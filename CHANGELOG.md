@@ -1,3 +1,12 @@
+## [0.8.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.5...0.8.6) (2021-09-12)
+
+
+### Bug Fixes
+
+* **formatting:** minor fixes and formatting for README.md ([9b2d011](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9b2d011ea57b5e8a82881ecd10e8dca7dd4d1dc9))
+* **spelling:** missing an s on ALBs ([1b5c8c3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1b5c8c3129405678a7ada6f511ea05ccad445c1d))
+* **wording:** channel -> workspace ([da3436f](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/da3436f93834f03916e99ea1acb9c85079b33516))
+
 ## [0.8.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.4...0.8.5) (2021-09-12)
 
 
