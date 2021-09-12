@@ -9,7 +9,7 @@
 <br />
 <br />
 
-An instant **GraphQL** API to query your cloud infrastructure and configuration so that you can solve a host of complex **security**, **compliance**, and **governance** challenges 10x faster. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+An instant **GraphQL** API to query your cloud infrastructure and configuration so that you can solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
 
 <br />
 
@@ -45,7 +45,7 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-CloudGraph gives anyone working with the cloud superpowers and makes it 🌩️ lightning-fast 🌩️ answer questions like, "What KMS keys do I have in us-east-1?", "Which VMs have unencrypted storage disks?", and "How much does this EC2 instance actually cost to run per month?". Ask any question about your cloud, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
+CloudGraph gives anyone working with the cloud superpowers and makes it 🌩️ lightning-fast 🌩️ to answer questions like, "What KMS keys do I have in us-east-1?", "Which VMs have unencrypted storage disks?", and "How much does this EC2 instance actually cost to run per month?". Ask any question about your cloud, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
 
 # How It Works
 
@@ -139,7 +139,7 @@ cg scan
 
 <br/>
 
-3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our slack channel.
+3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our [Slack Channel](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
@@ -161,17 +161,17 @@ Note that you may also use **any** GraphQL query tool you would like by connecti
 
 # Example Queries
 
-To use CloudGraph, you will need to be familiar with GraphQL. This section contains a handful of example queries to get you up and running but is by no means exhaustive but if you can dream it up, you can query it! Note that you can find additional example queries in the [examples](examples/) directory. Feel free to make a PR with other examples you would like to see included, check out the [Contribution Guidelines](#contribution-guidelines) section for more information.
+To use CloudGraph, you will need to be familiar with GraphQL. This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find additional example queries in the [examples](examples/) directory. Feel free to make a PR with other examples you would like to see included, check out the [Contribution Guidelines](#contribution-guidelines) section for more information.
 
 <br />
 
-## AWS Examples:
+## Basic AWS Examples:
 
-For the purposes of these examples we will just request the ID and ARNs to keep things brief, but you can query whatever attributes you want.
+For a list of currently supported AWS services please see the [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws). For the purposes of these examples we will just request the IDs and ARNs of AWS resources to keep things brief, but you can query whatever attributes you want.
 
 <br />
 
-Get the ID and ARN of a single EC2 instance:
+Get the `ID` and `ARN` of a single `EC2 instance`:
 
 ```graphql
 query {
@@ -185,7 +185,8 @@ query {
 ```
 
 <br />
-Get the ID and ARN of each EC2 in your entire AWS account:
+
+Get the `ID` and `ARN` of each `EC2` in your entire AWS account:
 
 ```graphql
 query {
@@ -197,7 +198,8 @@ query {
 ```
 
 <br />
-Get the ID and ARN of each EC2 in "us-east-1" using a regex to search the ARN:
+
+Get the `ID` and `ARN` of each `EC2` in `"us-east-1"` using a regex to search the `ARN`:
 
 ```graphql
 query {
@@ -209,7 +211,8 @@ query {
 ```
 
 <br />
-Do the same thing but checking to see that the region is equal to "us-east-1" instead of using a regex:
+
+Do the same thing but checking to see that the `region` is equal to `"us-east-1"` instead of using a regex:
 
 ```graphql
 query {
@@ -221,7 +224,8 @@ query {
 ```
 
 <br />
-Do the same thing but checking to see that the region contains "us-east-1" in the name instead of using eq:
+
+Do the same thing but checking to see that the `region` contains `"us-east-1"` in the name instead of using eq:
 
 ```graphql
 query {
@@ -233,7 +237,8 @@ query {
 ```
 
 <br />
-Get the ID and ARN of each M5 series EC2 instance in "us-east-1"
+
+Get the `ID` and `ARN` of each `M5` series `EC2 instance` in `"us-east-1"`
 
 ```graphql
 query {
@@ -247,7 +252,8 @@ query {
 ```
 
 <br />
-Do the same thing but skip the first found result (i.e. `offset: 1`) and then only return the first two results after that (i.e. `first: 2`) and order those results by AZ in ascending order (`order: { asc: availabilityZone }`) so that instance(s) in "us-east-1a" are returned at the top of the list.
+
+Do the same thing but skip the first found result (i.e. `offset: 1`) and then only return the first two results after that (i.e. `first: 2`) and order those results by AZ in ascending order (`order: { asc: availabilityZone }`) so that instance(s) in `"us-east-1a"` are returned at the top of the list.
 
 ```graphql
 query {
@@ -264,7 +270,8 @@ query {
 ```
 
 <br />
-Do the same thing but also include the EBS volume that is the boot disk for each EC2 instance
+
+Do the same thing but also include the `EBS Volume` that is the boot disk for each `EC2 instance`:
 
 ```graphql
 query {
@@ -286,7 +293,8 @@ query {
 ```
 
 <br />
-Do the same thing, but also include the SGs and ALBs for each EC2. For the ALBs, get the EC2s that they are connected to along with the ID and ARN of each found EC2 instance (i.e. a circular query).
+
+Do the same thing, but also include the `SGs` and `ALBs` for each `EC2`. For the `ALBs`, get the `EC2s` that they are connected to along with the `ID` and `ARN` of each found `EC2 instance` (i.e. a circular query).
 
 ```graphql
 query {
@@ -320,7 +328,8 @@ query {
 ```
 
 <br />
-Get each VPC, the ALB, and Lambdas in that VPC, and then a bunch of nested sub-data as well... you get the idea.
+
+Get each `VPC`, the `ALB` and `Lambdas` in that `VPC`, and then a bunch of nested sub-data as well... you get the idea.
 
 ```graphql
 query {
@@ -357,7 +366,7 @@ query {
 
 <br />
 
-Find all the unencrypted EBS Volumes.
+Find all the unencrypted `EBS Volumes`:
 
 ```graphql
 query {
@@ -372,7 +381,7 @@ query {
 
 <br />
 
-Find all the KMS keys in "us-east-1"
+Find all the `KMS` keys in `"us-east-1"`:
 
 ```graphql
 query {
@@ -391,7 +400,7 @@ query {
 
 <br />
 
-Find all the burstable instances
+Find all the burstable `T` series instances:
 
 ```graphql
 query {
@@ -406,7 +415,7 @@ query {
 
 <br />
 
-Find the default VPCs
+Find the default `VPCs`:
 
 ```graphql
 query {
@@ -421,7 +430,7 @@ query {
 
 <br />
 
-Find the public ALBs
+Find the public `ALBs`:
 
 ```graphql
 query {
@@ -440,7 +449,7 @@ query {
 
 <br />
 
-Find all of the EC2s, Lambdas, and VPCs that have a Tag value of "Production".
+Find all of the `EC2s`, `Lambdas`, and `VPCs` that have a `Tag` value of `"Production"`:
 
 ```graphql
 query {
@@ -465,12 +474,12 @@ query {
 
 <br />
 
-Do the same thing but look for both a key and a value
+Do the same thing but look for both a `key` and a `value`:
 
 ```graphql
 query {
   queryawsTag(
-    filter: { value: { eq: "Production" }, key: { eq: "Environment" } }
+    filter: {  key: { eq: "Environment" }, value: { eq: "Production" } }
   ) {
     key
     value
@@ -492,7 +501,7 @@ query {
 
 <br />
 
-Do the same thing using getawsTag instead of `queryawsTag`. Note that when searching for tags using `getawsTag` your must specify **both** the `key` and `value` as the `id` like is done below with `"Environment:Production"`.
+Do the same thing using `getawsTag` instead of `queryawsTag`. Note that when searching for tags using `getawsTag` your must specify **both** the `key` and `value` as the `id` like is done below with `"Environment:Production"`:
 
 ```graphql
 query {
@@ -544,7 +553,7 @@ This is actually not a limitation of CloudGraph, but rather a feature that still
 
 <!-- querytools -->
 
-CloudGraph comes shipped with 2 awesome query tools and a GraphQL schema explorer. Remember, you can use **ANY** GraphQL query tool if you would prefer another option, just connect it to your exposed `/graphql` endpoint!
+CloudGraph ships with 2 awesome query tools and a GraphQL schema explorer. Remember, you can use **ANY** GraphQL query tool if you would prefer another option, just connect it to your exposed `/graphql` endpoint!
 
 <br />
 
