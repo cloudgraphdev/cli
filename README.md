@@ -768,7 +768,7 @@ OPTIONS
   --no-serve                         Set to not serve a query engine
 
 ALIASES
-  $ cg provider:ls
+  $ cg provider ls
   $ cg list
   $ cg ls
 
