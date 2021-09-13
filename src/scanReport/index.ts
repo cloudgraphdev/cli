@@ -152,7 +152,7 @@ export class ScanReport {
     )
     console.log(this.table.toString())
     if (this.internalTable.status !== statusLevel.pass) {
-      logger.warn(
+      logger[this.internalTable.status === statusLevel.fail ? 'error' : 'warn'](
         `While CG ran successfully, there were some ${
           this.internalTable.status === statusLevel.fail ? 'major' : 'minor'
         } issues formatting and inserting your data into dGraph.`

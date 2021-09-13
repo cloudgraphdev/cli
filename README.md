@@ -628,11 +628,11 @@ You can either run CloudGraph locally, or you can deploy it to your cloud provid
 * [`cg launch [PROVIDER]`](#cg-launch-provider)
 * [`cg load [PROVIDER]`](#cg-load-provider)
 * [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+* [`cg provider add [PROVIDER]`](#cg-provideradd-provider)
+* [`cg provider install [PROVIDER]`](#cg-providerinstall-provider)
+* [`cg provider list [PROVIDER]`](#cg-providerlist-provider)
+* [`cg provider remove [PROVIDER]`](#cg-providerremove-provider)
+* [`cg provider update [PROVIDER]`](#cg-providerupdate-provider)
 * [`cg scan [PROVIDER]`](#cg-scan-provider)
 * [`cg serve [PROVIDER]`](#cg-serve-provider)
 
@@ -805,7 +805,7 @@ EXAMPLE
 
 _See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.8.6/src/commands/provider/install.ts)_
 
-## `cg provider:list [PROVIDER]`
+## `cg provider list [PROVIDER]`
 
 List currently installed providers and versions
 
