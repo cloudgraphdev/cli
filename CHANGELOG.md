@@ -3,6 +3,14 @@
 
 ### Bug Fixes
 
+* **init:** fix issue with init command not saving cg config when saying no to overwrite ([d4e3333](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d4e3333188828adc4181ad64d2fd5b49ed4b19b8))
+* **scan:** update scan report to change log level warn/error depending on severity ([ece4924](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ece4924e8f50bbc4b33c665900ef20c349abedf2))
+
+## [0.8.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.6...0.8.7) (2021-09-13)
+
+
+### Bug Fixes
+
 * **scan:** update scan report to change log level warn/error depending on severity ([ece4924](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ece4924e8f50bbc4b33c665900ef20c349abedf2))
 
 ## [0.8.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.5...0.8.6) (2021-09-12)
