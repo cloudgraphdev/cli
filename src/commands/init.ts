@@ -176,6 +176,8 @@ export default class Init extends Command {
       this.logger.debug(answers)
       if (answers.overwrite) {
         configResult.cloudGraph = await this.getCloudGraphConfig()
+      } else {
+        configResult.cloudGraph = cloudGraphConfig
       }
     } else {
       configResult.cloudGraph = await this.getCloudGraphConfig()
