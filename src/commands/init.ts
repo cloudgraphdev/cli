@@ -61,6 +61,7 @@ export default class Init extends Command {
     const result: { [key: string]: any } = {}
     if (dgraph) {
       result.dgraphHost = dgraph
+      result.versionLimit = 10
     } else {
       const { fullUrl, versionLimit } = await this.interface.prompt([
         {
@@ -78,6 +79,8 @@ export default class Init extends Command {
           default: 10,
         },
       ])
+
+      this.logger.info('Note that none of your cloud\'s information is ever sent to or stored by CloudGraph or third parties')
 
       result.versionLimit = versionLimit
 
