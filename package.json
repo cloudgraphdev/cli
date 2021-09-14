@@ -36,6 +36,8 @@
     "inquirer": "^8.1.1",
     "live-plugin-manager": "^0.15.1",
     "open": "^8.2.1",
+    "react": "16",
+    "react-dom": "16",
     "tslib": "^1"
   },
   "devDependencies": {
