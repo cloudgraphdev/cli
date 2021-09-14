@@ -1,3 +1,10 @@
+## [0.8.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.7...0.8.8) (2021-09-14)
+
+
+### Bug Fixes
+
+* **readme:** readme port number fix ([0d734bc](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0d734bcfd33e24eb8bab67116e940bef54eaa7ae))
+
 ## [0.8.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.6...0.8.7) (2021-09-13)
 
 
