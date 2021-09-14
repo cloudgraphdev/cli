@@ -1,3 +1,12 @@
+## [0.8.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.8...0.8.9) (2021-09-14)
+
+
+### Bug Fixes
+
+* **deps:** Add required react peer dep ([e511952](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e511952dfe37d7fae4ae0b2643161af0983f859c))
+* **deps:** remove graphql voyager dep, remove react deps ([03412be](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/03412be40add4403b2f781b152044c377467dcb1))
+* **init:** Add logging to ensure users we dont store cloud data outside their machine ([98ca12a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/98ca12a9348f92b77b79fff150a4f2f4b648b4f3))
+
 ## [0.8.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.7...0.8.8) (2021-09-14)
 
 
