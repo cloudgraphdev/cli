@@ -1,3 +1,10 @@
+## [0.8.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.9...0.8.10) (2021-09-15)
+
+
+### Bug Fixes
+
+* **alt tag:** voyager -> autocloud ([9fe9564](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9fe9564a617c0366ac179b501a6f6a5ec3525078))
+
 ## [0.8.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.8...0.8.9) (2021-09-14)
 
 
