@@ -630,7 +630,7 @@ Interested in a fully managed SaaS/self hosted version of CloudGraph that has bu
 
 <p align="center">
   <a href="https://www.autocloud.dev">
-    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="100%" style="display: block; margin: auto"/>
+    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="100%" style="display: block; margin: auto"/>
   </a>
 </p>
 
