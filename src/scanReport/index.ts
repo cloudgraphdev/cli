@@ -158,7 +158,7 @@ export class ScanReport {
         } issues formatting and inserting your data into dGraph.`
       )
       logger.info(
-        'For a complete list of these errors and what they mean for you please see our documentation'
+        'For a complete list of these errors and what they mean for you, please see https://github.com/cloudgraphdev/cli#common-errors'
       )
     }
   }

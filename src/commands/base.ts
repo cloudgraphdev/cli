@@ -238,6 +238,7 @@ export default abstract class BaseCommand extends Command {
       this.logger.warn(
         `There was an error installing or requiring a plugin for ${provider}, does one exist?`
       )
+      this.logger.info('For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors')
       return null
     }
   }
