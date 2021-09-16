@@ -101,6 +101,7 @@ export class Manager {
       checkSpinner.fail(
         `Manager failed to install plugin for ${chalk.green(providerName)}`
       )
+      this.logger.info('For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors')
       throw new Error(
         `${provider} moudle check ${chalk.red('FAILED')}, unable to find plugin`
       )
