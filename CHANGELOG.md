@@ -1,3 +1,16 @@
+# [0.9.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.10...0.9.0) (2021-09-16)
+
+
+### Bug Fixes
+
+* **readme:** add links to common errors in logs ([58e4079](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/58e4079f4793fababedadcbb6927c5a887153d0a))
+* **readme:** fix typo ([bc0345a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/bc0345a47e4da2a4d08f611f967e0212586e88b9))
+
+
+### Features
+
+* **readme:** update readme with common errors ([bd6bd9b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/bd6bd9b5e32b32d78f339b784d2af3c23a89d66b))
+
 ## [0.8.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.9...0.8.10) (2021-09-15)
 
 
