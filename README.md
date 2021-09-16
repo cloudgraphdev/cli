@@ -647,7 +647,7 @@ There are some common errors you may see when running CloudGraph that are usuall
 
 * ⚠️ unable to make some connections - This warning in the scan report appears when CG tries to make a connection between two resources and is unable to do so. If you see this using one of CG's offically supported providers, please [create a new issue](https://github.com/cloudgraphdev/cli/issues) so we can solve it. The most common cause of this error is a bug in the underlying provider's resource connection logic.
 
-* 🚫 unable to store data in Dgraph - This error in the scan report appears when CG tries to insert some cloud provider data into the graph DB and it fails. Any services with this error will be unable to be queried in the GraphQL query tool. This usally happens when CG is unable to grab required data (such as an arn) for a resource due to an error when calling the provider SDK, commonly due to a lack of authorization.
+* 🚫 unable to store data in Dgraph - This error in the scan report appears when CG tries to insert some cloud provider data into the graph DB and it fails. Any services with this error will be unable to be queried in the GraphQL query tool. This usually happens when CG is unable to grab required data (such as an arn) for a resource due to an error when calling the provider SDK, commonly due to a lack of authorization.
 
 * Provider {name}@${version} requires cli version {version} but cli version is ${version} - This warning means you have incompatible versions of CG and the provider you are trying to use. Try updating CG `npm install -g @cloudgraphdev/cli` and the provider module `cg provider update` so both are at the latest version. You can also check the proivder's `pacakge.json` to see what versions of CG support it.
 
