@@ -1,3 +1,10 @@
+## [0.9.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.0...0.9.1) (2021-09-17)
+
+
+### Bug Fixes
+
+* Fixed hanging queries issue with Dgraph ([f5d00f7](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f5d00f73efed4c908322da6c2b2e7102d0c5ce80))
+
 # [0.9.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.8.10...0.9.0) (2021-09-16)
 
 
