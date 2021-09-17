@@ -19,20 +19,21 @@ An instant **GraphQL** API to query your cloud infrastructure and configuration 
 [![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/master/package.json)
 
 <!-- toc -->
-* [Why CloudGraph](#why-cloudgraph)
-* [How It Works](#how-it-works)
-* [Authentication](#authentication)
-* [Install](#install)
-* [Quick Start](#quick-start)
-* [Example Queries](#example-queries)
-* [Query Tools](#query-tools)
-* [Community](#community)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Deployment Options](#deployment-options)
-* [Hosted Version](#hosted-version)
-* [Debugging](#debugging)
-* [Common Errors](#common-errors)
-* [Commands](#commands)
+
+- [Why CloudGraph](#why-cloudgraph)
+- [How It Works](#how-it-works)
+- [Authentication](#authentication)
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Example Queries](#example-queries)
+- [Query Tools](#query-tools)
+- [Community](#community)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Deployment Options](#deployment-options)
+- [Hosted Version](#hosted-version)
+- [Debugging](#debugging)
+- [Common Errors](#common-errors)
+- [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -128,7 +129,7 @@ cg launch
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
 ```bash
-  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0
+  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1
 ```
 
 ---
@@ -645,31 +646,32 @@ If you encounter any errors running CloudGraph you can prepend `CG_DEBUG=5` to t
 
 There are some common errors you may see when running CloudGraph that are usually related to permisions or connection issues.
 
-* ⚠️ unable to make some connections - This warning in the scan report appears when CG tries to make a connection between two resources and is unable to do so. If you see this using one of CG's offically supported providers, please [create a new issue](https://github.com/cloudgraphdev/cli/issues) so we can solve it. The most common cause of this error is a bug in the underlying provider's resource connection logic.
+- ⚠️ unable to make some connections - This warning in the scan report appears when CG tries to make a connection between two resources and is unable to do so. If you see this using one of CG's offically supported providers, please [create a new issue](https://github.com/cloudgraphdev/cli/issues) so we can solve it. The most common cause of this error is a bug in the underlying provider's resource connection logic.
 
-* 🚫 unable to store data in Dgraph - This error in the scan report appears when CG tries to insert some cloud provider data into the graph DB and it fails. Any services with this error will be unable to be queried in the GraphQL query tool. This usually happens when CG is unable to grab required data (such as an arn) for a resource due to an error when calling the provider SDK, commonly due to a lack of authorization.
+- 🚫 unable to store data in Dgraph - This error in the scan report appears when CG tries to insert some cloud provider data into the graph DB and it fails. Any services with this error will be unable to be queried in the GraphQL query tool. This usually happens when CG is unable to grab required data (such as an arn) for a resource due to an error when calling the provider SDK, commonly due to a lack of authorization.
 
-* Provider {name}@${version} requires cli version {version} but cli version is ${version} - This warning means you have incompatible versions of CG and the provider you are trying to use. Try updating CG `npm install -g @cloudgraphdev/cli` and the provider module `cg provider update` so both are at the latest version. You can also check the proivder's `pacakge.json` to see what versions of CG support it.
+- Provider {name}@${version} requires cli version {version} but cli version is ${version} - This warning means you have incompatible versions of CG and the provider you are trying to use. Try updating CG `npm install -g @cloudgraphdev/cli` and the provider module `cg provider update` so both are at the latest version. You can also check the proivder's `pacakge.json` to see what versions of CG support it.
 
-* Manager failed to install plugin for {provider} - This error occurs when CG's plugin manager can not find the provider module you want to use. The manager searches the public NPM registry for the provider module. For offically supported providers, just pass the provider name `CG init aws`. For community supported providers, you must pass the namespace as well `CG init @{providerNamespace}/{provider}`
+- Manager failed to install plugin for {provider} - This error occurs when CG's plugin manager can not find the provider module you want to use. The manager searches the public NPM registry for the provider module. For offically supported providers, just pass the provider name `CG init aws`. For community supported providers, you must pass the namespace as well `CG init @{providerNamespace}/{provider}`
 
 <br />
 
 # Commands
 
 <!-- commands -->
-* [`cg help [COMMAND]`](#cg-help-command)
-* [`cg init [PROVIDER]`](#cg-init-provider)
-* [`cg launch [PROVIDER]`](#cg-launch-provider)
-* [`cg load [PROVIDER]`](#cg-load-provider)
-* [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-* [`cg scan [PROVIDER]`](#cg-scan-provider)
-* [`cg serve [PROVIDER]`](#cg-serve-provider)
+
+- [`cg help [COMMAND]`](#cg-help-command)
+- [`cg init [PROVIDER]`](#cg-init-provider)
+- [`cg launch [PROVIDER]`](#cg-launch-provider)
+- [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg provider [PROVIDER]`](#cg-provider-provider)
+- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
+- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
+- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
+- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
+- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg scan [PROVIDER]`](#cg-scan-provider)
+- [`cg serve [PROVIDER]`](#cg-serve-provider)
 
 ## `cg help [COMMAND]`
 
@@ -983,4 +985,5 @@ EXAMPLE
 ```
 
 _See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.9.0/src/commands/serve.ts)_
+
 <!-- commandsstop -->

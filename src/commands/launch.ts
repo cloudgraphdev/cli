@@ -89,7 +89,9 @@ export default class Launch extends Command {
 
     if (!exitedContainerId && !runningContainerId) {
       containerCheck.succeed('No reusable instances found')
-      const dgraphImgCheck = this.logger.startSpinner('pulling Dgraph Docker image')
+      const dgraphImgCheck = this.logger.startSpinner(
+        'pulling Dgraph Docker image'
+      )
       try {
         fileUtils.makeDirIfNotExists(path.join(dataDir, '/dgraph'))
         await this.execCommand('docker pull dgraph/standalone')
@@ -115,9 +117,8 @@ export default class Launch extends Command {
           await this.execCommand(`docker container start ${exitedContainerId}`)
         } else {
           await this.execCommand(
-            `docker run -d -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 --label ${
-              Launch.dgraphContainerLabel
-            } -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.0`
+            `docker run -d -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 --label
+            ${Launch.dgraphContainerLabel} -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1`
           )
         }
         dgraphInit.succeed('Dgraph instance running')
@@ -132,7 +133,9 @@ export default class Launch extends Command {
   }
 
   async checkIfInstanceIsRunningReportStatus(): Promise<void> {
-    const healthCheck = this.logger.startSpinner('Running health check on Dgraph')
+    const healthCheck = this.logger.startSpinner(
+      'Running health check on Dgraph'
+    )
     // eslint-disable-next-line no-warning-comments
     // TODO: smaller sleep time and exponential backoff for ~5 tries
     await sleep(10000)
