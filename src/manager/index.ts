@@ -5,6 +5,8 @@ import path from 'path'
 import chalk from 'chalk'
 import fs from 'fs'
 import satisfies from 'semver/functions/satisfies'
+import gt from 'semver/functions/gt'
+import { printBoxMessage } from '../utils'
 //
 const getProviderImportPath = (
   provider: string
@@ -19,6 +21,7 @@ const getProviderImportPath = (
     name: providerName,
   }
 }
+
 export class Manager {
   constructor(config: any) {
     this.pluginManager = new PluginManager({
@@ -47,7 +50,7 @@ export class Manager {
     let plugin
     let providerName = provider
 
-    const checkSpinner = this.logger.startSpinner(
+    this.logger.startSpinner(
       `Checking for ${chalk.green(provider)} module...`
     )
     try {
@@ -61,7 +64,7 @@ export class Manager {
         // TODO: talk with live-plugin-manager maintainer on why above doesnt work but below does??
         plugin = await import(importPath)
       } else {
-        const installOra = this.logger.startSpinner(
+        this.logger.startSpinner(
           `Installing ${chalk.green(providerName)} plugin`
         )
         const providerLockVersion = this.getProviderVersionFromLock(provider)
@@ -73,6 +76,9 @@ export class Manager {
         await this.pluginManager.install(
           importPath,
           version ?? providerLockVersion
+        )
+        this.logger.successSpinner(
+          `${chalk.green(providerName)} plugin installed successfully!`
         )
         const isValidVersion = await this.checkRequiredVersion(importPath)
         if (!isValidVersion) {
@@ -91,24 +97,28 @@ export class Manager {
             version && version !== 'latest' ? version : newLockVersion
           )
         }
-        installOra.succeed(
-          `${chalk.green(providerName)} plugin installed successfully!`
-        )
         plugin = this.pluginManager.require(importPath)
       }
     } catch (error: any) {
       this.logger.debug(JSON.stringify(error))
-      checkSpinner.fail(
+      this.logger.failSpinner(
         `Manager failed to install plugin for ${chalk.green(providerName)}`
       )
-      this.logger.info('For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors')
+      this.logger.info(
+        'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
+      )
       throw new Error(
         `${provider} moudle check ${chalk.red('FAILED')}, unable to find plugin`
       )
     }
-    checkSpinner.succeed(`${chalk.green(providerName)} module check complete`)
+    this.logger.successSpinner(`${chalk.green(providerName)} module check complete`)
     this.plugins[providerName] = plugin
     return plugin
+  }
+
+  async queryRemoteVersion(importPath: string): Promise<string> {
+    const info = await this.pluginManager.queryPackage(importPath)
+    return info.version
   }
 
   getProviderVersion(importPath: string): string {
@@ -140,6 +150,17 @@ export class Manager {
       providerInfo = this.pluginManager.require(`${importPath}/package.json`)
     }
     const providerVersion = providerInfo?.version
+    const latestRemoveVersion = await this.queryRemoteVersion(importPath)
+    if (gt(latestRemoveVersion, providerVersion)) {
+      const stoppedMsg = this.logger.stopSpinner()
+      printBoxMessage(
+        `Update for ${chalk.italic.green(
+          importPath
+        )} is available: ${providerVersion} -> ${latestRemoveVersion}. \n
+Run ${chalk.italic.green('cg update')} to install`
+      )
+      this.logger.startSpinner(stoppedMsg)
+    }
     const requiredVersion = providerInfo?.cloudGraph?.version
     if (!requiredVersion) {
       this.logger.warn(
@@ -207,8 +228,7 @@ export class Manager {
     let oldLock
     try {
       oldLock = cosmiconfigSync('cloud-graph').load(lockPath)
-    } catch (error: any) {
-    }
+    } catch (error: any) {}
     try {
       let newLockFile
       if (oldLock?.config) {

@@ -185,6 +185,14 @@ export function printWelcomeMessage(): void {
   )
 }
 
+export function printBoxMessage(msg: string): void {
+  console.log(
+    boxen(msg, {
+      borderColor: 'green',
+    })
+  )
+}
+
 export function getVersionFolders(
   directory: string,
   provider?: string
