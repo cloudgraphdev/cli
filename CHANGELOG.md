@@ -1,3 +1,10 @@
+## [0.9.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.1...0.9.2) (2021-09-20)
+
+
+### Bug Fixes
+
+* **deps:** bump sdk to latest ver ([a032174](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a032174de41d833547917dcecf788d9c88b0b608))
+
 ## [0.9.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.0...0.9.1) (2021-09-17)
 
 
