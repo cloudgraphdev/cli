@@ -1,3 +1,10 @@
+## [0.9.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.2...0.9.3) (2021-09-21)
+
+
+### Bug Fixes
+
+* Used ESLINT disable to fix broken command ([979bd40](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/979bd4027df57b50fc0c372aee11e6580601d9b0))
+
 ## [0.9.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.1...0.9.2) (2021-09-20)
 
 
