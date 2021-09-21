@@ -117,8 +117,7 @@ export default class Launch extends Command {
           await this.execCommand(`docker container start ${exitedContainerId}`)
         } else {
           await this.execCommand(
-            `docker run -d -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 --label
-            ${Launch.dgraphContainerLabel} -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1`
+            `docker run -d -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 --label ${Launch.dgraphContainerLabel} -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1` // eslint-disable-line max-len
           )
         }
         dgraphInit.succeed('Dgraph instance running')
