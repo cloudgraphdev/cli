@@ -73,7 +73,7 @@ AWS TLDR; For AWS need you an IAM User with the AWS Managed "ReadOnlyAccess" pol
 
 # Install
 
-Note that installation via homebrew and other platforms is coming soon
+Use this command to install and update CloudGraph to the latest version.
 
 <!-- install -->
 
