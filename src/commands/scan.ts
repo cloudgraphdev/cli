@@ -121,7 +121,6 @@ export default class Scan extends Command {
         this.logger.warn(`No configuration found for ${provider}, run "cg init ${provider}" to create one`)
         continue // eslint-disable-line no-continue
       }
-      const { accountId } = await client.getIdentity()
       this.logger.startSpinner(
         `${chalk.italic.green('SCANNING')} data for ${chalk.italic.green(
           provider
@@ -180,7 +179,7 @@ export default class Scan extends Command {
       try {
         const dataPath = path.join(
           dataStorageLocation,
-          `/${provider}_${accountId}_${Date.now()}.json`
+          `/${provider}_${Date.now()}.json`
         )
         fs.writeFileSync(dataPath, JSON.stringify(providerData, null, 2))
       } catch (error: any) {
