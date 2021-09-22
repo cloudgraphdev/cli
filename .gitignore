@@ -15,3 +15,6 @@ yalc.lock
 /cg
 /dgraph
 .DS_Store
+/coverage
+/test/.testConfigDir
+/test/.testData

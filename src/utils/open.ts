@@ -2,6 +2,10 @@ import childProcess, { ChildProcess } from 'child_process'
 import open from 'open'
 
 const openBrowser = (url: string): Promise<void | ChildProcess> => {
+  // Skip opening browser while testing
+  if (process.env.NODE_ENV === 'test'){
+    return Promise.resolve()
+  }
   if (process.platform === 'darwin') {
     // Will use the first open browser found from list
     const supportedChromiumBrowsers = [

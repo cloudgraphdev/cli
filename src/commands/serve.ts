@@ -18,15 +18,15 @@ export default class Serve extends Command {
 
   static args = Command.args
 
-  async run() {
+  async run(): Promise<void> {
     const storageEngine = this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
     if (!storageRunning) {
-      this.logger.error(`Storage engine check at ${storageEngine.host} FAILED canceling SERVE`)
-      this.exit()
+      const msg = `Storage engine check at ${storageEngine.host} FAILED canceling SERVE`
+      this.logger.error(msg)
+      throw new Error(msg)
     }
     await this.startQueryEngine()
     this.logger.info('All done, bye')
-    this.exit()
   }
 }

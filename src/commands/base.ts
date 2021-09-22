@@ -1,18 +1,24 @@
-import Command, { flags } from '@oclif/command'
+import Command from '@oclif/command'
 import { Input } from '@oclif/parser'
 import CloudGraph, { Logger } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
-import path from 'path'
-import inquirer from 'inquirer'
 import chalk from 'chalk'
+import inquirer from 'inquirer'
+import path from 'path'
 import gt from 'semver/functions/gt'
 import Manager from '../manager'
 import EngineMap from '../storage'
 import QueryEngine from '../server'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
-import { getStorageEngineConnectionConfig, printWelcomeMessage, printBoxMessage } from '../utils'
+import {
+  getDefaultEndpoint,
+  getDefaultStorageEngineConnectionConfig,
+  getStorageEngineConnectionConfig,
+  printWelcomeMessage,
+  printBoxMessage
+} from '../utils'
+import flagsDefinition from '../utils/flags'
 import openBrowser from '../utils/open'
-import { DEFAULT_CONFIG } from '../utils/constants'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
@@ -37,49 +43,7 @@ export default abstract class BaseCommand extends Command {
 
   storedConfig: { [key: string]: any } | undefined
 
-  static flags = {
-    // devMode flag
-    dev: flags.boolean({ description: 'Turn on developer mode' }),
-    // dgraph host
-    dgraph: flags.string({
-      char: 'd',
-      env: 'CG_HOST_PORT',
-      description: 'Set where dgraph is running (default localhost:8997)',
-    }),
-    // storage engine to use
-    storage: flags.string({
-      char: 's',
-      description:
-        'Select a storage engine to use. Currently only supports Dgraph',
-    }),
-    // dir to store cloud graph data versions in
-    directory: flags.string({
-      description:
-        'Set the folder where CloudGraph will store data. (default cg)',
-    }),
-    // serve query engine after scan/load
-    'no-serve': flags.boolean({
-      default: false,
-      description: 'Set to not serve a query engine',
-    }),
-    // port for query engine
-    port: flags.integer({
-      char: 'p',
-      env: 'CG_QUERY_PORT',
-      description: 'Set port to serve query engine',
-    }),
-    // Query Engine to use
-    'query-engine': flags.string({
-      char: 'q',
-      description: 'Query engine to launch',
-    }),
-    // version limit
-    'version-limit': flags.string({
-      char: 'l',
-      description:
-        'Limit the amount of version folders stored on the filesystem (default 10)',
-    }),
-  }
+  static flags = flagsDefinition
 
   static hidden = true
 
@@ -205,12 +169,10 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       // nothing found, return default location
 
       showInitialStatus &&
-        this.logger.info(
-          `Dgraph host set as: ${DEFAULT_CONFIG.scheme}://${DEFAULT_CONFIG.host}:${DEFAULT_CONFIG.port}`
-        )
-      return DEFAULT_CONFIG
+        this.logger.info(`Dgraph host set as: ${getDefaultEndpoint()}`)
+      return getDefaultStorageEngineConnectionConfig()
     }
-    return DEFAULT_CONFIG
+    return getDefaultStorageEngineConnectionConfig()
   }
 
   getHost(config: StorageEngineConnectionConfig): string {
@@ -222,7 +184,11 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       flags: { dev: devMode },
     } = this.parse(this.constructor as Input<{ dev: boolean }>)
     if (!this.manager) {
-      this.manager = new Manager({ logger: this.logger, devMode, cliConfig: this.config })
+      this.manager = new Manager({
+        logger: this.logger,
+        devMode,
+        cliConfig: this.config,
+      })
     }
     return this.manager
   }
