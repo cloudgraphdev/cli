@@ -5,11 +5,12 @@ import { cosmiconfigSync } from 'cosmiconfig'
 import path from 'path'
 import inquirer from 'inquirer'
 import chalk from 'chalk'
+import gt from 'semver/functions/gt'
 import Manager from '../manager'
 import EngineMap from '../storage'
 import QueryEngine from '../server'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
-import { getStorageEngineConnectionConfig, printWelcomeMessage } from '../utils'
+import { getStorageEngineConnectionConfig, printWelcomeMessage, printBoxMessage } from '../utils'
 import openBrowser from '../utils/open'
 import { DEFAULT_CONFIG } from '../utils/constants'
 
@@ -106,6 +107,12 @@ export default abstract class BaseCommand extends Command {
     const config = this.getCGConfig('cloudGraph')
     if (!config) {
       printWelcomeMessage()
+    }
+    const manager = this.getPluginManager()
+    const cliLatestVersion = await manager.queryRemoteVersion('@cloudgraph/cli')
+    if (gt(cliLatestVersion, this.config.version)) {
+      printBoxMessage(`Update for ${chalk.italic.green('@cloudgraph/cli')} is available: ${this.config.version} -> ${cliLatestVersion}. \n
+Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     }
     const configDir = this.getCGConfigKey('directory') ?? 'cg'
     this.versionDirectory = directory ?? configDir

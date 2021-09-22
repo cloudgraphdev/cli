@@ -41,13 +41,13 @@ export default class Launch extends Command {
     // eslint-disable-next-line no-warning-comments
     // TODO: not a huge fan of this pattern, rework how to do debug and devmode tasks (specifically how to use in providers)
     // const opts: Opts = {logger: this.logger, debug, devMode}
-    const dockerCheck = this.logger.startSpinner('Checking for Docker')
+    this.logger.startSpinner('Checking for Docker')
     const { dataDir } = this.config
     try {
       await this.execCommand('docker -v')
-      dockerCheck.succeed('Docker found')
+      this.logger.successSpinner('Docker found')
     } catch (error: any) {
-      dockerCheck.fail(
+      this.logger.failSpinner(
         'It appears Docker is not installed, please install it at: https://docs.docker.com/get-docker/'
         // { level: 'error' }
       )
@@ -55,7 +55,7 @@ export default class Launch extends Command {
       this.exit()
     }
 
-    const containerCheck = this.logger.startSpinner(
+    this.logger.startSpinner(
       'Checking for an existing Dgraph docker instance'
     )
     let runningContainerId
@@ -80,7 +80,7 @@ export default class Launch extends Command {
         const containerId = stdout.trim()
         if (containerId) {
           exitedContainerId = containerId
-          containerCheck.succeed('Reusable container found!')
+          this.logger.successSpinner('Reusable container found!')
         }
       } catch (error: any) {
         this.logger.error(error)
@@ -88,16 +88,16 @@ export default class Launch extends Command {
     }
 
     if (!exitedContainerId && !runningContainerId) {
-      containerCheck.succeed('No reusable instances found')
-      const dgraphImgCheck = this.logger.startSpinner(
+      this.logger.successSpinner('No reusable instances found')
+      this.logger.startSpinner(
         'pulling Dgraph Docker image'
       )
       try {
         fileUtils.makeDirIfNotExists(path.join(dataDir, '/dgraph'))
         await this.execCommand('docker pull dgraph/standalone')
-        dgraphImgCheck.succeed('Pulled Dgraph Docker image')
+        this.logger.successSpinner('Pulled Dgraph Docker image')
       } catch (error: any) {
-        dgraphImgCheck.fail(
+        this.logger.failSpinner(
           'Failed pulling Dgraph Docker image please check your docker installation'
           // { level: 'error' }
         )
@@ -105,11 +105,10 @@ export default class Launch extends Command {
       }
     }
 
-    let dgraphInit
     if (runningContainerId) {
-      containerCheck.succeed('Reusable container found')
+      this.logger.successSpinner('Reusable container found')
     } else {
-      dgraphInit = this.logger.startSpinner(
+      this.logger.startSpinner(
         `Spinning up ${exitedContainerId ? 'existing' : 'new'} Dgraph instance`
       )
       try {
@@ -120,9 +119,9 @@ export default class Launch extends Command {
             `docker run -d -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 --label ${Launch.dgraphContainerLabel} -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1` // eslint-disable-line max-len
           )
         }
-        dgraphInit.succeed('Dgraph instance running')
+        this.logger.successSpinner('Dgraph instance running')
       } catch (error: any) {
-        dgraphInit.fail('Failed starting Dgraph instance')
+        this.logger.failSpinner('Failed starting Dgraph instance')
         this.logger.error(error)
         throw new Error('Dgraph was unable to start')
       }
@@ -132,7 +131,7 @@ export default class Launch extends Command {
   }
 
   async checkIfInstanceIsRunningReportStatus(): Promise<void> {
-    const healthCheck = this.logger.startSpinner(
+    this.logger.startSpinner(
       'Running health check on Dgraph'
     )
     // eslint-disable-next-line no-warning-comments
@@ -142,7 +141,7 @@ export default class Launch extends Command {
       const storageEngine = this.getStorageEngine()
       const running = await storageEngine.healthCheck(false)
       if (running) {
-        healthCheck.succeed('Dgraph health check passed')
+        this.logger.successSpinner('Dgraph health check passed')
       } else {
         throw new Error('Dgraph was unable to start')
       }

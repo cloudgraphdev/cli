@@ -128,7 +128,8 @@ cg launch
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
 ```bash
-  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1
+  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 
+  --label cloudgraph-cli-dgraph-standalone -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1
 ```
 
 ---

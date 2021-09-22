@@ -122,7 +122,7 @@ export default class Scan extends Command {
         continue // eslint-disable-line no-continue
       }
       const { accountId } = await client.getIdentity()
-      const providerDataLoader = this.logger.startSpinner(
+      this.logger.startSpinner(
         `${chalk.italic.green('SCANNING')} data for ${chalk.italic.green(
           provider
         )}`
@@ -130,12 +130,12 @@ export default class Scan extends Command {
       const providerData = await client.getData({
         opts,
       })
-      providerDataLoader.succeed(
+      this.logger.successSpinner(
         `${chalk.italic.green(provider)} data scanned successfully`
       )
 
       // Handle schema, write provider and combined schema to file and store in Dgraph if running
-      const handleSchemaLoader = this.logger.startSpinner(
+      this.logger.startSpinner(
         `updating ${chalk.italic.green('Schema')} for ${chalk.italic.green(
           provider
         )}`
@@ -171,7 +171,7 @@ export default class Scan extends Command {
           }
         }
       }
-      handleSchemaLoader.succeed(
+      this.logger.successSpinner(
         `${chalk.italic.green(
           'Schema'
         )} loaded successfully for ${chalk.italic.green(provider)}`
@@ -190,7 +190,7 @@ export default class Scan extends Command {
         this.exit()
       }
 
-      const connectionLoader = this.logger.startSpinner(
+      this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
       processConnectionsBetweenEntities(
@@ -198,7 +198,7 @@ export default class Scan extends Command {
         storageEngine,
         storageRunning
       )
-      connectionLoader.succeed(
+      this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
     }

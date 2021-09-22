@@ -167,7 +167,7 @@ export default class Load extends Command {
         file = files[0].name
         version = files[0].folder
       }
-      const handleSchemaLoader = this.logger.startSpinner(
+      this.logger.startSpinner(
         `updating ${chalk.italic.green('Schema')} for ${chalk.italic.green(
           provider
         )}`
@@ -182,7 +182,7 @@ export default class Load extends Command {
       if (allProviders.indexOf(provider) === allProviders.length - 1) {
         await storageEngine.setSchema(schema)
       }
-      handleSchemaLoader.succeed(
+      this.logger.successSpinner(
         `${chalk.italic.green(
           'Schema'
         )} loaded successfully for ${chalk.italic.green(provider)}`
@@ -196,11 +196,11 @@ export default class Load extends Command {
        * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
        * Push connected entity into dgraph
        */
-      const connectionLoader = this.logger.startSpinner(
+      this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
       processConnectionsBetweenEntities(providerData, storageEngine, storageRunning)
-      connectionLoader.succeed(
+      this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
     }
