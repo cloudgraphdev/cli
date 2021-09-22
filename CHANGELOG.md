@@ -1,3 +1,12 @@
+## [0.9.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.3...0.9.4) (2021-09-22)
+
+
+### Bug Fixes
+
+* **launch:** update launch for new logger. update README with docker label ([7e3dd07](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7e3dd07d14901ca2c69cff19363a94db51f7c3c5))
+* **logger:** update logger calls, also handle logging of a msg when using an outdated version ([a3066d6](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a3066d63848410a4689bee80b9cd1acc25076919))
+* **logger:** update sdk dep version for new logger ([a2ff74f](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a2ff74fef09ca3e0878d974b74bcdafa45ae2111))
+
 ## [0.9.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.2...0.9.3) (2021-09-21)
 
 
