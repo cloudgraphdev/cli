@@ -168,7 +168,7 @@ To use CloudGraph, you will need to be familiar with GraphQL. This section conta
 
 <br />
 
-## Basic AWS Examples:
+## Basic AWS Query Syntax Examples:
 
 For a list of currently supported AWS services please see the [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws). For the purposes of these examples we will just request the IDs and ARNs of AWS resources to keep things brief, but you can query whatever attributes you want.
 
@@ -332,40 +332,45 @@ query {
 
 <br />
 
-Get each `VPC`, the `ALBs` and `Lambdas` in that `VPC`, and then a bunch of nested sub-data as well... you get the idea.
+Get each `VPC`, the `ALBs` and `Lambdas` in that `VPC`, and then a bunch of nested sub-data as well. Also get each `S3 Bucket` in `us-east-1`. Also get the `SQS` queue with an `ARN` of `arn:aws:sqs:us-east-1:8499274828484:autocloud.fifo` and check the `approximateNumberOfMessages`. You get the idea, CloudGraph is **extremely** powerful.
 
 ```graphql
 query {
-  queryawsVpc {
-    id
-    arn
-    alb {
-      id
-      arn
-      ec2Instance {
-        id
-        arn
-        ebs(filter: { isBootDisk: true }) {
-          id
-          arn
-        }
-      }
-    }
-    lambda {
-      id
-      arn
-      kms {
-        id
-        arn
-      }
-    }
-  }
+  queryawsVpc {
+	id
+    arn
+    alb {
+      id
+      arn
+      ec2Instance{
+        id
+        arn
+        ebs(filter: { isBootDisk: true }) {
+          id
+          arn
+        }
+      }
+    }
+    lambda {
+      id
+      arn
+      kms {id
+      arn}
+    }
+  }
+  queryawsS3(filter: { region: { eq: "us-east-1" } }) {
+    id
+    arn
+  }
+  getawsSqs(arn: "arn:aws:sqs:us-east-1:8499274828484:autocloud.fifo") {
+    approximateNumberOfMessages
+  }
 }
 ```
 
 <br />
 
-## AWS real-world use cases:
+## AWS security, compliance, and governance examples:
 
 <br />
 
@@ -529,9 +534,67 @@ query {
 
 <br />
 
-### Limitations
+## AWS FinOps examples:
+<br />
+
+Note that in order to successfully ingest FinOps related data you must have the Cost Explorer API enabled in your AWS Account. [You can view how to do that here](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-access.html)
+
+<br />
+
+Get the `total cost` of your AWS account for the `last 30 days`, the `total cost` of your AWS account `month to date`, a breakdown of `each service and its cost for the last 30 days`, and a breakdown of `each service and its cost month to date`: 
+
+```graphql
+query {
+  queryawsBilling {
+    totalCostLast30Days
+    totalCostMonthToDate
+    monthToDate {
+      name
+      cost
+    }
+    last30Days {
+      name
+      cost
+    }
+  }
+}
+```
+
+<br />
+
+Get each `EC2 instance` in your AWS account along with its daily cost:
+
+```graphql
+query {
+  queryawsEc2 {
+    arn
+    dailyCost
+  }
+}
+```
+
+<br />
+
+Get each `NAT Gateway` in your AWS account along with its daily cost:
+
+```graphql
+query {
+  queryawsNatGateway {
+    arn
+    dailyCost
+  }
+}
+```
+
+<br />
+
+## Limitations
+
+<br />
 
 Today, the biggest limitation with CloudGraph and our query abilities is we don't support nested filtering based on child attributes. So for example, as cool as it would be to do the following, it's just not possible yet:
+
+<br />
 
 ```graphql
 query {
