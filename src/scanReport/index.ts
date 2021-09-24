@@ -33,7 +33,7 @@ enum statusKeyWords {
   connections = 'connections'
 }
 
-const servicesToIgnore = ['tag']
+const servicesToIgnore = ['tag', 'billing']
 
 
 // TODO: come back and add tests once testing strategy is determined
