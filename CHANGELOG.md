@@ -1,3 +1,11 @@
+## [0.9.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.4...0.9.5) (2021-09-24)
+
+
+### Bug Fixes
+
+* Updated sdk dependency ([9969e46](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9969e464657db56842985c6b9c6e8bb5846ceb2f))
+* **scan:** update scan report to ignore billing data ([6956ca4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/6956ca48a1831cd24f02bd6b57d60579502e531d))
+
 ## [0.9.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.3...0.9.4) (2021-09-22)
 
 
