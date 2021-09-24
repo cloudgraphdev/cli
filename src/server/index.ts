@@ -1,6 +1,7 @@
 import express from 'express'
 import { altairExpress } from 'altair-express-middleware'
 import expressPlayground from 'graphql-playground-middleware-express'
+import { Server } from 'http'
 
 function renderVoyagerPage(options: { endpointUrl: string }): string {
   const { endpointUrl } = options
@@ -82,7 +83,7 @@ export default class QueryEngine {
 
   port
 
-  startServer(host: string) {
+  startServer(host: string): Promise<Server> {
     return new Promise(resolve => {
       const app = express()
 
@@ -102,8 +103,8 @@ export default class QueryEngine {
       // TODO: rework QueryEngine to do this better and only serve one
       app.get('/playground', expressPlayground({ endpoint: `${host}/graphql` }))
 
-      app.listen(Number(this.port), () => {
-        resolve(true)
+      const server = app.listen(Number(this.port), () => {
+        resolve(server)
       })
     })
   }

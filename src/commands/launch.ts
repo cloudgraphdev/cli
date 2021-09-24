@@ -3,7 +3,11 @@ import path from 'path'
 import { exec } from 'child_process'
 
 import Command from './base'
-import { sleep, fileUtils } from '../utils'
+import {
+  sleep,
+  fileUtils,
+  getDefaultStorageEngineConnectionConfig,
+} from '../utils'
 import DgraphEngine from '../storage/dgraph'
 
 export default class Launch extends Command {
@@ -34,6 +38,48 @@ export default class Launch extends Command {
     })
   }
 
+  async findExistingDGraphContainerId(statusFilter: string): Promise<string> {
+    const stdout: any = await this.execCommand(
+      `docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=${statusFilter} --quiet`
+    )
+    return stdout.trim()
+  }
+
+  createDgraphFolder(): void {
+    const { dataDir } = this.config
+    fileUtils.makeDirIfNotExists(path.join(dataDir, '/dgraph'))
+  }
+
+  async checkForDockerInstallation(): Promise<void> {
+    await this.execCommand('docker -v')
+  }
+
+  async pullDGraphDockerImage(): Promise<void> {
+    await this.execCommand('docker pull dgraph/standalone')
+  }
+
+  async startDGraphContainer(
+    containerId?: string
+  ): Promise<undefined | unknown> {
+    const { dataDir } = this.config
+    let output: undefined | unknown
+    if (containerId) {
+      output = await this.execCommand(`docker container start ${containerId}`)
+    } else {
+      const {
+        connectionConfig: {
+          port = getDefaultStorageEngineConnectionConfig().port,
+        },
+      } = this.getStorageEngine() as DgraphEngine
+      output = await this.execCommand(
+        `docker run -d -p 8995:5080 -p 8996:6080 -p ${port}:8080 -p 8998:9080 -p 8999:8000 --label ${
+          Launch.dgraphContainerLabel
+        } -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1`
+      )
+    }
+    return output
+  }
+
   // eslint-disable-next-line no-warning-comments
   // TODO: convert this func to handle any storage provider
   async run() {
@@ -42,9 +88,8 @@ export default class Launch extends Command {
     // TODO: not a huge fan of this pattern, rework how to do debug and devmode tasks (specifically how to use in providers)
     // const opts: Opts = {logger: this.logger, debug, devMode}
     this.logger.startSpinner('Checking for Docker')
-    const { dataDir } = this.config
     try {
-      await this.execCommand('docker -v')
+      await this.checkForDockerInstallation()
       this.logger.successSpinner('Docker found')
     } catch (error: any) {
       this.logger.failSpinner(
@@ -60,10 +105,7 @@ export default class Launch extends Command {
     )
     let runningContainerId
     try {
-      const stdout: any = await this.execCommand(
-        `docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=running --quiet`
-      )
-      const containerId = stdout.trim()
+      const containerId = await this.findExistingDGraphContainerId('running')
       if (containerId) {
         runningContainerId = containerId
       }
@@ -74,10 +116,7 @@ export default class Launch extends Command {
     let exitedContainerId
     if (!runningContainerId) {
       try {
-        const stdout: any = await this.execCommand(
-          `docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=exited --quiet`
-        )
-        const containerId = stdout.trim()
+        const containerId = await this.findExistingDGraphContainerId('exited')
         if (containerId) {
           exitedContainerId = containerId
           this.logger.successSpinner('Reusable container found!')
@@ -93,8 +132,8 @@ export default class Launch extends Command {
         'pulling Dgraph Docker image'
       )
       try {
-        fileUtils.makeDirIfNotExists(path.join(dataDir, '/dgraph'))
-        await this.execCommand('docker pull dgraph/standalone')
+        this.createDgraphFolder()
+        await this.pullDGraphDockerImage()
         this.logger.successSpinner('Pulled Dgraph Docker image')
       } catch (error: any) {
         this.logger.failSpinner(
@@ -113,17 +152,17 @@ export default class Launch extends Command {
       )
       try {
         if (exitedContainerId) {
-          await this.execCommand(`docker container start ${exitedContainerId}`)
+          await this.startDGraphContainer(exitedContainerId)
         } else {
-          await this.execCommand(
-            `docker run -d -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 --label ${Launch.dgraphContainerLabel} -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1` // eslint-disable-line max-len
-          )
+          await this.startDGraphContainer()
         }
         this.logger.successSpinner('Dgraph instance running')
       } catch (error: any) {
         this.logger.failSpinner('Failed starting Dgraph instance')
         this.logger.error(error)
-        throw new Error('Dgraph was unable to start')
+        throw new Error(
+          'Dgraph was unable to start: Failed starting stopped Dgraph instance'
+        )
       }
     }
 
@@ -143,11 +182,11 @@ export default class Launch extends Command {
       if (running) {
         this.logger.successSpinner('Dgraph health check passed')
       } else {
-        throw new Error('Dgraph was unable to start')
+        throw new Error('Dgraph was unable to start: Dgraph not running')
       }
     } catch (error: any) {
       this.logger.debug(error)
-      throw new Error('Dgraph was unable to start')
+      throw new Error('Dgraph was unable to start: Failed running health check')
     }
     this.logger.success(
       `Access your dgraph instance at ${chalk.underline.green(
@@ -159,6 +198,5 @@ export default class Launch extends Command {
         'https://dgraph.io/docs/graphql/'
       )}`
     )
-    this.exit()
   }
 }

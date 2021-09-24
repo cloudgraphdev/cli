@@ -9,7 +9,7 @@ import glob from 'glob'
 import path from 'path'
 
 import isEmpty from 'lodash/isEmpty'
-import scanReport, {scanDataType, scanResult} from '../scanReport'
+import scanReport, { scanDataType, scanResult } from '../scanReport'
 import C, { DEFAULT_CONFIG } from '../utils/constants'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
 
@@ -153,7 +153,11 @@ export function processConnectionsBetweenEntities(
   for (const entity of providerData.entities) {
     const { mutation, data, name } = entity
     const connectedData = data.map((service: any) => {
-      scanReport.pushData({ service: name, type: scanDataType.count, result: scanResult.pass })
+      scanReport.pushData({
+        service: name,
+        type: scanDataType.count,
+        result: scanResult.pass,
+      })
       return getConnectedEntity(service, providerData, name)
     })
     if (storageRunning) {
@@ -161,7 +165,7 @@ export function processConnectionsBetweenEntities(
       storageEngine.push({
         query: mutation,
         connectedData,
-        name
+        name,
       })
     }
   }
@@ -271,14 +275,16 @@ export const getPort = (
   return DEFAULT_CONFIG.port
 }
 
+export const getDefaultStorageEngineConnectionConfig =
+  (): typeof DEFAULT_CONFIG => DEFAULT_CONFIG
+
+export const getDefaultEndpoint = (): string =>
+  `${DEFAULT_CONFIG.scheme}://${DEFAULT_CONFIG.host}:${DEFAULT_CONFIG.port}`
+
 export const getStorageEngineConnectionConfig = (
-  fullUrl: string
+  fullUrl: string = getDefaultEndpoint()
 ): StorageEngineConnectionConfig => {
-  const {
-    hostname: host = DEFAULT_CONFIG.host,
-    port = DEFAULT_CONFIG.port,
-    protocol = DEFAULT_CONFIG.scheme,
-  } = new URL(fullUrl)
+  const { hostname: host, port, protocol } = new URL(fullUrl)
   const scheme = protocol.split(':')[0]
   return {
     host,

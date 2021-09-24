@@ -1,16 +1,17 @@
 {
   "compilerOptions": {
+    "composite": true,
     "declaration": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "module": "commonjs",
     "outDir": "lib",
     "rootDir": "src",
+    "skipLibCheck": true,
     "strict": true,
     "target": "es2017",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "typeRoots": ["./node_modules/@types", "./types/*"]
   },
   "include": [
     "src/**/*"
