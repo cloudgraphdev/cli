@@ -388,6 +388,34 @@ query {
 
 <br />
 
+Find all the public `S3 Buckets`:
+
+```graphql
+query {
+  queryawsS3(filter: { access: { eq: "Public" } }) {
+    id
+    arn
+    access
+  }
+}
+```
+
+<br />
+
+Find all the `S3 Buckets` that are themselves public or that can have Objects that are public in them:
+
+```graphql
+query {
+  queryawsS3(filter: { not: { access: { eq: "Private" } } }) {
+    id
+    arn
+    access
+  }
+}
+```
+
+<br />
+
 Find all the `KMS` keys in `"us-east-1"`:
 
 ```graphql
