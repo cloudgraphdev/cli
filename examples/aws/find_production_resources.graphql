@@ -1,0 +1,58 @@
+query {
+  queryawsTag(filter: { value: { eq: "Production" } }) {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
+}
+
+query {
+  queryawsTag(
+    filter: {  key: { eq: "Environment" }, value: { eq: "Production" } }
+  ) {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
+}
+
+query {
+  getawsTag(id: "Environment:Production") {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
+}

@@ -1,0 +1,28 @@
+query {
+  queryawsBilling {
+    totalCostLast30Days
+    totalCostMonthToDate
+    monthToDate {
+      name
+      cost
+    }
+    last30Days {
+      name
+      cost
+    }
+  }
+}
+
+query {
+  queryawsEc2 {
+    arn
+    dailyCost
+  }
+}
+
+query {
+  queryawsNatGateway {
+    arn
+    dailyCost
+  }
+}

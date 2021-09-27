@@ -1,0 +1,20 @@
+query {
+  queryawsEc2(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
+    id
+    arn
+  }
+}
+
+query {
+  queryawsEc2(filter: { region: { eq: "us-east-1" } }) {
+    id
+    arn
+  }
+}
+
+query {
+  queryawsEc2(filter: { region: { in: "us-east-1" } }) {
+    id
+    arn
+  }
+}

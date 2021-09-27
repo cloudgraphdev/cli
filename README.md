@@ -24,6 +24,8 @@ An instant **GraphQL** API to query your cloud infrastructure and configuration 
 * [Authentication](#authentication)
 * [Install](#install)
 * [Quick Start](#quick-start)
+* [Loading Previous Versions](#loading-previous-versions)
+* [Supported Services](#supported-services)
 * [Example Queries](#example-queries)
 * [Query Tools](#query-tools)
 * [Community](#community)
@@ -101,7 +103,7 @@ cg init
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png">
-    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="65%" style="display: block; margin: auto"/>
+    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -121,7 +123,7 @@ cg launch
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png">
-    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="65%" style="display: block; margin: auto"/>
+    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -146,7 +148,7 @@ cg scan
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
-    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="65%" style="display: block; margin: auto"/>
+    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -160,21 +162,45 @@ Note that you may also use **any** GraphQL query tool you would like by connecti
 
 <br />
 
+# Loading Previous Versions
+
+<br />
+
+CloudGraph stores as many previous versions of your data as you configured in the `cg init` command. In order to load and query a previous version of your data simply run the `cg load` command and select the version of your data you wish to inspect like so:
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png">
+    <img alt="load" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
+# Supported Services
+
+<br />
+
+### AWS
+
+For a list of currently supported AWS services please see the [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws)
+
+<br />
+
 <!-- examplesqueries -->
 
 # Example Queries
 
-To use CloudGraph, you will need to be familiar with GraphQL. This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find additional example queries in the [examples](examples/) directory. Feel free to make a PR with other examples you would like to see included, check out the [Contribution Guidelines](#contribution-guidelines) section for more information.
+To use CloudGraph, you will need to be familiar with [GraphQL](https://graphql.org/). This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find additional example queries in the [examples](https://github.com/cloudgraphdev/cli/tree/master/examples) directory. Feel free to make a PR with other examples you would like to see included, check out the [Contribution Guidelines](#contribution-guidelines) section for more information.
 
 <br />
 
 ## Basic AWS Query Syntax Examples:
 
-For a list of currently supported AWS services please see the [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws). For the purposes of these examples we will just request the IDs and ARNs of AWS resources to keep things brief, but you can query whatever attributes you want.
+To explain how CloudGraph works consider the following query that you can run to get the `ID` and `ARN` of a single `EC2 instance`. Note that for the purposes of these examples we will just request the `IDs` and `ARNs` of AWS resources to keep things terse, but you can query whatever attributes you want:
 
 <br />
-
-Get the `ID` and `ARN` of a single `EC2 instance`:
 
 ```graphql
 query {
@@ -184,6 +210,26 @@ query {
     id
     arn
   }
+}
+```
+
+<br />
+
+This query will return a `JSON response` that looks like this. All of the following examples will follow suit:
+
+<br />
+
+```json
+{
+  "data": {
+    "getawsEc2": {
+      "id": "i-12345567889012234",
+      "arn": "arn:aws:ec2:us-east-1:123445678997:instance/i-12345567889012234"
+    },
+  },
+  "extensions": {
+    "touched_uids": 4
+  }
 }
 ```
 
@@ -616,6 +662,32 @@ query {
 
 <br />
 
+## Thinking in terms of a graph:
+
+<br />
+
+When you think, "in terms of a graph", you can do almost anything with CloudGraph. Say for example that you want to know what Lamba functions don't belong to a VPC (i.e. they don't leverage VPC networking). Because CloudGraph connects all resources that have relationships, such as VPC parents to their Lambda children, you are able to answer this question easily. Simply check to see what lambda functions the VPC is "connected" to, and compare that against the list of all lambda functions like so:
+
+
+```graphql
+query {
+  queryawsVpc{
+    id
+    arn
+    lambda {
+      id
+      arn
+    }
+  }
+  queryawsLambda {
+    id
+    arn
+  }
+}
+```
+
+<br />
+
 ## Limitations
 
 <br />
@@ -659,7 +731,7 @@ GraphQL playground has a fluid and engaging UX that is great for querying a Grap
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png">
-    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="65%" style="display: block; margin: auto"/>
+    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -673,7 +745,7 @@ Altair is another great GraphQL query tool that packs a ton of [features](https:
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png">
-    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="65%" style="display: block; margin: auto"/>
+    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -687,7 +759,7 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png">
-    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="65%" style="display: block; margin: auto"/>
+    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -723,7 +795,7 @@ Interested in a fully managed SaaS/self hosted version of CloudGraph that has bu
 
 <p align="center">
   <a href="https://www.autocloud.dev">
-    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="100%" style="display: block; margin: auto"/>
+    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
