@@ -53,11 +53,11 @@ CloudGraph gives anyone working with the cloud superpowers and makes it 🌩️
 
 # How It Works
 
-Note that CloudGraph requires **READ ONLY** permissions to run and as such can **never** make any changes to your actual cloud infrastructure.
+Note that CloudGraph requires **READ ONLY** permissions to run and as such can **never** mutate your actual cloud infrastructure. Additionally, none of your cloud environment information is ever sent to or shared with CloudGraph, AutoCloud, or any other third parties.
 
 <br />
 
-Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all of the configuration data, processes it, and stores a copy of this data for you in [Dgraph](https://dgraph.io/). It then exposes an endpoint at `http://localhost:8997` that allows you to write GraphQL Queries against your stored data. These queries not only allow you do to anything that you would do with say, the AWS SDK/CLI, but they also allow you to run much more powerful queries as well. **Note that none of your cloud's information is ever sent or stored to CloudGraph or third parties.**
+Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all of the configuration data, processes it, and stores a copy of this data for you in [Dgraph](https://dgraph.io/). It then exposes an endpoint at `http://localhost:8997` that allows you to write GraphQL Queries against your stored data. These queries not only allow you do to anything that you would do with say, the AWS SDK/CLI, but they also allow you to run much more powerful queries as well. CloudGraph ships with pre-packaged GraphQL query tools including [GraphQL Playground](https://github.com/graphql/graphql-playground) and [Altair](https://github.com/altair-viz/altair) but you can also feel free to use your own. It also includes a schema visualization tool called [Voyager](https://github.com/APIs-guru/graphql-voyager) so you can understand relationships between entities.
 
 <br />
 
