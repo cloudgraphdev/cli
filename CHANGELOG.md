@@ -1,3 +1,11 @@
+## [0.9.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.5...0.9.6) (2021-09-28)
+
+
+### Bug Fixes
+
+* **deps:** update lock file ([e8d5f39](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e8d5f39ed499d660cbe651a7af211de35f19ae6a))
+* **deps:** update sdk dep and enhance safety of getting provider client ([4c3ee93](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4c3ee938d482b2e98d6c5e6c37a6f6ac48c0e7a7))
+
 ## [0.9.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.4...0.9.5) (2021-09-24)
 
 
