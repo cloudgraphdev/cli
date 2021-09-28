@@ -100,12 +100,9 @@ export class Manager {
         plugin = this.pluginManager.require(importPath)
       }
     } catch (error: any) {
-      this.logger.debug(JSON.stringify(error))
+      this.logger.debug(error)
       this.logger.failSpinner(
         `Manager failed to install plugin for ${chalk.green(providerName)}`
-      )
-      this.logger.info(
-        'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
       )
       throw new Error(
         `${provider} moudle check ${chalk.red('FAILED')}, unable to find plugin`

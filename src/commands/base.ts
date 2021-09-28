@@ -199,7 +199,10 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       if (this.providers[provider]) {
         return this.providers[provider]
       }
-      const { default: Client } = await manager.getProviderPlugin(provider)
+      const { default: Client } = await manager.getProviderPlugin(provider) ?? {}
+      if (!Client || !(Client instanceof Function)) { // TODO: how can we better type this for the base Provider class from sdk
+        throw new Error(`The provider ${provider} did not return a valid Client instance`)
+      }
       const client = new Client({
         logger: this.logger,
         provider: this.getCGConfig(provider),
