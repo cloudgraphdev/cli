@@ -143,7 +143,7 @@ cg scan
 
 <br/>
 
-3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
+3. Scan for cloud infrastructure for all configured providers. This command will reach out and read all of the metadata on your cloud infrastructure. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said, if you encounter any problematic errors running CloudGraph you can prepend `CG_DEBUG=5` to the beginning of your command as in, `CG_DEBUG=5 cg scan`. This will print out the verbose logs with more information that you can then use to either open an [issue on GitHub](https://github.com/cloudgraphdev/cli/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
@@ -800,7 +800,7 @@ Interested in a fully managed SaaS/self hosted version of CloudGraph that has bu
 
 # Debugging
 
-If you encounter any errors running CloudGraph you can prepend `CG_DEBUG=5` to the beginning of your command as in, `CG_DEBUG=5 cg scan`. This will print out the verbose logs with more information that you can then use to either open a issue on GitHub or get help on Slack.
+If you encounter any errors running CloudGraph you can prepend `CG_DEBUG=5` to the beginning of your command as in, `CG_DEBUG=5 cg scan`. This will print out the verbose logs with more information that you can then use to either open an [issue on GitHub](https://github.com/cloudgraphdev/cli/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
 
 <br />
 
