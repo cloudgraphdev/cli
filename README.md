@@ -41,7 +41,8 @@ An instant **GraphQL** API to query your cloud infrastructure and configuration 
 
 # Why CloudGraph
 
-Whether you're a cloud architect with 15 years of experience or someone who is just getting started on their cloud journey, there is no denying that understanding the exact current state of your (AWS, Azure, GCP...) environments is challenging, time-consuming work. Even answering basic questions like, "What is running in X region?", "Is X secure and compliant?", or "How much is this cluster going to cost me in July?" requires both time and expertise or expensive 3rd party software.
+Whether you're a cloud architect with 15 years of experience or someone who is just getting started on their cloud journey, there is no denying that staying on top of security, compliance, governance, FinOps, operations...etc., is challenging, time-consuming work. Even answering basic questions like, "What all is running in the us-east-1 region?", "Are my RDS clusters properly secured and compliant?", or "How much is this EKS/AKS/GKE cluster going to cost me this month?" requires both time and expertise, or expensive 3rd party software.
+
 
 <br />
 
@@ -49,7 +50,7 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-CloudGraph gives anyone working with the cloud superpowers and makes it 🌩️ lightning-fast 🌩️ to answer questions like, "What KMS keys do I have in us-east-1?", "Which VMs have unencrypted storage disks?", and "How much does this EC2 instance actually cost to run per month?". Ask any question about your cloud, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
+CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
 
 # How It Works
 
@@ -214,7 +215,7 @@ query {
 
 <br />
 
-This query will return a `JSON response` that looks like this. All of the following examples will follow suit:
+This query will return a `JSON` payload that looks like this. All of the following examples will follow suit:
 
 <br />
 
@@ -619,17 +620,87 @@ Get the `total cost` of your AWS account for the `last 30 days`, the `total cost
 ```graphql
 query {
   queryawsBilling {
-    totalCostLast30Days
-    totalCostMonthToDate
+    totalCostLast30Days {
+      cost
+      currency
+    }
+    totalCostMonthToDate {
+      cost
+      currency
+    }
     monthToDate {
       name
       cost
+      currency
     }
     last30Days {
       name
       cost
+      currency
     }
   }
+}
+```
+
+<br />
+
+This query will return a `JSON` payload that looks like this:
+
+```json
+{
+  "data": {
+    "queryawsBilling": [
+      {
+        "totalCostLast30Days": {
+          "cost": 7088.87,
+          "currency": "USD"
+        },
+        "totalCostMonthToDate": {
+          "cost": 7089.28,
+          "currency": "USD"
+        },
+        "monthToDate": [
+          {
+            "name": "Amazon Relational Database Service",
+            "cost": 548.68,
+            "currency": "USD"
+          },
+          {
+            "name": "Amazon Managed Streaming for Apache Kafka",
+            "cost": 67.49,
+            "currency": "USD"
+          },
+          {
+            "name": "Amazon OpenSearch Service",
+            "cost": 1155.04,
+            "currency": "USD"
+          }
+          ...More Services
+        ],
+        "last30Days": [
+          {
+            "name": "AWS Step Functions",
+            "cost": 330.20,
+            "currency": "USD"
+          },
+          {
+            "name": "Amazon Elastic Container Service for Kubernetes",
+            "cost": 194.40,
+            "currency": "USD"
+          },
+          {
+            "name": "AmazonCloudWatch",
+            "cost": 310.54,
+            "currency": "USD"
+          }
+          ...More Services
+        ]
+      }
+    ]
+  },
+  "extensions": {
+    "touched_uids": 212
+  }
 }
 ```
 
@@ -642,7 +713,34 @@ query {
   queryawsEc2 {
     arn
     dailyCost
+    currency
   }
+}
+```
+
+<br />
+
+This query will return a `JSON` payload that looks like this. All of the following examples will follow suit:
+
+```json
+{
+  "data": {
+  "queryawsEc2": [
+    {
+      "arn": "arn:aws:ec2:us-east-1:111122222333:instance/i-03jdfgakfg9999fgf",
+      "dailyCost": 2.06,
+      "currency": "USD"
+    },
+    {
+      "arn": "arn:aws:ec2:us-east-1:111122222333:instance/i-jifgfd0df0gdf8fd88",
+      "dailyCost": 34.11,
+      "currency": "USD"
+    }
+    ...More EC2 Instances
+  ],
+  "extensions": {
+    "touched_uids": 212
+  }
 }
 ```
 
@@ -654,6 +752,7 @@ Get each `NAT Gateway` in your AWS account along with its daily cost:
 query {
   queryawsNatGateway {
     arn
+    currency
     dailyCost
   }
 }
