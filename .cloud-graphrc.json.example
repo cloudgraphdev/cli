@@ -1,22 +1,20 @@
 {
   "aws": {
-    "accounts": [
-      {
-        "profile": "default",
-        "regions": "us-east-1,us-east-2,us-west-1,us-west-2",
-        "resources": "alb,vpc,cloudwatch,eip,ebs,ec2Instance,elb,igw,kms,lambda,nat,sg,networkInterface,apiGatewayRestApi,apiGatewayResource,apiGatewayStage"
-      },
-      {
-        "profile": "sandbox",
-        "regions": "us-east-1",
-        "resources": "alb,vpc,cloudwatch,eip,ebs,ec2Instance,elb,igw,kms,lambda,nat,sg,networkInterface,apiGatewayRestApi,apiGatewayResource,apiGatewayStage"
-      }
-    ]
+    "profileApprovedList": [
+      "default",
+      "sandbox"
+    ],
+    "regions": "us-east-1,us-east-2",
+    "resources": "alb,apiGatewayResource,apiGatewayRestApi,apiGatewayStage,appSync,asg,billing,cognitoIdentityPool,cognitoUserPool,cloudfront,cloudwatch,ebs,ec2Instance,eip,elb,igw,kinesisFirehose,kinesisStream,kms,lambda,nat,networkInterface,route53HostedZone,route53Record,routeTable,sg,vpc,sqs,s3"
   },
   "cloudGraph": {
-    "dgraphHost": "http://localhost:8997",
-    "directory": "cg",
+    "storageConfig": {
+      "host": "localhost",
+      "port": "8997",
+      "scheme": "http"
+    },
+    "versionLimit": "3",
     "queryEngine": "playground",
-    "versionLimit": 10
+    "port": "5555"
   }
 }
