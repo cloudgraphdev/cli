@@ -45,10 +45,10 @@ export function getProviderDataFile(
 const mapFileNameToHumanReadable = (file: string): string => {
   const fileNameParts = file.split('/')
   const fileName = fileNameParts[fileNameParts.length - 1]
-  const [providerName, providerIdentity, timestamp] = fileName
+  const [providerName, timestamp] = fileName
     .replace('.json', '')
     .split('_')
-  return `${providerName} ${providerIdentity} ${new Date(
+  return `${providerName} ${new Date(
     Number(timestamp)
   ).toISOString()}`
 }
@@ -56,8 +56,8 @@ const mapFileNameToHumanReadable = (file: string): string => {
 // TODO: this could be refactored to go right to the correct version folder (avoid line 70)
 // if we extracted the version part of the url and passed to this func
 const findProviderFileLocation = (directory: string, file: string): string => {
-  const [providerName, providerIdentity, date] = file.trim().split(' ')
-  const fileName = `${providerName}_${providerIdentity}_${Date.parse(date)}`
+  const [providerName, date] = file.trim().split(' ')
+  const fileName = `${providerName}_${Date.parse(date)}`
   const fileGlob = path.join(directory, `/version-*/${fileName}.json`)
   const fileArray = glob.sync(fileGlob)
   if (fileArray && fileArray.length > 0) {
