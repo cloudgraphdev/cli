@@ -615,7 +615,7 @@ Note that in order to successfully ingest FinOps related data you must have the 
 
 <br />
 
-Get the `total cost` of your AWS account for the `last 30 days`, the `total cost` of your AWS account `month to date`, a breakdown of `each service and its cost for the last 30 days`, and a breakdown of `each service and its cost month to date`: 
+Get the `total cost` of your AWS Account for the `last 30 days`, the `total cost` of your AWS Account `month to date`, a breakdown of `each service and its cost for the last 30 days`, and a breakdown of `each service and its cost month to date` as well as the `monthly` and `month to date` average costs:
 
 ```graphql
 query {
