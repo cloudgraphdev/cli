@@ -41,7 +41,8 @@ An instant **GraphQL** API to query your cloud infrastructure and configuration 
 
 # Why CloudGraph
 
-Whether you're a cloud architect with 15 years of experience or someone who is just getting started on their cloud journey, there is no denying that understanding the exact current state of your (AWS, Azure, GCP...) environments is challenging, time-consuming work. Even answering basic questions like, "What is running in X region?", "Is X secure and compliant?", or "How much is this cluster going to cost me in July?" requires both time and expertise or expensive 3rd party software.
+Whether you're a cloud architect with 15 years of experience or someone who is just getting started on their cloud journey, there is no denying that staying on top of security, compliance, governance, FinOps, operations...etc., is challenging, time-consuming work. Even answering basic questions like, "What all is running in the us-east-1 region?", "Are my RDS clusters properly secured and compliant?", or "How much is this EKS/AKS/GKE cluster going to cost me this month?" requires both time and expertise, or expensive 3rd party software.
+
 
 <br />
 
@@ -49,7 +50,7 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-CloudGraph gives anyone working with the cloud superpowers and makes it 🌩️ lightning-fast 🌩️ to answer questions like, "What KMS keys do I have in us-east-1?", "Which VMs have unencrypted storage disks?", and "How much does this EC2 instance actually cost to run per month?". Ask any question about your cloud, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
+CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
 
 # How It Works
 
@@ -144,7 +145,7 @@ cg scan
 
 <br/>
 
-3. Scan for infrastructure updates for all configured providers. This command will reach out and read all of the metadata on your cloud assets. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said if you find a bug please open an issue on GitHub or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
+3. Scan for cloud infrastructure for all configured providers. This command will reach out and read all of the metadata on your cloud infrastructure. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said, if you encounter any problematic errors running CloudGraph you can prepend `CG_DEBUG=5` to the beginning of your command as in, `CG_DEBUG=5 cg scan`. This will print out the verbose logs with more information that you can then use to either open an [issue on GitHub](https://github.com/cloudgraphdev/cli/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
@@ -215,7 +216,7 @@ query {
 
 <br />
 
-This query will return a `JSON response` that looks like this. All of the following examples will follow suit:
+This query will return a `JSON` payload that looks like this. All of the following examples will follow suit:
 
 <br />
 
@@ -615,22 +616,159 @@ Note that in order to successfully ingest FinOps related data you must have the 
 
 <br />
 
-Get the `total cost` of your AWS account for the `last 30 days`, the `total cost` of your AWS account `month to date`, a breakdown of `each service and its cost for the last 30 days`, and a breakdown of `each service and its cost month to date`: 
+Get the `total cost` of your AWS Account for the `last 30 days`, the `total cost` of your AWS Account `month to date`, a breakdown of `each service and its cost for the last 30 days`, and a breakdown of `each service and its cost month to date` as well as the `monthly` and `month to date` average costs:
 
 ```graphql
 query {
   queryawsBilling {
-    totalCostLast30Days
-    totalCostMonthToDate
+    totalCostLast30Days {
+      cost
+      currency
+      formattedCost
+    }
+    totalCostMonthToDate {
+      cost
+      currency
+      formattedCost
+    }
     monthToDate {
       name
       cost
+      currency
+      formattedCost
     }
     last30Days {
       name
       cost
+      currency
+      formattedCost
+    }
+    monthToDateDailyAverage {
+      name
+      cost
+      currency
+      formattedCost
+    }
+    last30DaysDailyAverage {
+      name
+      cost
+      currency
+      formattedCost
     }
   }
+}
+```
+
+<br />
+
+This query will return a `JSON` payload that looks like this:
+
+```json
+{
+  "data": {
+    "queryawsBilling": [
+      {
+        "totalCostLast30Days": {
+          "cost": 7088.87,
+          "currency": "USD",
+          "formattedCost": "$7088.87"
+        },
+        "totalCostMonthToDate": {
+          "cost": 7089.28,
+          "currency": "USD",
+          "formattedCost": "$7089.28"
+
+        },
+        "monthToDate": [
+          {
+            "name": "Amazon Relational Database Service",
+            "cost": 548.68,
+            "currency": "USD",
+            "formattedCost": "$548.68"
+          },
+          {
+            "name": "Amazon Managed Streaming for Apache Kafka",
+            "cost": 67.49,
+            "currency": "USD",
+            "formattedCost": "$67.49"
+          },
+          {
+            "name": "Amazon OpenSearch Service",
+            "cost": 1155.04,
+            "currency": "USD",
+            "formattedCost": "$1155.04"
+          }
+          ...More Services
+        ],
+        "last30Days": [
+          {
+            "name": "AWS Step Functions",
+            "cost": 330.20,
+            "currency": "USD",
+            "formattedCost": "$330.20"
+          },
+          {
+            "name": "Amazon Elastic Container Service for Kubernetes",
+            "cost": 194.40,
+            "currency": "USD",
+            "formattedCost": "$194.40"
+          },
+          {
+            "name": "AmazonCloudWatch",
+            "cost": 310.54,
+            "currency": "USD",
+            "formattedCost": "$310.54"
+          }
+          ...More Services
+        ],
+        "monthToDateDailyAverage": [
+          {
+            "name": "Amazon Relational Database Service",
+            "cost": 54.86,
+            "currency": "USD",
+            "formattedCost": "$54.86"
+          },
+          {
+            "name": "Amazon Managed Streaming for Apache Kafka",
+            "cost": 6.74,
+            "currency": "USD",
+            "formattedCost": "$6.74"
+          },
+          {
+            "name": "Amazon OpenSearch Service",
+            "cost": 115.50,
+            "currency": "USD",
+            "formattedCost": "$115.50"
+          }
+          ...More Services
+        ],
+        "last30DaysDailyAverage": [
+          {
+            "name": "AWS Step Functions",
+            "cost": 33.01,
+            "currency": "USD",
+            "formattedCost": "$33.01"
+          },
+          {
+            "name": "Amazon Elastic Container Service for Kubernetes",
+            "cost": 19.44,
+            "currency": "USD",
+            "formattedCost": "$19.44"
+          },
+          {
+            "name": "AmazonCloudWatch",
+            "cost": 31.05,
+            "currency": "USD",
+            "formattedCost": "$31.05"
+          }
+          ...More Services
+        ],
+      }
+    ]
+  },
+  "extensions": {
+    "touched_uids": 212
+  }
 }
 ```
 
@@ -643,7 +781,37 @@ query {
   queryawsEc2 {
     arn
     dailyCost
+    currency
+    formattedDailyCost
   }
+}
+```
+
+<br />
+
+This query will return a `JSON` payload that looks like this. All of the following examples will follow suit:
+
+```json
+{
+  "data": {
+  "queryawsEc2": [
+    {
+      "arn": "arn:aws:ec2:us-east-1:111122222333:instance/i-03jdfgakfg9999fgf",
+      "dailyCost": 2.06,
+      "currency": "USD",
+      "formattedDailyCost": "$2.06"
+    },
+    {
+      "arn": "arn:aws:ec2:us-east-1:111122222333:instance/i-jifgfd0df0gdf8fd88",
+      "dailyCost": 34.11,
+      "currency": "USD",
+      "formattedDailyCost": "$34.11"
+    }
+    ...More EC2 Instances
+  ],
+  "extensions": {
+    "touched_uids": 212
+  }
 }
 ```
 
@@ -655,7 +823,9 @@ Get each `NAT Gateway` in your AWS account along with its daily cost:
 query {
   queryawsNatGateway {
     arn
+    currency
     dailyCost
+    formattedDailyCost
   }
 }
 ```
@@ -801,7 +971,7 @@ Interested in a fully managed SaaS/self hosted version of CloudGraph that has bu
 
 # Debugging
 
-If you encounter any errors running CloudGraph you can prepend `CG_DEBUG=5` to the beginning of your command as in, `CG_DEBUG=5 cg scan`. This will print out the verbose logs with more information that you can then use to either open a issue on GitHub or get help on Slack.
+If you encounter any errors running CloudGraph you can prepend `CG_DEBUG=5` to the beginning of your command as in, `CG_DEBUG=5 cg scan`. This will print out the verbose logs with more information that you can then use to either open an [issue on GitHub](https://github.com/cloudgraphdev/cli/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-vb8whl6u-3YH0F4mHXNyC6SOqZJvClQ).
 
 <br />
 
