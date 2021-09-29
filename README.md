@@ -623,20 +623,36 @@ query {
     totalCostLast30Days {
       cost
       currency
+      formattedCost
     }
     totalCostMonthToDate {
       cost
       currency
+      formattedCost
     }
     monthToDate {
       name
       cost
       currency
+      formattedCost
     }
     last30Days {
       name
       cost
       currency
+      formattedCost
+    }
+    monthToDateDailyAverage {
+      name
+      cost
+      currency
+      formattedCost
+    }
+    last30DaysDailyAverage {
+      name
+      cost
+      currency
+      formattedCost
     }
   }
 }
@@ -653,27 +669,33 @@ This query will return a `JSON` payload that looks like this:
       {
         "totalCostLast30Days": {
           "cost": 7088.87,
-          "currency": "USD"
+          "currency": "USD",
+          "formattedCost": "$7088.87"
         },
         "totalCostMonthToDate": {
           "cost": 7089.28,
-          "currency": "USD"
+          "currency": "USD",
+          "formattedCost": "$7089.28"
+
         },
         "monthToDate": [
           {
             "name": "Amazon Relational Database Service",
             "cost": 548.68,
-            "currency": "USD"
+            "currency": "USD",
+            "formattedCost": "$548.68"
           },
           {
             "name": "Amazon Managed Streaming for Apache Kafka",
             "cost": 67.49,
-            "currency": "USD"
+            "currency": "USD",
+            "formattedCost": "$67.49"
           },
           {
             "name": "Amazon OpenSearch Service",
             "cost": 1155.04,
-            "currency": "USD"
+            "currency": "USD",
+            "formattedCost": "$1155.04"
           }
           ...More Services
         ],
@@ -681,20 +703,65 @@ This query will return a `JSON` payload that looks like this:
           {
             "name": "AWS Step Functions",
             "cost": 330.20,
-            "currency": "USD"
+            "currency": "USD",
+            "formattedCost": "$330.20"
           },
           {
             "name": "Amazon Elastic Container Service for Kubernetes",
             "cost": 194.40,
-            "currency": "USD"
+            "currency": "USD",
+            "formattedCost": "$194.40"
           },
           {
             "name": "AmazonCloudWatch",
             "cost": 310.54,
-            "currency": "USD"
+            "currency": "USD",
+            "formattedCost": "$310.54"
           }
           ...More Services
-        ]
+        ],
+        "monthToDateDailyAverage": [
+          {
+            "name": "Amazon Relational Database Service",
+            "cost": 54.86,
+            "currency": "USD",
+            "formattedCost": "$54.86"
+          },
+          {
+            "name": "Amazon Managed Streaming for Apache Kafka",
+            "cost": 6.74,
+            "currency": "USD",
+            "formattedCost": "$6.74"
+          },
+          {
+            "name": "Amazon OpenSearch Service",
+            "cost": 115.50,
+            "currency": "USD",
+            "formattedCost": "$115.50"
+          }
+          ...More Services
+        ],
+        "last30DaysDailyAverage": [
+          {
+            "name": "AWS Step Functions",
+            "cost": 33.01,
+            "currency": "USD",
+            "formattedCost": "$33.01"
+          },
+          {
+            "name": "Amazon Elastic Container Service for Kubernetes",
+            "cost": 19.44,
+            "currency": "USD",
+            "formattedCost": "$19.44"
+          },
+          {
+            "name": "AmazonCloudWatch",
+            "cost": 31.05,
+            "currency": "USD",
+            "formattedCost": "$31.05"
+          }
+          ...More Services
+        ],
       }
     ]
   },
@@ -714,6 +781,7 @@ query {
     arn
     dailyCost
     currency
+    formattedDailyCost
   }
 }
 ```
@@ -729,12 +797,14 @@ This query will return a `JSON` payload that looks like this. All of the followi
     {
       "arn": "arn:aws:ec2:us-east-1:111122222333:instance/i-03jdfgakfg9999fgf",
       "dailyCost": 2.06,
-      "currency": "USD"
+      "currency": "USD",
+      "formattedDailyCost": "$2.06"
     },
     {
       "arn": "arn:aws:ec2:us-east-1:111122222333:instance/i-jifgfd0df0gdf8fd88",
       "dailyCost": 34.11,
-      "currency": "USD"
+      "currency": "USD",
+      "formattedDailyCost": "$34.11"
     }
     ...More EC2 Instances
   ],
@@ -754,6 +824,7 @@ query {
     arn
     currency
     dailyCost
+    formattedDailyCost
   }
 }
 ```
