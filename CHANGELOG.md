@@ -1,3 +1,10 @@
+# [0.10.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.6...0.10.0) (2021-09-29)
+
+
+### Features
+
+* **FinOps:** Daily averages for FinOps data ([2259425](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/2259425165cdf2793ae6c5b3199e61092be13bd6))
+
 ## [0.9.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.5...0.9.6) (2021-09-28)
 
 
