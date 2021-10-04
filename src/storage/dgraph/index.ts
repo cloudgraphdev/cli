@@ -2,7 +2,7 @@ import { ExecutionResult } from 'graphql'
 
 import { GraphQLInputData, StorageEngine, StorageEngineConfig } from '../types'
 import DGraphClientWrapper from './base'
-import { processGQLExecutionResult, UPDATE_SCHEMA_QUERY } from './utils'
+import {GET_SCHEMA_QUERY, processGQLExecutionResult, UPDATE_SCHEMA_QUERY} from './utils'
 
 export default class DgraphEngine
   extends DGraphClientWrapper
@@ -72,7 +72,7 @@ export default class DgraphEngine
   }
 
   async setSchema(schemas: string[]): Promise<void> {
-    await this.dropAll()
+    // await this.dropAll()
     const data = {
       query: UPDATE_SCHEMA_QUERY,
       variables: {
@@ -110,6 +110,25 @@ export default class DgraphEngine
     }
   }
 
+  async getSchema() {
+    const res = await this.query(GET_SCHEMA_QUERY, '/admin')
+    return res?.data?.getGQLSchema.schema
+  }
+
+  query(query: string, path = '/graphql') {
+    return this.generateAxiosRequest({
+      path,
+      data: {
+        query,
+        // variables: {input: connectedData,},
+      },
+    })
+      .then((res: ExecutionResult) => {
+        const { data: resData } = res
+        return resData
+      })
+      .catch(error => Promise.reject(error))
+  }
   /**
    * Add Service Mutation to axiosPromises Array
    */
