@@ -1,0 +1,11 @@
+type awsFinding @key(fields: "id") {
+  id: String! @id
+  ruleId: String!
+  resourceId: String!
+  result: Boolean @search # pass no pass
+  securityGroup: [awsSecurityGroup] @hasInverse(field: ruleFindings)
+}
+
+extend type awsSecurityGroup {
+   ruleFindings: [awsFinding] @hasInverse(field: securityGroup)
+}

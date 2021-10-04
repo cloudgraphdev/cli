@@ -16,6 +16,11 @@ mutation($schema: String!) {
     }
   }
 }`
+export const GET_SCHEMA_QUERY = `{
+  getGQLSchema {
+    schema
+  }
+}`
 
 // Look for mutation name and color it red
 function printErrorMessage(message: string, additionalInfo: any): void {
