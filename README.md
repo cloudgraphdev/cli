@@ -62,15 +62,29 @@ Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all 
 
 <br />
 
+# System Requirements
+
+ - Node 14+
+ - Docker
+
+<br />
+
 # Authentication
 
 CloudGraph currently supports AWS with Azure/GCP (and several others) coming soon. For more information on generating the necessary permission for each cloud provider please view our current provider repos:
 
-<br />
+ - [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws)
 
-#### [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws)
+## AWS TL;DR 
 
-AWS TLDR; For AWS need you an IAM User with the AWS Managed "ReadOnlyAccess" policy attached. CloudGraph will check to see what AWS user you are using in your current terminal session and use those credentials.
+For AWS, you need an IAM User with the following policies attached:
+-  [ReadOnlyAccess](https://console.aws.amazon.com/iam/home#/policies/arn:aws:iam::aws:policy/ReadOnlyAccess)
+
+CloudGraph will check to see what AWS user you are using in your current terminal session and use those credentials, but can also be quickly changed by overriding the environment:
+
+```bash
+env AWS_ACCESS_KEY_ID="..." AWS_SECRET_ACCESS_KEY="..." cg scan
+```
 
 <br />
 
