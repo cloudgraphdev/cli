@@ -149,9 +149,9 @@ export default class DgraphEngine
         await mutation()
       } catch (error: any) {
         const {
-          response: { data: resData, errors },
+          response: { data: resData, errors } = { data: null, errors: null },
           message,
-        } = error
+        } = error ?? {}
         this.logger.error('There was an issue pushing data into the Dgraph db')
         this.logger.debug(message)
         processGQLExecutionResult({ resData, errors })
