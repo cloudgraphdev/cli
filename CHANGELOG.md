@@ -1,3 +1,10 @@
+## [0.10.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.10.0...0.10.1) (2021-10-05)
+
+
+### Bug Fixes
+
+* **storage:** Add safe accessing to Dgraph error catch ([59c8649](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/59c8649de0a4cf7f5fc42daf5cbd27eea7ea5681))
+
 # [0.10.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.9.6...0.10.0) (2021-09-29)
 
 
