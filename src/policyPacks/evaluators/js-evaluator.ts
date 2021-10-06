@@ -11,7 +11,7 @@ export default class JsEvaluator implements RuleEvaluator<JsRule> {
   }
 
   async evaluateSingleResource (rule: JsRule, data: ResourceData): Promise<RuleResult> {
-    return rule.check!(data) ? RuleResult.FAIL: RuleResult.PASS
+    return rule.check!(data) ? RuleResult.MATCHES: RuleResult.DOESNT_MATCH
   }
 
 }
