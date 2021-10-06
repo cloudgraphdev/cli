@@ -1,5 +1,5 @@
-import { JsRule } from "./evaluators/js-evaluator"
-import { JsonRule } from "./evaluators/json-evaluator";
+import {JsRule} from "./evaluators/js-evaluator"
+import {JsonRule} from "./evaluators/json-evaluator";
 
 export const ruleSchemaTypeName = `awsFinding`
 // we may autogenerate this long list
@@ -55,23 +55,31 @@ export default [
     // the resource that will have the finding attached
     resource: 'queryawsEc2[*].securityGroups[*]',
     conditions: {
-      path: '@.id',
-      op: 'equal',
-      value: 'sg-0a7a7ce35fc04536b'
+      path: '@.inboundRules',
+      op: 'array_any',
+      value: {
+        and: [
+          {
+            path: '[*].source',
+            op: 'in',
+            value: ['0.0.0.0/0', '::/0', '68.250.115.158/32']
+          },
+          {
+            path: '[*].portRange',
+            op: 'in',
+            value: ['all', '0-65535']
+          }
+        ]
+      }
     },
-    check:  (data: any): boolean => { // return false
-      // We need to define if this mechanism query/resource covers all cases (i'm sure we'll find edge cases)
-      // the object here is linearized, we'll get one check per securityGroup.
-      const secGroup = data.queryawsEc2.securityGroups
-      // @NOTE we access the data up to the resource as non-arrays, as there's a single chain of ownership
-      // that is, data.queryawsEc2 is the ec2 we belong to, and queryawsEc2.securityGroups is this resource
-      // @NOTE our child data is an array, as they belong to us arrays in general
+    check: (data: any): boolean => { // return false
+      const secGroup = data.queryawsEc2['@'].securityGroups['@'] // curr resource
       return secGroup.inboundRules.some((ib: any) =>
         (ib.source === '0.0.0.0/0' || ib.source === '::/0') &&
         (ib.portRange === 'all' || ib.portRange === '0-65535'))
     }
 
   }
-] as (JsRule| JsonRule)[]
+] as (JsRule | JsonRule)[]
 
 
