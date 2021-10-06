@@ -2,7 +2,8 @@ import { pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
 
-const getProvider = (val: string): string => val.includes('@') ? val.split('@')[0] : val
+const getProvider = (val: string): string =>
+  val.includes('@') ? val.split('@')[0] : val
 
 export default class Update extends Command {
   static description = 'Update currently installed providers'
@@ -64,6 +65,11 @@ export default class Update extends Command {
         [, version] = rawProvider.split('@')
       }
       await manager.getProviderPlugin(key, version)
+      this.logger.info(
+        `Run ${chalk.italic.green(
+          `$cg init ${key}`
+        )} to ensure you have the latest configuration for this version (including new services).`
+      )
     }
   }
 }

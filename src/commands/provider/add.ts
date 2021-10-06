@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import Command from '../base'
 
 export default class Add extends Command {
@@ -32,6 +33,10 @@ export default class Add extends Command {
         [key, version] = key.split('@')
       }
       await manager.getProviderPlugin(key, version)
+      this.logger.info(
+        `Run ${chalk.italic.green(
+          `$cg init ${key}`
+        )} to setup configuration for this provider`)
     }
   }
 }

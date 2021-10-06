@@ -50,9 +50,7 @@ export class Manager {
     let plugin
     let providerName = provider
 
-    this.logger.startSpinner(
-      `Checking for ${chalk.green(provider)} module...`
-    )
+    this.logger.startSpinner(`Checking for ${chalk.green(provider)} module...`)
     try {
       const { importPath, name } = getProviderImportPath(provider)
       providerName = name
@@ -61,7 +59,10 @@ export class Manager {
         if (!isValidVersion) {
           throw new Error('Version check failed')
         }
-        // TODO: talk with live-plugin-manager maintainer on why above doesnt work but below does??
+        this.logger.warn(
+          // eslint-disable-next-line max-len
+          `You are running CloudGraph in devMode. In devMode, CG will assume provider modules are already installed. use ${chalk.italic.green('$yarn link {providerModule}')} to work with a local copy of a provider module`
+        )
         plugin = await import(importPath)
       } else {
         this.logger.startSpinner(
@@ -108,7 +109,9 @@ export class Manager {
         `${provider} moudle check ${chalk.red('FAILED')}, unable to find plugin`
       )
     }
-    this.logger.successSpinner(`${chalk.green(providerName)} module check complete`)
+    this.logger.successSpinner(
+      `${chalk.green(providerName)} module check complete`
+    )
     this.plugins[providerName] = plugin
     return plugin
   }
