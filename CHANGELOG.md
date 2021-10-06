@@ -1,3 +1,12 @@
+## [0.10.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.10.1...0.10.2) (2021-10-06)
+
+
+### Bug Fixes
+
+* **multiAccount:** drop accountId use in storage path ([5903fb7](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5903fb7b330198cb120699d1b70883e84a964250))
+* **multiAccount:** update config example ([5ba4dc4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5ba4dc4d710c10417471c711c7d9503de094faf0))
+* **multiAccount:** update file utils provider file location/selection ([ed77385](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ed773852e60ccfcce9bc2044a63c2eabd6bc7d9e))
+
 ## [0.10.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.10.0...0.10.1) (2021-10-05)
 
 
