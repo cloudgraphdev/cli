@@ -5,6 +5,8 @@ import RulesProvider from "../policyPacks/rules-provider";
 import {mergeTypeDefs} from "@graphql-tools/merge";
 import {print} from "graphql";
 
+import rulesAws, {resourceTypeNamesToFieldsMap, ruleSchemaTypeName} from "../policyPacks/rules-aws";
+
 function mergeSchemas(currSchema: string, additions: string[]) {
   const s = mergeTypeDefs([currSchema, ...additions]);
   return print(s)
@@ -35,7 +37,7 @@ export default class Rules extends Command {
     const storageEngine = this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
 
-    const client = new RulesProvider(); // await this.getProviderClient(provider)
+    const client = new RulesProvider(rulesAws, resourceTypeNamesToFieldsMap, ruleSchemaTypeName);
 
     // we need to extend our interface so we can use the generic one here
     const dGraph: DgraphEngine = storageEngine as DgraphEngine
@@ -52,6 +54,7 @@ export default class Rules extends Command {
      */
     const currSchema: string = await dGraph.getSchema()
     const providerSchema: string[] = client.getSchema()
+    // console.log('new schema', providerSchema)
     await storageEngine.setSchema([mergeSchemas(currSchema, providerSchema)])
 
     /**
