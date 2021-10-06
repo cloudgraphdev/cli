@@ -27,7 +27,7 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
   }
 
   async evaluateSingleResource (rule: JsonRule, data: ResourceData): Promise<RuleResult> {
-    return this.evaluateCondition(rule.conditions, data) ? RuleResult.FAIL: RuleResult.PASS
+    return this.evaluateCondition(rule.conditions, data) ? RuleResult.MATCHES: RuleResult.DOESNT_MATCH
   }
 
   calculatePath = (data: _ResourceData, path: string) => {
@@ -57,16 +57,19 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
     'greaterThanInclusive':(a, b) => a >= b,
     'array_all': (array, conditions, data) => {
       // an AND, but with every resource item
+      const baseElementPath = data.elementPath
+
       for (let i = 0; i < array.length; i++) {
-        if (this.evaluateCondition(conditions as Condition, {
+        if (!this.evaluateCondition(conditions as Condition, {
           ...data,
-          elementPath: data.elementPath + `[${i}]`
+          elementPath: baseElementPath + `[${i}]`
         })) return false
       }
       return true
     },
     'array_any': (array, conditions, data) => {
       // an OR, but with every resource item
+
       const baseElementPath = data.elementPath
       for (let i = 0; i < array.length; i++) {
         if (this.evaluateCondition(conditions as Condition, {

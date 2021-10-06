@@ -4,6 +4,7 @@ import jsonpath, {PathComponent} from 'jsonpath'
 import JsonEvaluator from "./evaluators/json-evaluator";
 import JsEvaluator from "./evaluators/js-evaluator";
 import {ResourceData, RuleEvaluator} from "./evaluators/rule-evaluator";
+import DefaultEvaluator from "./evaluators/default-evaluator";
 
 export interface Rule {
   id: string;
@@ -14,8 +15,8 @@ export interface Rule {
 }
 
 export enum RuleResult {
-  PASS = 'PASS',
-  FAIL = 'FAIL',
+  DOESNT_MATCH = 'DOESNT_MATCH',
+  MATCHES = 'MATCHES',
   MISSING = 'MISSING',
 }
 
@@ -23,13 +24,13 @@ export interface RuleFinding {
   id: string;
   ruleId: string;
   resourceId: string;
-  result: RuleResult,
+  result: 'FAIL' | 'PASS' | 'MISSING'
   // connections ...
   // securityGroup: [{id: data.resource.id}]
 }
 
 export default class RulesProvider {
-  evaluators: RuleEvaluator<any>[] = [new JsonEvaluator(), new JsEvaluator()]
+  evaluators: RuleEvaluator<any>[] = [new JsonEvaluator(), new JsEvaluator(), new DefaultEvaluator()]
 
   constructor(
     private rules: Rule[],
@@ -146,15 +147,15 @@ export default class RulesProvider {
       }
     }
   }
-  private processSingleResourceRule = async (rule: Rule, evaluator: RuleEvaluator<any>, data: ResourceData) => {
+  private processSingleResourceRule = async (rule: Rule, evaluator: RuleEvaluator<any>, data: ResourceData): Promise<RuleFinding> => {
     let result = await evaluator.evaluateSingleResource(rule, data);
 
     const finding = {
       id: rule.id + '/' + data.resource.id,
       ruleId: rule.id,
       resourceId: data.resource.id,
-      result,
-    }
+      result: result === RuleResult.MATCHES? 'FAIL': 'PASS',
+    } as RuleFinding
     const connField = data.resource.__typename && data.resource.__typename[this.schemaTypeName]
     if (connField) {
       (finding as any)[connField] = [{id: data.resource.id}]
