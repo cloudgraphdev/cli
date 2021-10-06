@@ -1,7 +1,6 @@
 import lodash from 'lodash'
 import {Rule, RuleResult} from '../rules-provider'
 import {ResourceData, RuleEvaluator} from "./rule-evaluator";
-import jsonpath, { PathComponent } from 'jsonpath'
 
 export interface JsonRule extends Rule {
   conditions: Condition;
@@ -17,7 +16,9 @@ interface ConnectedCondition {
   and?: Condition[],
   or?: Condition[],
 }
-type Operator = (pathValue: any, value: SimpleCondition['value']) => boolean
+type Operator = (pathValue: any, value: SimpleCondition['value'], data: ResourceData & { elementPath?: string } ) => boolean
+
+type _ResourceData = ResourceData & { elementPath?: string }
 
 export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
 
@@ -29,17 +30,21 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
     return this.evaluateCondition(rule.conditions, data) ? RuleResult.FAIL: RuleResult.PASS
   }
 
-  resolvePath = (data: ResourceData, path: string) => {
-    if(path.indexOf('@') === 0) {
+  calculatePath = (data: _ResourceData, path: string) => {
+    if (path.indexOf('@') === 0) {
       // @ means the curr resource, we replace by base path
       path = path.replace('@', data.resourcePath).substr(2) // remove `$.`
     }
+    if (path.indexOf('[*]') === 0 && data.elementPath) {
+      // @ means the curr resource, we replace by base path
+      path = path.replace('[*]', data.elementPath)
+    }
+    return path
+  }
+  resolvePath = (data: _ResourceData, path: string) => {
     return lodash.get(data.data, path)
   }
   operators: {[key: string]: Operator } = {
-    // 'array_all',
-    // 'array_any',
-    // 'array_length',
     'equal':(a, b) => a == b, // == is fine
     'notEqual':(a, b) => a !== b,
     'in':(a, b) => (b as any).indexOf(a) > -1,
@@ -50,15 +55,37 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
     'lessThanInclusive':(a, b) => a <= b,
     'greaterThan':(a, b) => a > b,
     'greaterThanInclusive':(a, b) => a >= b,
+    'array_all': (array, conditions, data) => {
+      // an AND, but with every resource item
+      for (let i = 0; i < array.length; i++) {
+        if (this.evaluateCondition(conditions as Condition, {
+          ...data,
+          elementPath: data.elementPath + `[${i}]`
+        })) return false
+      }
+      return true
+    },
+    'array_any': (array, conditions, data) => {
+      // an OR, but with every resource item
+      const baseElementPath = data.elementPath
+      for (let i = 0; i < array.length; i++) {
+        if (this.evaluateCondition(conditions as Condition, {
+          ...data,
+          elementPath: baseElementPath + `[${i}]`
+        })) return true
+      }
+      return false
+    },
+
   }
 
-  evaluateCondition(condition: Condition, data: ResourceData): boolean {
+  evaluateCondition(condition: Condition, data: _ResourceData ): boolean {
     if ('op' in condition) {
       // simple condition
       const operator = this.operators[condition.op]
-      const pathValue = this.resolvePath(data, condition.path)
-      console.log(condition.op, pathValue)
-      return operator(pathValue, condition.value)
+      const elementPath = this.calculatePath(data, condition.path)
+      const pathValue = this.resolvePath(data, elementPath)
+      return operator(pathValue, condition.value, {... data, elementPath})
     }
     // connectedConditions
     if (condition.or) {
