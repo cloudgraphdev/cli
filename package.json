@@ -107,6 +107,7 @@
     "run:scan": "NODE_ENV=development ./bin/run scan",
     "run:scan:aws": "NODE_ENV=development ./bin/run scan aws",
     "run:launch": "NODE_ENV=development ./bin/run launch",
+    "run:teardown": "NODE_ENV=development ./bin/run teardown",
     "test": "CG_DEBUG=-1 NODE_ENV=test jest --coverage=true --detectOpenHandles --runInBand --forceExit",
     "test:debug": "CG_DEBUG=5 NODE_ENV=test jest --coverage=false --detectOpenHandles --runInBand --forceExit",
     "version": "oclif-dev readme && git add README.md",

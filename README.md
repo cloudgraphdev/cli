@@ -163,6 +163,30 @@ Note that you may also use **any** GraphQL query tool you would like by connecti
 
 <br />
 
+## Stopping the Dgraph instance
+
+<br />
+
+To stop the Dgraph instance(stop the dgraph container) run:
+
+<br />
+
+```bash
+cg teardown
+```
+
+<br />
+
+Additionally if you wish to remove the container after stopping it, run:
+
+<br />
+
+```bash
+cg teardown --delete-image
+```
+
+<br />
+
 # Loading Previous Versions
 
 <br />

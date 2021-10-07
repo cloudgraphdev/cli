@@ -4,13 +4,14 @@ import { loadFilesSync } from '@graphql-tools/load-files'
 import boxen from 'boxen'
 import CFonts from 'cfonts'
 import chalk from 'chalk'
+import { exec } from 'child_process'
 import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
 
 import isEmpty from 'lodash/isEmpty'
 import scanReport, { scanDataType, scanResult } from '../scanReport'
-import C, { DEFAULT_CONFIG } from '../utils/constants'
+import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
 
 const { logger } = CloudGraph
@@ -291,6 +292,26 @@ export const getStorageEngineConnectionConfig = (
     port: getPort(host, protocol, port),
     scheme,
   }
+}
+
+export const execCommand = (cmd: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    exec(cmd, (error: any, stdout: any, stderr: any) => {
+      if (error) {
+        reject(error)
+      }
+      resolve(stdout || stderr)
+    })
+  })
+}
+
+export const findExistingDGraphContainerId = async (
+  statusFilter: string
+): Promise<string> => {
+  const stdout: any = await execCommand(
+    `docker ps --filter label=${DGRAPH_CONTAINER_LABEL} --filter status=${statusFilter} --quiet`
+  )
+  return stdout.trim()
 }
 
 export const fileUtils = {

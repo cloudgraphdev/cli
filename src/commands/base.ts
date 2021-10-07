@@ -43,7 +43,7 @@ export default abstract class BaseCommand extends Command {
 
   storedConfig: { [key: string]: any } | undefined
 
-  static flags = flagsDefinition
+  static flags: any = flagsDefinition
 
   static hidden = true
 

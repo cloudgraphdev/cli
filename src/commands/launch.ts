@@ -1,21 +1,21 @@
 import chalk from 'chalk'
 import path from 'path'
-import { exec } from 'child_process'
 
 import Command from './base'
 import {
   sleep,
   fileUtils,
   getDefaultStorageEngineConnectionConfig,
+  execCommand,
+  findExistingDGraphContainerId,
 } from '../utils'
 import DgraphEngine from '../storage/dgraph'
+import { DGRAPH_CONTAINER_LABEL, DGRAPH_DOCKER_IMAGE_NAME } from '../utils/constants'
 
 export default class Launch extends Command {
   static description = 'Launch an instance of Dgraph to store data'
 
   static examples = ['$ cg launch']
-
-  static dgraphContainerLabel = 'cloudgraph-cli-dgraph-standalone'
 
   static strict = false
 
@@ -27,35 +27,17 @@ export default class Launch extends Command {
 
   static args = Command.args
 
-  execCommand(cmd: string) {
-    return new Promise((resolve, reject) => {
-      exec(cmd, (error: any, stdout: any, stderr: any) => {
-        if (error) {
-          reject(error)
-        }
-        resolve(stdout || stderr)
-      })
-    })
-  }
-
-  async findExistingDGraphContainerId(statusFilter: string): Promise<string> {
-    const stdout: any = await this.execCommand(
-      `docker ps --filter label=${Launch.dgraphContainerLabel} --filter status=${statusFilter} --quiet`
-    )
-    return stdout.trim()
-  }
-
   createDgraphFolder(): void {
     const { dataDir } = this.config
     fileUtils.makeDirIfNotExists(path.join(dataDir, '/dgraph'))
   }
 
   async checkForDockerInstallation(): Promise<void> {
-    await this.execCommand('docker -v')
+    await execCommand('docker -v')
   }
 
   async pullDGraphDockerImage(): Promise<void> {
-    await this.execCommand('docker pull dgraph/standalone')
+    await execCommand(`docker pull ${DGRAPH_DOCKER_IMAGE_NAME}`)
   }
 
   async startDGraphContainer(
@@ -64,17 +46,17 @@ export default class Launch extends Command {
     const { dataDir } = this.config
     let output: undefined | unknown
     if (containerId) {
-      output = await this.execCommand(`docker container start ${containerId}`)
+      output = await execCommand(`docker container start ${containerId}`)
     } else {
       const {
         connectionConfig: {
           port = getDefaultStorageEngineConnectionConfig().port,
         },
       } = this.getStorageEngine() as DgraphEngine
-      output = await this.execCommand(
+      output = await execCommand(
         `docker run -d -p 8995:5080 -p 8996:6080 -p ${port}:8080 -p 8998:9080 -p 8999:8000 --label ${
-          Launch.dgraphContainerLabel
-        } -v ${dataDir}/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1`
+          DGRAPH_CONTAINER_LABEL
+        } -v ${dataDir}/dgraph:/dgraph --name dgraph ${DGRAPH_DOCKER_IMAGE_NAME}`
       )
     }
     return output
@@ -105,7 +87,7 @@ export default class Launch extends Command {
     )
     let runningContainerId
     try {
-      const containerId = await this.findExistingDGraphContainerId('running')
+      const containerId = await findExistingDGraphContainerId('running')
       if (containerId) {
         runningContainerId = containerId
       }
@@ -116,7 +98,7 @@ export default class Launch extends Command {
     let exitedContainerId
     if (!runningContainerId) {
       try {
-        const containerId = await this.findExistingDGraphContainerId('exited')
+        const containerId = await findExistingDGraphContainerId('exited')
         if (containerId) {
           exitedContainerId = containerId
           this.logger.successSpinner('Reusable container found!')
