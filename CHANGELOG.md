@@ -1,3 +1,11 @@
+## [0.10.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.10.2...0.10.3) (2021-10-07)
+
+
+### Bug Fixes
+
+* **logs:** update add, update, and devMode manager with better logs ([a9f9578](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a9f9578fed905fc765f21dafcb3ffc71c4d62e8d))
+* **scan:** handle off by one issue in scan report ([fa86ddf](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/fa86ddf43f03f72dc4ba3008dcdc13aa31eb4776))
+
 ## [0.10.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.10.1...0.10.2) (2021-10-06)
 
 
