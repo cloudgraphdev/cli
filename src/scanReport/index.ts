@@ -83,7 +83,7 @@ export class ScanReport {
         return val
       })
     } else {
-      this.internalTable.data.push({ [service]: ['1', status] })
+      this.internalTable.data.push({ [service]: [type === scanDataType.count ? '1': '0', status] })
     }
     if (type === scanDataType.count) {
       this.incrementTotalTable()
