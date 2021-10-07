@@ -10,7 +10,12 @@ import { cosmiconfigSync } from 'cosmiconfig'
 import InitCommandClass from '../../src/commands/init'
 import LaunchCommandClass from '../../src/commands/launch'
 import ServeCommandClass from '../../src/commands/serve'
-import { fileUtils } from '../../src/utils'
+import {
+  execCommand,
+  fileUtils,
+  findExistingDGraphContainerId,
+} from '../../src/utils'
+import { DGRAPH_CONTAINER_LABEL, DGRAPH_DOCKER_IMAGE_NAME } from '../../src/utils/constants'
 import {
   configFileMock,
   rootDir as root,
@@ -241,24 +246,22 @@ export const stopDgraphContainer = async (
 ): Promise<void> => {
   try {
     let containerToRemove: undefined | string
-    const runningContainerId =
-      await LaunchCommand.findExistingDGraphContainerId('running')
+    const runningContainerId = await findExistingDGraphContainerId('running')
     if (runningContainerId) {
       logger.debug(
         `Stopping ${rmContainer ? 'and deleting' : ''} ${runningContainerId}`
       )
-      await LaunchCommand.execCommand(`docker stop ${runningContainerId}`)
+      await execCommand(`docker stop ${runningContainerId}`)
       logger.debug(`${runningContainerId} stopped succesfully`)
       containerToRemove = runningContainerId
     } else {
-      const exitedContainerId =
-        await LaunchCommand.findExistingDGraphContainerId('exited')
+      const exitedContainerId = await findExistingDGraphContainerId('exited')
       if (exitedContainerId) {
         containerToRemove = exitedContainerId
       }
     }
     if (rmContainer && containerToRemove) {
-      await LaunchCommand.execCommand(`docker rm ${containerToRemove}`)
+      await execCommand(`docker rm ${containerToRemove}`)
       logger.debug(`${containerToRemove} removed succesfully`)
     }
   } catch (error) {
@@ -273,10 +276,10 @@ export const initDgraphContainer = async (): Promise<void> => {
     logger.debug(ConfigCommand.dataDir)
     await stopDgraphContainer(true)
     fileUtils.makeDirIfNotExists(path.join(dataDir, testDGraphDirectory))
-    await LaunchCommand.execCommand(
+    await execCommand(
       `docker run -d -p 8995:5080 -p 8996:6080 -p ${testStorageConfig.port}:8080 -p 8998:9080 -p 8999:8000 --label ${
-        LaunchCommandClass.dgraphContainerLabel
-      } -v ${dataDir}${testDGraphDirectory}:/dgraph --name dgraph dgraph/standalone:v21.03.1`
+        DGRAPH_CONTAINER_LABEL
+      } -v ${dataDir}${testDGraphDirectory}:/dgraph --name dgraph ${DGRAPH_DOCKER_IMAGE_NAME}`
     )
     logger.debug('DGraph instance started!')
     await LaunchCommand.checkIfInstanceIsRunningReportStatus()

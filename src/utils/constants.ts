@@ -9,3 +9,6 @@ export const DEFAULT_CONFIG = {
   port: '8997',
   scheme: 'http',
 }
+
+export const DGRAPH_CONTAINER_LABEL = 'cloudgraph-cli-dgraph-standalone'
+export const DGRAPH_DOCKER_IMAGE_NAME = 'dgraph/standalone:v21.03.1'
