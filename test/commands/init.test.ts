@@ -36,7 +36,7 @@ import { RunInitCommandTestType } from '../helpers/types'
 
 initTestSuite({ libsToMock: ['inquirer'] })
 
-xdescribe('Init command', () => {
+describe('Init command', () => {
   let InitCommand: InitCommandClass
 
   describe('Configuration prompts initial check', () => {
@@ -51,15 +51,6 @@ xdescribe('Init command', () => {
       inquirerPromptSpy.mockReset()
     })
 
-    it('should call getProvider prompt', async () => {
-      const response = await InitCommand.getProvider()
-      expect(response).toEqual('aws')
-      // TODO: change when we have more provider choices
-      // change to 1 (the question gets called if we have more provider choices)
-      expect(inquirerPromptSpy).toHaveBeenCalledTimes(0)
-      // enable (this is the complete question that gets asked with more providers)
-      // expect(inquirerPromptSpy).toHaveBeenCalledWith(getProviderQuestion)
-    })
     it('should call promptForDGraphConfig', async () => {
       await InitCommand.interface.prompt(dGraphConfigQuestions)
       expect(inquirerPromptSpy).toHaveBeenCalledTimes(1)
@@ -184,7 +175,7 @@ xdescribe('Init command', () => {
           askForQueryEngineConfigFlagsMock(true)
         )
       })
-      it('should call getCloudGraphConfig and get parsed args(full CloudGraph config)', async () => {
+      it('should call getCloudGraphConfig and get parsed args(full config)', async () => {
         await initCommandArgvGetterMethodTester(
           getCloudGraphConfigFlagsMock(true)
         )
@@ -212,7 +203,7 @@ xdescribe('Init command', () => {
           askForQueryEngineConfigFlagsMock(false)
         )
       })
-      it('should call getCloudGraphConfig and get parsed args(full CloudGraph config)', async () => {
+      it('should call getCloudGraphConfig and get parsed args(full config)', async () => {
         await initCommandNoOverwriteTester(getCloudGraphConfigFlagsMock(false))
       })
       it('should call fetchCloudGraphConfig and get parsed args(integration test)', async () => {
@@ -253,7 +244,7 @@ xdescribe('Init command', () => {
           )
         )
       })
-      it('should run command with mocked cloudgrapch config prompts and check that the config file is correct', async () => {
+      it('should run command with mocked config prompts and check that the config file is correct', async () => {
         await runInitCommandTester(
           inquirerPromptSpy,
           runInitCommandMock(
@@ -265,7 +256,7 @@ xdescribe('Init command', () => {
           )
         )
       })
-      it('should run command with mocked cloudgrapch config flags and check that the config file is correct', async () => {
+      it('should run command with mocked config flags and check that the config file is correct', async () => {
         await runInitCommandTester(
           inquirerPromptSpy,
           runInitCommandMock(
@@ -285,7 +276,7 @@ xdescribe('Init command', () => {
         inquirerPromptSpy.mockReset()
       })
 
-      it('should run command with mocked cloudgrapch config prompts and check that the config file is correct', async () => {
+      it('should run command with mocked config prompts and check that the config file is correct', async () => {
         await runInitCommandTester(
           inquirerPromptSpy,
           runInitCommandMock(
@@ -298,7 +289,7 @@ xdescribe('Init command', () => {
           true
         )
       })
-      it('should run command with mocked cloudgrapch config flags and check that the config file is correct', async () => {
+      it('should run command with mocked config flags and check that the config file is correct', async () => {
         await runInitCommandTester(
           inquirerPromptSpy,
           runInitCommandMock(
