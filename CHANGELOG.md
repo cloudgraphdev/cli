@@ -1,3 +1,10 @@
+# [0.11.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.10.3...0.11.0) (2021-10-07)
+
+
+### Features
+
+* **teardown:** add teardown command to stop/delete dgraph docker container ([e411cba](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e411cba02a8db4cf319004f89edfd4ce835581c8))
+
 ## [0.10.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.10.2...0.10.3) (2021-10-07)
 
 
