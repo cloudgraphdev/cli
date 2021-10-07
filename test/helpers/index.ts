@@ -1,7 +1,6 @@
 import { existsSync, rmdirSync, unlinkSync } from 'fs'
 import * as path from 'path'
 import CloudGraph from '@cloudgraph/sdk'
-import Provider from '@cloudgraph/sdk/dist/client'
 import oclifParse, { parse as oclifParser } from '@oclif/parser'
 import { Config as ConfigCommandClass } from '@oclif/config'
 import { Config } from 'cosmiconfig/dist/types'
@@ -33,6 +32,8 @@ import {
   MockRunInitCmdPromptExpectation,
 } from './types'
 
+const { Client: Provider } = CloudGraph
+
 const ConfigCommand = new ConfigCommandClass({ root })
 const LaunchCommand = new LaunchCommandClass([''], { root })
 const ServeCommand = new ServeCommandClass([''], { root })
@@ -51,6 +52,18 @@ export const getInitCommand = async (
   argv: any = ['']
 ): Promise<InitCommandClass> => {
   const { version } = await setConfigCommand()
+  // Mock the provider module
+  InitCommandClass.prototype.getProviderClient = jest.fn(async function () {
+    return Provider
+  })
+  InitCommandClass.prototype.checkProviderConfig = jest.fn(async function () {
+    return configFileMock.aws as any
+  })
+  InitCommandClass.prototype.getProvider = jest.fn(async function () {
+    return 'aws'
+  })
+  InitCommandClass.prototype.providers = {}
+  InitCommandClass.prototype.providers.aws = jest.fn()
   const initCommand = new InitCommandClass(argv, { root })
   initCommand.config.configDir = configDir
   initCommand.config.dataDir = dataDir
@@ -154,9 +167,9 @@ export const initCommandNoOverwriteTester = async (
   await saveTestCloudGraphConfigFile(InitCommand, debug)
   const response = await InitCommand[mock.methodToTest](mock.overwriteFlag)
   debug && logger.debug(`response: ${JSON.stringify(response)}`)
-  expect(response).toMatchObject(mock.expectedResult)
   debug &&
     logger.debug(`expectedResult: ${JSON.stringify(mock.expectedResult)}`)
+  expect(response).toMatchObject(mock.expectedResult)
 }
 
 export const initCommandArgvGetterMethodTester = async (
@@ -194,14 +207,6 @@ export const runInitCommandTester = async (
   const InitCommand = await getInitCommand(mock.argvList)
   if (removeConfig) {
     removeConfigFile(debug)
-    // Mock inquirer prompt call in the provider plugin
-    // TODO: Change mock structure after we add more providers
-    const client: Provider = await InitCommand.getProviderClient(
-      await InitCommand.getProvider()
-    )
-    const clientInterfaceSpy = jest.spyOn(client.interface, 'prompt')
-    clientInterfaceSpy.mockResolvedValueOnce({ approved: true })
-    clientInterfaceSpy.mockResolvedValueOnce({ regions: ['us-east-1'] })
     // remove all overwrite prompt mocks
     mock.promptExpectation = mock.promptExpectation.filter(
       i => !('overwrite' in i)
@@ -252,7 +257,7 @@ export const stopDgraphContainer = async (
         `Stopping ${rmContainer ? 'and deleting' : ''} ${runningContainerId}`
       )
       await execCommand(`docker stop ${runningContainerId}`)
-      logger.debug(`${runningContainerId} stopped succesfully`)
+      logger.debug(`${runningContainerId} stopped successfully`)
       containerToRemove = runningContainerId
     } else {
       const exitedContainerId = await findExistingDGraphContainerId('exited')
@@ -262,7 +267,7 @@ export const stopDgraphContainer = async (
     }
     if (rmContainer && containerToRemove) {
       await execCommand(`docker rm ${containerToRemove}`)
-      logger.debug(`${containerToRemove} removed succesfully`)
+      logger.debug(`${containerToRemove} removed successfully`)
     }
   } catch (error) {
     logger.debug('Error while stopping dgraph container')
