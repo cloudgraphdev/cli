@@ -1,3 +1,10 @@
+## [0.11.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.1...0.11.2) (2021-10-08)
+
+
+### Bug Fixes
+
+* **manager:** add more logging to capture errors ([a2f6dca](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a2f6dcab5e2644ac32707aff641ef523dca8dbd9))
+
 ## [0.11.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.0...0.11.1) (2021-10-08)
 
 
