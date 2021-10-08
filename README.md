@@ -277,7 +277,7 @@ Get the `ID` and `ARN` of all `EC2` instances in one of your AWS accounts by fil
 
 ```graphql
 query {
-  queryawsEc2(filter: { accountId: { eq: '123456' } }) {
+  queryawsEc2(filter: { accountId: { eq: "123456" } }) {
     id
     arn
   }
