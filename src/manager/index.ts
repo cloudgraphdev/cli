@@ -138,6 +138,7 @@ export class Manager {
       return lockFile?.config ?? {}
     } catch (error: any) {
       this.logger.info('No lock file found for Cloud Graph')
+      this.logger.debug(error)
       return {}
     }
   }
@@ -217,6 +218,7 @@ Run ${chalk.italic.green('cg update')} to install`
       this.logger.error(
         `There was an error removing ${provider} from lock file`
       )
+      this.logger.debug(error)
     }
   }
 
@@ -246,6 +248,7 @@ Run ${chalk.italic.green('cg update')} to install`
       this.logger.error(
         'There was an error writing latest version to the lock file'
       )
+      this.logger.debug(error)
     }
   }
 
@@ -255,6 +258,7 @@ Run ${chalk.italic.green('cg update')} to install`
       await this.pluginManager.uninstall(importPath)
     } catch (error: any) {
       this.logger.error(`There was an error uninstalling ${provider}`)
+      this.logger.debug(error)
     }
   }
 }
