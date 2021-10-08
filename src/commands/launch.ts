@@ -176,7 +176,7 @@ export default class Launch extends Command {
       )}`
     )
     this.logger.info(
-      `For more information on dgraph, see the dgrah docs at: ${chalk.underline.green(
+      `For more information on dgraph, see the dgraph docs at: ${chalk.underline.green(
         'https://dgraph.io/docs/graphql/'
       )}`
     )
