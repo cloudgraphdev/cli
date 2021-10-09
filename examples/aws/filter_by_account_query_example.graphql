@@ -1,5 +1,5 @@
 query {
-  queryawsEc2(filter: { accountId: { eq: '123456' } }) {
+  queryawsEc2(filter: { accountId: { eq: "123456" } }) {
     id
     arn
   }
