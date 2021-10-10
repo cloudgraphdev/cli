@@ -1,28 +1,60 @@
 query {
-  queryawsBilling {
-    totalCostLast30Days
-    totalCostMonthToDate
-    monthToDate {
+  queryawsBilling {
+    totalCostLast30Days {
+      cost
+      currency
+      formattedCost
+    }
+    totalCostMonthToDate {
+      cost
+      currency
+      formattedCost
+    }
+    monthToDate {
       name
       cost
+      currency
+      formattedCost
     }
-    last30Days {
+    last30Days {
       name
       cost
+      currency
+      formattedCost
     }
-  }
+    monthToDateDailyAverage {
+      name
+      cost
+      currency
+      formattedCost
+    }
+    last30DaysDailyAverage {
+      name
+      cost
+      currency
+      formattedCost
+    }
+  }
 }
 
 query {
-  queryawsEc2 {
-    arn
-    dailyCost
-  }
+  queryawsEc2 {
+    arn
+    dailyCost {
+      cost
+      currency
+      formattedCost
+    }
+  }
 }
 
 query {
-  queryawsNatGateway {
-    arn
-    dailyCost
-  }
+  queryawsNatGateway {
+    arn
+    dailyCost {
+      cost
+      currency
+      formattedCost
+    }
+  }
 }

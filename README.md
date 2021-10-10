@@ -438,8 +438,10 @@ query {
     lambda {
       id
       arn
-      kms {id
-      arn}
+      kms {
+        id
+        arn
+      }
     }
   }
   queryawsS3(filter: { region: { eq: "us-east-1" } }) {
@@ -657,42 +659,42 @@ Get the `total cost` of your AWS Account for the `last 30 days`, the `total cost
 
 ```graphql
 query {
-  queryawsBilling {
-    totalCostLast30Days {
+  queryawsBilling {
+    totalCostLast30Days {
       cost
       currency
       formattedCost
     }
-    totalCostMonthToDate {
+    totalCostMonthToDate {
       cost
       currency
       formattedCost
     }
-    monthToDate {
+    monthToDate {
       name
       cost
       currency
       formattedCost
     }
-    last30Days {
+    last30Days {
       name
       cost
       currency
       formattedCost
     }
-    monthToDateDailyAverage {
+    monthToDateDailyAverage {
       name
       cost
       currency
       formattedCost
     }
-    last30DaysDailyAverage {
+    last30DaysDailyAverage {
       name
       cost
       currency
       formattedCost
     }
-  }
+  }
 }
 ```
 
@@ -815,12 +817,14 @@ Get each `EC2 instance` in your AWS account along with its daily cost:
 
 ```graphql
 query {
-  queryawsEc2 {
-    arn
-    dailyCost
-    currency
-    formattedDailyCost
-  }
+  queryawsEc2 {
+    arn
+    dailyCost {
+      cost
+      currency
+      formattedCost
+    }
+  }
 }
 ```
 
@@ -830,24 +834,30 @@ This query will return a `JSON` payload that looks like this. All of the followi
 
 ```json
 {
+{
   "data": {
-  "queryawsEc2": [
-    {
-      "arn": "arn:aws:ec2:us-east-1:111122222333:instance/i-03jdfgakfg9999fgf",
-      "dailyCost": 2.06,
-      "currency": "USD",
-      "formattedDailyCost": "$2.06"
-    },
-    {
-      "arn": "arn:aws:ec2:us-east-1:111122222333:instance/i-jifgfd0df0gdf8fd88",
-      "dailyCost": 34.11,
-      "currency": "USD",
-      "formattedDailyCost": "$34.11"
-    }
-    ...More EC2 Instances
-  ],
+    "queryawsEc2": [
+      {
+        "arn": "arn:aws:ec2:us-east-1:12345678910:instance/i-0c8b3vhfgf8df923f",
+        "dailyCost": {
+          "cost": 2.06,
+          "currency": "USD",
+          "formattedCost": "$2.06"
+        }
+      },
+      {
+        "arn": "arn:aws:ec2:us-east-1:12345678910:instance/i-060b3dsfds7sdf62e3",
+        "dailyCost": {
+          "cost": 2.06,
+          "currency": "USD",
+          "formattedCost": "$2.06"
+        }
+      },
+     ...More EC2 Instances
+    ]
+  },
   "extensions": {
-    "touched_uids": 212
+    "touched_uids": 28
   }
 }
 ```
@@ -858,12 +868,14 @@ Get each `NAT Gateway` in your AWS account along with its daily cost:
 
 ```graphql
 query {
-  queryawsNatGateway {
-    arn
-    currency
-    dailyCost
-    formattedDailyCost
-  }
+  queryawsNatGateway {
+    arn
+    dailyCost {
+      cost
+      currency
+      formattedCost
+    }
+  }
 }
 ```
 

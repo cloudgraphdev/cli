@@ -7,7 +7,6 @@ query {
   }
 }
 
-
 query {
   queryawsEc2(
     filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
