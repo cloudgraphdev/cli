@@ -1,3 +1,10 @@
+## [0.11.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.3...0.11.4) (2021-10-11)
+
+
+### Bug Fixes
+
+* **manager:** Ensure cli config folder exists before trying to write lock file to it ([a77369f](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a77369f19cf226f56b7f45150d4305af4cab19ad))
+
 ## [0.11.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.2...0.11.3) (2021-10-10)
 
 
