@@ -308,10 +308,19 @@ export const execCommand = (cmd: string): Promise<void> => {
 export const findExistingDGraphContainerId = async (
   statusFilter: string
 ): Promise<string> => {
-  const stdout: any = await execCommand(
+  let result: string
+  let stdout: any
+  stdout = await execCommand(
     `docker ps --filter label=${DGRAPH_CONTAINER_LABEL} --filter status=${statusFilter} --quiet`
   )
-  return stdout.trim()
+  result = stdout.trim()
+  if (!result) {
+    stdout = await execCommand(
+      `docker ps --filter name=dgraph --filter status=${statusFilter} --quiet`
+    )
+    result = stdout.trim()
+  }
+  return result
 }
 
 export const fileUtils = {

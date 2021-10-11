@@ -32,7 +32,7 @@ export default class Teardown extends Command {
       if (runningContainerId) {
         await execCommand(`docker stop ${runningContainerId}`)
         this.logger.successSpinner(
-          `Dgraph container(${runningContainerId}) stopped succesfully!`
+          `Dgraph container(${runningContainerId}) stopped successfully!`
         )
         containerToRemove = runningContainerId
       } else {
@@ -52,7 +52,7 @@ export default class Teardown extends Command {
         )
         await execCommand(`docker rm ${containerToRemove}`)
         this.logger.successSpinner(
-          `Dgraph container(${containerToRemove}) removed succesfully`
+          `Dgraph container(${containerToRemove}) removed successfully`
         )
       }
     } catch (error: any) {
