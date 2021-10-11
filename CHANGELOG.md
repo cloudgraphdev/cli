@@ -1,3 +1,10 @@
+## [0.11.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.4...0.11.5) (2021-10-11)
+
+
+### Bug Fixes
+
+* **dgraph:** add name based query to find preexistent dgraph instances ([cd8fbd4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cd8fbd45d222f387b0ee766995a70637d979d7c3))
+
 ## [0.11.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.3...0.11.4) (2021-10-11)
 
 
