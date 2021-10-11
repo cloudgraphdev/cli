@@ -6,7 +6,7 @@ import chalk from 'chalk'
 import fs from 'fs'
 import satisfies from 'semver/functions/satisfies'
 import gt from 'semver/functions/gt'
-import { printBoxMessage } from '../utils'
+import { printBoxMessage, fileUtils } from '../utils'
 //
 const getProviderImportPath = (
   provider: string
@@ -243,6 +243,7 @@ Run ${chalk.italic.green('cg update')} to install`
           [provider]: version,
         }
       }
+      fileUtils.makeDirIfNotExists(this.cliConfig.configDir)
       fs.writeFileSync(lockPath, JSON.stringify(newLockFile, null, 2))
     } catch (error: any) {
       this.logger.error(
