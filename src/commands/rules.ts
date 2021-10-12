@@ -1,23 +1,25 @@
+import { mergeTypeDefs } from '@graphql-tools/merge'
+import { print } from 'graphql'
+
 import Command from './base'
 import { processConnectionsBetweenEntities } from '../utils'
 import DgraphEngine from '../storage/dgraph'
-import RulesProvider from "../policyPacks/rules-provider";
-import {mergeTypeDefs} from "@graphql-tools/merge";
-import {print} from "graphql";
+import RulesProvider from '../policyPacks/rules-provider'
 
-import rulesAws, {resourceTypeNamesToFieldsMap, ruleSchemaTypeName} from "../policyPacks/rules-aws";
+import rulesAws, {
+  resourceTypeNamesToFieldsMap,
+  ruleSchemaTypeName,
+} from '../policyPacks/rules-aws'
 
 function mergeSchemas(currSchema: string, additions: string[]) {
-  const s = mergeTypeDefs([currSchema, ...additions]);
+  const s = mergeTypeDefs([currSchema, ...additions])
   return print(s)
 }
 
 export default class Rules extends Command {
   static description = 'Local test'
 
-  static examples = [
-    '$ cg rules',
-  ]
+  static examples = ['$ cg rules']
 
   static strict = false
 
@@ -30,14 +32,18 @@ export default class Rules extends Command {
   static args = Command.args
 
   async run() {
-    const {
-      flags: { dev: devMode },
-    } = this.parse(Rules)
+    // const {
+    //   flags: { dev: devMode },
+    // } = this.parse(Rules)
     // Run dgraph health check
     const storageEngine = this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
 
-    const client = new RulesProvider(rulesAws, resourceTypeNamesToFieldsMap, ruleSchemaTypeName);
+    const client = new RulesProvider(
+      rulesAws,
+      resourceTypeNamesToFieldsMap,
+      ruleSchemaTypeName
+    )
 
     // we need to extend our interface so we can use the generic one here
     const dGraph: DgraphEngine = storageEngine as DgraphEngine
@@ -53,6 +59,7 @@ export default class Rules extends Command {
      *  Note that we can even create bidirectional connections with append-only
      */
     const currSchema: string = await dGraph.getSchema()
+    console.log('The scmea', currSchema)
     const providerSchema: string[] = client.getSchema()
     // console.log('new schema', providerSchema)
     await storageEngine.setSchema([mergeSchemas(currSchema, providerSchema)])
