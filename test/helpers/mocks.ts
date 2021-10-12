@@ -9,7 +9,10 @@ import {
 
 export const rootDir = path.join(__dirname, '../../')
 export const rootTestConfigDir = path.join(__dirname, '../../test/.testConfig')
-export const testConfigDir = path.join(__dirname, '../../test/.testConfig/cloudgraph')
+export const testConfigDir = path.join(
+  __dirname,
+  '../../test/.testConfig/cloudgraph'
+)
 export const testDataDir = path.join(__dirname, '../../test/.testData')
 export const testEndpoint = 'http://localhost:8888'
 export const testVersionLimit = '20'
@@ -34,6 +37,7 @@ export const testStorageConfig = {
 
 export const configFileMock = {
   aws: {
+    profileApprovedList: ['default'],
     regions: 'us-east-1',
     resources: 'alb',
   },
@@ -88,12 +92,10 @@ export const askForDGraphConfigPromptMock = (
 ): MockInitCmdPromptExpectation => ({
   methodToTest: InitCommandEnums.askForDGraphConfig,
   overwriteFlag,
-  promptExpectation: [
-    {
-      receivedUrl: testEndpoint,
-      vLimit: testVersionLimit,
-    },
-  ],
+  promptExpectation: overwriteFlag ? [{
+    receivedUrl: testEndpoint,
+    vLimit: testVersionLimit,
+  }] : [],
   expectedResult: askForDGraphConfigFlagsMock(overwriteFlag).expectedResult,
 })
 
@@ -102,11 +104,11 @@ export const askForQueryEngineConfigPromptMock = (
 ): MockInitCmdPromptExpectation => ({
   methodToTest: InitCommandEnums.askForQueryEngineConfig,
   overwriteFlag,
-  promptExpectation: [
+  promptExpectation: overwriteFlag ? [
     {
       inputQueryEngine: testQueryEngine,
     },
-  ],
+  ] : [],
   expectedResult:
     askForQueryEngineConfigFlagsMock(overwriteFlag).expectedResult,
 })
