@@ -1,15 +1,15 @@
+import RulesProvider, {
+  rules as awsRules,
+  resourceTypeNamesToFieldsMap,
+  ruleSchemaTypeName,
+} from '@cloudgraph/policy-pack-aws'
+
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import { print } from 'graphql'
 
 import Command from './base'
 import { processConnectionsBetweenEntities } from '../utils'
 import DgraphEngine from '../storage/dgraph'
-import RulesProvider from '../policyPacks/rules-provider'
-
-import rulesAws, {
-  resourceTypeNamesToFieldsMap,
-  ruleSchemaTypeName,
-} from '../policyPacks/rules-aws'
 
 function mergeSchemas(currSchema: string, additions: string[]) {
   const s = mergeTypeDefs([currSchema, ...additions])
@@ -40,7 +40,7 @@ export default class Rules extends Command {
     const storageRunning = await storageEngine.healthCheck()
 
     const client = new RulesProvider(
-      rulesAws,
+      awsRules,
       resourceTypeNamesToFieldsMap,
       ruleSchemaTypeName
     )
