@@ -1,3 +1,10 @@
+## [0.11.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.5...0.11.6) (2021-10-12)
+
+
+### Bug Fixes
+
+* **account:** Rework multi account flow ([ff8aeeb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ff8aeebe02f700bd4c3f71cec8aa2f4905525450))
+
 ## [0.11.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.4...0.11.5) (2021-10-11)
 
 
