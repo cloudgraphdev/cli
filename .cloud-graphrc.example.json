@@ -1,0 +1,33 @@
+{
+  "aws": {
+    "regions": "us-east-1,us-east-2,us-west-2",
+    "resources": "alb,apiGatewayResource,apiGatewayRestApi,apiGatewayStage,appSync,asg,billing,cognitoIdentityPool,cognitoUserPool,cloudFormationStack,cloudFormationStackSet,cloudfront,cloudtrail,cloudwatch,dynamodb,ebs,ec2Instance,eip,elb,igw,kinesisFirehose,kinesisStream,kms,lambda,nacl,nat,networkInterface,route53HostedZone,route53Record,routeTable,sg,vpc,sqs,s3",
+    "accounts": [
+      {
+        "profile": "default",
+        "roleArn": "",
+        "externalId": ""
+      },
+      {
+        "profile": "master",
+        "roleArn": "arn:aws:iam::123456678:role/my-readonly-role",
+        "externalId": ""
+      },
+      {
+        "profile": "master",
+        "roleArn": "arn:aws:iam::123456678:role/my-readonly-role-with-external-id",
+        "externalId": "my-external-id"
+      }
+    ]
+  },
+  "cloudGraph": {
+    "storageConfig": {
+      "host": "localhost",
+      "port": "8997",
+      "scheme": "http"
+    },
+    "versionLimit": 10,
+    "queryEngine": "playground",
+    "port": "5555"
+  }
+}

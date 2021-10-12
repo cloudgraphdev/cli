@@ -44,4 +44,9 @@ export default {
     description:
       'Limit the amount of version folders stored on the filesystem (default 10)',
   }),
+  // use roles flag (AWS only)
+  'use-roles': flags.boolean({
+    default: false,
+    description: 'Set to true to use roleARNs instead of profiles for AWS credentials'
+  })
 }
