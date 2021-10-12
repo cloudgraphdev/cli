@@ -146,7 +146,7 @@ export default class RulesProvider {
       }
       if (dedupeIds[resource.id]) {
         console.warn('Resource is duplicated, skipping', resource.id)
-        continue
+        continue // eslint-disable-line no-continue
       }
       dedupeIds[resource.id] = 1
 
@@ -196,9 +196,10 @@ export default class RulesProvider {
 
     const connField =
       // eslint-disable-next-line no-underscore-dangle
-      data.resource.__typename && this.typenameToFieldMap[data.resource.__typename]
+      data.resource.__typename &&
+      this.typenameToFieldMap[data.resource.__typename]
     if (connField) {
-      (finding as any)[connField] = [{ id: data.resource.id }]
+      ;(finding as any)[connField] = [{ id: data.resource.id }]
     }
     return finding
   }
@@ -209,11 +210,11 @@ export default class RulesProvider {
    */
   private highlightPath(data: any, path: PathComponent[]) {
     let curr = data // we can write the data, as next time we'll set the same fields
-    for (let j = 1; j < path.length; j++) {
+    for (let j = 1; j < path.length; j + 1) {
       const segment = path[j]
       if (Array.isArray(curr)) {
         // this is an array, we store in []._ the alias of this resource position in the array
-        (curr as any)['@'] = curr[segment as number]
+        ;(curr as any)['@'] = curr[segment as number]
       }
       curr = curr[segment]
     }

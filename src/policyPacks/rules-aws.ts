@@ -74,9 +74,11 @@ export default [
     //     (ib.source === '0.0.0.0/0' || ib.source === '::/0') &&
     //     (ib.portRange === 'all' || ib.portRange === '0-65535'))
     // }
-  },  {
+  },
+  {
     id: 'r2',
-    description: 'AWS CIS 1.3 Ensure credentials unused for 90 days or greater are disabled',
+    description:
+      'AWS CIS 1.3 Ensure credentials unused for 90 days or greater are disabled',
     gql: `{
        queryawsIamUser {
           id
@@ -94,16 +96,16 @@ export default [
         {
           // @TODO - add a and passwordEnabled
           value: { daysAgo: {}, path: '@.passwordLastUsed' },
-          greaterThan: 90
+          greaterThan: 90,
         },
         {
           path: '@.accessKeyData',
           array_any: {
             value: { daysAgo: {}, path: '[*].lastUsedDate' },
             greaterThan: 90,
-          }
-        }
-      ]
+          },
+        },
+      ],
     },
   },
 ] as (JsRule | JsonRule)[]
