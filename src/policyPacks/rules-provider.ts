@@ -1,17 +1,19 @@
-import DgraphEngine from '../storage/dgraph';
+/* eslint-disable no-underscore-dangle, @typescript-eslint/no-extra-semi */
 
-import jsonpath, {PathComponent} from 'jsonpath'
-import JsonEvaluator from "./evaluators/json-evaluator";
-import JsEvaluator from "./evaluators/js-evaluator";
-import {ResourceData, RuleEvaluator} from "./evaluators/rule-evaluator";
-import DefaultEvaluator from "./evaluators/default-evaluator";
+import jsonpath, { PathComponent } from 'jsonpath'
+
+import DgraphEngine from '../storage/dgraph'
+import JsonEvaluator from './evaluators/json-evaluator'
+import JsEvaluator from './evaluators/js-evaluator'
+import { ResourceData, RuleEvaluator } from './evaluators/rule-evaluator'
+import DefaultEvaluator from './evaluators/default-evaluator'
 
 export interface Rule {
-  id: string;
-  description: string;
-  rationale: string;
-  gql: string;
-  resource: string;
+  id: string
+  description: string
+  rationale: string
+  gql: string
+  resource: string
 }
 
 export enum RuleResult {
@@ -21,22 +23,36 @@ export enum RuleResult {
 }
 
 export interface RuleFinding {
-  id: string;
-  ruleId: string;
-  resourceId: string;
+  id: string
+  ruleId: string
+  resourceId: string
   result: 'FAIL' | 'PASS' | 'MISSING'
   // connections ...
   // securityGroup: [{id: data.resource.id}]
 }
 
 export default class RulesProvider {
-  evaluators: RuleEvaluator<any>[] = [new JsonEvaluator(), new JsEvaluator(), new DefaultEvaluator()]
+  evaluators: RuleEvaluator<any>[] = [
+    new JsonEvaluator(),
+    new JsEvaluator(),
+    new DefaultEvaluator(),
+  ]
 
   constructor(
-    private rules: Rule[],
-    private typenameToFieldMap: { [tn: string]: string },
-    private schemaTypeName: string) {
+    rules: Rule[],
+    typenameToFieldMap: { [tn: string]: string },
+    schemaTypeName: string
+  ) {
+    this.rules = rules
+    this.typenameToFieldMap = typenameToFieldMap
+    this.schemaTypeName = schemaTypeName
   }
+
+  private rules: Rule[] = []
+
+  private typenameToFieldMap: { [tn: string]: string } = {}
+
+  private schemaTypeName = ''
 
   getSchema = () => {
     const mainType = `
@@ -51,15 +67,22 @@ export default class RulesProvider {
       resourceId: String!
       result: ${this.schemaTypeName}Result @search
       # connections
-       ${Object.keys(this.typenameToFieldMap).map((tn: string) =>
-      `${this.typenameToFieldMap[tn]}: [${tn}] @hasInverse(field: findings)`).join(` `)
-    }
+       ${Object.keys(this.typenameToFieldMap)
+         .map(
+           (tn: string) =>
+             `${this.typenameToFieldMap[tn]}: [${tn}] @hasInverse(field: findings)`
+         )
+         .join(' ')}
     }
    `
-    const extensions = Object.keys(this.typenameToFieldMap).map((tn: string) =>
-      `extend type ${tn} {
+    const extensions = Object.keys(this.typenameToFieldMap)
+      .map(
+        (tn: string) =>
+          `extend type ${tn} {
    findings: [${this.schemaTypeName}] @hasInverse(field: ${this.typenameToFieldMap[tn]})
-}`).join('\n')
+}`
+      )
+      .join('\n')
 
     return [mainType, extensions]
   }
@@ -70,36 +93,38 @@ export default class RulesProvider {
   }
 
   getData = async (cli: DgraphEngine) => {
-    const findings: any = [];
+    const findings: any = []
     for (const rule of this.rules) {
       try {
-        const {data} = await cli.query(rule.gql) as any;
+        const { data } = (await cli.query(rule.gql)) as any
         console.log('executing rule with data', rule, data)
-        const result = await this.processRule(rule, data);
+        const result = await this.processRule(rule, data)
         console.log('result: ', result)
         findings.push(...result)
-      } catch (e) {
-        console.error(e)
+      } catch (error) {
+        console.error(error)
       }
     }
 
     return {
       connections: [],
-      entities: [{
-        name: this.schemaTypeName,
-        mutation: `mutation($input: [Add${this.schemaTypeName}Input!]!) {
+      entities: [
+        {
+          name: this.schemaTypeName,
+          mutation: `mutation($input: [Add${this.schemaTypeName}Input!]!) {
   add${this.schemaTypeName}(input: $input, upsert: true) {
     numUids
   }
 }`,
-        data: findings
-      }]
+          data: findings,
+        },
+      ],
     }
   }
 
   private processRule = async (rule: Rule, data: any) => {
-    const res: any[] = []; //
-    const dedupeIds = {} as any;
+    const res: any[] = [] //
+    const dedupeIds = {} as any
     const resourcePaths = jsonpath.nodes(data, rule.resource)
     const evaluator = this.getRuleEvaluator(rule)
 
@@ -110,28 +135,31 @@ export default class RulesProvider {
 
     // @NOTE: here we can evaluate things such as Data being empty (may imply rule to pass)
     // or if we have no resources, or none pass, we can decide on that rule (+ some rule field)
-    for (let i = 0; i < resourcePaths.length; i++) {
-      const {path, value: resource} = resourcePaths[i];
+    for (let i = 0; i < resourcePaths.length; i + 1) {
+      const { path, value: resource } = resourcePaths[i]
       if (!resource.id) {
         // @NOTE: we'll support more complex rules in the future where you dont need a resource upfront
-        console.warn('Resource must have an id', resourcePaths[i]);
-        continue
+        console.warn('Resource must have an id', resourcePaths[i])
+        continue // eslint-disable-line no-continue
       }
       if (dedupeIds[resource.id]) {
         console.warn('Resource is duplicated, skipping', resource.id)
-        continue
+        continue // eslint-disable-line no-continue
       }
       dedupeIds[resource.id] = 1
 
       if (path[0] !== '$') {
-        console.log('Is this case possible? how do we process it?', resourcePaths[i]);
-        continue;
+        console.log(
+          'Is this case possible? how do we process it?',
+          resourcePaths[i]
+        )
+        continue // eslint-disable-line no-continue
       }
-      const processedData = this.highlightPath(data, path);
+      const processedData = this.highlightPath(data, path)
       const ruleResult = await this.processSingleResourceRule(rule, evaluator, {
         data: processedData,
         resource,
-        resourcePath: jsonpath.stringify(path)
+        resourcePath: jsonpath.stringify(path),
       })
       if (ruleResult) {
         res.push(ruleResult)
@@ -141,24 +169,32 @@ export default class RulesProvider {
   }
 
   private getRuleEvaluator = (rule: Rule) => {
-    for (let evaluator of this.getRuleEvaluators()) {
+    for (const evaluator of this.getRuleEvaluators()) {
       if (evaluator.canEvaluate(rule)) {
         return evaluator
       }
     }
   }
-  private processSingleResourceRule = async (rule: Rule, evaluator: RuleEvaluator<any>, data: ResourceData): Promise<RuleFinding> => {
-    let result = await evaluator.evaluateSingleResource(rule, data);
+
+  private processSingleResourceRule = async (
+    rule: Rule,
+    evaluator: RuleEvaluator<any>,
+    data: ResourceData
+  ): Promise<RuleFinding> => {
+    const result = await evaluator.evaluateSingleResource(rule, data)
 
     const finding = {
-      id: rule.id + '/' + data.resource.id,
+      id: `${rule.id}/${data.resource.id}`,
       ruleId: rule.id,
       resourceId: data.resource.id,
-      result: result === RuleResult.MATCHES? 'FAIL': 'PASS',
+      result: result === RuleResult.MATCHES ? 'FAIL' : 'PASS',
     } as RuleFinding
-    const connField = data.resource.__typename && data.resource.__typename[this.schemaTypeName]
+
+    const connField =
+      data.resource.__typename && data.resource.__typename[this.schemaTypeName]
+
     if (connField) {
-      (finding as any)[connField] = [{id: data.resource.id}]
+      ;(finding as any)[connField] = [{ id: data.resource.id }]
     }
     return finding
   }
@@ -169,15 +205,14 @@ export default class RulesProvider {
    */
   private highlightPath(data: any, path: PathComponent[]) {
     let curr = data // we can write the data, as next time we'll set the same fields
-    for (let j = 1; j < path.length; j++) {
+    for (let j = 1; j < path.length; j + 1) {
       const segment = path[j]
       if (Array.isArray(curr)) {
         // this is an array, we store in []._ the alias of this resource position in the array
-        (curr as any)['@'] = curr[segment as number]
+        ;(curr as any)['@'] = curr[segment as number]
       }
       curr = curr[segment]
     }
-    return data;
+    return data
   }
-
 }
