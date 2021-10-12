@@ -7,7 +7,7 @@ import fs from 'fs'
 import satisfies from 'semver/functions/satisfies'
 import gt from 'semver/functions/gt'
 import { printBoxMessage, fileUtils } from '../utils'
-//
+
 const getProviderImportPath = (
   provider: string
 ): { importPath: string; name: string } => {
