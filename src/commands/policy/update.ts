@@ -1,6 +1,7 @@
 import { pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
+import { PluginType } from '../../utils/constants'
 
 const getProvider = (val: string): string =>
   val.includes('@') ? val.split('@')[0] : val
@@ -28,16 +29,16 @@ export default class Update extends Command {
 
   async run(): Promise<void> {
     const { argv } = this.parse(Update)
-    const allProviders = argv
-    const manager = this.getPluginManager()
+    const allPolicyPacks = argv
+    const manager = this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
 
     // Get the providers from the lock file that user wants to update
     // If user passes something like aws@1.1.0, filter the lock file to only grab 'aws' entry
-    const providersToList =
-      allProviders.length >= 1
+    const policyPacksList =
+      allPolicyPacks.length >= 1
         ? pickBy(lockFile, (_, key) => {
-            const providers = allProviders.map(val => {
+            const providers = allPolicyPacks.map(val => {
               return getProvider(val)
             })
             return providers.indexOf(key) > -1
@@ -45,7 +46,7 @@ export default class Update extends Command {
         : lockFile
 
     // Warn the user if they are trying to update providers they have not installed.
-    const nonInstalledProviders = allProviders.filter(rawProvider => {
+    const nonInstalledProviders = allPolicyPacks.filter(rawProvider => {
       const provider = getProvider(rawProvider)
       return Object.keys(lockFile).includes(provider)
     })
@@ -58,13 +59,13 @@ export default class Update extends Command {
     }
 
     // Loop through providers and try to update them
-    for (const [key] of Object.entries(providersToList)) {
+    for (const [key] of Object.entries(policyPacksList)) {
       let version = 'latest'
-      const rawProvider = allProviders.find(val => val.includes(key))
+      const rawProvider = allPolicyPacks.find(val => val.includes(key))
       if (rawProvider && rawProvider.includes('@')) {
         [, version] = rawProvider.split('@')
       }
-      await manager.getProviderPlugin(key, version)
+      await manager.getPlugin(key, version)
       this.logger.info(
         `Run ${chalk.italic.green(
           `$cg init ${key}`

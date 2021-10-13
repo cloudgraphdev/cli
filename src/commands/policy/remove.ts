@@ -1,6 +1,7 @@
-// import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
 import { flags } from '@oclif/command'
 import Command from '../base'
+import { PluginType } from '../../utils/constants'
 
 export default class Remove extends Command {
   static description = 'Remove currently installed policy pack'
@@ -28,22 +29,22 @@ export default class Remove extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    // const {
-    //   argv,
-    //   flags: { 'no-save': noSave },
-    // } = this.parse(Remove)
-    // const allProviders = argv
-    // const manager = this.getPluginManager()
-    // const lockFile = manager.getLockFile()
-    // if (isEmpty(lockFile)) {
-    //   this.logger.info('No providers found, have you installed any?')
-    //   this.exit()
-    // }
-    // for (const key of allProviders) {
-    //   await manager.removePlugin(key)
-    //   if (!noSave) {
-    //     manager.removeProviderFromLockFile(key)
-    //   }
-    // }
+    const {
+      argv,
+      flags: { 'no-save': noSave },
+    } = this.parse(Remove)
+    const allPolicyPacks = argv
+    const manager = this.getPluginManager(PluginType.PolicyPack)
+    const lockFile = manager.getLockFile()
+    if (isEmpty(lockFile)) {
+      this.logger.info('No policy packs found, have you installed any?')
+      this.exit()
+    }
+    for (const key of allPolicyPacks) {
+      await manager.removePlugin(key)
+      if (!noSave) {
+        manager.removeFromLockFile(key)
+      }
+    }
   }
 }
