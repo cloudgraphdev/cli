@@ -215,6 +215,5 @@ export default class Load extends Command {
       )}`
     )
     await this.startQueryEngine()
-    this.exit()
   }
 }
