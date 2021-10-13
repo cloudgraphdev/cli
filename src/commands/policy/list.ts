@@ -1,6 +1,7 @@
-// import { isEmpty, pickBy } from 'lodash'
-// import chalk from 'chalk'
+import { isEmpty, pickBy } from 'lodash'
+import chalk from 'chalk'
 import Command from '../base'
+import { PluginType } from '../../utils/constants'
 
 export default class List extends Command {
   static description = 'List currently installed policy packs and versions'
@@ -20,19 +21,24 @@ export default class List extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    // const { argv } = this.parse(List)
-    // const allProviders = argv
-    // const manager = this.getPluginManager()
-    // const lockFile = manager.getLockFile()
-    // if (isEmpty(lockFile)) {
-    //   this.logger.info('No providers found, have you installed any?')
-    //   this.exit()
-    // }
-    // const providersToList = allProviders.length >= 1 ? pickBy(lockFile, (_, key) => {
-    //   return allProviders.includes(key)
-    // }) : lockFile
-    // for (const [key, value] of Object.entries(providersToList)) {
-    //   this.logger.success(`Provider ${chalk.green(`${key}@${value}`)} is installed`)
-    // }
+    const { argv } = this.parse(List)
+    const allPolicyPacks = argv
+    const manager = this.getPluginManager(PluginType.PolicyPack)
+    const lockFile = manager.getLockFile()
+    if (isEmpty(lockFile)) {
+      this.logger.info('No policy packs found, have you installed any?')
+      this.exit()
+    }
+    const policyPacksToList =
+      allPolicyPacks.length >= 1
+        ? pickBy(lockFile, (_, key) => {
+            return allPolicyPacks.includes(key)
+          })
+        : lockFile
+    for (const [key, value] of Object.entries(policyPacksToList)) {
+      this.logger.success(
+        `Policy Pack ${chalk.green(`${key}@${value}`)} is installed`
+      )
+    }
   }
 }

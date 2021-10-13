@@ -1,4 +1,5 @@
-// import chalk from 'chalk'
+import chalk from 'chalk'
+import { PluginType } from '../../utils/constants'
 import Command from '../base'
 
 export default class Add extends Command {
@@ -19,21 +20,20 @@ export default class Add extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    // const {
-    //   argv
-    // } = this.parse(Add)
-    // const allProviders = argv
-    // const manager = this.getPluginManager()
-    // for (let key of allProviders) {
-    //   let version = 'latest'
-    //   if (key.includes('@')) {
-    //     [key, version] = key.split('@')
-    //   }
-    //   await manager.getProviderPlugin(key, version)
-    //   this.logger.info(
-    //     `Run ${chalk.italic.green(
-    //       `$cg init ${key}`
-    //     )} to setup configuration for this provider`)
-    // }
+    const { argv } = this.parse(Add)
+    const allPolicyPacks = argv
+    const manager = this.getPluginManager(PluginType.PolicyPack)
+    for (let key of allPolicyPacks) {
+      let version = 'latest'
+      if (key.includes('@')) {
+        [key, version] = key.split('@')
+      }
+      await manager.getPlugin(key, version)
+      this.logger.info(
+        `Run ${chalk.italic.green(
+          `$cg init ${key}`
+        )} to setup configuration for this policy pack`
+      )
+    }
   }
 }

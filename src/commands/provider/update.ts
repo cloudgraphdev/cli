@@ -1,6 +1,7 @@
 import { pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
+import { PluginType } from '../../utils/constants'
 
 const getProvider = (val: string): string =>
   val.includes('@') ? val.split('@')[0] : val
@@ -29,7 +30,7 @@ export default class Update extends Command {
   async run(): Promise<void> {
     const { argv } = this.parse(Update)
     const allProviders = argv
-    const manager = this.getPluginManager()
+    const manager = this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()
 
     // Get the providers from the lock file that user wants to update
@@ -64,7 +65,7 @@ export default class Update extends Command {
       if (rawProvider && rawProvider.includes('@')) {
         [, version] = rawProvider.split('@')
       }
-      await manager.getProviderPlugin(key, version)
+      await manager.getPlugin(key, version)
       this.logger.info(
         `Run ${chalk.italic.green(
           `$cg init ${key}`

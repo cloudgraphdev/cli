@@ -15,10 +15,11 @@ import {
   getDefaultStorageEngineConnectionConfig,
   getStorageEngineConnectionConfig,
   printWelcomeMessage,
-  printBoxMessage
+  printBoxMessage,
 } from '../utils'
 import flagsDefinition from '../utils/flags'
 import openBrowser from '../utils/open'
+import { PluginType } from '../utils/constants'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
@@ -72,10 +73,12 @@ export default abstract class BaseCommand extends Command {
     if (!config) {
       printWelcomeMessage()
     }
-    const manager = this.getPluginManager()
+    const manager = this.getPluginManager(PluginType.Provider)
     const cliLatestVersion = await manager.queryRemoteVersion('@cloudgraph/cli')
     if (gt(cliLatestVersion, this.config.version)) {
-      printBoxMessage(`Update for ${chalk.italic.green('@cloudgraph/cli')} is available: ${this.config.version} -> ${cliLatestVersion}. \n
+      printBoxMessage(`Update for ${chalk.italic.green(
+        '@cloudgraph/cli'
+      )} is available: ${this.config.version} -> ${cliLatestVersion}. \n
 Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     }
     const configDir = this.getCGConfigKey('directory') ?? 'cg'
@@ -183,7 +186,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     return `${config.scheme}://${config.host}:${config.port}`
   }
 
-  getPluginManager(): Manager {
+  getPluginManager(pluginType: PluginType): Manager {
     const {
       flags: { dev: devMode },
     } = this.parse(this.constructor as Input<{ dev: boolean }>)
@@ -192,6 +195,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
         logger: this.logger,
         devMode,
         cliConfig: this.config,
+        pluginType,
       })
     }
     return this.manager
@@ -199,13 +203,16 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
 
   async getProviderClient(provider: string): Promise<any> {
     try {
-      const manager = this.getPluginManager()
+      const manager = this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
         return this.providers[provider]
       }
-      const { default: Client } = await manager.getProviderPlugin(provider) ?? {}
-      if (!Client || !(Client instanceof Function)) { // TODO: how can we better type this for the base Provider class from sdk
-        throw new Error(`The provider ${provider} did not return a valid Client instance`)
+      const { default: Client } = (await manager.getPlugin(provider)) ?? {}
+      if (!Client || !(Client instanceof Function)) {
+        // TODO: how can we better type this for the base Provider class from sdk
+        throw new Error(
+          `The provider ${provider} did not return a valid Client instance`
+        )
       }
       const client = new Client({
         logger: this.logger,
@@ -218,7 +225,9 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       this.logger.warn(
         `There was an error installing or requiring a plugin for ${provider}, does one exist?`
       )
-      this.logger.info('For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors')
+      this.logger.info(
+        'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
+      )
       return null
     }
   }
