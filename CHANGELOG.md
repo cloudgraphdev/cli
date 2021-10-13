@@ -1,3 +1,10 @@
+## [0.11.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.6...0.11.7) (2021-10-13)
+
+
+### Bug Fixes
+
+* **scan:** dont exit after starting express server ([f6d7410](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f6d7410cf33ea5fa80798eddf20f286be286b9bb))
+
 ## [0.11.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.5...0.11.6) (2021-10-12)
 
 
