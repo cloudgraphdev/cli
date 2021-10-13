@@ -145,7 +145,7 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
     } else {
       firstArg = value
     }
-    console.log(operator, firstArg, otherArgs, data)
+    // console.log(operator, firstArg, otherArgs, data)
     return operator(firstArg, otherArgs, data)
   }
 }

@@ -39,7 +39,7 @@ export default class RulesProvider {
 
   private readonly rules: Rule[]
 
-  private readonly typenameToFieldMap: { [tn: string]: string }
+  private readonly typenameToFieldMap: { [typeName: string]: string }
 
   private readonly schemaTypeName
 
@@ -193,9 +193,10 @@ export default class RulesProvider {
       resourceId: data.resource.id,
       result: result === RuleResult.MATCHES ? 'FAIL' : 'PASS',
     } as RuleFinding
+
     const connField =
       // eslint-disable-next-line no-underscore-dangle
-      data.resource.__typename && data.resource.__typename[this.schemaTypeName]
+      data.resource.__typename && this.typenameToFieldMap[data.resource.__typename]
     if (connField) {
       (finding as any)[connField] = [{ id: data.resource.id }]
     }
