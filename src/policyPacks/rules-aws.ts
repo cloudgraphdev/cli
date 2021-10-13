@@ -12,6 +12,7 @@ export const resourceTypeNamesToFieldsMap = {
   awsEip: 'eip',
   awsElb: 'elb',
   awsIgw: 'igw',
+  awsIamUser: 'iamUser',
   awsKms: 'kms',
   awsLambda: 'lambda',
   awsNatGateway: 'natGateway',
@@ -73,5 +74,36 @@ export default [
     //     (ib.source === '0.0.0.0/0' || ib.source === '::/0') &&
     //     (ib.portRange === 'all' || ib.portRange === '0-65535'))
     // }
+  },  {
+    id: 'r2',
+    description: 'AWS CIS 1.3 Ensure credentials unused for 90 days or greater are disabled',
+    gql: `{
+       queryawsIamUser {
+          id
+          __typename
+          passwordLastUsed
+          accessKeyData {
+            accessKeyId
+            lastUsedDate
+          }
+        }
+      }`,
+    resource: 'queryawsIamUser[*]',
+    conditions: {
+      or: [
+        {
+          // @TODO - add a and passwordEnabled
+          value: { daysAgo: {}, path: '@.passwordLastUsed' },
+          greaterThan: 90
+        },
+        {
+          path: '@.accessKeyData',
+          array_any: {
+            value: { daysAgo: {}, path: '[*].lastUsedDate' },
+            greaterThan: 90,
+          }
+        }
+      ]
+    },
   },
 ] as (JsRule | JsonRule)[]
