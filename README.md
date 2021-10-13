@@ -1175,9 +1175,10 @@ OPTIONS
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
   --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
-_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.3/src/commands/policy/index.ts)_
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/index.ts)_
 
 ## `cg policy:add [PROVIDER]`
 
@@ -1196,6 +1197,7 @@ OPTIONS
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
   --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg add
@@ -1205,7 +1207,7 @@ EXAMPLES
   $ cg policy add aws@0.12.0
 ```
 
-_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.3/src/commands/policy/add.ts)_
+_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/add.ts)_
 
 ## `cg policy:install [PROVIDER]`
 
@@ -1224,6 +1226,7 @@ OPTIONS
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
   --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg install
@@ -1232,7 +1235,7 @@ EXAMPLE
   $ cg policy install
 ```
 
-_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.3/src/commands/policy/install.ts)_
+_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/install.ts)_
 
 ## `cg policy:list [PROVIDER]`
 
@@ -1251,6 +1254,7 @@ OPTIONS
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
   --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg policy ls
@@ -1262,7 +1266,7 @@ EXAMPLES
   $ cg policy list aws
 ```
 
-_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.3/src/commands/policy/list.ts)_
+_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/list.ts)_
 
 ## `cg policy:remove [PROVIDER]`
 
@@ -1282,6 +1286,7 @@ OPTIONS
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
   --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg remove
@@ -1296,7 +1301,7 @@ EXAMPLES
   $ cg policy delete aws --no-save
 ```
 
-_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.3/src/commands/policy/remove.ts)_
+_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/remove.ts)_
 
 ## `cg policy:update [PROVIDER]`
 
@@ -1315,6 +1320,7 @@ OPTIONS
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
   --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg update
@@ -1325,7 +1331,7 @@ EXAMPLES
   $cg provider update aws@0.12.0
 ```
 
-_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.3/src/commands/policy/update.ts)_
+_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/update.ts)_
 
 ## `cg provider [PROVIDER]`
 
@@ -1519,12 +1525,13 @@ OPTIONS
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
   --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 EXAMPLE
   $ cg rules
 ```
 
-_See code: [src/commands/rules.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.3/src/commands/rules.ts)_
+_See code: [src/commands/rules.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/rules.ts)_
 
 ## `cg scan [PROVIDER]`
 

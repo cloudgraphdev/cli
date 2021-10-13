@@ -1,7 +1,8 @@
 import Command from '../base'
 
 export default class Add extends Command {
-  static description = 'Commands to manage provider modules, run $ cg provider for more info.'
+  static description =
+    'Commands to manage provider modules, run $ cg provider for more info.'
 
   static strict = false
 
@@ -9,7 +10,7 @@ export default class Add extends Command {
 
   static flags = {
     ...Command.flags,
-  };
+  }
 
   static args = Command.args
 

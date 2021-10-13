@@ -1,4 +1,5 @@
-// import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash'
+import { PluginType } from '../../utils/constants'
 import Command from '../base'
 
 export default class Install extends Command {
@@ -19,14 +20,14 @@ export default class Install extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    // const manager = this.getPluginManager()
-    // const lockFile = manager.getLockFile()
-    // if (isEmpty(lockFile)) {
-    //   this.logger.info('No providers found in lock file, have you added any?')
-    //   this.exit()
-    // }
-    // for (const [key, value] of Object.entries(lockFile)) {
-    //   await manager.getProviderPlugin(key, value as string)
-    // }
+    const manager = this.getPluginManager(PluginType.PolicyPack)
+    const lockFile = manager.getLockFile()
+    if (isEmpty(lockFile)) {
+      this.logger.info('No providers found in lock file, have you added any?')
+      this.exit()
+    }
+    for (const [key, value] of Object.entries(lockFile)) {
+      await manager.getPlugin(key, value as string)
+    }
   }
 }
