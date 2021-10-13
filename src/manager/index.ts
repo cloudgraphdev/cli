@@ -179,7 +179,6 @@ Run ${chalk.italic.green('cg update')} to install`
       )
       this.logger.startSpinner(stoppedMsg)
     }
-
     const requiredVersion = pluginInfo?.cloudGraph?.version
     if (!requiredVersion) {
       this.logger.warn(
