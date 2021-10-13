@@ -1,12 +1,13 @@
-/* eslint-disable no-underscore-dangle, @typescript-eslint/no-extra-semi */
-
 import jsonpath, { PathComponent } from 'jsonpath'
-
+import { ProviderData } from '@cloudgraph/sdk'
 import DgraphEngine from '../storage/dgraph'
+
 import JsonEvaluator from './evaluators/json-evaluator'
 import JsEvaluator from './evaluators/js-evaluator'
 import { ResourceData, RuleEvaluator } from './evaluators/rule-evaluator'
 import DefaultEvaluator from './evaluators/default-evaluator'
+
+/* eslint-disable no-plusplus, @typescript-eslint/no-explicit-any, no-continue */
 
 export interface Rule {
   id: string
@@ -32,11 +33,15 @@ export interface RuleFinding {
 }
 
 export default class RulesProvider {
-  evaluators: RuleEvaluator<any>[] = [
-    new JsonEvaluator(),
-    new JsEvaluator(),
-    new DefaultEvaluator(),
-  ]
+  evaluators: RuleEvaluator<any>[] = [new JsonEvaluator(), new JsEvaluator()]
+
+  defaultEvaluator = new DefaultEvaluator()
+
+  private readonly rules: Rule[]
+
+  private readonly typenameToFieldMap: { [tn: string]: string }
+
+  private readonly schemaTypeName
 
   constructor(
     rules: Rule[],
@@ -48,13 +53,7 @@ export default class RulesProvider {
     this.schemaTypeName = schemaTypeName
   }
 
-  private rules: Rule[] = []
-
-  private typenameToFieldMap: { [tn: string]: string } = {}
-
-  private schemaTypeName = ''
-
-  getSchema = () => {
+  getSchema = (): string[] => {
     const mainType = `
     enum ${this.schemaTypeName}Result {
       PASS
@@ -92,7 +91,7 @@ export default class RulesProvider {
     return this.evaluators
   }
 
-  getData = async (cli: DgraphEngine) => {
+  getData = async (cli: DgraphEngine): Promise<ProviderData> => {
     const findings: any = []
     for (const rule of this.rules) {
       try {
@@ -107,7 +106,7 @@ export default class RulesProvider {
     }
 
     return {
-      connections: [],
+      connections: [] as any,
       entities: [
         {
           name: this.schemaTypeName,
@@ -122,7 +121,10 @@ export default class RulesProvider {
     }
   }
 
-  private processRule = async (rule: Rule, data: any) => {
+  private processRule = async (
+    rule: Rule,
+    data: any
+  ): Promise<RuleFinding[]> => {
     const res: any[] = [] //
     const dedupeIds = {} as any
     const resourcePaths = jsonpath.nodes(data, rule.resource)
@@ -135,16 +137,16 @@ export default class RulesProvider {
 
     // @NOTE: here we can evaluate things such as Data being empty (may imply rule to pass)
     // or if we have no resources, or none pass, we can decide on that rule (+ some rule field)
-    for (let i = 0; i < resourcePaths.length; i + 1) {
+    for (let i = 0; i < resourcePaths.length; i++) {
       const { path, value: resource } = resourcePaths[i]
       if (!resource.id) {
         // @NOTE: we'll support more complex rules in the future where you dont need a resource upfront
         console.warn('Resource must have an id', resourcePaths[i])
-        continue // eslint-disable-line no-continue
+        continue
       }
       if (dedupeIds[resource.id]) {
         console.warn('Resource is duplicated, skipping', resource.id)
-        continue // eslint-disable-line no-continue
+        continue
       }
       dedupeIds[resource.id] = 1
 
@@ -153,7 +155,7 @@ export default class RulesProvider {
           'Is this case possible? how do we process it?',
           resourcePaths[i]
         )
-        continue // eslint-disable-line no-continue
+        continue
       }
       const processedData = this.highlightPath(data, path)
       const ruleResult = await this.processSingleResourceRule(rule, evaluator, {
@@ -168,12 +170,14 @@ export default class RulesProvider {
     return res
   }
 
-  private getRuleEvaluator = (rule: Rule) => {
-    for (const evaluator of this.getRuleEvaluators()) {
+  private getRuleEvaluator = (rule: Rule): RuleEvaluator<any> => {
+    const evaluators = this.getRuleEvaluators()
+    for (const evaluator of evaluators) {
       if (evaluator.canEvaluate(rule)) {
         return evaluator
       }
     }
+    return this.defaultEvaluator
   }
 
   private processSingleResourceRule = async (
@@ -189,12 +193,11 @@ export default class RulesProvider {
       resourceId: data.resource.id,
       result: result === RuleResult.MATCHES ? 'FAIL' : 'PASS',
     } as RuleFinding
-
     const connField =
+      // eslint-disable-next-line no-underscore-dangle
       data.resource.__typename && data.resource.__typename[this.schemaTypeName]
-
     if (connField) {
-      ;(finding as any)[connField] = [{ id: data.resource.id }]
+      (finding as any)[connField] = [{ id: data.resource.id }]
     }
     return finding
   }
@@ -205,11 +208,11 @@ export default class RulesProvider {
    */
   private highlightPath(data: any, path: PathComponent[]) {
     let curr = data // we can write the data, as next time we'll set the same fields
-    for (let j = 1; j < path.length; j + 1) {
+    for (let j = 1; j < path.length; j++) {
       const segment = path[j]
       if (Array.isArray(curr)) {
         // this is an array, we store in []._ the alias of this resource position in the array
-        ;(curr as any)['@'] = curr[segment as number]
+        (curr as any)['@'] = curr[segment as number]
       }
       curr = curr[segment]
     }

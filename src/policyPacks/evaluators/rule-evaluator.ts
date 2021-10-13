@@ -1,5 +1,7 @@
 import { Rule, RuleResult } from '../rules-provider'
 
+/* eslint-disable no-plusplus, @typescript-eslint/no-explicit-any */
+
 export type ResourceData = {
   data: { [k: string]: any }
   resource: { id: string; [k: string]: any }
