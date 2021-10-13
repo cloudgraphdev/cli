@@ -56,31 +56,22 @@ export default [
     resource: 'queryawsEc2[*].securityGroups[*]',
     conditions: {
       path: '@.inboundRules',
-      op: 'array_any',
-      value: {
+      array_any: {
         and: [
           {
             path: '[*].source',
-            op: 'in',
-            value: ['0.0.0.0/0', '::/0', '68.250.115.158/32'],
+            in: ['0.0.0.0/0', '::/0', '68.250.115.158/32'],
           },
-          {
-            path: '[*].portRange',
-            op: 'in',
-            value: ['all', '0-65535'],
-          },
+
+          { path: '[*].portRange', in: ['all', '0-65535'] },
         ],
       },
     },
-    check: (data: any): boolean => {
-      // return false
-      console.log('Fetching the data', data)
-      const secGroup = data.queryawsEc2['@'].securityGroups['@'] // curr resource
-      return secGroup.inboundRules.some(
-        (ib: any) =>
-          (ib.source === '0.0.0.0/0' || ib.source === '::/0') &&
-          (ib.portRange === 'all' || ib.portRange === '0-65535')
-      )
-    },
+    // check: (data: any): boolean => { // return false
+    //   const secGroup = data.queryawsEc2['@'].securityGroups['@']; // curr resource
+    //   return secGroup.inboundRules.some((ib: any) =>
+    //     (ib.source === '0.0.0.0/0' || ib.source === '::/0') &&
+    //     (ib.portRange === 'all' || ib.portRange === '0-65535'))
+    // }
   },
 ] as (JsRule | JsonRule)[]
