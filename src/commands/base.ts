@@ -131,9 +131,13 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
           `http://localhost:${serverPort}`
         )}`
       )
-      await openBrowser(
-        `http://localhost:${serverPort}/${this.getQueryEngine()}`
-      )
+      try {
+        await openBrowser(
+          `http://localhost:${serverPort}/${this.getQueryEngine()}`
+        )
+      } catch (error) {
+        this.logger.warn(`Could not open a browser tab with query engine, open manually at http://localhost:${serverPort}`)
+      }
     }
   }
 

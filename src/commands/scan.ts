@@ -231,6 +231,5 @@ export default class Scan extends Command {
       )
     }
     storageRunning && (await this.startQueryEngine())
-    this.exit()
   }
 }
