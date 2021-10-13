@@ -1,29 +1,23 @@
-/* eslint-disable no-use-before-define */
-
 import lodash from 'lodash'
 import { Rule, RuleResult } from '../rules-provider'
 import { ResourceData, RuleEvaluator } from './rule-evaluator'
 
-interface SimpleCondition {
-  path: string
-  op: string
-  value: string | number | Condition
+/* eslint-disable no-plusplus, @typescript-eslint/no-explicit-any */
+export type Condition = {
+  path?: string
+  value?: string | number | Condition | (string | number)[]
+  [operationId: string]: any
 }
-interface ConnectedCondition {
-  and?: Condition[]
-  or?: Condition[]
-}
+
 export interface JsonRule extends Rule {
   conditions: Condition
 }
 
-export type Condition = SimpleCondition | ConnectedCondition
-
 type Operator = (
-  pathValue: any,
-  value: SimpleCondition['value'],
+  mainArg: any,
+  otherArgs: any[],
   data: ResourceData & { elementPath?: string }
-) => boolean
+) => boolean | number
 
 type _ResourceData = ResourceData & { elementPath?: string }
 
@@ -41,7 +35,8 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
       : RuleResult.DOESNT_MATCH
   }
 
-  calculatePath = (data: _ResourceData, path: string) => {
+  calculatePath = (data: _ResourceData, _path: string) => {
+    let path = _path
     if (path.indexOf('@') === 0) {
       // @ means the curr resource, we replace by base path
       path = path.replace('@', data.resourcePath).substr(2) // remove `$.`
@@ -53,28 +48,47 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
     return path
   }
 
-  resolvePath = (data: _ResourceData, path: string) => {
+  resolvePath = (data: _ResourceData, path: string): any => {
     return lodash.get(data.data, path)
   }
 
   operators: { [key: string]: Operator } = {
-    equal: (a, b) => a === b, // == is fine
+    // eslint-disable-next-line eqeqeq
+    equal: (a, b) => a == b, // == is fine
     notEqual: (a, b) => a !== b,
-    in: (a, b) => (b as any).indexOf(a) > -1,
-    notIn: (a, b) => (b as any).indexOf(a) === -1,
+    in: (a, b) => (b as any[]).indexOf(a) > -1,
+    notIn: (a, b) => (b as any[]).indexOf(a) === -1,
     contains: (a, b) => a.indexOf(b) > -1,
     doesNotContain: (a, b) => a.indexOf(b) === -1,
     lessThan: (a, b) => a < b,
     lessThanInclusive: (a, b) => a <= b,
     greaterThan: (a, b) => a > b,
     greaterThanInclusive: (a, b) => a >= b,
-    array_all: (array, conditions, data) => {
+
+    daysAgo: a =>
+      Math.trunc((Date.now() - new Date(a).getTime()) / (60 * 60 * 1000 * 24)), // @TODO use library
+
+    or: (_, conditions: Condition[], data) => {
+      for (let i = 0; i < conditions.length; i++) {
+        // if 1 is true, it's true
+        if (this.evaluateCondition(conditions[i], data)) return true
+      }
+      return false
+    },
+    and: (_, conditions: Condition[], data) => {
+      for (let i = 0; i < conditions.length; i++) {
+        // if 1 is false, it's false
+        if (!this.evaluateCondition(conditions[i], data)) return false
+      }
+      return true
+    },
+    array_all: (array, conditions: Condition, data) => {
       // an AND, but with every resource item
       const baseElementPath = data.elementPath
 
-      for (let i = 0; i < array.length; i + 1) {
+      for (let i = 0; i < array.length; i++) {
         if (
-          !this.evaluateCondition(conditions as Condition, {
+          !this.evaluateCondition(conditions, {
             ...data,
             elementPath: `${baseElementPath}[${i}]`,
           })
@@ -87,7 +101,7 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
       // an OR, but with every resource item
 
       const baseElementPath = data.elementPath
-      for (let i = 0; i < array.length; i + 1) {
+      for (let i = 0; i < array.length; i++) {
         if (
           this.evaluateCondition(conditions as Condition, {
             ...data,
@@ -100,29 +114,38 @@ export default class JsonEvaluator implements RuleEvaluator<JsonRule> {
     },
   }
 
-  evaluateCondition(condition: Condition, data: _ResourceData): boolean {
-    if ('op' in condition) {
-      // simple condition
-      const operator = this.operators[condition.op]
-      const elementPath = this.calculatePath(data, condition.path)
-      const pathValue = this.resolvePath(data, elementPath)
-      return operator(pathValue, condition.value, { ...data, elementPath })
+  isCondition = (a: unknown): boolean =>
+    !!a && (a as any).constructor === Object
+
+  evaluateCondition(
+    _condition: Condition,
+    _data: _ResourceData
+  ): boolean | number {
+    const condition = { ..._condition }
+    const { path, value } = condition
+    delete condition.path
+    delete condition.value
+    // remaining field should be the op name
+    const op = Object.keys(condition)[0] //
+    const operator = this.operators[op]
+    const otherArgs = condition[op] // {[and]: xxx }
+    if (!op || !operator) {
+      throw new Error(`unrecognized operation${JSON.stringify(condition)}`)
     }
-    // connectedConditions
-    if (condition.or) {
-      for (let i = 0; i < condition.or.length; i + 1) {
-        // if 1 is true, it's true
-        if (this.evaluateCondition(condition.or[i], data)) return true
-      }
-      return false
+
+    const data = { ..._data }
+    let firstArg
+
+    if (path) {
+      const elementPath = this.calculatePath(data, path)
+      data.elementPath = elementPath
+      firstArg = this.resolvePath(data, elementPath)
+    } else if (this.isCondition(value)) {
+      firstArg = this.evaluateCondition(value as any, data)
+    } else {
+      firstArg = value
     }
-    if (condition.and) {
-      for (let i = 0; i < condition.and.length; i + 1) {
-        // if 1 is false, it's false
-        if (!this.evaluateCondition(condition.and[i], data)) return false
-      }
-      return true
-    }
-    return false
+    console.log(operator, firstArg, otherArgs, data)
+    return operator(firstArg, otherArgs, data)
   }
 }
