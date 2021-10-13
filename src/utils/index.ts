@@ -1,6 +1,5 @@
 // import CloudGraph, { Opts } from '@cloudgraph/sdk'
 import CloudGraph from '@cloudgraph/sdk'
-import { loadFilesSync } from '@graphql-tools/load-files'
 import boxen from 'boxen'
 import CFonts from 'cfonts'
 import chalk from 'chalk'
@@ -46,12 +45,8 @@ export function getProviderDataFile(
 const mapFileNameToHumanReadable = (file: string): string => {
   const fileNameParts = file.split('/')
   const fileName = fileNameParts[fileNameParts.length - 1]
-  const [providerName, timestamp] = fileName
-    .replace('.json', '')
-    .split('_')
-  return `${providerName} ${new Date(
-    Number(timestamp)
-  ).toISOString()}`
+  const [providerName, timestamp] = fileName.replace('.json', '').split('_')
+  return `${providerName} ${new Date(Number(timestamp)).toISOString()}`
 }
 
 // TODO: this could be refactored to go right to the correct version folder (avoid line 70)
@@ -229,12 +224,6 @@ export function getVersionFolders(
   return []
 }
 
-export function getSchemaFromFolder(dirPath: string, provider?: string): any[] {
-  return loadFilesSync(path.join(dirPath, provider ? `${provider}*` : ''), {
-    extensions: ['graphql'],
-  })
-}
-
 export function deleteFolder(dirPath: string): void {
   fs.rmSync(dirPath, { recursive: true })
 }
@@ -329,7 +318,6 @@ export const fileUtils = {
   writeGraphqlSchemaToFile,
   getVersionFolders,
   findProviderFileLocation,
-  getSchemaFromFolder,
   getProviderDataFile,
   deleteFolder,
 }
