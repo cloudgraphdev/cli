@@ -9,7 +9,7 @@ import glob from 'glob'
 import path from 'path'
 
 import isEmpty from 'lodash/isEmpty'
-import scanReport, { scanDataType, scanResult } from '../scanReport'
+import scanReport, { scanDataType, scanResult } from '../reports/scan-report'
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
 
