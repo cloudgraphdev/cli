@@ -26,6 +26,7 @@ export default abstract class BaseCommand extends Command {
     super(argv, config)
     this.logger = CloudGraph.logger
     this.providers = {}
+    this.policyPacks = {}
   }
 
   interface = inquirer
@@ -41,6 +42,8 @@ export default abstract class BaseCommand extends Command {
   storageEngine: StorageEngine | undefined
 
   providers: { [key: string]: any }
+
+  policyPacks: { [key: string]: any }
 
   storedConfig: { [key: string]: any } | undefined
 
@@ -139,7 +142,9 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
           `http://localhost:${serverPort}/${this.getQueryEngine()}`
         )
       } catch (error) {
-        this.logger.warn(`Could not open a browser tab with query engine, open manually at http://localhost:${serverPort}`)
+        this.logger.warn(
+          `Could not open a browser tab with query engine, open manually at http://localhost:${serverPort}`
+        )
       }
     }
   }
@@ -190,14 +195,14 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     const {
       flags: { dev: devMode },
     } = this.parse(this.constructor as Input<{ dev: boolean }>)
-    if (!this.manager) {
-      this.manager = new Manager({
-        logger: this.logger,
-        devMode,
-        cliConfig: this.config,
-        pluginType,
-      })
-    }
+
+    this.manager = new Manager({
+      logger: this.logger,
+      devMode,
+      cliConfig: this.config,
+      pluginType,
+    })
+
     return this.manager
   }
 
@@ -224,6 +229,45 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       this.logger.error(error)
       this.logger.warn(
         `There was an error installing or requiring a plugin for ${provider}, does one exist?`
+      )
+      this.logger.info(
+        'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
+      )
+      return null
+    }
+  }
+
+  async getPolicyPackClient(policyPack: string): Promise<any> {
+    try {
+      const manager = this.getPluginManager(PluginType.PolicyPack)
+      if (this.policyPacks[policyPack]) {
+        return this.policyPacks[policyPack]
+      }
+
+      const {
+        default: Client,
+        rules: awsRules,
+        resourceTypeNamesToFieldsMap,
+        ruleSchemaTypeName,
+      } = (await manager.getPlugin(policyPack)) ?? {}
+
+      if (!Client || !(Client instanceof Function)) {
+        // TODO: how can we better type this for the base Provider class from sdk
+        throw new Error(
+          `The policy pack ${policyPack} did not return a valid Client instance`
+        )
+      }
+      const client = new Client(
+        awsRules,
+        resourceTypeNamesToFieldsMap,
+        ruleSchemaTypeName
+      )
+      this.policyPacks[policyPack] = client
+      return client
+    } catch (error: any) {
+      this.logger.error(error)
+      this.logger.warn(
+        `There was an error installing or requiring a plugin for ${policyPack}, does one exist?`
       )
       this.logger.info(
         'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
