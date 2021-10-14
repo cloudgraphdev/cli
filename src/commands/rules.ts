@@ -2,7 +2,7 @@ import RulesProvider, {
   rules as awsRules,
   resourceTypeNamesToFieldsMap,
   ruleSchemaTypeName,
-} from '@cloudgraph/policy-pack-aws'
+} from '@cloudgraph/policy-pack-aws-demo'
 
 import Command from './base'
 // import { processConnectionsBetweenEntities } from '../utils'
