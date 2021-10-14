@@ -1,10 +1,14 @@
 import chalk from 'chalk'
+import groupBy from 'lodash/groupBy'
+import isEmpty from 'lodash/isEmpty'
 
 import Command from './base'
 import { processConnectionsBetweenEntities } from '../utils'
 import DgraphEngine from '../storage/dgraph'
 import { mergeSchemas } from '../utils/schema'
 import { getPolicyPackQuestion } from '../utils/questions'
+import rulesReport from '../reports/rules-report'
+
 
 export default class Rules extends Command {
   static description = 'Local test'
@@ -112,7 +116,8 @@ export default class Rules extends Command {
        * same interface as Providers, but we pass dGraph client - previous data needs to be saved already
        */
       const providerData = await client.getData(dGraph)
-      await client.getData(dGraph)
+
+
 
       // @NOTE: processConnectionsBetweenEntities is not needed as we can return the right mutations from within the rules plugin
       // we only use it as it has the report, and to push the mutations
@@ -122,6 +127,31 @@ export default class Rules extends Command {
         storageRunning
       )
       await storageEngine.run(false)
+
+      this.logger.successSpinner(
+        `${chalk.italic.green(policyPack)} rules excuted successfully`
+      )
+
+
+      const { data = []} = providerData.entities.find(({ name }: any) => name === 'awsFinding')
+
+      const findingsByRule = groupBy(data, 'ruleId')
+
+
+
+      for (const rule in findingsByRule) {
+        if (!isEmpty(rule)) {
+          let ruleName = ''
+          const findings =  findingsByRule[rule]
+          for (const {resourceId, result, ruleDescription } of findings) {
+            rulesReport.pushData({  resourceId, result })
+            ruleName = ruleDescription
+          }
+          rulesReport.print(ruleName)
+          rulesReport.clean()
+        }
+      }
+
     }
 
     this.exit()

@@ -7,7 +7,7 @@ import { range } from 'lodash'
 import Command from './base'
 import { fileUtils, processConnectionsBetweenEntities } from '../utils'
 import DgraphEngine from '../storage/dgraph'
-import scanReport from '../scanReport'
+import scanReport from '../reports/scan-report'
 
 export default class Scan extends Command {
   static description =

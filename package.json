@@ -23,6 +23,7 @@
     "@oclif/config": "^1",
     "@oclif/plugin-help": "^3",
     "@tiagonapoli/oclif-plugin-spaced-commands": "^1.0.1",
+    "@types/lodash": "^4.14.175",
     "altair-express-middleware": "^4.0.8",
     "axios": "^0.21.1",
     "boxen": "^5.0.1",
@@ -40,6 +41,7 @@
     "inquirer": "^8.1.1",
     "jsonpath": "^1.1.1",
     "live-plugin-manager": "0.15.1",
+    "lodash": "^4.17.21",
     "open": "^8.2.1",
     "tslib": "^1",
     "npm": "^8.1.2"
