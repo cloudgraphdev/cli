@@ -209,10 +209,15 @@ export default class Scan extends Command {
       )}] have a valid module and config, exiting`)
       this.exit()
     }
-
     if (storageRunning) {
+      this.logger.startSpinner(
+        'Inserting data into Dgraph and generating scan report'
+      )
       // Execute services mutations promises
       await storageEngine.run()
+      this.logger.successSpinner(
+        'Data insertion into Dgraph complete'
+      )
     }
 
     scanReport.print()
