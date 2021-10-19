@@ -1,14 +1,10 @@
-// import { Opts } from '@cloudgraph/sdk'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import { isEmpty } from 'lodash'
 
 import Command from './base'
-// import { getLatestProviderData, fileUtils, getConnectedEntity } from '../utils'
 import { fileUtils, processConnectionsBetweenEntities } from '../utils'
-
-// import { Opts } from '@cloudgraph/sdk'
 
 export default class Load extends Command {
   static description = 'Load a specific version of your CloudGraph data'
@@ -28,7 +24,7 @@ export default class Load extends Command {
 
   static args = Command.args
 
-  async run() {
+  async run(): Promise<void> {
     const {
       argv,
       // flags: { debug, dev: devMode },
@@ -206,7 +202,14 @@ export default class Load extends Command {
     }
 
     // Execute services mutations promises
+    this.logger.startSpinner(
+      'Inserting loaded data into Dgraph'
+    )
+    // Execute services mutations promises
     await storageEngine.run(true)
+    this.logger.successSpinner(
+      'Data insertion into Dgraph complete'
+    )
     this.logger.success(
       `Your data for ${allProviders.join(
         ' | '
