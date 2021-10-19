@@ -1,3 +1,10 @@
+## [0.11.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.7...0.11.8) (2021-10-19)
+
+
+### Bug Fixes
+
+* **storage:** update scan and load to use spinner while inserting data to Dgraph ([81811bd](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/81811bd709f740e1c0f528550bb08283ea5c255a))
+
 ## [0.11.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.6...0.11.7) (2021-10-13)
 
 
