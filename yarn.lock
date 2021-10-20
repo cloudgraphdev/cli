@@ -5819,7 +5819,7 @@ listr2@^3.8.2:
     through "^2.3.8"
     wrap-ansi "^7.0.0"
 
-live-plugin-manager@^0.15.1:
+live-plugin-manager@0.15.1:
   version "0.15.1"
   resolved "https://registry.yarnpkg.com/live-plugin-manager/-/live-plugin-manager-0.15.1.tgz#d268dd976e93d1ee0516dd90cc30999ec0d8ed35"
   integrity sha512-nhQmx0JEq7blNtQh3+w6to9x4tU1geY2RUQcvFvCJA1V2RnLjLC9dQlj1Hhr5tu8OpMDfeZkA9OIZyIs26q85Q==
