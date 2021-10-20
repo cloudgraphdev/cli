@@ -27,6 +27,5 @@ export default class Serve extends Command {
       throw new Error(msg)
     }
     await this.startQueryEngine()
-    this.logger.info('All done, bye')
   }
 }
