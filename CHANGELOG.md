@@ -1,3 +1,10 @@
+## [0.11.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.8...0.11.9) (2021-10-20)
+
+
+### Bug Fixes
+
+* **queryEngine:** remove logger, force new version ([8abbf03](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8abbf0378d3a56ea31959b2fbfecafb382a00183))
+
 ## [0.11.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.7...0.11.8) (2021-10-19)
 
 
