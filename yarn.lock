@@ -346,10 +346,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cloudgraph/sdk@0.3.10":
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.3.10.tgz#68b155d6cf30dbf17095c176720dadcadb506edd"
-  integrity sha512-LHXK22wgMPtFYUDamlGyFiqIVym+/xueRqMiCLzFNfnYEvf5sDIvLd03nUIWrV0raLYJMnctuj4cnGE/PbYhqg==
+"@cloudgraph/sdk@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.4.0.tgz#4bab3bdb96c09638210459733e1682bbd1889698"
+  integrity sha512-OMdBQslT8VnSzJWLdCiYFaSWgHb9KQXC4CE2E8GPuJd8p4E/BearknaqsHqBHzFZpTKmMkhcdNQ7fGvfrtOZow==
   dependencies:
     inquirer "^8.1.2"
     ora "^5.4.1"
