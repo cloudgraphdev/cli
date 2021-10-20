@@ -1,3 +1,11 @@
+## [0.11.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.9...0.11.10) (2021-10-20)
+
+
+### Bug Fixes
+
+* **deps:** update live plugin dep ([95ed410](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/95ed4102b83bc8088cbd517ddebd4fea61034b5f))
+* **deps:** update lock file ([4b59cb9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4b59cb9d4505f3fd84d28bf434e346f162a17449))
+
 ## [0.11.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.8...0.11.9) (2021-10-20)
 
 
