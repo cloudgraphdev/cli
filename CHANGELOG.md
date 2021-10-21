@@ -1,3 +1,10 @@
+## [0.11.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.10...0.11.11) (2021-10-21)
+
+
+### Bug Fixes
+
+* **aws:** install aws provider as a dep while fixing plugin manager ([6b24a4e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/6b24a4e01a0c5d809138b9d5feb48ba59a120046))
+
 ## [0.11.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.9...0.11.10) (2021-10-20)
 
 
