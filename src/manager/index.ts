@@ -54,6 +54,16 @@ export class Manager {
     try {
       const { importPath, name } = getProviderImportPath(provider)
       providerName = name
+      // !!! We currently have an issue with the plugin manager that is breaking all versions. 
+      // For a stop gap, we are including the aws provider as a complie time dep and just requiring here
+      if (providerName === 'aws') {
+        this.logger.successSpinner(
+          `${chalk.green(providerName)} module check complete`
+        )
+        plugin = require('@cloudgraph/cg-provider-aws') // eslint-disable-line global-require
+        this.plugins[providerName] = plugin
+        return plugin
+      }
       if (process.env.NODE_ENV === 'development' || this.devMode) {
         const isValidVersion = await this.checkRequiredVersion(importPath)
         if (!isValidVersion) {
