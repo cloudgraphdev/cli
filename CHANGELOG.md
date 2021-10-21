@@ -1,3 +1,10 @@
+## [0.11.12](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.11...0.11.12) (2021-10-21)
+
+
+### Bug Fixes
+
+* **schema:** fix loading schema from file function ([7360b58](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7360b581934474e9e772f520d8d45a45592ecfbb))
+
 ## [0.11.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.10...0.11.11) (2021-10-21)
 
 
