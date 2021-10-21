@@ -1,6 +1,8 @@
 // import CloudGraph, { Opts } from '@cloudgraph/sdk'
 import CloudGraph from '@cloudgraph/sdk'
 import { loadFilesSync } from '@graphql-tools/load-files'
+import { mergeTypeDefs } from '@graphql-tools/merge'
+import { print } from 'graphql'
 import boxen from 'boxen'
 import CFonts from 'cfonts'
 import chalk from 'chalk'
@@ -229,10 +231,11 @@ export function getVersionFolders(
   return []
 }
 
-export function getSchemaFromFolder(dirPath: string, provider?: string): any[] {
-  return loadFilesSync(path.join(dirPath, provider ? `${provider}*` : ''), {
+export function getSchemaFromFolder(dirPath: string, provider?: string): string {
+  const typesArray = loadFilesSync(path.join(dirPath, provider ? `${provider}*` : ''), {
     extensions: ['graphql'],
   })
+  return print(mergeTypeDefs(typesArray))
 }
 
 export function deleteFolder(dirPath: string): void {
