@@ -387,6 +387,16 @@
     lodash "^4.17.21"
     ora "^5.4.1"
 
+"@cloudgraph/sdk@0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.5.0.tgz#df41e6e7b20b34807eb552ac1fb97038096270a3"
+  integrity sha512-nSdi0FlfUd9+FuHQZLZKZN6GMpeOtpM4I/dRuTMt1pIM/qLeENcbvUn5wC85046glqv15qa/vkLvpAsbQ3RH1A==
+  dependencies:
+    inquirer "^8.1.2"
+    jsonpath "^1.1.1"
+    lodash "^4.17.21"
+    ora "^5.4.1"
+
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"
   resolved "https://registry.npmjs.org/@cspotcode/source-map-consumer/-/source-map-consumer-0.8.0.tgz"
