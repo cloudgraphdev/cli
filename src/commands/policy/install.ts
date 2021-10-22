@@ -22,11 +22,11 @@ export default class Install extends Command {
   async run(): Promise<void> {
     const manager = this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile)) {
+    if (isEmpty(lockFile?.policyPack)) {
       this.logger.info('No providers found in lock file, have you added any?')
       this.exit()
     }
-    for (const [key, value] of Object.entries(lockFile)) {
+    for (const [key, value] of Object.entries(lockFile.policyPack)) {
       await manager.getPlugin(key, value as string)
     }
   }

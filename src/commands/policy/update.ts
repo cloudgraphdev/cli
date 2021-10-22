@@ -43,7 +43,7 @@ export default class Update extends Command {
             })
             return providers.indexOf(key) > -1
           })
-        : lockFile
+        : lockFile.policyPack
 
     // Warn the user if they are trying to update providers they have not installed.
     const nonInstalledProviders = allPolicyPacks.filter(rawProvider => {

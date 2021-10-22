@@ -220,7 +220,7 @@ Run ${chalk.italic.green('cg update')} to install`
     return lockFile[plugin]
   }
 
-  removeFromLockFile(plugin: string): void {
+  removeFromLockFile(plugin: string, pluginType: PluginType): void {
     const lockPath = path.join(
       this.cliConfig.configDir,
       '.cloud-graph.lock.json'

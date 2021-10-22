@@ -34,7 +34,7 @@ export default class List extends Command {
         ? pickBy(lockFile, (_, key) => {
             return allPolicyPacks.includes(key)
           })
-        : lockFile
+        : lockFile.policyPack
     for (const [key, value] of Object.entries(policyPacksToList)) {
       this.logger.success(
         `Policy Pack ${chalk.green(`${key}@${value}`)} is installed`
