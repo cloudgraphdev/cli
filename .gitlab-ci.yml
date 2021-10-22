@@ -64,6 +64,8 @@ semantic release:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^chore\(release\)/'
       when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_BRANCH == "alpha"
+    - if: $CI_COMMIT_BRANCH == "beta"
   variables:
     # Set git commit identity
     GIT_AUTHOR_NAME: "AutoCloud Deploy Bot"
