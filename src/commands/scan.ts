@@ -2,12 +2,14 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import { Opts } from '@cloudgraph/sdk'
-import { range } from 'lodash'
+import { groupBy, isEmpty, range } from 'lodash'
 
 import Command from './base'
 import { fileUtils, processConnectionsBetweenEntities } from '../utils'
 import DgraphEngine from '../storage/dgraph'
 import scanReport from '../reports/scan-report'
+import { mergeSchemas } from '../utils/schema'
+import rulesReport from '../reports/rules-report'
 
 export default class Scan extends Command {
   static description =
@@ -33,14 +35,15 @@ export default class Scan extends Command {
   async run() {
     const {
       argv,
-      flags: { dev: devMode },
+      flags: { dev: devMode, policies: policyPacks },
     } = this.parse(Scan)
     const { dataDir } = this.config
     const opts: Opts = { logger: this.logger, debug: true, devMode }
     let allProviders = argv
+    const policyPacksPlugins: { [policyPackName: string]: any } = {}
 
     // Run dgraph health check
-    const storageEngine = this.getStorageEngine()
+    const storageEngine = this.getStorageEngine() as DgraphEngine
     const storageRunning = await storageEngine.healthCheck()
     /**
      * Handle 2 methods of scanning, either for explicitly passed providers OR
@@ -203,6 +206,76 @@ export default class Scan extends Command {
       this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
+
+      // Rules
+      let allPolicyPacks = policyPacks?.split(',') || []
+
+      if (allPolicyPacks.length >= 1) {
+        this.logger.debug(`Executing rules for policy packs: ${allPolicyPacks}`)
+      } else {
+        this.logger.debug('Executing rules for policy packs found in config')
+        allPolicyPacks = config.policies
+        if (allPolicyPacks.length === 0) {
+          this.logger.error(
+            'There are no policy packs configured and none were passed to scan'
+          )
+          this.exit()
+        }
+      }
+
+      this.logger.debug(
+        `Executing rules for policy packs found in config: ${allPolicyPacks}`
+      )
+
+      const failedPolicyPackList: string[] = []
+      const resources = config.resources.split(',')
+
+      // Generate schema mapping
+      const resourceTypeNamesToFieldsMap: { [schemaName: string]: string } = {}
+      for (const resource of resources) {
+        let schemaName = `aws${resource
+          .charAt(0)
+          .toUpperCase()}${resource.slice(1)}`
+
+        if (resource === 'ec2Instance') {
+          schemaName = 'awsEc2'
+        }
+
+        if (resource === 'sg') {
+          schemaName = 'awsSecurityGroup'
+        }
+
+        resourceTypeNamesToFieldsMap[schemaName] = resource
+      }
+
+      for (const policyPack of allPolicyPacks) {
+        this.logger.info(
+          `Beginning ${chalk.italic.green('RULES')} for ${policyPack}`
+        )
+
+        const policyPackClient = await this.getPolicyPackClient({
+          policyPack,
+          mappings: resourceTypeNamesToFieldsMap,
+          provider,
+        })
+        if (!policyPackClient) {
+          failedPolicyPackList.push(policyPack)
+          this.logger.warn(
+            `No valid client found for ${policyPack}, skipping...`
+          )
+          continue // eslint-disable-line no-continue
+        }
+
+        policyPacksPlugins[policyPack] = policyPackClient
+
+        // Update Schema:
+        const currentSchema: string = await storageEngine.getSchema()
+        const findingsSchema: string[] = policyPackClient.getSchema()
+
+        await storageEngine.setSchema([
+          mergeSchemas(currentSchema, findingsSchema),
+        ])
+      }
     }
 
     // If every provider that has been passed is a failure, just exit
@@ -220,10 +293,60 @@ export default class Scan extends Command {
       )
       // Execute services mutations promises
       await storageEngine.run()
+
       this.logger.successSpinner('Data insertion into Dgraph complete')
+
+      for (const policyPack in policyPacksPlugins) {
+        if (policyPack && policyPacksPlugins[policyPack]) {
+          this.logger.startSpinner(
+            `${chalk.italic.green('EXECUTING')} rules for ${chalk.italic.green(
+              policyPack
+            )}`
+          )
+
+          // Run rules:
+          const updatedData = await policyPacksPlugins[policyPack].getData(
+            storageEngine
+          )
+
+          // Save connections
+          processConnectionsBetweenEntities(
+            updatedData,
+            storageEngine,
+            storageRunning
+          )
+          await storageEngine.run(false)
+
+          const { data = [] } = updatedData.entities.find(
+            ({ name }: any) => name === 'awsFinding'
+          )
+
+          const findingsByRule = groupBy(data, 'ruleId')
+
+          for (const rule in findingsByRule) {
+            if (!isEmpty(rule)) {
+              const findings = findingsByRule[rule]
+              for (const { resourceId, result, ruleDescription } of findings) {
+                rulesReport.pushData({
+                  policyPack,
+                  ruleDescription,
+                  resourceId,
+                  result,
+                })
+              }
+            }
+          }
+
+          this.logger.successSpinner(
+            `${chalk.italic.green(policyPack)} rules excuted successfully`
+          )
+        }
+      }
     }
 
     scanReport.print()
+    rulesReport.print()
+
     this.logger.success(
       `Your data for ${allProviders.join(
         ' | '
