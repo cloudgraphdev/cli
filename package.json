@@ -128,5 +128,6 @@
       "yarn lint:fix",
       "git add --force"
     ]
-  }
+  },
+  "workspaces": [ "plugins" ]
 }

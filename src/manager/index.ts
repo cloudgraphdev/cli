@@ -1,7 +1,8 @@
 import { PluginManager } from 'live-plugin-manager' // TODO: replace with homegrown solution
 import { Logger } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
-import npm from 'npm'
+import { exec } from 'child_process'
+
 import path from 'path'
 import chalk from 'chalk'
 import fs from 'fs'
@@ -23,32 +24,20 @@ const getProviderImportPath = (
   }
 }
 
-const install = async (path: string, version?: string) => {
-  return new Promise((res, rej) => {
-    npm.load(function () {
-      // catch errors
-      npm.config.set('audit', false)
-      npm.config.set('silent', true)
-      npm.config.set('progress', false)
-      npm.config.set('log-level', 'silent')
-      npm.config.set('fund', false)
+const install = async (_path: string, version?: string) => {
+  return new Promise((resolve, reject) => {
+    const module = `${_path}${version ? `@${version}` : ''}`
 
-      // super hack to avoid logging to console. This can cause issues if someone else uses this libs
-      // npm.log.enableProgress = ()=> {} // console.log('spin!')
-      ;(npm as any).output = () => 0 // ignore output
-
-      const module = `${path}${version ? `@${version}` : ''}`
-      npm.commands.install([module], function (er, data) {
-        // log the error or data
-        if (er) return rej(er)
-        // console.log('data', data)
-        res(data)
-      })
-      npm.on('log', function (message) {
-        // log the progress of the installation
-        console.log('[can remove]', message)
-      })
-    })
+    exec(
+      `npm install ${module} -w @cloudgraph/plugins --include-workspace-root --no-audit --no-fund`,
+      (err, stdout, stdErr) => {
+        console.log('debug Err: ', err)
+        if (err) reject(err)
+        console.log('debug Err: ', stdout)
+        console.log('debug StdErr: ', stdErr)
+        resolve(0)
+      }
+    )
   })
 }
 
