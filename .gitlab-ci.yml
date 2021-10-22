@@ -11,7 +11,7 @@
       echo "\"@cloudgraph:registry\" \"https://registry.npmjs.com/\""
       echo "\"//registry.npmjs.com/:_authToken\" \"${NPM_TOKEN}\""
     } | tee -a .yarnrc
-  - NODE_ENV=cicd yarn install --frozen-lockfile --cache-folder .npm --prefer-offline
+  - NODE_ENV=cicd yarn install --cache-folder .npm --prefer-offline
 default:
   image: node:16-alpine
   before_script:
