@@ -1,6 +1,7 @@
 import { PluginManager } from 'live-plugin-manager' // TODO: replace with homegrown solution
 import { Logger } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
+import npm from 'npm'
 import path from 'path'
 import chalk from 'chalk'
 import fs from 'fs'
@@ -14,12 +15,41 @@ const getProviderImportPath = (
   let providerNamespace = '@cloudgraph'
   let providerName = provider
   if (provider.includes('/')) {
-    [providerNamespace, providerName] = provider.split('/')
+    ;[providerNamespace, providerName] = provider.split('/')
   }
   return {
     importPath: `${providerNamespace}/cg-provider-${providerName}`,
     name: providerName,
   }
+}
+
+const install = async (path: string, version?: string) => {
+  return new Promise((res, rej) => {
+    npm.load(function () {
+      // catch errors
+      npm.config.set('audit', false)
+      npm.config.set('silent', true)
+      npm.config.set('progress', false)
+      npm.config.set('log-level', 'silent')
+      npm.config.set('fund', false)
+
+      // super hack to avoid logging to console. This can cause issues if someone else uses this libs
+      // npm.log.enableProgress = ()=> {} // console.log('spin!')
+      ;(npm as any).output = () => 0 // ignore output
+
+      const module = `${path}${version ? `@${version}` : ''}`
+      npm.commands.install([module], function (er, data) {
+        // log the error or data
+        if (er) return rej(er)
+        // console.log('data', data)
+        res(data)
+      })
+      npm.on('log', function (message) {
+        // log the progress of the installation
+        console.log('[can remove]', message)
+      })
+    })
+  })
 }
 
 export class Manager {
@@ -48,82 +78,88 @@ export class Manager {
      * Determine if the user has passed a provider and prompt them if not
      */
     let plugin
-    let providerName = provider
-
-    this.logger.startSpinner(`Checking for ${chalk.green(provider)} module...`)
+    const providerName = provider
     try {
-      const { importPath, name } = getProviderImportPath(provider)
-      providerName = name
-      // !!! We currently have an issue with the plugin manager that is breaking all versions. 
-      // For a stop gap, we are including the aws provider as a complie time dep and just requiring here
-      if (providerName === 'aws') {
-        this.logger.successSpinner(
-          `${chalk.green(providerName)} module check complete`
-        )
-        plugin = require('@cloudgraph/cg-provider-aws') // eslint-disable-line global-require
-        this.plugins[providerName] = plugin
-        return plugin
-      }
-      if (process.env.NODE_ENV === 'development' || this.devMode) {
-        const isValidVersion = await this.checkRequiredVersion(importPath)
-        if (!isValidVersion) {
-          throw new Error('Version check failed')
-        }
-        this.logger.warn(
-          // eslint-disable-next-line max-len
-          `You are running CloudGraph in devMode. In devMode, CG will assume provider modules are already installed. use ${chalk.italic.green('$yarn link {providerModule}')} to work with a local copy of a provider module`
-        )
-        plugin = await import(importPath)
-      } else {
-        this.logger.startSpinner(
-          `Installing ${chalk.green(providerName)} plugin`
-        )
-        const providerLockVersion = this.getProviderVersionFromLock(provider)
-        this.logger.info(
-          `Installing ${chalk.green(provider)} module version: ${chalk.green(
-            version ?? providerLockVersion
-          )}`
-        )
-        await this.pluginManager.install(
-          importPath,
-          version ?? providerLockVersion
-        )
-        this.logger.successSpinner(
-          `${chalk.green(providerName)} plugin installed successfully!`
-        )
-        const isValidVersion = await this.checkRequiredVersion(importPath)
-        if (!isValidVersion) {
-          throw new Error(`Version check ${chalk.red('failed')}`)
-        }
-        // If there is no lock file, we download latest and then update the lock file with latest version
-        if (version || providerLockVersion === 'latest') {
-          const newLockVersion = this.getProviderVersion(importPath)
-          this.logger.info(
-            `${chalk.green(provider)} version locked at: ${chalk.green(
-              version && version !== 'latest' ? version : newLockVersion
-            )}`
-          )
-          this.writeVersionToLockFile(
-            provider,
-            version && version !== 'latest' ? version : newLockVersion
-          )
-        }
-        plugin = this.pluginManager.require(importPath)
-      }
+      this.logger.info(`Checking for ${chalk.green(provider)} module...`)
+      const { importPath } = getProviderImportPath(provider)
+
+      // we may avoid the npm install here by checking the file/folder
+      await install(importPath, version)
+
+      plugin = await import(importPath)
+
+      this.logger.successSpinner(`Got the plugin ${chalk.green(providerName)}`)
+
+      this.plugins[providerName] = plugin
     } catch (error: any) {
-      this.logger.debug(error)
-      this.logger.failSpinner(
-        `Manager failed to install plugin for ${chalk.green(providerName)}`
-      )
-      throw new Error(
-        `${provider} moudle check ${chalk.red('FAILED')}, unable to find plugin`
-      )
+      console.log(error)
     }
-    this.logger.successSpinner(
-      `${chalk.green(providerName)} module check complete`
-    )
-    this.plugins[providerName] = plugin
     return plugin
+    // try {
+    //   providerName = name
+    //   if (process.env.NODE_ENV === 'development' || this.devMode) {
+    //     const isValidVersion = await this.checkRequiredVersion(importPath)
+    //     if (!isValidVersion) {
+    //       throw new Error('Version check failed')
+    //     }
+    //     this.logger.warn(
+    //       // eslint-disable-next-line max-len
+    //       `You are running CloudGraph in devMode.
+    //       In devMode, CG will assume provider modules are already installed. use
+    //       ${chalk.italic.green('$yarn link {providerModule}')} to work with a local copy of a provider module`
+    //     )
+    //     // plugin = await import(importPath)
+    //   } else {
+    //     this.logger.startSpinner(
+    //       `Installing ${chalk.green(providerName)} plugin`
+    //     )
+    //     const providerLockVersion = this.getProviderVersionFromLock(provider)
+    //     this.logger.info(
+    //       `Installing ${chalk.green(provider)} module version: ${chalk.green(
+    //         version ?? providerLockVersion
+    //       )}`
+    //     )
+    //     await this.pluginManager.install(
+    //       importPath,
+    //       version ?? providerLockVersion
+    //     )
+    //     this.logger.successSpinner(
+    //       `${chalk.green(providerName)} plugin installed successfully!`
+    //     )
+    //     const isValidVersion = await this.checkRequiredVersion(importPath)
+    //     if (!isValidVersion) {
+    //       throw new Error(`Version check ${chalk.red('failed')}`)
+    //     }
+    //     // If there is no lock file, we download latest and then update the lock file with latest version
+    //     if (version || providerLockVersion === 'latest') {
+    //       const newLockVersion = this.getProviderVersion(importPath)
+    //       this.logger.info(
+    //         `${chalk.green(provider)} version locked at: ${chalk.green(
+    //           version && version !== 'latest' ? version : newLockVersion
+    //         )}`
+    //       )
+    //       this.writeVersionToLockFile(
+    //         provider,
+    //         version && version !== 'latest' ? version : newLockVersion
+    //       )
+    //     }
+    //     plugin = this.pluginManager.require(importPath)
+    //   }
+    // } catch (error: any) {
+    //   this.logger.debug(error)
+    //   this.logger.failSpinner(
+    //     `Manager failed to install plugin for ${chalk.green(providerName)}`
+    //   )
+    //   console.log(error)
+    //   throw new Error(
+    //     `${provider} moudle check ${chalk.red('FAILED')}, unable to find plugin`
+    //   )
+    // }
+    // this.logger.successSpinner(
+    //   `${chalk.green(providerName)} module check complete`
+    // )
+    // this.plugins[providerName] = plugin
+    // return plugin
   }
 
   async queryRemoteVersion(importPath: string): Promise<string> {
@@ -181,8 +217,7 @@ Run ${chalk.italic.green('cg update')} to install`
     }
     const test = satisfies(this.cliConfig.version, requiredVersion)
     if (!test) {
-      const errText = 
-      `Provider ${importPath}@${providerVersion} requires cli version ${requiredVersion} but cli version is ${this.cliConfig.version}`
+      const errText = `Provider ${importPath}@${providerVersion} requires cli version ${requiredVersion} but cli version is ${this.cliConfig.version}`
       this.logger.error(errText)
       return false
     }
