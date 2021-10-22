@@ -328,7 +328,7 @@ export default class Scan extends Command {
               const findings = findingsByRule[rule]
               for (const { resourceId, result, ruleDescription } of findings) {
                 rulesReport.pushData({
-                  policyPack,
+                  policyPack: `${policyPack}-${rule}`,
                   ruleDescription,
                   resourceId,
                   result,

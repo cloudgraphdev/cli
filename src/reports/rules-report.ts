@@ -7,34 +7,42 @@ const { logger } = CloudGraph
 export enum scanResult {
   pass = 'pass',
   fail = 'fail',
-  warn = 'warn'
+  warn = 'warn',
 }
 
 export enum scanDataType {
   status = 'status',
-  count = 'count'
+  count = 'count',
 }
 
 export class RulesReport {
-  constructor() {
-    this.table = new Table({ head: this.tableHeaders })
-  }
+  tableHeaders = [chalk.green('ResourceId'), chalk.green('Result')]
 
-  tableHeaders = [
-    chalk.green('ResourceId'),
-    chalk.green('Result'),
-  ]
+  tables: { [policyPack: string]: Table } = {}
 
-  table: Table
-
-  pushData({ resourceId, result }: { resourceId: string, result: 'FAIL' | 'PASS' | 'MISSING' }): void {
-
+  pushData({
+    policyPack,
+    resourceId,
+    ruleDescription,
+    result,
+  }: {
+    policyPack: string
+    resourceId: string
+    ruleDescription: string
+    result: 'FAIL' | 'PASS' | 'MISSING'
+  }): void {
     const status = this.getStatus(result)
 
-    this.table.push([resourceId, status])
+    if (!this.tables[policyPack]) {
+      this.tables[policyPack] = new Table({ style: { head: [], border: [] } })
+      this.tables[policyPack].push(
+        [chalk.italic.green(ruleDescription)],
+        this.tableHeaders
+      )
+    }
+
+    this.tables[policyPack].push([resourceId, status])
   }
-
-
 
   private getStatus(result: string): string {
     let status
@@ -58,16 +66,15 @@ export class RulesReport {
     return status
   }
 
-  print(ruleDescription: string): void {
-    logger.info(`Printing results for ${chalk.italic.green(ruleDescription)} rule...`)
+  print(): void {
+    logger.info('Printing rules result...')
 
-    console.log(this.table.toString())
+    for (const tableName in this.tables) {
+      if (tableName) {
+        console.log(this.tables[tableName].toString())
+      }
+    }
   }
-
-  clean(): void {
-    this.table = new Table({ head: this.tableHeaders })
-  }
-
 }
 
 export default new RulesReport()
