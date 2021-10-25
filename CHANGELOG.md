@@ -1,3 +1,11 @@
+# [0.12.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.12...0.12.0) (2021-10-25)
+
+
+### Features
+
+* **README:** new readme ([71cd3eb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/71cd3eb69fa940b9dfbd8386af699b6ba66b23c0))
+* **README:** update examples in README ([36812eb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/36812eb7be144b918ac53c1c494b84c22fff81c6))
+
 ## [0.11.12](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.11...0.11.12) (2021-10-21)
 
 
