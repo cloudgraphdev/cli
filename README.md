@@ -52,7 +52,7 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-**Not anymore.**
+**Not anymore**
 
 <br />
 
