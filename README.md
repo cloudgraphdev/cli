@@ -10,6 +10,12 @@
 <br />
 
 An instant **GraphQL** API to query your cloud infrastructure and configuration so that you can solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+<br />
+
+🌐 Website: https://www.cloudgraph.dev
+<br />
+
+💻 Documentation: https://docs.cloudgraph.dev
 
 <br />
 
@@ -50,7 +56,42 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
+CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers. Here are some more examples:
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg">
+    <img alt="exampleQuery1" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg">
+    <img alt="exampleQuery2" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg">
+    <img alt="exampleQuery3" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg">
+    <img alt="exampleQuery4" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
 
 # How It Works
 
@@ -216,8 +257,9 @@ For a list of currently supported AWS services please see the [AWS Provider Repo
 <!-- examplesqueries -->
 
 # Example Queries
+Link to full documentation: https://docs.cloudgraph.dev/overview.
 
-To use CloudGraph, you will need to be familiar with [GraphQL](https://graphql.org/). This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find additional example queries in the [examples](https://github.com/cloudgraphdev/cli/tree/master/examples) directory. Feel free to make a PR with other examples you would like to see included, check out the [Contribution Guidelines](#contribution-guidelines) section for more information.
+To use CloudGraph, you will need to be familiar with [GraphQL](https://graphql.org/). This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find **hundreds** of additional example queries in the [documentation](https://docs.cloudgraph.dev/overview).
 
 <br />
 
