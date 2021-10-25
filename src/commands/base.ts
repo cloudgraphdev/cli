@@ -3,6 +3,7 @@ import { Input } from '@oclif/parser'
 import CloudGraph, { Logger } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
 import chalk from 'chalk'
+import fs from 'fs'
 import inquirer from 'inquirer'
 import path from 'path'
 import gt from 'semver/functions/gt'
@@ -15,16 +16,20 @@ import {
   getDefaultStorageEngineConnectionConfig,
   getStorageEngineConnectionConfig,
   printWelcomeMessage,
-  printBoxMessage
+  printBoxMessage,
+  fileUtils,
 } from '../utils'
 import flagsDefinition from '../utils/flags'
 import openBrowser from '../utils/open'
+import { PluginType } from '../utils/constants'
+import { CloudGraphConfig } from '../types'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
     super(argv, config)
     this.logger = CloudGraph.logger
     this.providers = {}
+    this.policyPacks = {}
   }
 
   interface = inquirer
@@ -40,6 +45,10 @@ export default abstract class BaseCommand extends Command {
   storageEngine: StorageEngine | undefined
 
   providers: { [key: string]: any }
+
+  policyPacks: {
+    [key: string]: any
+  }
 
   storedConfig: { [key: string]: any } | undefined
 
@@ -72,10 +81,12 @@ export default abstract class BaseCommand extends Command {
     if (!config) {
       printWelcomeMessage()
     }
-    const manager = this.getPluginManager()
+    const manager = this.getPluginManager(PluginType.Provider)
     const cliLatestVersion = await manager.queryRemoteVersion('@cloudgraph/cli')
     if (gt(cliLatestVersion, this.config.version)) {
-      printBoxMessage(`Update for ${chalk.italic.green('@cloudgraph/cli')} is available: ${this.config.version} -> ${cliLatestVersion}. \n
+      printBoxMessage(`Update for ${chalk.italic.green(
+        '@cloudgraph/cli'
+      )} is available: ${this.config.version} -> ${cliLatestVersion}. \n
 Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     }
     const configDir = this.getCGConfigKey('directory') ?? 'cg'
@@ -136,7 +147,9 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
           `http://localhost:${serverPort}/${this.getQueryEngine()}`
         )
       } catch (error) {
-        this.logger.warn(`Could not open a browser tab with query engine, open manually at http://localhost:${serverPort}`)
+        this.logger.warn(
+          `Could not open a browser tab with query engine, open manually at http://localhost:${serverPort}`
+        )
       }
     }
   }
@@ -183,29 +196,33 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     return `${config.scheme}://${config.host}:${config.port}`
   }
 
-  getPluginManager(): Manager {
+  getPluginManager(pluginType: PluginType): Manager {
     const {
       flags: { dev: devMode },
     } = this.parse(this.constructor as Input<{ dev: boolean }>)
-    if (!this.manager) {
-      this.manager = new Manager({
-        logger: this.logger,
-        devMode,
-        cliConfig: this.config,
-      })
-    }
+
+    this.manager = new Manager({
+      logger: this.logger,
+      devMode,
+      cliConfig: this.config,
+      pluginType,
+    })
+
     return this.manager
   }
 
   async getProviderClient(provider: string): Promise<any> {
     try {
-      const manager = this.getPluginManager()
+      const manager = this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
         return this.providers[provider]
       }
-      const { default: Client } = await manager.getProviderPlugin(provider) ?? {}
-      if (!Client || !(Client instanceof Function)) { // TODO: how can we better type this for the base Provider class from sdk
-        throw new Error(`The provider ${provider} did not return a valid Client instance`)
+      const { default: Client } = (await manager.getPlugin(provider)) ?? {}
+      if (!Client || !(Client instanceof Function)) {
+        // TODO: how can we better type this for the base Provider class from sdk
+        throw new Error(
+          `The provider ${provider} did not return a valid Client instance`
+        )
       }
       const client = new Client({
         logger: this.logger,
@@ -218,7 +235,53 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       this.logger.warn(
         `There was an error installing or requiring a plugin for ${provider}, does one exist?`
       )
-      this.logger.info('For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors')
+      this.logger.info(
+        'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
+      )
+      return null
+    }
+  }
+
+  async getPolicyPackClient({
+    policyPack,
+    mappings,
+    provider,
+  }: {
+    policyPack: string
+    provider: string
+    mappings: { [schemaName: string]: string }
+  }): Promise<any> {
+    try {
+      const manager = this.getPluginManager(PluginType.PolicyPack)
+      if (this.policyPacks[policyPack]) {
+        return this.policyPacks[policyPack]
+      }
+
+      const {
+        default: { rules },
+      } = (await manager.getPlugin(policyPack)) ?? {}
+
+      if (!rules) {
+        // TODO: how can we better type this for the base Provider class from sdk
+        throw new Error(
+          `The policy pack ${policyPack} did not return a valid set of rules`
+        )
+      }
+      const client = new CloudGraph.RulesEngine(
+        rules,
+        mappings,
+        `${provider}Finding`
+      )
+      this.policyPacks[policyPack] = client
+      return client
+    } catch (error: any) {
+      this.logger.error(error)
+      this.logger.warn(
+        `There was an error installing or requiring a plugin for ${policyPack}, does one exist?`
+      )
+      this.logger.info(
+        'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
+      )
       return null
     }
   }
@@ -245,6 +308,18 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     } catch (error: any) {
       return null
     }
+  }
+
+  /**
+   * Ensures that the configuration path exists and saves the CloudGraph json config file in it
+   */
+  saveCloudGraphConfigFile(configResult: CloudGraphConfig): void {
+    const { configDir } = this.config
+    fileUtils.makeDirIfNotExists(configDir)
+    fs.writeFileSync(
+      path.join(configDir, '.cloud-graphrc.json'),
+      JSON.stringify(configResult, null, 2)
+    )
   }
 
   async catch(err: any): Promise<any> {
