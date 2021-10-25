@@ -28,8 +28,16 @@ const install = async (_path: string, version?: string) => {
   return new Promise((resolve, reject) => {
     const module = `${_path}${version ? `@${version}` : ''}`
 
+    const npmBinary = './node_modules/.bin/npm'
+    const flags = [
+      '--no-audit',
+      '--no-fund',
+      '--no-save',
+      '--ignore-scripts',
+      '--silent',
+    ]
     exec(
-      `npm install ${module} -w @cloudgraph/plugins --include-workspace-root --no-audit --no-fund`,
+      `${npmBinary} install ${module} ${flags.join(' ')}`,
       (err, stdout, stdErr) => {
         console.log('debug Err: ', err)
         if (err) reject(err)
@@ -72,8 +80,11 @@ export class Manager {
       this.logger.info(`Checking for ${chalk.green(provider)} module...`)
       const { importPath } = getProviderImportPath(provider)
 
-      // we may avoid the npm install here by checking the file/folder
-      await install(importPath, version)
+      if (!fs.existsSync(path.resolve('node_modules', importPath))) {
+        // using a try/catch is not working as it's being cached, and I'm not being able to flush it correctly
+        // console.log('installing')
+        await install(importPath, version)
+      }
 
       plugin = await import(importPath)
 
