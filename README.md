@@ -9,7 +9,7 @@
 <br />
 <br />
 
-An instant **GraphQL** API to query your cloud infrastructure and configuration so that you can solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+The **GraphQL** API for AWS - solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
 <br />
 
 🌐 Website: https://www.cloudgraph.dev
