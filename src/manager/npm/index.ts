@@ -14,7 +14,7 @@ export default class NpmManager {
     let providerNamespace = '@cloudgraph'
     let providerName = provider
     if (provider.includes('/')) {
-      [providerNamespace, providerName] = provider.split('/')
+      ;[providerNamespace, providerName] = provider.split('/')
     }
     return {
       importPath: `${providerNamespace}/cg-provider-${providerName}`,
@@ -35,7 +35,7 @@ export default class NpmManager {
       ]
       exec(
         `${this.npmBinary} install ${module} ${flags.join(' ')}`,
-        // (err, stdout, stdErr) => {
+
         err => {
           if (err) reject(err)
           resolve(0)
@@ -55,15 +55,11 @@ export default class NpmManager {
         '--ignore-scripts',
         '--silent',
       ]
-      exec(
-        `${this.npmBinary} uninstall ${module} ${flags.join(' ')}`,
-        // (err, stdout, stdErr) => {
-        err => {
-          if (err) reject(err)
+      exec(`${this.npmBinary} uninstall ${module} ${flags.join(' ')}`, err => {
+        if (err) reject(err)
 
-          resolve(0)
-        }
-      )
+        resolve(0)
+      })
     })
   }
 
