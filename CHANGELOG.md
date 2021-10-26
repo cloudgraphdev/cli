@@ -1,3 +1,10 @@
+## [0.12.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.0...0.12.1) (2021-10-26)
+
+
+### Bug Fixes
+
+* **title:** updating title ([e227cb3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e227cb389044ecfad4a0521bbbccfcf7db463aab))
+
 # [0.12.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.11.12...0.12.0) (2021-10-25)
 
 
