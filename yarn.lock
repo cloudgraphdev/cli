@@ -346,10 +346,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cloudgraph/cg-provider-aws@^0.36.1":
-  version "0.36.1"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/cg-provider-aws/-/cg-provider-aws-0.36.1.tgz#f703fb84a8dc883f94fec080b49736ed680f4d5a"
-  integrity sha512-NI97V4wCIVnMSmM57cZeU+3DqZ9N9uuX7aMhSAGtNlOJm51xycuXHHOLZYnyqPgJzaCBZiPJeF5NWHwD5jWhUg==
+"@cloudgraph/cg-provider-aws@^0.39.0":
+  version "0.39.0"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/cg-provider-aws/-/cg-provider-aws-0.39.0.tgz#50b507214fab8a7211486cc6428835eaf70ccca2"
+  integrity sha512-KqGsj7FA14rD5CY0yfnTWaBP6PBDpCn+eVeWseXp3Q0Ow9PIM9apAT5H4nvHCEdTKcubJ7HqqWlync4t7ZwmSQ==
   dependencies:
     "@cloudgraph/sdk" "0.4.0"
     "@graphql-tools/load-files" "6.3.2"

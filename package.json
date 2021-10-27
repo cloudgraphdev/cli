@@ -16,7 +16,7 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/cg-provider-aws": "^0.36.1",
+    "@cloudgraph/cg-provider-aws": "^0.39.0",
     "@cloudgraph/sdk": "0.4.0",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
