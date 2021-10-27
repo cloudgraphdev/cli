@@ -1,3 +1,10 @@
+## [0.12.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.1...0.12.2) (2021-10-27)
+
+
+### Bug Fixes
+
+* Update aws provider to 0.39.0 version ([42bbd94](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/42bbd9419f159aa9044141d3c8afb99803c1e14a))
+
 ## [0.12.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.0...0.12.1) (2021-10-26)
 
 
