@@ -1113,7 +1113,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
 ## `cg init [PROVIDER]`
 
@@ -1272,6 +1272,34 @@ EXAMPLE
 ```
 
 _See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.13.0-alpha.3/src/commands/provider/install.ts)_
+
+## `cg provider:install [PROVIDER]`
+
+Install providers based on the lock file
+
+```
+USAGE
+  $ cg provider install [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg install
+
+EXAMPLE
+  $ cg provider install
+```
+
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/provider/install.ts)_
 
 ## `cg provider:list [PROVIDER]`
 
