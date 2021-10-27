@@ -45,7 +45,7 @@ export class Manager {
     let pluginName = plugin
 
     if (plugin.includes('/')) {
-      ;[pluginNamespace, pluginName] = plugin.split('/')
+      [pluginNamespace, pluginName] = plugin.split('/')
     }
     return {
       importPath: `${pluginNamespace}/${
@@ -109,7 +109,6 @@ export class Manager {
           )
           this.writeVersionToLockFile({
             plugin,
-            pluginType: this.pluginType,
             version: version && version !== 'latest' ? version : newLockVersion,
           })
         }
@@ -216,7 +215,7 @@ Run ${chalk.italic.green('cg update')} to install`
     return lockFile[plugin]
   }
 
-  removeFromLockFile(plugin: string, pluginType: PluginType): void {
+  removeFromLockFile(plugin: string): void {
     const lockPath = path.join(
       this.cliConfig.configDir,
       '.cloud-graph.lock.json'
@@ -224,13 +223,13 @@ Run ${chalk.italic.green('cg update')} to install`
     try {
       const oldLock = cosmiconfigSync('cloud-graph').load(lockPath)
       const lockFile = oldLock?.config
-      if (!lockFile || !lockFile[pluginType]?.[plugin]) {
+      if (!lockFile || !lockFile[this.pluginType]?.[plugin]) {
         this.logger.warn(
           `No lock file found containing ${plugin}, could not remove`
         )
         return
       }
-      delete lockFile[pluginType][plugin]
+      delete lockFile[this.pluginType][plugin]
       this.logger.success(
         `${this.pluginType} ${chalk.green(plugin)} has been removed`
       )
@@ -243,12 +242,10 @@ Run ${chalk.italic.green('cg update')} to install`
 
   writeVersionToLockFile({
     plugin,
-    pluginType,
     version,
   }: {
     plugin: string
     version: string
-    pluginType: PluginType
   }): void {
     const lockPath = path.join(
       this.cliConfig.configDir,
@@ -263,14 +260,14 @@ Run ${chalk.italic.green('cg update')} to install`
       if (oldLock?.config) {
         newLockFile = {
           ...oldLock.config,
-          [pluginType]: {
-            ...oldLock.config[pluginType],
+          [this.pluginType]: {
+            ...oldLock.config[this.pluginType],
             [plugin]: version,
           },
         }
       } else {
         newLockFile = {
-          [pluginType]: {
+          [this.pluginType]: {
             [plugin]: version,
           },
         }
