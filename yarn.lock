@@ -386,10 +386,26 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cloudgraph/sdk@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.5.0.tgz#df41e6e7b20b34807eb552ac1fb97038096270a3"
-  integrity sha512-nSdi0FlfUd9+FuHQZLZKZN6GMpeOtpM4I/dRuTMt1pIM/qLeENcbvUn5wC85046glqv15qa/vkLvpAsbQ3RH1A==
+"@cloudgraph/cg-provider-aws@^0.39.0":
+  version "0.39.0"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/cg-provider-aws/-/cg-provider-aws-0.39.0.tgz#50b507214fab8a7211486cc6428835eaf70ccca2"
+  integrity sha512-KqGsj7FA14rD5CY0yfnTWaBP6PBDpCn+eVeWseXp3Q0Ow9PIM9apAT5H4nvHCEdTKcubJ7HqqWlync4t7ZwmSQ==
+  dependencies:
+    "@cloudgraph/sdk" "0.4.0"
+    "@graphql-tools/load-files" "6.3.2"
+    "@graphql-tools/merge" "8.0.1"
+    aws-sdk "2.982.0"
+    chalk "4.1.2"
+    cuid "2.1.8"
+    dotenv "10.0.0"
+    graphql "15.5.1"
+    lodash "4.17.21"
+    typescript "4.3.5"
+
+"@cloudgraph/sdk@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.4.0.tgz#4bab3bdb96c09638210459733e1682bbd1889698"
+  integrity sha512-OMdBQslT8VnSzJWLdCiYFaSWgHb9KQXC4CE2E8GPuJd8p4E/BearknaqsHqBHzFZpTKmMkhcdNQ7fGvfrtOZow==
   dependencies:
     inquirer "^8.1.2"
     jsonpath "^1.1.1"
