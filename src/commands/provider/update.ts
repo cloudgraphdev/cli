@@ -43,7 +43,7 @@ export default class Update extends Command {
             })
             return providers.indexOf(key) > -1
           })
-        : lockFile.provider
+        : lockFile?.provider || {}
 
     // Warn the user if they are trying to update providers they have not installed.
     const nonInstalledProviders = allProviders.filter(rawProvider => {

@@ -43,7 +43,7 @@ export default class Remove extends Command {
     for (const key of allProviders) {
       await manager.removePlugin(key)
       if (!noSave) {
-        manager.removeFromLockFile(key, PluginType.Provider)
+        manager.removeFromLockFile(key)
       }
     }
   }
