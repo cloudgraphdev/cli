@@ -1,25 +1,24 @@
 ## [0.12.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.2...0.12.3) (2021-10-28)
 
-
 ### Bug Fixes
 
-* **deps:** bump provider version ([d7dfc75](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d7dfc75fd0aaf9a7fa069935af78cf5d4b44d208))
+- **deps:** bump provider version ([d7dfc75](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d7dfc75fd0aaf9a7fa069935af78cf5d4b44d208))
 
 ## [0.12.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.1...0.12.2) (2021-10-27)
 
-
 ### Bug Fixes
 
-* Update aws provider to 0.39.0 version ([42bbd94](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/42bbd9419f159aa9044141d3c8afb99803c1e14a))
+- Update aws provider to 0.39.0 version ([42bbd94](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/42bbd9419f159aa9044141d3c8afb99803c1e14a))
 
 ## [0.12.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.0...0.12.1) (2021-10-26)
 
-
 ### Bug Fixes
 
-* Restored install provider command ([c6a33b9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c6a33b9e63acff9840b6c6dbad127ffc90671761))
-* Update aws provider to 0.39.0 version ([d076b63](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d076b63342dda864afb1f77e7a2ba2af0cfb4aa7))
-* Updated npm binary reference ([fa16ffe](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/fa16ffe6640999ffe46852e94c46d88ed30a0e88))
+- Restored install provider command ([c6a33b9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c6a33b9e63acff9840b6c6dbad127ffc90671761))
+- Update aws provider to 0.39.0 version ([d076b63](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d076b63342dda864afb1f77e7a2ba2af0cfb4aa7))
+- Updated npm binary reference ([fa16ffe](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/fa16ffe6640999ffe46852e94c46d88ed30a0e88))
+
+* **title:** updating title ([e227cb3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e227cb389044ecfad4a0521bbbccfcf7db463aab))
 
 # [0.13.0-alpha.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.2...0.13.0-alpha.3) (2021-10-29)
 
@@ -43,6 +42,11 @@
 ### Features
 
 - Moved PluginManager methods to NpmManager ([f14502b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f14502b708e499f757eaa80264962f92d103df55))
+
+### Features
+
+- **README:** new readme ([71cd3eb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/71cd3eb69fa940b9dfbd8386af699b6ba66b23c0))
+- **README:** update examples in README ([36812eb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/36812eb7be144b918ac53c1c494b84c22fff81c6))
 
 ## [0.12.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.0...0.12.1) (2021-10-26)
 
