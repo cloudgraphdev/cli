@@ -1,3 +1,10 @@
+## [0.12.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.2...0.12.3) (2021-10-28)
+
+
+### Bug Fixes
+
+* **deps:** bump provider version ([d7dfc75](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d7dfc75fd0aaf9a7fa069935af78cf5d4b44d208))
+
 ## [0.12.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.1...0.12.2) (2021-10-27)
 
 
