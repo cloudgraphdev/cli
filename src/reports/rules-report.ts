@@ -1,6 +1,7 @@
 import Table from 'cli-table'
 import chalk from 'chalk'
 import CloudGraph from '@cloudgraph/sdk'
+import { isEmpty } from 'lodash'
 
 const { logger } = CloudGraph
 
@@ -49,13 +50,13 @@ export class RulesReport {
     switch (result) {
       case 'MISSING': {
         status = chalk.yellow(
-          String.fromCodePoint(0x26A0) // warning symbol
+          String.fromCodePoint(0x26a0) // warning symbol
         )
         break
       }
       case 'FAIL': {
         status = chalk.red(
-          String.fromCodePoint(0x1F6AB) // failure symbol
+          String.fromCodePoint(0x1f6ab) // failure symbol
         )
         break
       }
@@ -67,11 +68,13 @@ export class RulesReport {
   }
 
   print(): void {
-    logger.info('Printing rules result...')
+    if (!isEmpty(this.tables)) {
+      logger.info('Printing rules result...')
 
-    for (const tableName in this.tables) {
-      if (tableName) {
-        console.log(this.tables[tableName].toString())
+      for (const tableName in this.tables) {
+        if (tableName) {
+          console.log(this.tables[tableName].toString())
+        }
       }
     }
   }

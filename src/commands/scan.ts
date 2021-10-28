@@ -35,7 +35,7 @@ export default class Scan extends Command {
   async run() {
     const {
       argv,
-      flags: { dev: devMode, policies: policyPacks },
+      flags: { dev: devMode, policies: policyPacks = '' },
     } = this.parse(Scan)
     const { dataDir } = this.config
     const opts: Opts = { logger: this.logger, debug: true, devMode }
@@ -208,24 +208,22 @@ export default class Scan extends Command {
       )
 
       // Rules
-      let allPolicyPacks = policyPacks?.split(',') || []
+      let allPolicyPacks = isEmpty(policyPacks) ? [] : policyPacks.split(',')
 
       if (allPolicyPacks.length >= 1) {
         this.logger.debug(`Executing rules for policy packs: ${allPolicyPacks}`)
       } else {
-        this.logger.debug('Executing rules for policy packs found in config')
-        allPolicyPacks = config.policies
-        if (allPolicyPacks.length === 0) {
-          this.logger.error(
-            'There are no policy packs configured and none were passed to scan'
-          )
-          this.exit()
-        }
+        allPolicyPacks = config.policies || []
+        this.logger.debug(
+          `Executing rules for policy packs found in config: ${allPolicyPacks}`
+        )
       }
 
-      this.logger.debug(
-        `Executing rules for policy packs found in config: ${allPolicyPacks}`
-      )
+      if (allPolicyPacks.length === 0) {
+        this.logger.warn(
+          'There are no policy packs configured and none were passed to scan'
+        )
+      }
 
       const failedPolicyPackList: string[] = []
       const resources = config.resources.split(',')
@@ -352,6 +350,7 @@ export default class Scan extends Command {
         ' | '
       )} has been saved to ${chalk.italic.green(dataStorageLocation)}`
     )
+
     if (storageRunning) {
       this.logger.success(
         `Your data for ${allProviders.join(
