@@ -1,3 +1,16 @@
+# [0.13.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.1...0.13.0-alpha.1) (2021-10-28)
+
+
+### Bug Fixes
+
+* Dropped pluginType as param from lock file methods ([3328c8b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3328c8b60ce76c36d9584d7156e5ecef5c4211e1))
+* Restored install provider command ([49316d9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/49316d99bf374364ca686f8179ed93b609dc478f))
+
+
+### Features
+
+* Moved PluginManager methods to NpmManager ([f14502b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f14502b708e499f757eaa80264962f92d103df55))
+
 ## [0.12.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.0...0.12.1) (2021-10-26)
 
 
