@@ -9,7 +9,13 @@
 <br />
 <br />
 
-An instant **GraphQL** API to query your cloud infrastructure and configuration so that you can solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+The **GraphQL** API for AWS - solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+<br />
+
+🌐 Website: https://www.cloudgraph.dev
+<br />
+
+💻 Documentation: https://docs.cloudgraph.dev
 
 <br />
 
@@ -46,11 +52,46 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-**Not anymore.**
+**Not anymore**
 
 <br />
 
-CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers.
+CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers. Here are some more examples:
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg">
+    <img alt="exampleQuery1" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg">
+    <img alt="exampleQuery2" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg">
+    <img alt="exampleQuery3" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg">
+    <img alt="exampleQuery4" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br />
+
 
 # How It Works
 
@@ -131,7 +172,7 @@ cg launch
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
 ```bash
-  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 
+  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000
   --label cloudgraph-cli-dgraph-standalone -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1
 ```
 
@@ -216,8 +257,9 @@ For a list of currently supported AWS services please see the [AWS Provider Repo
 <!-- examplesqueries -->
 
 # Example Queries
+Link to full documentation: https://docs.cloudgraph.dev/overview.
 
-To use CloudGraph, you will need to be familiar with [GraphQL](https://graphql.org/). This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find additional example queries in the [examples](https://github.com/cloudgraphdev/cli/tree/master/examples) directory. Feel free to make a PR with other examples you would like to see included, check out the [Contribution Guidelines](#contribution-guidelines) section for more information.
+To use CloudGraph, you will need to be familiar with [GraphQL](https://graphql.org/). This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find **hundreds** of additional example queries in the [documentation](https://docs.cloudgraph.dev/overview).
 
 <br />
 
@@ -1098,7 +1140,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -1123,7 +1165,7 @@ EXAMPLE
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1149,7 +1191,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/load.ts)_
 
 ## `cg provider [PROVIDER]`
 
@@ -1171,7 +1213,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/provider/index.ts)_
 
 ## `cg provider:add [PROVIDER]`
 
@@ -1200,7 +1242,7 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
-_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/provider/add.ts)_
+_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/provider/add.ts)_
 
 ## `cg provider:install [PROVIDER]`
 
@@ -1228,7 +1270,7 @@ EXAMPLE
   $ cg provider install
 ```
 
-_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/provider/install.ts)_
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/provider/install.ts)_
 
 ## `cg provider:list [PROVIDER]`
 
@@ -1259,7 +1301,7 @@ EXAMPLES
   $ cg provider list aws
 ```
 
-_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/provider/list.ts)_
+_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/provider/list.ts)_
 
 ## `cg provider:remove [PROVIDER]`
 
@@ -1294,7 +1336,7 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
-_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/provider/remove.ts)_
+_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/provider/remove.ts)_
 
 ## `cg provider:update [PROVIDER]`
 
@@ -1324,7 +1366,7 @@ EXAMPLES
   $cg provider update aws@0.12.0
 ```
 
-_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/provider/update.ts)_
+_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/provider/update.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -1352,7 +1394,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -1377,7 +1419,7 @@ EXAMPLE
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 
@@ -1395,5 +1437,5 @@ EXAMPLES
   $ cg teardown --delete-image
 ```
 
-_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.12/src/commands/teardown.ts)_
+_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.12.1/src/commands/teardown.ts)_
 <!-- commandsstop -->

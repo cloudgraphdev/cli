@@ -1,7 +1,7 @@
 {
   "name": "@cloudgraph/cli",
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
-  "version": "0.11.12",
+  "version": "0.12.1",
   "author": "AutoCloud",
   "license": "MPL-2.0",
   "publishConfig": {
@@ -16,8 +16,7 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/cg-provider-aws": "^0.36.1",
-    "@cloudgraph/sdk": "0.4.0",
+    "@cloudgraph/sdk": "0.5.0",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
     "@oclif/command": "^1",
@@ -37,6 +36,7 @@
     "graphql-playground-middleware-express": "^1.7.22",
     "inquirer": "^8.1.1",
     "live-plugin-manager": "0.15.1",
+    "npm": "^7.24.2",
     "open": "^8.2.1",
     "tslib": "^1"
   },
@@ -54,6 +54,7 @@
     "@types/inquirer": "^7.3.2",
     "@types/jest": "^27.0.1",
     "@types/node": "^14",
+    "@types/npm": "^7.19.0",
     "@types/pino": "^6.3.8",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",

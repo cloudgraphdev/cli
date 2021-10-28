@@ -12,3 +12,13 @@ export const DEFAULT_CONFIG = {
 
 export const DGRAPH_CONTAINER_LABEL = 'cloudgraph-cli-dgraph-standalone'
 export const DGRAPH_DOCKER_IMAGE_NAME = 'dgraph/standalone:v21.03.1'
+
+export enum PluginType {
+  Provider = 'provider',
+  PolicyPack = 'policyPack',
+}
+
+export enum PluginModule {
+  'provider' = 'cg-provider',
+  'policyPack' = 'policy-pack',
+}
