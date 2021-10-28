@@ -45,7 +45,7 @@ export class Manager {
     let pluginName = plugin
 
     if (plugin.includes('/')) {
-      [pluginNamespace, pluginName] = plugin.split('/')
+      ;[pluginNamespace, pluginName] = plugin.split('/')
     }
     return {
       importPath: `${pluginNamespace}/${
@@ -187,7 +187,8 @@ Run ${chalk.italic.green('cg update')} to install`
       )
       return true
     }
-    const test = satisfies(this.cliConfig.version, requiredVersion)
+    const [cliVersion] = this.cliConfig.version.split('-')
+    const test = satisfies(cliVersion, requiredVersion)
     if (!test) {
       // eslint-disable-next-line max-len
       const errText = `${this.pluginType} ${importPath}@${pluginVersion} requires cli version ${requiredVersion} but cli version is ${this.cliConfig.version}`
