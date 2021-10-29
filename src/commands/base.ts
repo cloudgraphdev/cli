@@ -267,13 +267,14 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
           `The policy pack ${policyPack} did not return a valid set of rules`
         )
       }
-      const client = new CloudGraph.RulesEngine(
-        rules,
-        mappings,
-        `${provider}Finding`
-      )
-      this.policyPacks[policyPack] = client
-      return client
+      // const client = new CloudGraph.RulesEngine(
+      //   rules,
+      //   mappings,
+      //   `${provider}Finding`
+      // )
+      // this.policyPacks[policyPack] = client
+      // return client
+      return null
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(
