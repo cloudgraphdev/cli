@@ -1299,7 +1299,7 @@ EXAMPLE
   $ cg provider install
 ```
 
-_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.13.0-alpha.2/src/commands/provider/install.ts)_
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.13.0-alpha.3/src/commands/provider/install.ts)_
 
 ## `cg provider:list [PROVIDER]`
 
