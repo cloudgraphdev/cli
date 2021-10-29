@@ -25,22 +25,23 @@ The **GraphQL** API for AWS - solve a host of complex security, compliance, and 
 [![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/master/package.json)
 
 <!-- toc -->
-* [Why CloudGraph](#why-cloudgraph)
-* [How It Works](#how-it-works)
-* [Authentication](#authentication)
-* [Install](#install)
-* [Quick Start](#quick-start)
-* [Loading Previous Versions](#loading-previous-versions)
-* [Supported Services](#supported-services)
-* [Example Queries](#example-queries)
-* [Query Tools](#query-tools)
-* [Community](#community)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Deployment Options](#deployment-options)
-* [Hosted Version](#hosted-version)
-* [Debugging](#debugging)
-* [Common Errors](#common-errors)
-* [Commands](#commands)
+
+- [Why CloudGraph](#why-cloudgraph)
+- [How It Works](#how-it-works)
+- [Authentication](#authentication)
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Loading Previous Versions](#loading-previous-versions)
+- [Supported Services](#supported-services)
+- [Example Queries](#example-queries)
+- [Query Tools](#query-tools)
+- [Community](#community)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Deployment Options](#deployment-options)
+- [Hosted Version](#hosted-version)
+- [Debugging](#debugging)
+- [Common Errors](#common-errors)
+- [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -48,7 +49,6 @@ The **GraphQL** API for AWS - solve a host of complex security, compliance, and 
 # Why CloudGraph
 
 Whether you're a cloud architect with 15 years of experience or someone who is just getting started on their cloud journey, there is no denying that staying on top of security, compliance, governance, FinOps, operations...etc., is challenging, time-consuming work. Even answering basic questions like, "What all is running in the us-east-1 region?", "Are my RDS clusters properly secured and compliant?", or "How much is this EKS/AKS/GKE cluster going to cost me this month?" requires both time and expertise, or expensive 3rd party software.
-
 
 <br />
 
@@ -91,7 +91,6 @@ CloudGraph lets any cloud professional answer questions like, "What KMS keys do 
 </p>
 
 <br />
-
 
 # How It Works
 
@@ -257,6 +256,7 @@ For a list of currently supported AWS services please see the [AWS Provider Repo
 <!-- examplesqueries -->
 
 # Example Queries
+
 Link to full documentation: https://docs.cloudgraph.dev/overview.
 
 To use CloudGraph, you will need to be familiar with [GraphQL](https://graphql.org/). This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find **hundreds** of additional example queries in the [documentation](https://docs.cloudgraph.dev/overview).
@@ -292,7 +292,7 @@ This query will return a `JSON` payload that looks like this. All of the followi
     "getawsEc2": {
       "id": "i-12345567889012234",
       "arn": "arn:aws:ec2:us-east-1:123445678997:instance/i-12345567889012234"
-    },
+    }
   },
   "extensions": {
     "touched_uids": 4
@@ -463,12 +463,12 @@ Get each `VPC`, the `ALBs` and `Lambdas` in that `VPC`, and then a bunch of nest
 ```graphql
 query {
   queryawsVpc {
-	id
+    id
     arn
     alb {
       id
       arn
-      ec2Instance{
+      ec2Instance {
         id
         arn
         ebs(filter: { isBootDisk: true }) {
@@ -691,6 +691,7 @@ query {
 <br />
 
 ## AWS FinOps examples:
+
 <br />
 
 Note that in order to successfully ingest FinOps related data you must have the Cost Explorer API enabled in your AWS Account. [You can view how to do that here](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-access.html)
@@ -929,10 +930,9 @@ query {
 
 When you think, "in terms of a graph", you can do almost anything with CloudGraph. Say for example that you want to know what Lamba functions don't belong to a VPC (i.e. they don't leverage VPC networking). Because CloudGraph connects all resources that have relationships, such as VPC parents to their Lambda children, you are able to answer this question easily. Simply check to see what lambda functions the VPC is "connected" to, and compare that against the list of all lambda functions like so:
 
-
 ```graphql
 query {
-  queryawsVpc{
+  queryawsVpc {
     id
     arn
     lambda {
@@ -1083,19 +1083,20 @@ There are some common errors you may see when running CloudGraph that are usuall
 # Commands
 
 <!-- commands -->
-* [`cg help [COMMAND]`](#cg-help-command)
-* [`cg init [PROVIDER]`](#cg-init-provider)
-* [`cg launch [PROVIDER]`](#cg-launch-provider)
-* [`cg load [PROVIDER]`](#cg-load-provider)
-* [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-* [`cg scan [PROVIDER]`](#cg-scan-provider)
-* [`cg serve [PROVIDER]`](#cg-serve-provider)
-* [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+
+- [`cg help [COMMAND]`](#cg-help-command)
+- [`cg init [PROVIDER]`](#cg-init-provider)
+- [`cg launch [PROVIDER]`](#cg-launch-provider)
+- [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg provider [PROVIDER]`](#cg-provider-provider)
+- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
+- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
+- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
+- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
+- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg scan [PROVIDER]`](#cg-scan-provider)
+- [`cg serve [PROVIDER]`](#cg-serve-provider)
+- [`cg teardown [PROVIDER]`](#cg-teardown-provider)
 
 ## `cg help [COMMAND]`
 
@@ -1243,6 +1244,34 @@ EXAMPLES
 ```
 
 _See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.13.0-alpha.3/src/commands/provider/add.ts)_
+
+## `cg provider:install [PROVIDER]`
+
+Install providers based on the lock file
+
+```
+USAGE
+  $ cg provider install [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg install
+
+EXAMPLE
+  $ cg provider install
+```
+
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.13.0-alpha.3/src/commands/provider/install.ts)_
 
 ## `cg provider:install [PROVIDER]`
 
@@ -1438,4 +1467,5 @@ EXAMPLES
 ```
 
 _See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.13.0-alpha.3/src/commands/teardown.ts)_
+
 <!-- commandsstop -->
