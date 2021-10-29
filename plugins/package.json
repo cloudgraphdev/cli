@@ -1,8 +1,0 @@
-{
-  "name": "@cloudgraph/plugins",
-  "description": "Plugins directory",
-  "version": "0",
-  "dependencies": {
-    "@cloudgraph/cg-provider-aws": "^0.36.1"
-  }
-}

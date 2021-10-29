@@ -60,17 +60,31 @@ export default class Update extends Command {
 
     // Loop through providers and try to update them
     for (const [key] of Object.entries(providersToList)) {
-      let version = 'latest'
-      const rawProvider = allProviders.find(val => val.includes(key))
-      if (rawProvider && rawProvider.includes('@')) {
-        [, version] = rawProvider.split('@')
+      try {
+        let version = 'latest'
+        const rawProvider = allProviders.find(val => val.includes(key))
+        if (rawProvider && rawProvider.includes('@')) {
+          ;[, version] = rawProvider.split('@')
+        }
+
+        this.logger.startSpinner(
+          `Updating ${chalk.italic.green(key)} provider to ${version} version`
+        )
+
+        await manager.getPlugin(key, version)
+
+        this.logger.successSpinner(
+          `${chalk.italic.green(key)} provider updated successfully`
+        )
+
+        this.logger.info(
+          `Run ${chalk.italic.green(
+            `$cg init ${key}`
+          )} to ensure you have the latest configuration for this version (including new services).`
+        )
+      } catch (error) {
+        this.logger.stopSpinner()
       }
-      await manager.getPlugin(key, version)
-      this.logger.info(
-        `Run ${chalk.italic.green(
-          `$cg init ${key}`
-        )} to ensure you have the latest configuration for this version (including new services).`
-      )
     }
   }
 }
