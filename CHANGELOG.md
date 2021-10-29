@@ -1,3 +1,12 @@
+# [0.13.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.3...0.13.0-alpha.4) (2021-10-29)
+
+
+### Bug Fixes
+
+* Restored install provider command ([c6a33b9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c6a33b9e63acff9840b6c6dbad127ffc90671761))
+* Update aws provider to 0.39.0 version ([d076b63](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d076b63342dda864afb1f77e7a2ba2af0cfb4aa7))
+* Updated npm binary reference ([fa16ffe](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/fa16ffe6640999ffe46852e94c46d88ed30a0e88))
+
 # [0.13.0-alpha.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.2...0.13.0-alpha.3) (2021-10-29)
 
 ### Bug Fixes
