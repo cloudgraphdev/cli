@@ -2,7 +2,8 @@ import { exec } from 'child_process'
 
 export default class NpmManager {
   constructor() {
-    this.npmBinary = './node_modules/.bin/npm'
+    this.npmBinary =
+      process.env.NODE_ENV === 'test' ? './node_modules/.bin/npm' : 'npm'
   }
 
   npmBinary: string
@@ -14,7 +15,7 @@ export default class NpmManager {
     let providerNamespace = '@cloudgraph'
     let providerName = provider
     if (provider.includes('/')) {
-      [providerNamespace, providerName] = provider.split('/')
+      ;[providerNamespace, providerName] = provider.split('/')
     }
     return {
       importPath: `${providerNamespace}/cg-provider-${providerName}`,

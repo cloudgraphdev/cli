@@ -1,5 +1,7 @@
 import { isEmpty } from 'lodash'
+import chalk from 'chalk'
 import { flags } from '@oclif/command'
+
 import Command from '../base'
 import { PluginType } from '../../utils/constants'
 
@@ -41,9 +43,20 @@ export default class Remove extends Command {
       this.exit()
     }
     for (const key of allProviders) {
-      await manager.removePlugin(key)
-      if (!noSave) {
-        manager.removeFromLockFile(key)
+      try {
+        this.logger.startSpinner(`Removing ${chalk.italic.green(key)} provider`)
+
+        await manager.removePlugin(key)
+
+        this.logger.successSpinner(
+          `${chalk.italic.green(key)} provider removed successfully`
+        )
+
+        if (!noSave) {
+          manager.removeFromLockFile(key)
+        }
+      } catch (error) {
+        this.logger.stopSpinner()
       }
     }
   }
