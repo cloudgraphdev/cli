@@ -49,7 +49,6 @@ The **GraphQL** API for AWS - solve a host of complex security, compliance, and 
 
 Whether you're a cloud architect with 15 years of experience or someone who is just getting started on their cloud journey, there is no denying that staying on top of security, compliance, governance, FinOps, operations...etc., is challenging, time-consuming work. Even answering basic questions like, "What all is running in the us-east-1 region?", "Are my RDS clusters properly secured and compliant?", or "How much is this EKS/AKS/GKE cluster going to cost me this month?" requires both time and expertise, or expensive 3rd party software.
 
-
 <br />
 
 **Not anymore**
@@ -91,7 +90,6 @@ CloudGraph lets any cloud professional answer questions like, "What KMS keys do 
 </p>
 
 <br />
-
 
 # How It Works
 
@@ -172,7 +170,7 @@ cg launch
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
 ```bash
-  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000 
+  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000
   --label cloudgraph-cli-dgraph-standalone -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1
 ```
 
@@ -257,6 +255,7 @@ For a list of currently supported AWS services please see the [AWS Provider Repo
 <!-- examplesqueries -->
 
 # Example Queries
+
 Link to full documentation: https://docs.cloudgraph.dev/overview.
 
 To use CloudGraph, you will need to be familiar with [GraphQL](https://graphql.org/). This section contains a handful of example queries to get you up and running but is by no means exhaustive. If you can dream it up, you can query it! Note that you can find **hundreds** of additional example queries in the [documentation](https://docs.cloudgraph.dev/overview).
@@ -292,7 +291,7 @@ This query will return a `JSON` payload that looks like this. All of the followi
     "getawsEc2": {
       "id": "i-12345567889012234",
       "arn": "arn:aws:ec2:us-east-1:123445678997:instance/i-12345567889012234"
-    },
+    }
   },
   "extensions": {
     "touched_uids": 4
@@ -463,12 +462,12 @@ Get each `VPC`, the `ALBs` and `Lambdas` in that `VPC`, and then a bunch of nest
 ```graphql
 query {
   queryawsVpc {
-	id
+    id
     arn
     alb {
       id
       arn
-      ec2Instance{
+      ec2Instance {
         id
         arn
         ebs(filter: { isBootDisk: true }) {
@@ -691,6 +690,7 @@ query {
 <br />
 
 ## AWS FinOps examples:
+
 <br />
 
 Note that in order to successfully ingest FinOps related data you must have the Cost Explorer API enabled in your AWS Account. [You can view how to do that here](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-access.html)
@@ -929,10 +929,9 @@ query {
 
 When you think, "in terms of a graph", you can do almost anything with CloudGraph. Say for example that you want to know what Lamba functions don't belong to a VPC (i.e. they don't leverage VPC networking). Because CloudGraph connects all resources that have relationships, such as VPC parents to their Lambda children, you are able to answer this question easily. Simply check to see what lambda functions the VPC is "connected" to, and compare that against the list of all lambda functions like so:
 
-
 ```graphql
 query {
-  queryawsVpc{
+  queryawsVpc {
     id
     arn
     lambda {
@@ -1112,7 +1111,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
 
 ## `cg init [PROVIDER]`
 

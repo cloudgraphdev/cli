@@ -1,6 +1,9 @@
 import { isEmpty } from 'lodash'
+import chalk from 'chalk'
 import { flags } from '@oclif/command'
+
 import Command from '../base'
+import { PluginType } from '../../utils/constants'
 
 export default class Remove extends Command {
   static description = 'Remove currently installed provider'
@@ -33,16 +36,27 @@ export default class Remove extends Command {
       flags: { 'no-save': noSave },
     } = this.parse(Remove)
     const allProviders = argv
-    const manager = this.getPluginManager()
+    const manager = this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()
     if (isEmpty(lockFile)) {
       this.logger.info('No providers found, have you installed any?')
       this.exit()
     }
     for (const key of allProviders) {
-      await manager.removePlugin(key)
-      if (!noSave) {
-        manager.removeProviderFromLockFile(key)
+      try {
+        this.logger.startSpinner(`Removing ${chalk.italic.green(key)} provider`)
+
+        await manager.removePlugin(key)
+
+        this.logger.successSpinner(
+          `${chalk.italic.green(key)} provider removed successfully`
+        )
+
+        if (!noSave) {
+          manager.removeFromLockFile(key)
+        }
+      } catch (error) {
+        this.logger.stopSpinner()
       }
     }
   }

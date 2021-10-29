@@ -58,7 +58,7 @@ export default class DGraphClientWrapper {
         resolve(result)
       } catch (error) {
         this.logger.error(`${chalk.red('dropAll')}: Operation failed`)
-        this.logger.debug(error)
+        this.logger.debug(JSON.stringify(error))
         reject(error)
       }
     })
@@ -78,7 +78,7 @@ export default class DGraphClientWrapper {
         resolve(result)
       } catch (error) {
         this.logger.error(`${chalk.red('dropData')}: Operation failed.`)
-        this.logger.debug(error)
+        this.logger.debug(JSON.stringify(error))
         reject(error)
       }
     })
