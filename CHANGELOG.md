@@ -1,3 +1,10 @@
+# [0.13.0-alpha.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.2...0.13.0-alpha.3) (2021-10-29)
+
+
+### Bug Fixes
+
+* Updated npm binary reference ([c64a6db](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c64a6db874fb9df33519d34bc9c5bdcedd8e0e2a))
+
 # [0.13.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.1...0.13.0-alpha.2) (2021-10-29)
 
 
