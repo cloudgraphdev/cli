@@ -1,3 +1,10 @@
+# [0.13.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.1...0.13.0-alpha.2) (2021-10-29)
+
+
+### Bug Fixes
+
+* solved alpha versions condition when getting plugin ([1effb43](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1effb430b8b181638d08e329dc1f059c4144b214))
+
 # [0.13.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.1...0.13.0-alpha.1) (2021-10-28)
 
 
