@@ -1,3 +1,10 @@
+## [0.13.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0...0.13.1) (2021-11-01)
+
+
+### Bug Fixes
+
+* Removed aws provider dependency ([94bb59d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/94bb59d84e78cfd1356651a7448fa7bdacdf58ba))
+
 # [0.13.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.3...0.13.0) (2021-10-29)
 
 
