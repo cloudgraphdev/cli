@@ -36,7 +36,6 @@
     "graphql-playground-middleware-express": "^1.7.22",
     "inquirer": "^8.1.1",
     "live-plugin-manager": "0.15.1",
-    "npm": "^7.24.2",
     "open": "^8.2.1",
     "tslib": "^1"
   },
@@ -70,6 +69,7 @@
     "jest": "^27.1.0",
     "jest-diff": "^27.1.0",
     "lint-staged": "^11.1.1",
+    "npm": "^8.1.2",
     "semantic-release": "^17.4.4",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
