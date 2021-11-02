@@ -15,7 +15,7 @@ export default class NpmManager {
     let providerNamespace = '@cloudgraph'
     let providerName = provider
     if (provider.includes('/')) {
-      [providerNamespace, providerName] = provider.split('/')
+      ;[providerNamespace, providerName] = provider.split('/')
     }
     return {
       importPath: `${providerNamespace}/cg-provider-${providerName}`,
