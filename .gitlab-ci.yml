@@ -64,8 +64,14 @@ semantic release:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^chore\(release\)/'
       when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        TAG: "latest"
     - if: $CI_COMMIT_BRANCH == "alpha"
+      variables:
+        TAG: "alpha"
     - if: $CI_COMMIT_BRANCH == "beta"
+      variables:
+        TAG: "beta"
   variables:
     # Set git commit identity
     GIT_AUTHOR_NAME: "AutoCloud Deploy Bot"
@@ -78,7 +84,7 @@ semantic release:
   before_script:
     - *configure-registry
   script:
-    - npx semantic-release -r $CI_PROJECT_URL
+    - npx semantic-release -r $CI_PROJECT_URL -t $TAG
 
 .curlcmd: &curlcmd >
   curl
