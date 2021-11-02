@@ -1,3 +1,10 @@
+## [0.13.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.2...0.13.3) (2021-11-02)
+
+
+### Bug Fixes
+
+* **provider:** remove aws provider dep ([3ea2238](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3ea2238e737011e8517375fbc1adaeb04c720656))
+
 ## [0.13.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.1...0.13.2) (2021-11-01)
 
 
