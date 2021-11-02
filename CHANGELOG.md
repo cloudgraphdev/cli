@@ -1,3 +1,10 @@
+## [0.13.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.3...0.13.4) (2021-11-02)
+
+
+### Bug Fixes
+
+* Moved npm library to dev dependency only ([58ecbd2](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/58ecbd2adafd1b740d391e4821434cebf4971be4))
+
 ## [0.13.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.2...0.13.3) (2021-11-02)
 
 
