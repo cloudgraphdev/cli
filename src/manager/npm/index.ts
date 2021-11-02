@@ -1,9 +1,9 @@
 import { exec } from 'child_process'
+import path from 'path'
 
 export default class NpmManager {
   constructor() {
-    this.npmBinary =
-      process.env.NODE_ENV === 'test' ? './node_modules/.bin/npm' : 'npm'
+    this.npmBinary = './node_modules/.bin/npm'
   }
 
   npmBinary: string
@@ -36,6 +36,7 @@ export default class NpmManager {
       ]
       exec(
         `${this.npmBinary} install ${module} ${flags.join(' ')}`,
+        { cwd: path.resolve(__dirname, '../../../') },
 
         err => {
           if (err) reject(err)
@@ -56,22 +57,30 @@ export default class NpmManager {
         '--ignore-scripts',
         '--silent',
       ]
-      exec(`${this.npmBinary} uninstall ${module} ${flags.join(' ')}`, err => {
-        if (err) reject(err)
+      exec(
+        `${this.npmBinary} uninstall ${module} ${flags.join(' ')}`,
+        { cwd: path.resolve(__dirname, '../../../') },
+        err => {
+          if (err) reject(err)
 
-        resolve(0)
-      })
+          resolve(0)
+        }
+      )
     })
   }
 
   async queryPackage(module: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      exec(`${this.npmBinary} view ${module} --json`, (err, stdout) => {
-        if (err) reject(err)
+      exec(
+        `${this.npmBinary} view ${module} --json`,
+        { cwd: path.resolve(__dirname, '../../../') },
+        (err, stdout) => {
+          if (err) reject(err)
 
-        const res = JSON.parse(stdout)
-        resolve(res)
-      })
+          const res = JSON.parse(stdout)
+          resolve(res)
+        }
+      )
     })
   }
 }
