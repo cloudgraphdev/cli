@@ -18,6 +18,7 @@ import {
   printWelcomeMessage,
   printBoxMessage,
   fileUtils,
+  getNextPort
 } from '../utils'
 import flagsDefinition from '../utils/flags'
 import openBrowser from '../utils/open'
@@ -135,20 +136,24 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     if (!noServe) {
       const configPort = this.getCGConfigKey('port') ?? 5555
       const serverPort = port ?? configPort
-      const queryEngine = new QueryEngine(serverPort)
+      const availablePort = await getNextPort(Number(serverPort))
+      if (serverPort !== availablePort) {
+        this.logger.warn(`Requested port ${serverPort} is unavailable, using ${availablePort}`)
+      }
+      const queryEngine = new QueryEngine(availablePort)
       await queryEngine.startServer(this.getHost(this.getConnectionSettings()))
       this.logger.success(
         `Serving query engine at ${chalk.underline.green(
-          `http://localhost:${serverPort}`
+          `http://localhost:${availablePort}`
         )}`
       )
       try {
         await openBrowser(
-          `http://localhost:${serverPort}/${this.getQueryEngine()}`
+          `http://localhost:${availablePort}/${this.getQueryEngine()}`
         )
       } catch (error) {
         this.logger.warn(
-          `Could not open a browser tab with query engine, open manually at http://localhost:${serverPort}`
+          `Could not open a browser tab with query engine, open manually at http://localhost:${availablePort}`
         )
       }
     }
