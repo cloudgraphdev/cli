@@ -1,3 +1,10 @@
+## [0.13.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.4...0.13.5) (2021-11-03)
+
+
+### Bug Fixes
+
+* **queryEngine:** detect if wanted port is in use and move to next available port ([35978aa](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/35978aa2f6247fcd328e91ce7473c81805e0b5ef))
+
 ## [0.13.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.3...0.13.4) (2021-11-02)
 
 
