@@ -45,7 +45,7 @@ export class Manager {
     let pluginName = plugin
 
     if (plugin.includes('/')) {
-      ;[pluginNamespace, pluginName] = plugin.split('/')
+      [pluginNamespace, pluginName] = plugin.split('/')
     }
     return {
       importPath: `${pluginNamespace}/${
@@ -252,11 +252,9 @@ Run ${chalk.italic.green('cg update')} to install`
       this.cliConfig.configDir,
       '.cloud-graph.lock.json'
     )
-    let oldLock
+
     try {
-      oldLock = cosmiconfigSync('cloud-graph').load(lockPath)
-    } catch (error: any) {}
-    try {
+      const oldLock = cosmiconfigSync('cloud-graph').load(lockPath)
       let newLockFile
       if (oldLock?.config) {
         newLockFile = {

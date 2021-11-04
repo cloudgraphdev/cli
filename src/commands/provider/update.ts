@@ -64,7 +64,7 @@ export default class Update extends Command {
         let version = 'latest'
         const rawProvider = allProviders.find(val => val.includes(key))
         if (rawProvider && rawProvider.includes('@')) {
-          ;[, version] = rawProvider.split('@')
+          [, version] = rawProvider.split('@')
         }
 
         this.logger.startSpinner(

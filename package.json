@@ -61,8 +61,6 @@
     "@typescript-eslint/parser": "^4.28.5",
     "chai": "^4.3.4",
     "eslint-config-airbnb-base": "14.2.1",
-    "eslint-config-oclif": "^3.1",
-    "eslint-config-oclif-typescript": "^0.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.4.0",
