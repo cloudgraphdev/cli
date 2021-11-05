@@ -1,3 +1,10 @@
+## [0.13.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.5...0.13.6) (2021-11-05)
+
+
+### Bug Fixes
+
+* Bring fix for npm manager to master branch ([476676e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/476676e2fe20801c4d9acc6403d397717c95cabe))
+
 ## [0.13.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.4...0.13.5) (2021-11-03)
 
 
