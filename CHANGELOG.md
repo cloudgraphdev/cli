@@ -1,3 +1,11 @@
+## [0.13.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.6...0.13.7) (2021-11-05)
+
+
+### Bug Fixes
+
+* Fixed npm as a main dependency ([ac4d322](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ac4d322721335f965cec9f547953a95425893f57))
+* Fixed npm as a main dependency ([d842222](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d842222c8d548064da47176211c1f58c90e455d0))
+
 ## [0.13.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.5...0.13.6) (2021-11-05)
 
 
