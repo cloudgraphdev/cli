@@ -1,3 +1,10 @@
+## [0.13.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.7...0.13.8) (2021-11-05)
+
+
+### Bug Fixes
+
+* **package:** peg typescript version ([04a9df4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/04a9df445838653e8d942e4e67149931c8ff9e44))
+
 ## [0.13.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.6...0.13.7) (2021-11-05)
 
 
