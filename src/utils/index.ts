@@ -9,8 +9,8 @@ import glob from 'glob'
 import path from 'path'
 import isEmpty from 'lodash/isEmpty'
 import detect from 'detect-port'
+import { scanReport, scanDataType, scanResult } from '../reports'
 
-import scanReport, { scanDataType, scanResult } from '../scanReport'
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
 

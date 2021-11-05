@@ -256,9 +256,9 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
 
   async getPolicyPackClient({
     policyPack,
-  }: // mappings,
-  // provider,
-  {
+    mappings,
+    provider,
+  }: {
     policyPack: string
     provider: string
     mappings: { [schemaName: string]: string }

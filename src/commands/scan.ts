@@ -7,9 +7,8 @@ import { groupBy, isEmpty, range } from 'lodash'
 import Command from './base'
 import { fileUtils, processConnectionsBetweenEntities } from '../utils'
 import DgraphEngine from '../storage/dgraph'
-import scanReport from '../reports/scan-report'
+import { scanReport, rulesReport } from '../reports'
 import { mergeSchemas } from '../utils/schema'
-import rulesReport from '../reports/rules-report'
 
 export default class Scan extends Command {
   static description =

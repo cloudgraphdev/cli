@@ -139,7 +139,6 @@ export default class DgraphEngine
     })
       .then((res: ExecutionResult) => {
         const { data: resData } = res
-        // console.log('data', query, resData)
         return resData
       })
       .catch(error => Promise.reject(error))

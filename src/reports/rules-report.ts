@@ -5,17 +5,6 @@ import { isEmpty } from 'lodash'
 
 const { logger } = CloudGraph
 
-export enum scanResult {
-  pass = 'pass',
-  fail = 'fail',
-  warn = 'warn',
-}
-
-export enum scanDataType {
-  status = 'status',
-  count = 'count',
-}
-
 export class RulesReport {
   tableHeaders = [chalk.green('ResourceId'), chalk.green('Result')]
 

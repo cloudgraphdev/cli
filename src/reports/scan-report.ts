@@ -2,18 +2,10 @@ import Table from 'cli-table'
 import chalk from 'chalk'
 import CloudGraph from '@cloudgraph/sdk'
 
+import { scanDataType, scanResult } from '.'
+
 const { logger } = CloudGraph
 
-export enum scanResult {
-  pass = 'pass',
-  fail = 'fail',
-  warn = 'warn'
-}
-
-export enum scanDataType {
-  status = 'status',
-  count = 'count'
-}
 interface pushDataParams {
   service: string
   type: scanDataType
@@ -30,11 +22,10 @@ enum statusLevel {
 // used for updating status of a service
 enum statusKeyWords {
   data = 'data',
-  connections = 'connections'
+  connections = 'connections',
 }
 
 const servicesToIgnore = ['tag', 'billing']
-
 
 // TODO: come back and add tests once testing strategy is determined
 export class ScanReport {
@@ -74,7 +65,10 @@ export class ScanReport {
           if (oldStatus.includes(statusKeyWords.data)) {
             newStatus = oldStatus
           }
-          if (oldStatus.includes(statusKeyWords.connections) && !status.includes(statusKeyWords.data)) {
+          if (
+            oldStatus.includes(statusKeyWords.connections) &&
+            !status.includes(statusKeyWords.data)
+          ) {
             newStatus = oldStatus
           }
           return { [service]: [`${count}`, newStatus] }
@@ -83,7 +77,9 @@ export class ScanReport {
         return val
       })
     } else {
-      this.internalTable.data.push({ [service]: [type === scanDataType.count ? '1': '0', status] })
+      this.internalTable.data.push({
+        [service]: [type === scanDataType.count ? '1' : '0', status],
+      })
     }
     if (type === scanDataType.count) {
       this.incrementTotalTable()
@@ -97,7 +93,9 @@ export class ScanReport {
     if (this.internalTable?.data?.[totalIndex]?.total) {
       const [currentCount, status] = this.internalTable.data[totalIndex].total
       const newCount = 1 + Number(currentCount)
-      this.internalTable.data[totalIndex] = { total: [String(newCount), status] }
+      this.internalTable.data[totalIndex] = {
+        total: [String(newCount), status],
+      }
     }
   }
 
@@ -106,7 +104,7 @@ export class ScanReport {
     switch (result) {
       case statusLevel.warn: {
         status = `${chalk.yellow(
-          String.fromCodePoint(0x26A0) // warning symbol
+          String.fromCodePoint(0x26a0) // warning symbol
         )} unable to make some connections`
         if (this.internalTable.status !== statusLevel.fail) {
           this.internalTable.status = statusLevel.warn
@@ -115,7 +113,7 @@ export class ScanReport {
       }
       case statusLevel.fail: {
         status = `${chalk.red(
-          String.fromCodePoint(0x1F6AB) // failure symbol
+          String.fromCodePoint(0x1f6ab) // failure symbol
         )} unable to store data in Dgraph`
         this.internalTable.status = statusLevel.fail
         break
@@ -130,7 +128,10 @@ export class ScanReport {
   print(): void {
     logger.info('Printing scan report...')
     // flip the table to put total at the bottom
-    const tableToPrint = [...this.internalTable.data.slice(1), this.internalTable.data[0]]
+    const tableToPrint = [
+      ...this.internalTable.data.slice(1),
+      this.internalTable.data[0],
+    ]
     this.table.push(
       ...tableToPrint.map(val => {
         const key = Object.keys(val)[0]
