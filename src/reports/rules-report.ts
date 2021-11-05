@@ -1,6 +1,6 @@
 import Table from 'cli-table'
 import chalk from 'chalk'
-import CloudGraph from '@cloudgraph/sdk'
+import CloudGraph, { RuleFinding } from '@cloudgraph/sdk'
 import { isEmpty } from 'lodash'
 
 const { logger } = CloudGraph
@@ -12,26 +12,26 @@ export class RulesReport {
 
   pushData({
     policyPack,
-    resourceId,
     ruleDescription,
-    result,
+    results,
   }: {
     policyPack: string
-    resourceId: string
     ruleDescription: string
-    result: 'FAIL' | 'PASS' | 'MISSING'
+    results: RuleFinding[]
   }): void {
-    const status = this.getStatus(result)
+    for (const { resourceId, ruleId, result } of results) {
+      const tableName = `${policyPack}-${ruleId}`
+      if (!this.tables[tableName]) {
+        this.tables[tableName] = new Table({ style: { head: [], border: [] } })
+        this.tables[tableName].push(
+          [chalk.italic.green(ruleDescription)],
+          this.tableHeaders
+        )
+      }
 
-    if (!this.tables[policyPack]) {
-      this.tables[policyPack] = new Table({ style: { head: [], border: [] } })
-      this.tables[policyPack].push(
-        [chalk.italic.green(ruleDescription)],
-        this.tableHeaders
-      )
+      const status = this.getStatus(result)
+      this.tables[tableName].push([resourceId, status])
     }
-
-    this.tables[policyPack].push([resourceId, status])
   }
 
   private getStatus(result: string): string {

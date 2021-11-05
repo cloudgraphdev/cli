@@ -254,14 +254,10 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     }
   }
 
-  async getPolicyPackClient({
+  async getPolicyPackPackage({
     policyPack,
-    mappings,
-    provider,
   }: {
     policyPack: string
-    provider: string
-    mappings: { [schemaName: string]: string }
   }): Promise<any> {
     try {
       const manager = this.getPluginManager(PluginType.PolicyPack)
@@ -279,13 +275,9 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
           `The policy pack ${policyPack} did not return a valid set of rules`
         )
       }
-      const client = new CloudGraph.RulesEngine(
-        rules,
-        mappings,
-        `${provider}Finding`
-      )
-      this.policyPacks[policyPack] = client
-      return client
+
+      this.policyPacks[policyPack] = rules
+      return rules
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(

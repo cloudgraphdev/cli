@@ -1,8 +1,8 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import { Opts } from '@cloudgraph/sdk'
-import { groupBy, isEmpty, range } from 'lodash'
+import CloudGraph, { Opts, RuleFinding } from '@cloudgraph/sdk'
+import { isEmpty, range } from 'lodash'
 
 import Command from './base'
 import { fileUtils, processConnectionsBetweenEntities } from '../utils'
@@ -250,24 +250,33 @@ export default class Scan extends Command {
           `Beginning ${chalk.italic.green('RULES')} for ${policyPack}`
         )
 
-        const policyPackClient = await this.getPolicyPackClient({
+        const policyPackRules = await this.getPolicyPackPackage({
           policyPack,
-          mappings: resourceTypeNamesToFieldsMap,
-          provider,
+          // mappings: resourceTypeNamesToFieldsMap,
+          // provider,
         })
-        if (!policyPackClient) {
+        if (!policyPackRules) {
           failedPolicyPackList.push(policyPack)
           this.logger.warn(
-            `No valid client found for ${policyPack}, skipping...`
+            `No valid rules found for ${policyPack}, skipping...`
           )
           continue // eslint-disable-line no-continue
         }
 
-        policyPacksPlugins[policyPack] = policyPackClient
+        // Initialize RulesEngine
+        const rulesEngine = new CloudGraph.RulesEngine(
+          resourceTypeNamesToFieldsMap,
+          `${provider}Finding`
+        )
+
+        policyPacksPlugins[policyPack] = {
+          engine: rulesEngine,
+          rules: policyPackRules,
+        }
 
         // Update Schema:
         const currentSchema: string = await storageEngine.getSchema()
-        const findingsSchema: string[] = policyPackClient.getSchema()
+        const findingsSchema: string[] = rulesEngine.getSchema()
 
         await storageEngine.setSchema([
           mergeSchemas(currentSchema, findingsSchema),
@@ -302,9 +311,33 @@ export default class Scan extends Command {
           )
 
           // Run rules:
-          const updatedData = await policyPacksPlugins[policyPack].getData(
-            storageEngine
-          )
+          const findings: RuleFinding[] = []
+          for (const rule of policyPacksPlugins[policyPack]?.rules) {
+            try {
+              const { data } = await storageEngine.query(rule.gql)
+              const results = (await policyPacksPlugins[
+                policyPack
+              ]?.engine?.processRule(rule, data)) as RuleFinding[]
+
+              // Generate results report
+              rulesReport.pushData({
+                policyPack,
+                ruleDescription: rule.description,
+                results,
+              })
+
+              findings.push(...results)
+            } catch (error) {
+              this.logger.debug(
+                `Error processing rule ${rule.ruleId} for ${policyPack} policy pack`
+              )
+            }
+          }
+
+          // Update data
+          const updatedData = await policyPacksPlugins[
+            policyPack
+          ]?.engine?.getData(findings)
 
           // Save connections
           processConnectionsBetweenEntities(
@@ -313,26 +346,6 @@ export default class Scan extends Command {
             storageRunning
           )
           await storageEngine.run(false)
-
-          const { data = [] } = updatedData.entities.find(
-            ({ name }: any) => name === 'awsFinding'
-          )
-
-          const findingsByRule = groupBy(data, 'ruleId')
-
-          for (const rule in findingsByRule) {
-            if (!isEmpty(rule)) {
-              const findings = findingsByRule[rule]
-              for (const { resourceId, result, ruleDescription } of findings) {
-                rulesReport.pushData({
-                  policyPack: `${policyPack}-${rule}`,
-                  ruleDescription,
-                  resourceId,
-                  result,
-                })
-              }
-            }
-          }
 
           this.logger.successSpinner(
             `${chalk.italic.green(policyPack)} rules excuted successfully`
