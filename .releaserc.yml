@@ -5,6 +5,8 @@ branches:
     prerelease: true
   - name: alpha
     prerelease: true
+  - name: alpha-test
+    prerelease: true
 plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"

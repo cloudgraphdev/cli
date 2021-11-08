@@ -65,6 +65,7 @@ semantic release:
       when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     - if: $CI_COMMIT_BRANCH == "alpha"
+    - if: $CI_COMMIT_BRANCH == "alpha-test"
     - if: $CI_COMMIT_BRANCH == "beta"
   variables:
     # Set git commit identity
@@ -78,7 +79,7 @@ semantic release:
   before_script:
     - *configure-registry
   script:
-    - npx semantic-release -r $CI_PROJECT_URL
+    - npx semantic-release -r $CI_PROJECT_URL --no-ci --dry-run
 
 .curlcmd: &curlcmd >
   curl
