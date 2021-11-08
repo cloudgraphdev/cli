@@ -3,7 +3,6 @@
 1. [Reporting security problems to CloudGraph](#reporting)
 2. [Security Point of Contact](#contact)
 3. [Incident Response Process](#process)
-4. [Vulnerability Management Plans](#vulnerability-management)
 
 <a name="reporting"></a>
 ## Reporting security problems to CloudGraph
@@ -53,9 +52,6 @@ CloudGraph will create an RCA (Root Cause Analysis) document in the [CloudGraph 
 Once the incident is confirmed to be resolved, CloudGraph will summarize the lessons
 learned from the incident and create a list of actions CloudGraph will take to prevent
 it from happening again.
-
-<a name="vulnerability-management"></a>
-## Vulnerability Management Plans
 
 ### Keep permissions to a minimum
 
