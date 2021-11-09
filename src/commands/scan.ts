@@ -8,7 +8,7 @@ import Command from './base'
 import { fileUtils, processConnectionsBetweenEntities } from '../utils'
 import DgraphEngine from '../storage/dgraph'
 import { scanReport, rulesReport } from '../reports'
-import { mergeSchemas } from '../utils/schema'
+import { generateSchemaMapDynamically, mergeSchemas } from '../utils/schema'
 
 export default class Scan extends Command {
   static description =
@@ -110,7 +110,7 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client } = await this.getProviderClient(provider)
+      const { client, schemasMap } = await this.getProviderClient(provider)
       if (!client) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
@@ -228,22 +228,8 @@ export default class Scan extends Command {
       const resources = config.resources.split(',')
 
       // Generate schema mapping
-      const resourceTypeNamesToFieldsMap: { [schemaName: string]: string } = {}
-      for (const resource of resources) {
-        let schemaName = `aws${resource
-          .charAt(0)
-          .toUpperCase()}${resource.slice(1)}`
-
-        if (resource === 'ec2Instance') {
-          schemaName = 'awsEc2'
-        }
-
-        if (resource === 'sg') {
-          schemaName = 'awsSecurityGroup'
-        }
-
-        resourceTypeNamesToFieldsMap[schemaName] = resource
-      }
+      const resourceTypeNamesToFieldsMap =
+        schemasMap || generateSchemaMapDynamically(provider, resources)
 
       for (const policyPack of allPolicyPacks) {
         this.logger.info(

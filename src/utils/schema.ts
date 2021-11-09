@@ -13,3 +13,19 @@ export function getSchemaFromFolder(dirPath: string, provider?: string): any[] {
     extensions: ['graphql'],
   })
 }
+
+export const generateSchemaMapDynamically = (
+  provider: string,
+  resources: string[]
+): { [schemaName: string]: string } => {
+  const resourceTypeNamesToFieldsMap: { [schemaName: string]: string } = {}
+
+  for (const resource of resources) {
+    const schemaName = `${provider}${resource
+      .charAt(0)
+      .toUpperCase()}${resource.slice(1)}`
+
+    resourceTypeNamesToFieldsMap[schemaName] = resource
+  }
+  return resourceTypeNamesToFieldsMap
+}
