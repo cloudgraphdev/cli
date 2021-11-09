@@ -177,7 +177,7 @@ export default class Init extends Command {
       /**
        * First install and require the provider plugin
        */
-      const client = await this.getProviderClient(provider)
+      const { client } = await this.getProviderClient(provider)
       if (!client) {
         this.logger.warn(
           `There was an issue initializing ${provider} plugin, skipping...`
