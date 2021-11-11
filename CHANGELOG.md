@@ -1,3 +1,10 @@
+## [0.13.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.8...0.13.9) (2021-11-11)
+
+
+### Bug Fixes
+
+* Imported schemasMap from provider package ([8fda732](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8fda7324e262b87bf36b47a5897d3e4a331a03e7))
+
 ## [0.13.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.7...0.13.8) (2021-11-05)
 
 
