@@ -18,12 +18,12 @@ import {
   printWelcomeMessage,
   printBoxMessage,
   fileUtils,
-  getNextPort
+  getNextPort,
 } from '../utils'
 import flagsDefinition from '../utils/flags'
 import openBrowser from '../utils/open'
 import { PluginType } from '../utils/constants'
-import { CloudGraphConfig } from '../types'
+import { CloudGraphConfig, SchemaMap } from '../types'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
@@ -138,7 +138,9 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       const serverPort = port ?? configPort
       const availablePort = await getNextPort(Number(serverPort))
       if (serverPort !== availablePort) {
-        this.logger.warn(`Requested port ${serverPort} is unavailable, using ${availablePort}`)
+        this.logger.warn(
+          `Requested port ${serverPort} is unavailable, using ${availablePort}`
+        )
       }
       const queryEngine = new QueryEngine(availablePort)
       await queryEngine.startServer(this.getHost(this.getConnectionSettings()))
@@ -216,13 +218,18 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     return this.manager
   }
 
-  async getProviderClient(provider: string): Promise<any> {
+  async getProviderClient(
+    provider: string
+  ): Promise<{ client: any; schemasMap?: SchemaMap }> {
     try {
       const manager = this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
         return this.providers[provider]
       }
-      const { default: Client } = (await manager.getPlugin(provider)) ?? {}
+      const {
+        default: Client,
+        enums: { schemasMap },
+      } = (await manager.getPlugin(provider)) ?? {}
       if (!Client || !(Client instanceof Function)) {
         // TODO: how can we better type this for the base Provider class from sdk
         throw new Error(
@@ -233,8 +240,8 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
         logger: this.logger,
         provider: this.getCGConfig(provider),
       })
-      this.providers[provider] = client
-      return client
+      this.providers[provider] = { client, schemasMap }
+      return { client, schemasMap }
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(
@@ -243,7 +250,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       this.logger.info(
         'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
       )
-      return null
+      return { client: null }
     }
   }
 
