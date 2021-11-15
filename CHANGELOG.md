@@ -1,3 +1,11 @@
+## [0.13.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.9...0.13.10) (2021-11-15)
+
+
+### Bug Fixes
+
+* **slack:** fix slack link ([34cf790](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/34cf790e156cc1d572396ff9547b64df24fb8ad2))
+* **slack:** fix slack link ([bdc196e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/bdc196e759ccf40d3e98423beadb8d086ed1910c))
+
 ## [0.13.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.8...0.13.9) (2021-11-11)
 
 
