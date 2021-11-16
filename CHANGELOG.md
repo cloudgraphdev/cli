@@ -1,3 +1,10 @@
+## [0.13.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.10...0.13.11) (2021-11-16)
+
+
+### Bug Fixes
+
+* **manager:** update writeToLockFile to ensure it works if no lock file exists ([cacbf2e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cacbf2ec97dc663ff868190c5a554eacf7a83c8a))
+
 ## [0.13.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.9...0.13.10) (2021-11-15)
 
 
