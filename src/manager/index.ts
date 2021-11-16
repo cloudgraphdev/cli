@@ -252,9 +252,13 @@ Run ${chalk.italic.green('cg update')} to install`
       this.cliConfig.configDir,
       '.cloud-graph.lock.json'
     )
-
+    let oldLock
     try {
-      const oldLock = cosmiconfigSync('cloud-graph').load(lockPath)
+      oldLock = cosmiconfigSync('cloud-graph').load(lockPath)
+    } catch (e: any) {
+      this.logger.debug(e)
+    }
+    try {
       let newLockFile
       if (oldLock?.config) {
         newLockFile = {
