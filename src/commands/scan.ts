@@ -238,8 +238,6 @@ export default class Scan extends Command {
 
         const policyPackRules = await this.getPolicyPackPackage({
           policyPack,
-          // mappings: resourceTypeNamesToFieldsMap,
-          // provider,
         })
         if (!policyPackRules) {
           failedPolicyPackList.push(policyPack)
@@ -321,9 +319,8 @@ export default class Scan extends Command {
           }
 
           // Update data
-          const updatedData = await policyPacksPlugins[
-            policyPack
-          ]?.engine?.getData(findings)
+          const updatedData =
+            policyPacksPlugins[policyPack]?.engine?.getData(findings)
 
           // Save connections
           processConnectionsBetweenEntities(

@@ -25,7 +25,7 @@ export const generateSchemaMapDynamically = (
       .charAt(0)
       .toUpperCase()}${resource.slice(1)}`
 
-    resourceTypeNamesToFieldsMap[schemaName] = resource
+    resourceTypeNamesToFieldsMap[resource] = schemaName
   }
   return resourceTypeNamesToFieldsMap
 }
