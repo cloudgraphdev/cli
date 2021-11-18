@@ -1,3 +1,10 @@
+# [0.14.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.11...0.14.0) (2021-11-18)
+
+
+### Features
+
+* add azure to provider question list ([f667789](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f667789b7c8e56ef564e4b3349cb538c1df0e286))
+
 ## [0.13.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.10...0.13.11) (2021-11-16)
 
 
