@@ -28,7 +28,16 @@ export default class Add extends Command {
       if (key.includes('@')) {
         [key, version] = key.split('@')
       }
-      await manager.getPlugin(key, version)
+      const {
+        default: { provider },
+      } = await manager.getPlugin(key, version)
+      const config = this.getCGConfig()
+      if (config[provider]) {
+        config[provider].policies = [
+          ...new Set([...config[provider].policies, key]),
+        ]
+        this.saveCloudGraphConfigFile(config)
+      }
       this.logger.info(
         `Run ${chalk.italic.green(
           `$cg init ${key}`

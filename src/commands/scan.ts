@@ -1,14 +1,14 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import CloudGraph, { Opts, RuleFinding } from '@cloudgraph/sdk'
-import { isEmpty, range } from 'lodash'
+import CloudGraph, { Opts, RuleFinding, Engine } from '@cloudgraph/sdk'
+import { isEmpty, range, groupBy } from 'lodash'
 
 import Command from './base'
 import { fileUtils, processConnectionsBetweenEntities } from '../utils'
-import DgraphEngine from '../storage/dgraph'
-import { scanReport, rulesReport } from '../reports'
 import { generateSchemaMapDynamically, mergeSchemas } from '../utils/schema'
+import DgraphEngine from '../storage/dgraph'
+import { scanReport } from '../reports'
 
 export default class Scan extends Command {
   static description =
@@ -39,7 +39,12 @@ export default class Scan extends Command {
     const { dataDir } = this.config
     const opts: Opts = { logger: this.logger, debug: true, devMode }
     let allProviders = argv
-    const policyPacksPlugins: { [policyPackName: string]: any } = {}
+    const policyPacksPlugins: {
+      [policyPackName: string]: {
+        engine: Engine
+        rules: any
+      }
+    } = {}
 
     // Run dgraph health check
     const storageEngine = this.getStorageEngine() as DgraphEngine
@@ -303,13 +308,6 @@ export default class Scan extends Command {
                 policyPack
               ]?.engine?.processRule(rule, data)) as RuleFinding[]
 
-              // Generate results report
-              rulesReport.pushData({
-                policyPack,
-                ruleDescription: rule.description,
-                results,
-              })
-
               findings.push(...results)
             } catch (error) {
               this.logger.debug(
@@ -333,12 +331,37 @@ export default class Scan extends Command {
           this.logger.successSpinner(
             `${chalk.italic.green(policyPack)} rules excuted successfully`
           )
+
+          const results = findings.filter(
+            finding => finding.result === CloudGraph.Result.FAIL
+          )
+
+          if (!isEmpty(results)) {
+            const { warning, danger } = groupBy(results, 'severity')
+            this.logger.warn(
+              `${chalk.italic.yellow(
+                `${warning.length || 0} warning${warning.length > 1 ? 's' : ''}`
+              )}  found during rules execution.`
+            )
+            this.logger.error(
+              `${chalk.italic.redBright.red(
+                `${danger.length || 0} vulnerabilit${
+                  danger.length > 1 ? 'ies' : 'y'
+                }`
+              )}  found during rules execution.`
+            )
+            this.logger.info(
+              `For more information, use the ${chalk.italic.green(
+                allProviders
+                  .map(provider => `query${provider}Finding`)
+                  .join(', ')
+              )} at the query engine`
+            )
+          }
         }
       }
     }
-
     scanReport.print()
-    rulesReport.print()
 
     this.logger.success(
       `Your data for ${allProviders.join(
