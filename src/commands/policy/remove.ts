@@ -42,8 +42,21 @@ export default class Remove extends Command {
     }
     for (const key of allPolicyPacks) {
       await manager.removePlugin(key)
+
       if (!noSave) {
         manager.removeFromLockFile(key)
+
+        const [provider] = key.split('-')
+        const config = this.getCGConfig()
+
+        if (config[provider]) {
+          config[provider].policies = [
+            ...config[provider].policies.filter(
+              (policy: string) => policy !== key
+            ),
+          ]
+          this.saveCloudGraphConfigFile(config)
+        }
       }
     }
   }

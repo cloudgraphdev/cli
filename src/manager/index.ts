@@ -168,12 +168,8 @@ export class Manager {
     }
     const pluginVersion = pluginInfo?.version
 
-    let latestRemoveVersion = '0.0.0'
-    try {
-      latestRemoveVersion = await this.queryRemoteVersion(importPath)
-    } catch (error) {
-      // TODO: Remove when @cloudgraph/policy-pack-aws-demo is published
-    }
+    const latestRemoveVersion = await this.queryRemoteVersion(importPath)
+
     if (gt(latestRemoveVersion, pluginVersion)) {
       const stoppedMsg = this.logger.stopSpinner()
       printBoxMessage(
