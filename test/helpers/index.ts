@@ -14,7 +14,10 @@ import {
   fileUtils,
   findExistingDGraphContainerId,
 } from '../../src/utils'
-import { DGRAPH_CONTAINER_LABEL, DGRAPH_DOCKER_IMAGE_NAME } from '../../src/utils/constants'
+import {
+  DGRAPH_CONTAINER_LABEL,
+  DGRAPH_DOCKER_IMAGE_NAME,
+} from '../../src/utils/constants'
 import {
   configFileMock,
   rootDir as root,
@@ -49,18 +52,19 @@ export const setConfigCommand = async (): Promise<{ version: string }> => {
 }
 
 export const getInitCommand = async (
-  argv: any = ['']
+  argv: any = [''],
+  providerName = ''
 ): Promise<InitCommandClass> => {
   const { version } = await setConfigCommand()
   // Mock the provider module
   InitCommandClass.prototype.getProviderClient = jest.fn(async function () {
-    return Provider
+    return { client: Provider, schemaMap: {} }
   })
   InitCommandClass.prototype.checkProviderConfig = jest.fn(async function () {
     return configFileMock.aws as any
   })
   InitCommandClass.prototype.getProvider = jest.fn(async function () {
-    return 'aws'
+    return providerName
   })
   InitCommandClass.prototype.providers = {}
   InitCommandClass.prototype.providers.aws = jest.fn()
@@ -143,7 +147,7 @@ export const initCommandPromptGetterMethodTester = async (
   mock.promptExpectation.forEach(expectation =>
     spyFn.mockResolvedValueOnce(expectation)
   )
-  const InitCommand = await getInitCommand([''])
+  const InitCommand = await getInitCommand([''], 'aws')
   const cloudGraphConfig = InitCommand.getCGConfig('cloudGraph')
   debug &&
     logger.debug(
@@ -163,7 +167,7 @@ export const initCommandNoOverwriteTester = async (
 ): Promise<void> => {
   debug && logger.debug('******')
   debug && logger.debug(`Test ${mock.methodToTest}`)
-  const InitCommand = await getInitCommand([''])
+  const InitCommand = await getInitCommand([''], 'aws')
   await saveTestCloudGraphConfigFile(InitCommand, debug)
   const response = await InitCommand[mock.methodToTest](mock.overwriteFlag)
   debug && logger.debug(`response: ${JSON.stringify(response)}`)
@@ -179,7 +183,7 @@ export const initCommandArgvGetterMethodTester = async (
   debug && logger.debug('******')
   debug && logger.debug(`Test ${mock.methodToTest}`)
   debug && logger.debug(`argvList: ${JSON.stringify(mock.argvList)}`)
-  const Init = await getInitCommand(mock.argvList)
+  const Init = await getInitCommand(mock.argvList, 'aws')
   const response = await Init[mock.methodToTest](mock.overwriteFlag)
   debug && logger.debug(`response: ${JSON.stringify(response)}`)
   expect(response).toMatchObject(mock.expectedResult)
@@ -204,7 +208,7 @@ export const runInitCommandTester = async (
   debug && logger.debug('******')
   debug && logger.debug('Test InitCommand.run()')
   debug && logger.debug(`argvList: ${JSON.stringify(mock.argvList)}`)
-  const InitCommand = await getInitCommand(mock.argvList)
+  const InitCommand = await getInitCommand(mock.argvList, 'aws')
   if (removeConfig) {
     removeConfigFile(debug)
     // remove all overwrite prompt mocks
