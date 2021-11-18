@@ -18,7 +18,7 @@ initTestSuite()
 describe('Serve command with DGraph container stopped', () => {
   beforeAll(async () => {
     await stopDgraphContainer(true)
-    await saveTestCloudGraphConfigFile(await getInitCommand([`--port=${testQueryEnginePort}`]))
+    await saveTestCloudGraphConfigFile(await getInitCommand([`--port=${testQueryEnginePort}`], 'aws'))
   })
   afterAll(() => {
     removeTestDirs()
@@ -37,7 +37,7 @@ describe('Serve command with DGraph container stopped', () => {
 describe('Serve command with DGraph container running', () => {
   let serveCommand: ServeCommandClass
   beforeAll(async () => {
-    await saveTestCloudGraphConfigFile(await getInitCommand([`--port=${testQueryEnginePort}`]), true)
+    await saveTestCloudGraphConfigFile(await getInitCommand([`--port=${testQueryEnginePort}`], 'aws'), true)
     await initDgraphContainer()
     serveCommand = await getServeCommand([`--port=${testQueryEnginePort}`])
   })

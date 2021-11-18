@@ -36,11 +36,6 @@ export default class Init extends Command {
   static args = Command.args
 
   async getProvider(): Promise<string> {
-    // TODO: remove when we have more choices
-    const choices = ['aws']
-    if (choices.length < 2) {
-      return new Promise(resolve => resolve('aws'))
-    }
     const { provider } = await this.interface.prompt(getProviderQuestion)
     this.logger.debug(provider)
     return provider
