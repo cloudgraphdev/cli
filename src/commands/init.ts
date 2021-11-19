@@ -146,10 +146,20 @@ export default class Init extends Command {
    */
   saveCloudGraphConfigFile(configResult: CloudGraphConfig): void {
     const { configDir } = this.config
-    fileUtils.makeDirIfNotExists(configDir)
+    const previousConfig = this.getCGConfig()
+    const newConfig = configResult
+    if (previousConfig) {
+      for (const key of Object.keys(previousConfig)) {
+        if (!configResult[key]) {
+          newConfig[key] = previousConfig[key]
+        }
+      }
+    } else {
+      fileUtils.makeDirIfNotExists(configDir)
+    }
     fs.writeFileSync(
       path.join(configDir, '.cloud-graphrc.json'),
-      JSON.stringify(configResult, null, 2)
+      JSON.stringify(newConfig, null, 2)
     )
   }
 
