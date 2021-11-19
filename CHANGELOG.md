@@ -1,3 +1,10 @@
+## [0.14.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.0...0.14.1) (2021-11-19)
+
+
+### Bug Fixes
+
+* **init:** fix multi provider config file saving to not overwrite other providers ([c666935](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c66693539a889bb6ce6538dac9f28248e20aaa3c))
+
 # [0.14.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.11...0.14.0) (2021-11-18)
 
 
