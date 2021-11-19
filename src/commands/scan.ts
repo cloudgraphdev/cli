@@ -225,7 +225,7 @@ export default class Scan extends Command {
 
       if (allPolicyPacks.length === 0) {
         this.logger.warn(
-          'There are no policy packs configured and none were passed to scan'
+          'There are no policy packs configured and none were passed to execute'
         )
       }
 
@@ -318,7 +318,7 @@ export default class Scan extends Command {
 
           // Update data
           const updatedData =
-            policyPacksPlugins[policyPack]?.engine?.getData(findings)
+            policyPacksPlugins[policyPack]?.engine?.prepareMutations(findings)
 
           // Save connections
           processConnectionsBetweenEntities(
@@ -338,18 +338,22 @@ export default class Scan extends Command {
 
           if (!isEmpty(results)) {
             const { warning, danger } = groupBy(results, 'severity')
-            this.logger.warn(
-              `${chalk.italic.yellow(
-                `${warning.length || 0} warning${warning.length > 1 ? 's' : ''}`
-              )}  found during rules execution.`
-            )
-            this.logger.error(
-              `${chalk.italic.redBright.red(
-                `${danger.length || 0} vulnerabilit${
-                  danger.length > 1 ? 'ies' : 'y'
-                }`
-              )}  found during rules execution.`
-            )
+            warning &&
+              this.logger.warn(
+                `${chalk.italic.yellow(
+                  `${warning.length || 0} warning${
+                    warning.length > 1 ? 's' : ''
+                  }`
+                )}  found during rules execution.`
+              )
+            danger &&
+              this.logger.error(
+                `${chalk.italic.redBright.red(
+                  `${danger.length || 0} vulnerabilit${
+                    danger.length > 1 ? 'ies' : 'y'
+                  }`
+                )}  found during rules execution.`
+              )
             this.logger.info(
               `For more information, use the ${chalk.italic.green(
                 allProviders

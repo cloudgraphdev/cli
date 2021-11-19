@@ -25,7 +25,7 @@ enum statusKeyWords {
   connections = 'connections',
 }
 
-const servicesToIgnore = ['tag', 'billing']
+const servicesToIgnore = ['tag', 'billing', 'Finding']
 
 // TODO: come back and add tests once testing strategy is determined
 export class ScanReport {
@@ -45,7 +45,7 @@ export class ScanReport {
   table: Table
 
   pushData({ service, type, result }: pushDataParams): void {
-    if (servicesToIgnore.includes(service)) {
+    if (servicesToIgnore.some(ignore => service.includes(ignore))) {
       return
     }
     const status = this.getStatus(result)

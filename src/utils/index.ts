@@ -149,14 +149,22 @@ export function processConnectionsBetweenEntities(
 ): void {
   for (const entity of providerData.entities) {
     const { mutation, data, name } = entity
-    const connectedData = data.map((service: any) => {
-      scanReport.pushData({
-        service: name,
-        type: scanDataType.count,
-        result: scanResult.pass,
+
+    let connectedData
+
+    if (data instanceof Array) {
+      connectedData = data.map((service: any) => {
+        scanReport.pushData({
+          service: name,
+          type: scanDataType.count,
+          result: scanResult.pass,
+        })
+        return getConnectedEntity(service, providerData, name)
       })
-      return getConnectedEntity(service, providerData, name)
-    })
+    } else {
+      connectedData = data
+    }
+
     if (storageRunning) {
       // Add service mutation to promises array
       storageEngine.push({
