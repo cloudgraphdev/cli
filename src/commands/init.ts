@@ -36,11 +36,6 @@ export default class Init extends Command {
   static args = Command.args
 
   async getProvider(): Promise<string> {
-    // TODO: remove when we have more choices
-    const choices = ['aws']
-    if (choices.length < 2) {
-      return new Promise(resolve => resolve('aws'))
-    }
     const { provider } = await this.interface.prompt(getProviderQuestion)
     this.logger.debug(provider)
     return provider
@@ -151,10 +146,20 @@ export default class Init extends Command {
    */
   saveCloudGraphConfigFile(configResult: CloudGraphConfig): void {
     const { configDir } = this.config
-    fileUtils.makeDirIfNotExists(configDir)
+    const previousConfig = this.getCGConfig()
+    const newConfig = configResult
+    if (previousConfig) {
+      for (const key of Object.keys(previousConfig)) {
+        if (!configResult[key]) {
+          newConfig[key] = previousConfig[key]
+        }
+      }
+    } else {
+      fileUtils.makeDirIfNotExists(configDir)
+    }
     fs.writeFileSync(
       path.join(configDir, '.cloud-graphrc.json'),
-      JSON.stringify(configResult, null, 2)
+      JSON.stringify(newConfig, null, 2)
     )
   }
 
@@ -177,7 +182,7 @@ export default class Init extends Command {
       /**
        * First install and require the provider plugin
        */
-      const client = await this.getProviderClient(provider)
+      const { client } = await this.getProviderClient(provider)
       if (!client) {
         this.logger.warn(
           `There was an issue initializing ${provider} plugin, skipping...`

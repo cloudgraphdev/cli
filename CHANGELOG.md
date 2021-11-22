@@ -1,11 +1,132 @@
-# [0.13.0-alpha.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.4...0.13.0-alpha.5) (2021-11-02)
+## [0.14.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.0...0.14.1) (2021-11-19)
 
 
 ### Bug Fixes
 
-* Uses missing cwd to fix installed packages issue ([e59e86d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e59e86d448dee53b59899072c1738d07e04b31a8))
+* **init:** fix multi provider config file saving to not overwrite other providers ([c666935](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c66693539a889bb6ce6538dac9f28248e20aaa3c))
 
-# [0.13.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.3...0.13.0-alpha.4) (2021-10-29)
+# [0.14.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.11...0.14.0) (2021-11-18)
+
+
+### Features
+
+* add azure to provider question list ([f667789](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f667789b7c8e56ef564e4b3349cb538c1df0e286))
+
+## [0.13.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.10...0.13.11) (2021-11-16)
+
+
+### Bug Fixes
+
+* **manager:** update writeToLockFile to ensure it works if no lock file exists ([cacbf2e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cacbf2ec97dc663ff868190c5a554eacf7a83c8a))
+
+## [0.13.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.9...0.13.10) (2021-11-15)
+
+
+### Bug Fixes
+
+* **slack:** fix slack link ([34cf790](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/34cf790e156cc1d572396ff9547b64df24fb8ad2))
+* **slack:** fix slack link ([bdc196e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/bdc196e759ccf40d3e98423beadb8d086ed1910c))
+
+## [0.13.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.8...0.13.9) (2021-11-11)
+
+
+### Bug Fixes
+
+* Imported schemasMap from provider package ([8fda732](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8fda7324e262b87bf36b47a5897d3e4a331a03e7))
+
+## [0.13.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.7...0.13.8) (2021-11-05)
+
+
+### Bug Fixes
+
+* **package:** peg typescript version ([04a9df4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/04a9df445838653e8d942e4e67149931c8ff9e44))
+
+## [0.13.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.6...0.13.7) (2021-11-05)
+
+
+### Bug Fixes
+
+* Fixed npm as a main dependency ([ac4d322](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ac4d322721335f965cec9f547953a95425893f57))
+* Fixed npm as a main dependency ([d842222](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d842222c8d548064da47176211c1f58c90e455d0))
+
+## [0.13.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.5...0.13.6) (2021-11-05)
+
+
+### Bug Fixes
+
+* Bring fix for npm manager to master branch ([476676e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/476676e2fe20801c4d9acc6403d397717c95cabe))
+
+## [0.13.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.4...0.13.5) (2021-11-03)
+
+
+### Bug Fixes
+
+* **queryEngine:** detect if wanted port is in use and move to next available port ([35978aa](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/35978aa2f6247fcd328e91ce7473c81805e0b5ef))
+
+## [0.13.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.3...0.13.4) (2021-11-02)
+
+
+### Bug Fixes
+
+* Moved npm library to dev dependency only ([58ecbd2](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/58ecbd2adafd1b740d391e4821434cebf4971be4))
+
+## [0.13.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.2...0.13.3) (2021-11-02)
+
+
+### Bug Fixes
+
+* **provider:** remove aws provider dep ([3ea2238](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3ea2238e737011e8517375fbc1adaeb04c720656))
+
+## [0.13.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.1...0.13.2) (2021-11-01)
+
+
+### Bug Fixes
+
+* **aws:** add aws as a dep until we fix plugin manager ([04e5bfc](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/04e5bfc9d2122e256fa7572330edd968e56b8c5d))
+* **aws:** add aws as a dep until we fix plugin manager ([0b2beb4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0b2beb45f4eaba8b76036028fbfa65fd9ad0b293))
+
+## [0.13.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0...0.13.1) (2021-11-01)
+
+
+### Bug Fixes
+
+* Removed aws provider dependency ([94bb59d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/94bb59d84e78cfd1356651a7448fa7bdacdf58ba))
+
+# [0.13.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.3...0.13.0) (2021-10-29)
+
+
+### Bug Fixes
+
+* **deps:** bump provider version ([3826f77](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3826f77a7238ff2573486b805f9e4e1da1a7ba5d))
+* Dropped pluginType as param from lock file methods ([3328c8b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3328c8b60ce76c36d9584d7156e5ecef5c4211e1))
+* Restored install provider command ([c6a33b9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c6a33b9e63acff9840b6c6dbad127ffc90671761))
+* Restored install provider command ([49316d9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/49316d99bf374364ca686f8179ed93b609dc478f))
+* solved alpha versions condition when getting plugin ([1effb43](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1effb430b8b181638d08e329dc1f059c4144b214))
+* Update aws provider to 0.39.0 version ([656ba99](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/656ba99bec8440ae679003060b576dc3e32d8719))
+* Update aws provider to 0.39.0 version ([d076b63](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d076b63342dda864afb1f77e7a2ba2af0cfb4aa7))
+* Updated npm binary reference ([fa16ffe](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/fa16ffe6640999ffe46852e94c46d88ed30a0e88))
+* Updated npm binary reference ([c64a6db](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c64a6db874fb9df33519d34bc9c5bdcedd8e0e2a))
+
+
+### Features
+
+* Moved PluginManager methods to NpmManager ([f14502b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f14502b708e499f757eaa80264962f92d103df55))
+
+## [0.12.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.2...0.12.3) (2021-10-28)
+
+
+### Bug Fixes
+
+* **deps:** bump provider version ([d7dfc75](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d7dfc75fd0aaf9a7fa069935af78cf5d4b44d208))
+
+## [0.12.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.1...0.12.2) (2021-10-27)
+
+
+### Bug Fixes
+
+* Update aws provider to 0.39.0 version ([42bbd94](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/42bbd9419f159aa9044141d3c8afb99803c1e14a))
+
+## [0.12.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.12.0...0.12.1) (2021-10-26)
 
 
 ### Bug Fixes

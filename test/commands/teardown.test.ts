@@ -13,7 +13,7 @@ initTestSuite()
 
 describe('Teardown command with docker installed', () => {
   beforeAll(async () => {
-    await saveTestCloudGraphConfigFile(await getInitCommand(['']))
+    await saveTestCloudGraphConfigFile(await getInitCommand([''], 'aws'))
     await initDgraphContainer()
   })
 

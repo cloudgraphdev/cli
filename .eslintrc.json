@@ -1,7 +1,5 @@
 {
   "extends": [
-    "oclif",
-    "oclif-typescript",
     "@autocloud"
   ],
   "rules": {

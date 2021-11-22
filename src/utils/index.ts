@@ -10,8 +10,9 @@ import { exec } from 'child_process'
 import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
-
 import isEmpty from 'lodash/isEmpty'
+import detect from 'detect-port'
+
 import scanReport, { scanDataType, scanResult } from '../scanReport'
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
@@ -335,4 +336,9 @@ export const fileUtils = {
   getSchemaFromFolder,
   getProviderDataFile,
   deleteFolder,
+}
+
+export const getNextPort = async (port: number): Promise<string> => {
+  const availablePort = await detect(port)
+  return String(availablePort)
 }

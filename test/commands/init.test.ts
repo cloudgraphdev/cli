@@ -44,7 +44,7 @@ describe('Init command', () => {
       .spyOn(inquirer, 'prompt')
       .mockImplementation()
     beforeEach(async () => {
-      InitCommand = await getInitCommand([''])
+      InitCommand = await getInitCommand([''], 'aws')
       jest.clearAllMocks()
     })
     afterEach(() => {
@@ -95,7 +95,7 @@ describe('Init command', () => {
       })
 
       it('should call fetchCloudGraphConfig and return the desired configuration(integration test)', async () => {
-        InitCommand = await getInitCommand([''])
+        InitCommand = await getInitCommand([''], 'aws')
         await saveTestCloudGraphConfigFile(InitCommand)
         await initCommandPromptGetterMethodTester(
           inquirerPromptSpy,
@@ -229,7 +229,7 @@ describe('Init command', () => {
 
     describe('When a config file already exist', () => {
       beforeAll(async () => {
-        InitCommand = await getInitCommand([''])
+        InitCommand = await getInitCommand([''], 'aws')
         await saveTestCloudGraphConfigFile(InitCommand)
       })
       it('should run command skipping config overwrite and check that the config file is unchanged', async () => {
