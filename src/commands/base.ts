@@ -18,11 +18,12 @@ import {
   printWelcomeMessage,
   printBoxMessage,
   fileUtils,
+  getNextPort,
 } from '../utils'
 import flagsDefinition from '../utils/flags'
 import openBrowser from '../utils/open'
 import { PluginType } from '../utils/constants'
-import { CloudGraphConfig } from '../types'
+import { CloudGraphConfig, SchemaMap } from '../types'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
@@ -135,20 +136,26 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     if (!noServe) {
       const configPort = this.getCGConfigKey('port') ?? 5555
       const serverPort = port ?? configPort
-      const queryEngine = new QueryEngine(serverPort)
+      const availablePort = await getNextPort(Number(serverPort))
+      if (serverPort !== availablePort) {
+        this.logger.warn(
+          `Requested port ${serverPort} is unavailable, using ${availablePort}`
+        )
+      }
+      const queryEngine = new QueryEngine(availablePort)
       await queryEngine.startServer(this.getHost(this.getConnectionSettings()))
       this.logger.success(
         `Serving query engine at ${chalk.underline.green(
-          `http://localhost:${serverPort}`
+          `http://localhost:${availablePort}`
         )}`
       )
       try {
         await openBrowser(
-          `http://localhost:${serverPort}/${this.getQueryEngine()}`
+          `http://localhost:${availablePort}/${this.getQueryEngine()}`
         )
       } catch (error) {
         this.logger.warn(
-          `Could not open a browser tab with query engine, open manually at http://localhost:${serverPort}`
+          `Could not open a browser tab with query engine, open manually at http://localhost:${availablePort}`
         )
       }
     }
@@ -211,13 +218,18 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     return this.manager
   }
 
-  async getProviderClient(provider: string): Promise<any> {
+  async getProviderClient(
+    provider: string
+  ): Promise<{ client: any; schemasMap?: SchemaMap }> {
     try {
       const manager = this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
         return this.providers[provider]
       }
-      const { default: Client } = (await manager.getPlugin(provider)) ?? {}
+      const {
+        default: Client,
+        enums: { schemasMap },
+      } = (await manager.getPlugin(provider)) ?? {}
       if (!Client || !(Client instanceof Function)) {
         // TODO: how can we better type this for the base Provider class from sdk
         throw new Error(
@@ -228,8 +240,8 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
         logger: this.logger,
         provider: this.getCGConfig(provider),
       })
-      this.providers[provider] = client
-      return client
+      this.providers[provider] = { client, schemasMap }
+      return { client, schemasMap }
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(
@@ -238,15 +250,15 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       this.logger.info(
         'For more information on this error, please see https://github.com/cloudgraphdev/cli#common-errors'
       )
-      return null
+      return { client: null }
     }
   }
 
   async getPolicyPackClient({
     policyPack,
-    mappings,
-    provider,
-  }: {
+  }: // mappings,
+  // provider,
+  {
     policyPack: string
     provider: string
     mappings: { [schemaName: string]: string }
@@ -267,13 +279,14 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
           `The policy pack ${policyPack} did not return a valid set of rules`
         )
       }
-      const client = new CloudGraph.RulesEngine(
-        rules,
-        mappings,
-        `${provider}Finding`
-      )
-      this.policyPacks[policyPack] = client
-      return client
+      // const client = new CloudGraph.RulesEngine(
+      //   rules,
+      //   mappings,
+      //   `${provider}Finding`
+      // )
+      // this.policyPacks[policyPack] = client
+      // return client
+      return null
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(

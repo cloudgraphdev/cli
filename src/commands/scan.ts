@@ -108,7 +108,7 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const client = await this.getProviderClient(provider)
+      const { client } = await this.getProviderClient(provider)
       if (!client) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
@@ -118,7 +118,9 @@ export default class Scan extends Command {
       this.logger.debug(config)
       if (!config) {
         failedProviderList.push(provider)
-        this.logger.warn(`No configuration found for ${provider}, run "cg init ${provider}" to create one`)
+        this.logger.warn(
+          `No configuration found for ${provider}, run "cg init ${provider}" to create one`
+        )
         continue // eslint-disable-line no-continue
       }
       this.logger.startSpinner(
@@ -204,9 +206,11 @@ export default class Scan extends Command {
 
     // If every provider that has been passed is a failure, just exit
     if (failedProviderList.length === allProviders.length) {
-      this.logger.warn(`No providers in list: [${allProviders.join(
-        ' | '
-      )}] have a valid module and config, exiting`)
+      this.logger.warn(
+        `No providers in list: [${allProviders.join(
+          ' | '
+        )}] have a valid module and config, exiting`
+      )
       this.exit()
     }
     if (storageRunning) {
@@ -215,9 +219,7 @@ export default class Scan extends Command {
       )
       // Execute services mutations promises
       await storageEngine.run()
-      this.logger.successSpinner(
-        'Data insertion into Dgraph complete'
-      )
+      this.logger.successSpinner('Data insertion into Dgraph complete')
     }
 
     scanReport.print()

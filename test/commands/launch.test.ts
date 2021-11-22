@@ -12,7 +12,7 @@ initTestSuite()
 
 describe('Launch command with docker installed', () => {
   beforeAll(async () => {
-    await saveTestCloudGraphConfigFile(await getInitCommand(['']))
+    await saveTestCloudGraphConfigFile(await getInitCommand([''], 'aws'))
     await stopDgraphContainer(true)
   })
 

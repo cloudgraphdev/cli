@@ -79,7 +79,7 @@ export default class Load extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('LOAD')} for ${provider}`
       )
-      const client = await this.getProviderClient(provider)
+      const { client } = await this.getProviderClient(provider)
       if (!client) {
         continue // eslint-disable-line no-continue
       }
@@ -202,14 +202,10 @@ export default class Load extends Command {
     }
 
     // Execute services mutations promises
-    this.logger.startSpinner(
-      'Inserting loaded data into Dgraph'
-    )
+    this.logger.startSpinner('Inserting loaded data into Dgraph')
     // Execute services mutations promises
     await storageEngine.run(true)
-    this.logger.successSpinner(
-      'Data insertion into Dgraph complete'
-    )
+    this.logger.successSpinner('Data insertion into Dgraph complete')
     this.logger.success(
       `Your data for ${allProviders.join(
         ' | '
