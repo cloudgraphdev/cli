@@ -36,9 +36,9 @@
     "graphql-playground-middleware-express": "^1.7.22",
     "inquirer": "^8.1.1",
     "live-plugin-manager": "0.15.1",
-    "npm": "^8.1.2",
     "open": "^8.2.1",
-    "tslib": "^1"
+    "tslib": "^1",
+    "npm": "^8.1.2"
   },
   "devDependencies": {
     "@autocloud/eslint-config": "^0.1.0",
