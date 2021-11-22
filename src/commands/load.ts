@@ -79,7 +79,7 @@ export default class Load extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('LOAD')} for ${provider}`
       )
-      const { client } = await this.getProviderClient(provider)
+      const { client, schemasMap } = await this.getProviderClient(provider)
       if (!client) {
         continue // eslint-disable-line no-continue
       }
@@ -143,7 +143,7 @@ export default class Load extends Command {
           version = versionString.split('-')[1] // eslint-disable-line prefer-destructuring
           file = fileUtils.findProviderFileLocation(
             path.join(dataDir, this.versionDirectory),
-            fileName,
+            fileName
           )
           const foundFile = files.find(val => val.name === file)
           if (!foundFile) {
@@ -195,7 +195,13 @@ export default class Load extends Command {
       this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
-      processConnectionsBetweenEntities(providerData, storageEngine, storageRunning)
+      processConnectionsBetweenEntities(
+        provider,
+        providerData,
+        storageEngine,
+        storageRunning,
+        schemasMap
+      )
       this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )

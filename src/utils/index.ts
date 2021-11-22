@@ -1,5 +1,5 @@
 // import CloudGraph, { Opts } from '@cloudgraph/sdk'
-import CloudGraph from '@cloudgraph/sdk'
+import CloudGraph, { ProviderData } from '@cloudgraph/sdk'
 import { loadFilesSync } from '@graphql-tools/load-files'
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import { print } from 'graphql'
@@ -16,6 +16,8 @@ import detect from 'detect-port'
 import scanReport, { scanDataType, scanResult } from '../scanReport'
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
+import { SchemaMap } from '../types'
+import { generateMutation, getResourceNameForMutationGenerator } from './mutation'
 
 const { logger } = CloudGraph
 
@@ -93,7 +95,7 @@ export function writeGraphqlSchemaToFile(
 
 export function getConnectedEntity(
   service: any,
-  { entities, connections: allConnections }: any,
+  { entities, connections: allConnections }: ProviderData,
   initiatorServiceName: string
 ): Record<string, unknown> {
   // opts: Opts
@@ -150,12 +152,18 @@ export function getConnectedEntity(
 }
 
 export function processConnectionsBetweenEntities(
-  providerData: any,
+  provider: string,
+  providerData: ProviderData,
   storageEngine: StorageEngine,
-  storageRunning: boolean
+  storageRunning: boolean,
+  schemaMap: SchemaMap | undefined
 ): void {
   for (const entity of providerData.entities) {
-    const { mutation, data, name } = entity
+    const { data, name } = entity
+      const resourceName: string = getResourceNameForMutationGenerator(
+        entity,
+        schemaMap
+      )
     const connectedData = data.map((service: any) => {
       scanReport.pushData({
         service: name,
@@ -167,7 +175,7 @@ export function processConnectionsBetweenEntities(
     if (storageRunning) {
       // Add service mutation to promises array
       storageEngine.push({
-        query: mutation,
+        query: generateMutation('add', provider, resourceName),
         connectedData,
         name,
       })

@@ -108,7 +108,7 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client } = await this.getProviderClient(provider)
+      const { client, schemasMap } = await this.getProviderClient(provider)
       if (!client) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
@@ -195,9 +195,11 @@ export default class Scan extends Command {
         `Making service connections for ${chalk.italic.green(provider)}`
       )
       processConnectionsBetweenEntities(
+        provider,
         providerData,
         storageEngine,
-        storageRunning
+        storageRunning,
+        schemasMap
       )
       this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
