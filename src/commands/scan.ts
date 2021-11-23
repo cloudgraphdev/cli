@@ -262,14 +262,6 @@ export default class Scan extends Command {
           engine: rulesEngine,
           rules: policyPackRules,
         }
-
-        // Update Schema:
-        const currentSchema: string = await storageEngine.getSchema()
-        const findingsSchema: string[] = rulesEngine.getSchema()
-
-        await storageEngine.setSchema([
-          mergeSchemas(currentSchema, findingsSchema),
-        ])
       }
     }
 
@@ -298,6 +290,15 @@ export default class Scan extends Command {
               policyPack
             )}`
           )
+
+          // Update Schema:
+          const currentSchema: string = await storageEngine.getSchema()
+          const findingsSchema: string[] =
+            policyPacksPlugins[policyPack]?.engine?.getSchema() || []
+
+          await storageEngine.setSchema([
+            mergeSchemas(currentSchema, findingsSchema),
+          ])
 
           // Run rules:
           const findings: RuleFinding[] = []

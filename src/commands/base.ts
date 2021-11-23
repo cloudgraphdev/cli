@@ -270,7 +270,6 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       } = (await manager.getPlugin(policyPack)) ?? {}
 
       if (!rules) {
-        // TODO: how can we better type this for the base Provider class from sdk
         throw new Error(
           `The policy pack ${policyPack} did not return a valid set of rules`
         )
