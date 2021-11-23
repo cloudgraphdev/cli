@@ -25,22 +25,23 @@ The **GraphQL** API for AWS - solve a host of complex security, compliance, and 
 [![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/master/package.json)
 
 <!-- toc -->
-* [Why CloudGraph](#why-cloudgraph)
-* [How It Works](#how-it-works)
-* [Authentication](#authentication)
-* [Install](#install)
-* [Quick Start](#quick-start)
-* [Loading Previous Versions](#loading-previous-versions)
-* [Supported Services](#supported-services)
-* [Example Queries](#example-queries)
-* [Query Tools](#query-tools)
-* [Community](#community)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Deployment Options](#deployment-options)
-* [Hosted Version](#hosted-version)
-* [Debugging](#debugging)
-* [Common Errors](#common-errors)
-* [Commands](#commands)
+
+- [Why CloudGraph](#why-cloudgraph)
+- [How It Works](#how-it-works)
+- [Authentication](#authentication)
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Loading Previous Versions](#loading-previous-versions)
+- [Supported Services](#supported-services)
+- [Example Queries](#example-queries)
+- [Query Tools](#query-tools)
+- [Community](#community)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Deployment Options](#deployment-options)
+- [Hosted Version](#hosted-version)
+- [Debugging](#debugging)
+- [Common Errors](#common-errors)
+- [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -1082,26 +1083,27 @@ There are some common errors you may see when running CloudGraph that are usuall
 # Commands
 
 <!-- commands -->
-* [`cg help [COMMAND]`](#cg-help-command)
-* [`cg init [PROVIDER]`](#cg-init-provider)
-* [`cg launch [PROVIDER]`](#cg-launch-provider)
-* [`cg load [PROVIDER]`](#cg-load-provider)
-* [`cg policy [PROVIDER]`](#cg-policy-provider)
-* [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
-* [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
-* [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
-* [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
-* [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
-* [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-* [`cg rules [PROVIDER]`](#cg-rules-provider)
-* [`cg scan [PROVIDER]`](#cg-scan-provider)
-* [`cg serve [PROVIDER]`](#cg-serve-provider)
-* [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+
+- [`cg help [COMMAND]`](#cg-help-command)
+- [`cg init [PROVIDER]`](#cg-init-provider)
+- [`cg launch [PROVIDER]`](#cg-launch-provider)
+- [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg policy [PROVIDER]`](#cg-policy-provider)
+- [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
+- [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
+- [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
+- [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
+- [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
+- [`cg provider [PROVIDER]`](#cg-provider-provider)
+- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
+- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
+- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
+- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
+- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg rules [PROVIDER]`](#cg-rules-provider)
+- [`cg scan [PROVIDER]`](#cg-scan-provider)
+- [`cg serve [PROVIDER]`](#cg-serve-provider)
+- [`cg teardown [PROVIDER]`](#cg-teardown-provider)
 
 ## `cg help [COMMAND]`
 
@@ -1549,31 +1551,6 @@ EXAMPLES
 
 _See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/provider/update.ts)_
 
-## `cg rules [PROVIDER]`
-
-Local test
-
-```
-USAGE
-  $ cg rules [PROVIDER]
-
-OPTIONS
-  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=port                       Set port to serve query engine
-  -q, --query-engine=playground|altair  Query engine to launch
-  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
-  --dev                                 Turn on developer mode
-  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                            Set to not serve a query engine
-  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
-
-EXAMPLE
-  $ cg rules
-```
-
-_See code: [src/commands/rules.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/rules.ts)_
-
 ## `cg scan [PROVIDER]`
 
 Scan one or multiple providers data to be queried through Dgraph
@@ -1644,4 +1621,5 @@ EXAMPLES
 ```
 
 _See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/teardown.ts)_
+
 <!-- commandsstop -->

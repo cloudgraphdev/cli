@@ -21,15 +21,6 @@ export const getProviderQuestion: ListQuestion[] = [
   },
 ]
 
-export const getPolicyPackQuestion: ListQuestion[] = [
-  {
-    type: 'list',
-    name: 'policyPack',
-    message: 'Which Policy Pack would you like to use?',
-    choices: ['aws-demo'],
-  },
-]
-
 export const dGraphConfigQuestions: InputQuestion[] = [
   {
     type: 'input',
