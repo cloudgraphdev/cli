@@ -16,7 +16,7 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/sdk": "^0.5.3",
+    "@cloudgraph/sdk": "^0.6.1",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
     "@oclif/command": "^1",
