@@ -122,7 +122,7 @@ pack:
       when: never
     - if: $CI_COMMIT_BRANCH == "beta"
       when: never
-    - if: $CI_COMMIT_BRANCH == "feature/homebrew"
+    - if: $CI_COMMIT_BRANCH == "chore/homebrew"
   before_script:
     - *configure-registry
   script:
