@@ -12,6 +12,27 @@
       echo "\"//registry.npmjs.com/:_authToken\" \"${NPM_TOKEN}\""
     } | tee -a .yarnrc
   - NODE_ENV=cicd yarn install --frozen-lockfile --cache-folder .npm --prefer-offline
+
+.configure-aws: &configure-aws
+  - mkdir -p /root/.aws
+  - |
+    cat << EOF > /root/.aws/config
+    [default]
+    region=us-east-1
+    output=json
+
+    [profile cloudgraph-iac]
+    role_arn = ${AWS_ROLE_ARN}
+    source_profile = default
+    EOF
+  - |
+    cat << EOF > /root/.aws/credentials
+    [default]
+    aws_access_key_id = ${AWS_ACCESS_KEY_ID}
+    aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
+    EOF
+  - aws sts --profile cloudgraph-iac get-caller-identity
+
 default:
   image: node:16-alpine
   before_script:
@@ -33,6 +54,7 @@ stages:
   - build
   - test
   - release
+  - pack
   - publish
   - notify
 
@@ -88,6 +110,51 @@ semantic release:
   script:
     - npx semantic-release -r $CI_PROJECT_URL
 
+pack:
+  image: node:16-alpine
+  stage: pack
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^chore\(release\)/'
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: never
+    - if: $CI_COMMIT_BRANCH == "alpha"
+      when: never
+    - if: $CI_COMMIT_BRANCH == "beta"
+      when: never
+    - if: $CI_COMMIT_BRANCH == "feature/homebrew"
+  before_script:
+    - *configure-registry
+  script:
+    - yarn pack:oclif
+    - ls -1R dist
+
+publish:
+  image:
+    name: amazon/aws-cli
+    entrypoint: ["/bin/bash", "-c"]
+  stage: publish
+  rules:
+    - if: $CI_COMMIT_TAG
+  # Overwrite the default before script with a no-op action to disable the node specific actions
+  before_script:
+    - *configure-aws
+  script:
+    - >
+      aws s3 cp
+      build
+      s3://${DEPLOY_BUCKET_NAME}/
+      --profile cloudgraph-iac
+      --recursive
+      --quiet
+      --acl bucket-owner-full-control
+      --sse AES256
+    - >
+      aws cloudfront create-invalidation
+      --profile cloudgraph-iac
+      --distribution-id ${DEPLOY_CF_DISTRO}
+      --paths "/*"
+
 .curlcmd: &curlcmd >
   curl
   -sS
@@ -107,3 +174,4 @@ notify:
     - apk add --no-cache curl
     - GITLAB_USER_AVATAR=$( echo $GITLAB_USER_EMAIL | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]' | md5sum | awk -F' ' '{print $1}' | xargs -I{} echo 'https://www.gravatar.com/avatar/{}?s=80&d=identicon' )
     - *curlcmd
+
