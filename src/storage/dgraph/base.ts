@@ -37,8 +37,8 @@ export default class DGraphClientWrapper {
     return axios({
       method: verb || 'post',
       baseURL: baseUrl || this.baseUrl,
-      maxBodyLength: Infinity,
-      maxContentLength: Infinity,
+      maxBodyLength: Number(process.env.MAX_BODY_LENGTH) || Infinity,
+      maxContentLength: Number(process.env.MAX_CONTENT_LENGTH) || Infinity,
       url,
       headers: {
         ...headers,
