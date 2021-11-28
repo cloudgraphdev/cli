@@ -1,3 +1,13 @@
+## [0.14.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.1...0.14.2) (2021-11-28)
+
+
+### Bug Fixes
+
+* **storage:** update axios calls to use infinite body and content length ([4fcb1af](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4fcb1af56237b07fd4fde33434061d922733e3cf))
+* **storage:** update axios calls to use infinite body and content length ([c7e4895](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c7e4895d0d5f0a3cd992a3cd09497bf9ea622ad9))
+* **storage:** use env variable so you can override axios props ([a4b0d79](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a4b0d7926d9aabd9e8a6feafc96cc4a613e846e1))
+* **storage:** use env variable so you can override axios props ([3264449](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3264449e014eda65468905017c07334d971d629f))
+
 ## [0.14.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.0...0.14.1) (2021-11-19)
 
 
