@@ -95,7 +95,12 @@
     "plugins": [
       "@oclif/plugin-help",
       "@tiagonapoli/oclif-plugin-spaced-commands"
-    ]
+    ],
+    "update": {
+      "s3": {
+        "bucket": "cloudgraph-production-cli-assets"
+      }
+    }
   },
   "repository": "github:cloudgraphdev/cli",
   "scripts": {
@@ -121,7 +126,9 @@
     "test:debug": "CG_DEBUG=5 NODE_ENV=test jest --coverage=false --detectOpenHandles --runInBand --forceExit",
     "version": "oclif-dev readme && git add README.md",
     "lint": "eslint --config .eslintrc.json --ext .js,.ts ./",
-    "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./"
+    "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./",
+    "pack:oclif": "oclif-dev pack",
+    "publish:oclif": "oclif-dev publish"
   },
   "husky": {
     "hooks": {
