@@ -33,15 +33,20 @@
     EOF
   - aws sts --profile cloudgraph-iac get-caller-identity
 
+cache: &default-cache
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm/
+    - lib/
+    - dist/
+  policy: pull-push
+
 default:
   image: node:16-alpine
   before_script:
     - *configure-registry
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - .npm/
-      - lib/
+    <<: *default-cache
 
 workflow:
   rules:
@@ -136,10 +141,14 @@ publish:
     entrypoint: ["/bin/bash", "-c"]
   stage: publish
   rules:
-    - if: $CI_COMMIT_TAG
+    # - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == "chore/homebrew"
   # Overwrite the default before script with a no-op action to disable the node specific actions
   before_script:
     - *configure-aws
+  cache:
+    <<: *default-cache
+    policy: pull
   script:
     - >
       aws s3 cp
