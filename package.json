@@ -98,6 +98,7 @@
     ],
     "update": {
       "s3": {
+        "host": "https://cli-assets.cloudgraph.dev/",
         "bucket": "cloudgraph-production-cli-assets"
       }
     }
