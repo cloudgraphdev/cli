@@ -149,9 +149,10 @@ publish:
       - dist/
     policy: pull
   script:
+    - ls -1R dist
     - >
       aws s3 cp
-      build
+      dist
       s3://${DEPLOY_BUCKET_NAME}/
       --profile cloudgraph-iac
       --recursive
