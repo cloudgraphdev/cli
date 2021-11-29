@@ -156,7 +156,6 @@ publish:
       s3://${DEPLOY_BUCKET_NAME}/
       --profile cloudgraph-iac
       --recursive
-      --quiet
       --acl bucket-owner-full-control
       --sse AES256
     - >
