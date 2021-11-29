@@ -125,6 +125,7 @@ pack:
     - if: $CI_COMMIT_BRANCH == "chore/homebrew"
   before_script:
     - *configure-registry
+    - apk --quiet --no-progress --update --no-cache add curl perl-utils p7zip
   script:
     - yarn pack:oclif
     - ls -1R dist
