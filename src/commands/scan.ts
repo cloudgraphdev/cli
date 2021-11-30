@@ -300,9 +300,11 @@ export default class Scan extends Command {
             mergeSchemas(currentSchema, findingsSchema),
           ])
 
-          // Run rules:
           const findings: RuleFinding[] = []
-          for (const rule of policyPacksPlugins[policyPack]?.rules) {
+          const rules = policyPacksPlugins[policyPack]?.rules || []
+
+          // Run rules:
+          for (const rule of rules) {
             try {
               const { data } = await storageEngine.query(rule.gql)
               const results = (await policyPacksPlugins[
