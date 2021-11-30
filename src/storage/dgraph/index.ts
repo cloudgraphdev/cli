@@ -122,7 +122,7 @@ export default class DgraphEngine
         response: { data: resData, errors } = { data: null, errors: null },
         message,
       } = error ?? {}
-      this.logger.error('There was an issue pushing data into the Dgraph db')
+      this.logger.error('There was an issue getting the Dgraph schema')
       this.logger.debug(message)
       processGQLExecutionResult({ resData, errors })
       return ''
@@ -134,7 +134,6 @@ export default class DgraphEngine
       path,
       data: {
         query,
-        // variables: {input: connectedData,},
       },
     })
       .then((res: ExecutionResult) => {
