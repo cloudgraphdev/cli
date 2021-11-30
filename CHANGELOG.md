@@ -1,3 +1,10 @@
+## [0.14.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.2...0.14.3) (2021-11-30)
+
+
+### Bug Fixes
+
+* Resolves JSON input error on not found package ([c0b99a3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c0b99a3612430cf6e18fdd78ff817bd20190106d))
+
 ## [0.14.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.1...0.14.2) (2021-11-28)
 
 
