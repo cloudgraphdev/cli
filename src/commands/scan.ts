@@ -236,6 +236,12 @@ export default class Scan extends Command {
       const resourceTypeNamesToFieldsMap =
         schemasMap || generateSchemaMapDynamically(provider, resources)
 
+      // Initialize RulesEngine
+      const rulesEngine = new CloudGraph.RulesEngine(
+        resourceTypeNamesToFieldsMap,
+        `${provider}Findings`
+      )
+
       for (const policyPack of allPolicyPacks) {
         this.logger.info(
           `Beginning ${chalk.italic.green('RULES')} for ${policyPack}`
@@ -251,12 +257,6 @@ export default class Scan extends Command {
           )
           continue // eslint-disable-line no-continue
         }
-
-        // Initialize RulesEngine
-        const rulesEngine = new CloudGraph.RulesEngine(
-          resourceTypeNamesToFieldsMap,
-          `${provider}Findings`
-        )
 
         policyPacksPlugins[policyPack] = {
           engine: rulesEngine,
