@@ -23,7 +23,7 @@ export default class NpmManager {
     }
   }
 
-  async install(_path: string, version?: string) {
+  async install(_path: string, version?: string): Promise<number> {
     return new Promise((resolve, reject) => {
       const module = `${_path}${version ? `@${version}` : ''}`
 
@@ -39,14 +39,14 @@ export default class NpmManager {
         { cwd: path.resolve(__dirname, '../../../') },
 
         err => {
-          if (err) reject(err)
+          if (err) return reject(err)
           resolve(0)
         }
       )
     })
   }
 
-  async uninstall(_path: string, version?: string) {
+  async uninstall(_path: string, version?: string): Promise<number> {
     return new Promise((resolve, reject) => {
       const module = `${_path}${version ? `@${version}` : ''}`
 
@@ -61,7 +61,7 @@ export default class NpmManager {
         `${this.npmBinary} uninstall ${module} ${flags.join(' ')}`,
         { cwd: path.resolve(__dirname, '../../../') },
         err => {
-          if (err) reject(err)
+          if (err) return reject(err)
 
           resolve(0)
         }
@@ -75,7 +75,7 @@ export default class NpmManager {
         `${this.npmBinary} view ${module} --json`,
         { cwd: path.resolve(__dirname, '../../../') },
         (err, stdout) => {
-          if (err) reject(err)
+          if (err) return reject(err)
 
           const res = JSON.parse(stdout)
           resolve(res)
