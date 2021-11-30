@@ -255,7 +255,7 @@ export default class Scan extends Command {
         // Initialize RulesEngine
         const rulesEngine = new CloudGraph.RulesEngine(
           resourceTypeNamesToFieldsMap,
-          `${provider}Finding`
+          `${provider}Findings`
         )
 
         policyPacksPlugins[policyPack] = {
@@ -358,11 +358,11 @@ export default class Scan extends Command {
                 )}  found during rules execution.`
               )
             this.logger.info(
-              `For more information, use the ${chalk.italic.green(
+              `For more information, you can query query ${chalk.italic.green(
                 allProviders
-                  .map(provider => `query${provider}Finding`)
+                  .map(provider => `query${provider}Findings`)
                   .join(', ')
-              )} at the query engine`
+              )} in the GraphQL query tool`
             )
           }
         }
