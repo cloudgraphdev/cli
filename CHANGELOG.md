@@ -1,3 +1,10 @@
+## [0.14.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.3...0.14.4) (2021-12-02)
+
+
+### Bug Fixes
+
+* latest channel ([f2dc97b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f2dc97b9c6a05fcbbec32b5f8cfded88f4ba12fd))
+
 ## [0.14.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.2...0.14.3) (2021-11-30)
 
 
