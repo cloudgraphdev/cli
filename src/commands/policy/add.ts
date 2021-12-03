@@ -5,9 +5,12 @@ import Command from '../base'
 export default class Add extends Command {
   static description = 'Add new policy packs'
 
-  static aliases = ['add']
+  static aliases = []
 
-  static examples = ['$ cg policy add aws', '$ cg policy add aws@0.12.0']
+  static examples = [
+    '$ cg policy add aws-cis-1.2.0',
+    '$ cg policy add aws-cis-1.2.0@0.12.0',
+  ]
 
   static strict = false
 

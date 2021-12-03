@@ -6,12 +6,12 @@ import { PluginType } from '../../utils/constants'
 export default class Remove extends Command {
   static description = 'Remove currently installed policy pack'
 
-  static aliases = ['remove', 'rm', 'del', 'policy:rm', 'policy:del']
+  static aliases = ['policy:rm', 'policy:del']
 
   static examples = [
     '$ cg policy delete',
-    '$ cg policy delete aws',
-    '$ cg policy delete aws --no-save',
+    '$ cg policy delete aws-cis-1.2.0',
+    '$ cg policy delete aws-cis-1.2.0 --no-save',
   ]
 
   static strict = false

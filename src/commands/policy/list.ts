@@ -6,7 +6,7 @@ import { PluginType } from '../../utils/constants'
 export default class List extends Command {
   static description = 'List currently installed policy packs and versions'
 
-  static aliases = ['policy:ls', 'list', 'ls']
+  static aliases = ['policy:ls']
 
   static examples = ['$ cg policy list', '$ cg policy list aws']
 

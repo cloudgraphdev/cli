@@ -116,7 +116,7 @@ export default class DgraphEngine
   async getSchema(): Promise<string> {
     try {
       const { data } = await this.query(GET_SCHEMA_QUERY, '/admin')
-      return data?.getGQLSchema.schema
+      return data?.getGQLSchema?.schema || ''
     } catch (error: any) {
       const {
         response: { data: resData, errors } = { data: null, errors: null },
