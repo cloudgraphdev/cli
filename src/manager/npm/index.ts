@@ -3,7 +3,7 @@ import path from 'path'
 
 export default class NpmManager {
   constructor() {
-    this.npmBinary = './node_modules/.bin/npm'
+   this.npmBinary  = path.normalize('./node_modules/.bin/npm')
   }
 
   npmBinary: string
