@@ -1,3 +1,10 @@
+## [0.14.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.4...0.14.5) (2021-12-06)
+
+
+### Bug Fixes
+
+* **windows npm path:** Fix bug with Npm manager using Windows OS ([7f97a50](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7f97a5072c7ea2b052853f2293a1c026d6190715))
+
 ## [0.14.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.3...0.14.4) (2021-12-02)
 
 
