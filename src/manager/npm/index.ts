@@ -3,7 +3,7 @@ import path from 'path'
 
 export default class NpmManager {
   constructor() {
-   this.npmBinary  = path.normalize('./node_modules/.bin/npm')
+    this.npmBinary = path.normalize('./node_modules/.bin/npm')
   }
 
   npmBinary: string
@@ -27,13 +27,7 @@ export default class NpmManager {
     return new Promise((resolve, reject) => {
       const module = `${_path}${version ? `@${version}` : ''}`
 
-      const flags = [
-        '--no-audit',
-        '--no-fund',
-        '--no-save',
-        '--ignore-scripts',
-        '--silent',
-      ]
+      const flags = ['--no-audit', '--no-fund', '--ignore-scripts', '--silent']
       exec(
         `${this.npmBinary} install ${module} ${flags.join(' ')}`,
         { cwd: path.resolve(__dirname, '../../../') },
