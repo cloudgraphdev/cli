@@ -1,3 +1,10 @@
+## [0.14.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.5...0.14.6) (2021-12-07)
+
+
+### Bug Fixes
+
+* **windows npm path:** added cross-env dev dependency ([cf92aff](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cf92aff428ba69c132908a5262eebae089dbdb8d))
+
 ## [0.14.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.4...0.14.5) (2021-12-06)
 
 
