@@ -1,3 +1,10 @@
+# [0.15.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.7...0.15.0) (2021-12-07)
+
+
+### Features
+
+* add multiple strategies to generate entities mutations ([d7a4f28](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d7a4f284cdc55c9ee09c28cb38b2f10cb137ab66))
+
 ## [0.14.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.6...0.14.7) (2021-12-07)
 
 
