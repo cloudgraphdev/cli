@@ -37,9 +37,9 @@
     "graphql-playground-middleware-express": "^1.7.22",
     "inquirer": "^8.1.1",
     "live-plugin-manager": "0.15.1",
+    "npm": "^8.1.2",
     "open": "^8.2.1",
-    "tslib": "^1",
-    "npm": "^8.1.2"
+    "tslib": "^1"
   },
   "devDependencies": {
     "@autocloud/eslint-config": "^0.1.0",
@@ -61,6 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "chai": "^4.3.4",
+    "cross-env": "^7.0.3",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.1",
