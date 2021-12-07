@@ -1,12 +1,11 @@
 {
   "name": "@cloudgraph/cli",
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
-  "version": "0.14.1",
+  "version": "0.14.6",
   "author": "AutoCloud",
   "license": "MPL-2.0",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "tag": "latest",
     "access": "public"
   },
   "main": "lib/index.js",
@@ -66,6 +65,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "chai": "^4.3.4",
+    "cross-env": "^7.0.3",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.1",

@@ -1,3 +1,41 @@
+## [0.14.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.5...0.14.6) (2021-12-07)
+
+
+### Bug Fixes
+
+* **windows npm path:** added cross-env dev dependency ([cf92aff](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cf92aff428ba69c132908a5262eebae089dbdb8d))
+
+## [0.14.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.4...0.14.5) (2021-12-06)
+
+
+### Bug Fixes
+
+* **windows npm path:** Fix bug with Npm manager using Windows OS ([7f97a50](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7f97a5072c7ea2b052853f2293a1c026d6190715))
+
+## [0.14.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.3...0.14.4) (2021-12-02)
+
+
+### Bug Fixes
+
+* latest channel ([f2dc97b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f2dc97b9c6a05fcbbec32b5f8cfded88f4ba12fd))
+
+## [0.14.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.2...0.14.3) (2021-11-30)
+
+
+### Bug Fixes
+
+* Resolves JSON input error on not found package ([c0b99a3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c0b99a3612430cf6e18fdd78ff817bd20190106d))
+
+## [0.14.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.1...0.14.2) (2021-11-28)
+
+
+### Bug Fixes
+
+* **storage:** update axios calls to use infinite body and content length ([4fcb1af](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4fcb1af56237b07fd4fde33434061d922733e3cf))
+* **storage:** update axios calls to use infinite body and content length ([c7e4895](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c7e4895d0d5f0a3cd992a3cd09497bf9ea622ad9))
+* **storage:** use env variable so you can override axios props ([a4b0d79](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a4b0d7926d9aabd9e8a6feafc96cc4a613e846e1))
+* **storage:** use env variable so you can override axios props ([3264449](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3264449e014eda65468905017c07334d971d629f))
+
 ## [0.14.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.0...0.14.1) (2021-11-19)
 
 
