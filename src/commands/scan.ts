@@ -5,8 +5,9 @@ import CloudGraph, { Opts, RuleFinding, Engine } from '@cloudgraph/sdk'
 import { isEmpty, range, groupBy } from 'lodash'
 
 import Command from './base'
-import { fileUtils, processConnectionsBetweenEntities } from '../utils'
+import { fileUtils } from '../utils'
 import { generateSchemaMapDynamically, mergeSchemas } from '../utils/schema'
+import { processConnectionsBetweenEntities } from '../utils/data'
 import DgraphEngine from '../storage/dgraph'
 import { scanReport } from '../reports'
 
