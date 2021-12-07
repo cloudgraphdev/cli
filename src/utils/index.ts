@@ -1,5 +1,4 @@
-// import CloudGraph, { Opts } from '@cloudgraph/sdk'
-import CloudGraph from '@cloudgraph/sdk'
+import CloudGraph, { ProviderData } from '@cloudgraph/sdk'
 import { loadFilesSync } from '@graphql-tools/load-files'
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import { print } from 'graphql'
@@ -16,6 +15,8 @@ import detect from 'detect-port'
 import scanReport, { scanDataType, scanResult } from '../scanReport'
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
 import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
+import { SchemaMap } from '../types'
+import { generateMutation } from './mutation'
 
 const { logger } = CloudGraph
 
@@ -49,12 +50,8 @@ export function getProviderDataFile(
 const mapFileNameToHumanReadable = (file: string): string => {
   const fileNameParts = file.split('/')
   const fileName = fileNameParts[fileNameParts.length - 1]
-  const [providerName, timestamp] = fileName
-    .replace('.json', '')
-    .split('_')
-  return `${providerName} ${new Date(
-    Number(timestamp)
-  ).toISOString()}`
+  const [providerName, timestamp] = fileName.replace('.json', '').split('_')
+  return `${providerName} ${new Date(Number(timestamp)).toISOString()}`
 }
 
 // TODO: this could be refactored to go right to the correct version folder (avoid line 70)
@@ -93,7 +90,7 @@ export function writeGraphqlSchemaToFile(
 
 export function getConnectedEntity(
   service: any,
-  { entities, connections: allConnections }: any,
+  { entities, connections: allConnections }: ProviderData,
   initiatorServiceName: string
 ): Record<string, unknown> {
   // opts: Opts
@@ -149,13 +146,21 @@ export function getConnectedEntity(
   return connectedEntity
 }
 
-export function processConnectionsBetweenEntities(
-  providerData: any,
-  storageEngine: StorageEngine,
+export function processConnectionsBetweenEntities({
+  provider,
+  providerData,
+  storageEngine,
+  storageRunning,
+  schemaMap,
+}: {
+  provider: string
+  providerData: ProviderData
+  storageEngine: StorageEngine
   storageRunning: boolean
-): void {
+  schemaMap: SchemaMap | undefined
+}): void {
   for (const entity of providerData.entities) {
-    const { mutation, data, name } = entity
+    const { data, name, mutation } = entity
     const connectedData = data.map((service: any) => {
       scanReport.pushData({
         service: name,
@@ -167,7 +172,9 @@ export function processConnectionsBetweenEntities(
     if (storageRunning) {
       // Add service mutation to promises array
       storageEngine.push({
-        query: mutation,
+        query:
+          mutation ||
+          generateMutation({ type: 'add', provider, entity, schemaMap }),
         connectedData,
         name,
       })
@@ -232,10 +239,16 @@ export function getVersionFolders(
   return []
 }
 
-export function getSchemaFromFolder(dirPath: string, provider?: string): string {
-  const typesArray = loadFilesSync(path.join(dirPath, provider ? `${provider}*` : ''), {
-    extensions: ['graphql'],
-  })
+export function getSchemaFromFolder(
+  dirPath: string,
+  provider?: string
+): string {
+  const typesArray = loadFilesSync(
+    path.join(dirPath, provider ? `${provider}*` : ''),
+    {
+      extensions: ['graphql'],
+    }
+  )
   return print(mergeTypeDefs(typesArray))
 }
 
