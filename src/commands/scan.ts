@@ -115,7 +115,9 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client, schemasMap } = await this.getProviderClient(provider)
+      const { client, schemasMap, serviceKey } = await this.getProviderClient(
+        provider
+      )
       if (!client) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
@@ -230,7 +232,15 @@ export default class Scan extends Command {
       }
 
       const failedPolicyPackList: string[] = []
-      const resources = config.resources.split(',')
+
+      let resources
+      if (serviceKey) {
+        // Uses custom service key
+        resources = config[serviceKey].split(',')
+      } else {
+        // Uses default resources key
+        resources = config.resources.split(',')
+      }
 
       // Generate schema mapping
       const resourceTypeNamesToFieldsMap =

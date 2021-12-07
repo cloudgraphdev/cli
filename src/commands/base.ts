@@ -220,7 +220,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
 
   async getProviderClient(
     provider: string
-  ): Promise<{ client: any; schemasMap?: SchemaMap }> {
+  ): Promise<{ client: any; schemasMap?: SchemaMap; serviceKey?: string }> {
     try {
       const manager = this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
@@ -229,6 +229,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       const {
         default: Client,
         enums: { schemasMap },
+        serviceKey,
       } = (await manager.getPlugin(provider)) ?? {}
       if (!Client || !(Client instanceof Function)) {
         // TODO: how can we better type this for the base Provider class from sdk
@@ -240,8 +241,8 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
         logger: this.logger,
         provider: this.getCGConfig(provider),
       })
-      this.providers[provider] = { client, schemasMap }
-      return { client, schemasMap }
+      this.providers[provider] = { client, schemasMap, serviceKey }
+      return { client, schemasMap, serviceKey }
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(
