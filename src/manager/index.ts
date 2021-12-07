@@ -164,14 +164,14 @@ export class Manager {
     const pluginVersion = pluginInfo?.version
 
     if (process.env.NODE_ENV !== 'development' && !this.devMode) {
-      const latestRemoveVersion = await this.queryRemoteVersion(importPath)
+      const latestRemoteVersion = await this.queryRemoteVersion(importPath)
 
-      if (gt(latestRemoveVersion, pluginVersion)) {
+      if (gt(latestRemoteVersion, pluginVersion)) {
         const stoppedMsg = this.logger.stopSpinner()
         printBoxMessage(
           `Update for ${chalk.italic.green(
             importPath
-          )} is available: ${pluginVersion} -> ${latestRemoveVersion}. \n
+          )} is available: ${pluginVersion} -> ${latestRemoteVersion}. \n
           Run ${chalk.italic.green('cg update')} to install`
         )
         this.logger.startSpinner(stoppedMsg)
