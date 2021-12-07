@@ -81,7 +81,7 @@ export default class Load extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('LOAD')} for ${provider}`
       )
-      const { client } = await this.getProviderClient(provider)
+      const { client, schemasMap } = await this.getProviderClient(provider)
       if (!client) {
         continue // eslint-disable-line no-continue
       }
@@ -197,11 +197,13 @@ export default class Load extends Command {
       this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
-      processConnectionsBetweenEntities(
+      processConnectionsBetweenEntities({
+        provider,
         providerData,
         storageEngine,
-        storageRunning
-      )
+        storageRunning,
+        schemaMap: schemasMap,
+      })
       this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )

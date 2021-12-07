@@ -205,11 +205,13 @@ export default class Scan extends Command {
       this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
-      processConnectionsBetweenEntities(
+      processConnectionsBetweenEntities({
+        provider,
         providerData,
         storageEngine,
-        storageRunning
-      )
+        storageRunning,
+        schemaMap: schemasMap,
+      })
       this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
@@ -335,11 +337,11 @@ export default class Scan extends Command {
             policyPacksPlugins[policyPack]?.engine?.prepareMutations(findings)
 
           // Save connections
-          processConnectionsBetweenEntities(
-            updatedData,
+          processConnectionsBetweenEntities({
+            providerData: updatedData,
             storageEngine,
-            storageRunning
-          )
+            storageRunning,
+          })
           await storageEngine.run(false)
 
           this.logger.successSpinner(
