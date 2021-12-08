@@ -1,3 +1,10 @@
+## [0.15.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.0...0.15.1) (2021-12-08)
+
+
+### Bug Fixes
+
+* **manager:** add gcp choice, bypass version check in dev ([fb4b223](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/fb4b2238f65b10aa0341d4c7a3d3a5bc648c0c6e))
+
 # [0.15.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.7...0.15.0) (2021-12-07)
 
 
