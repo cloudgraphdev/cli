@@ -1,3 +1,10 @@
+## [0.15.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.1...0.15.2) (2021-12-09)
+
+
+### Bug Fixes
+
+* **config:** update provider config obj to include flags and cg config for more flexibility ([12f76c6](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/12f76c68ac20d0a292c1233c879d89902a854999))
+
 ## [0.15.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.0...0.15.1) (2021-12-08)
 
 
