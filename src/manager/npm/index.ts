@@ -3,7 +3,7 @@ import path from 'path'
 
 export default class NpmManager {
   constructor() {
-    this.npmBinary = './node_modules/.bin/npm'
+    this.npmBinary = path.normalize('./node_modules/.bin/npm')
   }
 
   npmBinary: string
@@ -23,30 +23,24 @@ export default class NpmManager {
     }
   }
 
-  async install(_path: string, version?: string) {
+  async install(_path: string, version?: string): Promise<number> {
     return new Promise((resolve, reject) => {
       const module = `${_path}${version ? `@${version}` : ''}`
 
-      const flags = [
-        '--no-audit',
-        '--no-fund',
-        '--no-save',
-        '--ignore-scripts',
-        '--silent',
-      ]
+      const flags = ['--no-audit', '--no-fund', '--ignore-scripts', '--silent']
       exec(
         `${this.npmBinary} install ${module} ${flags.join(' ')}`,
         { cwd: path.resolve(__dirname, '../../../') },
 
         err => {
-          if (err) reject(err)
+          if (err) return reject(err)
           resolve(0)
         }
       )
     })
   }
 
-  async uninstall(_path: string, version?: string) {
+  async uninstall(_path: string, version?: string): Promise<number> {
     return new Promise((resolve, reject) => {
       const module = `${_path}${version ? `@${version}` : ''}`
 
@@ -61,7 +55,7 @@ export default class NpmManager {
         `${this.npmBinary} uninstall ${module} ${flags.join(' ')}`,
         { cwd: path.resolve(__dirname, '../../../') },
         err => {
-          if (err) reject(err)
+          if (err) return reject(err)
 
           resolve(0)
         }
@@ -75,7 +69,7 @@ export default class NpmManager {
         `${this.npmBinary} view ${module} --json`,
         { cwd: path.resolve(__dirname, '../../../') },
         (err, stdout) => {
-          if (err) reject(err)
+          if (err) return reject(err)
 
           const res = JSON.parse(stdout)
           resolve(res)

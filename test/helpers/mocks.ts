@@ -1,3 +1,4 @@
+import { Entity } from '@cloudgraph/sdk'
 import path from 'path'
 import {
   MockInitCmdFlagsExpectation,
@@ -92,10 +93,14 @@ export const askForDGraphConfigPromptMock = (
 ): MockInitCmdPromptExpectation => ({
   methodToTest: InitCommandEnums.askForDGraphConfig,
   overwriteFlag,
-  promptExpectation: overwriteFlag ? [{
-    receivedUrl: testEndpoint,
-    vLimit: testVersionLimit,
-  }] : [],
+  promptExpectation: overwriteFlag
+    ? [
+        {
+          receivedUrl: testEndpoint,
+          vLimit: testVersionLimit,
+        },
+      ]
+    : [],
   expectedResult: askForDGraphConfigFlagsMock(overwriteFlag).expectedResult,
 })
 
@@ -104,11 +109,13 @@ export const askForQueryEngineConfigPromptMock = (
 ): MockInitCmdPromptExpectation => ({
   methodToTest: InitCommandEnums.askForQueryEngineConfig,
   overwriteFlag,
-  promptExpectation: overwriteFlag ? [
-    {
-      inputQueryEngine: testQueryEngine,
-    },
-  ] : [],
+  promptExpectation: overwriteFlag
+    ? [
+        {
+          inputQueryEngine: testQueryEngine,
+        },
+      ]
+    : [],
   expectedResult:
     askForQueryEngineConfigFlagsMock(overwriteFlag).expectedResult,
 })
@@ -171,3 +178,26 @@ export const runInitCommandMock = (
       : {}),
   },
 })
+
+export const addmutationMock =
+  (): string =>
+'mutation($input:[AddawsApiGatewayResourceInput!]!){addawsApiGatewayResource(input:$input,upsert:true){numUids}}'
+
+export const updatemutationMock =
+  (): string =>
+'mutation($patch:UpdateawsApiGatewayResourceInput!){updateawsApiGatewayResource(input:$patch){awsApiGatewayResource{id}}}'
+
+export const addmutationMockUsingClassname =
+  (): string =>
+'mutation($input:[AddawsAPIGatewayResourceInput!]!){addawsAPIGatewayResource(input:$input,upsert:true){numUids}}'
+
+export const mockEntityForMutationTest = {
+  className: 'APIGatewayResource',
+  name: 'apiGatewayResource',
+  mutation: 'mutation($input:[AddawsApiGatewayResourceInput!]!){addawsApiGatewayResource(input:$input,upsert:true){numUids}}',
+  data: []
+} as Entity
+
+export const mockSchemaMap = {
+  'apiGatewayResource': 'apiGatewayResource'
+}
