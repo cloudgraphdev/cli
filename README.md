@@ -12,11 +12,11 @@
 The **GraphQL** API for AWS and Azure - solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
 <br />
 
-🌐 [Website](https://www.cloudgraph.dev) 🌐 
+🌐 [Website](https://www.cloudgraph.dev)
 
-💻 [Documentation](https://docs.cloudgraph.dev) 💻
+💻 [Documentation](https://docs.cloudgraph.dev)
 
-💰 [Get paid to build CloudGraph Providers](https://github.com/kunovsky/paid-open-source-projects)💰
+💰 [Get paid to build CloudGraph providers](https://github.com/cloudgraphdev/cli/blob/master/CONTRIBUTING.md)
 
 <br />
 
