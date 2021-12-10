@@ -12,11 +12,11 @@
 The **GraphQL** API for AWS and Azure - solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
 <br />
 
-🌐 [Website](https://www.cloudgraph.dev) 🌐 
+🌐 [Website](https://www.cloudgraph.dev)
 
-💻 [Documentation](https://docs.cloudgraph.dev) 💻
+💻 [Documentation](https://docs.cloudgraph.dev)
 
-💰 [Get paid to build CloudGraph Providers](https://github.com/kunovsky/paid-open-source-projects)💰
+💰 [Get paid to build CloudGraph providers](https://github.com/cloudgraphdev/cli/blob/master/CONTRIBUTING.md)
 
 <br />
 
@@ -28,7 +28,7 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 <!-- toc -->
 * [Why CloudGraph](#why-cloudgraph)
 * [How It Works](#how-it-works)
-* [Authentication](#authentication)
+* [Authentication and Permissions](#authentication-and-permissions)
 * [Install](#install)
 * [Quick Start](#quick-start)
 * [Loading Previous Versions](#loading-previous-versions)
@@ -45,6 +45,23 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 <!-- tocstop -->
 
 <br />
+
+# Amazing companies using CloudGraph**
+
+- [AWS](https://aws.amazon.com/)
+- [Google](https://cloud.google.com/)
+- [Microsoft](https://www.microsoft.com/)
+- [Oracle](https://www.oracle.com/index.html)
+- [NASA](https://www.nasa.gov/)
+- [Grafana](https://grafana.com/)
+- [Pinterest](https://www.pinterest.com/)
+- [Zendesk](https://www.zendesk.com/)
+- [McKinsey](https://www.mckinsey.com/)
+- [Pulumi](https://www.pulumi.com/)
+- [Siemens](https://www.siemens.com/)
+- [MasterCard](https://www.mastercard.us/en-us.html)
+
+** usage does not imply endorsement
 
 # Why CloudGraph
 
@@ -102,19 +119,24 @@ Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all 
 
 <br />
 
-# Authentication
+# Authentication and Permissions
 
-CloudGraph currently supports AWS with Azure/GCP (and several others) coming soon. For more information on generating the necessary permission for each cloud provider please view our current provider repos:
+CloudGraph currently supports AWS and Azure with GCP/K8s (and several others) coming soon. CloudGraph needs read permissions in order to ingest your data. To keep things easy you can use the same permissions that we use internally when we run CloudGraph to power AutoCloud. Here are the auth guides and details for how to generate credentials for each provider (feel free to leave out AutoCloud specific configuration):
 
 <br />
 
-#### [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws)
-
-AWS TLDR; For AWS need you an IAM User with the AWS Managed "ReadOnlyAccess" policy attached. CloudGraph will check to see what AWS user you are using in your current terminal session and use those credentials.
+- [AWS Docs](https://docs.autocloud.dev/connect-an-environment/aws)
+- [Azure Docs](https://docs.autocloud.dev/connect-an-environment/azure)
+- [GCP Docs](https://docs.autocloud.dev/connect-an-environment/gcp)
 
 <br />
 
 # Install
+
+**System Requirements**
+
+ - Node 14+
+ - Docker
 
 Use this command to install and update CloudGraph to the latest version.
 
