@@ -35,6 +35,8 @@ At CloudGraph, we believe in paying contributors for their time when it comes to
 
 - HyperV
 
+- Snowflake
+
 Interested in learning more? Here is a [spreadsheet](https://docs.google.com/spreadsheets/d/1twlflwXiMrWJ9VYpVX2whpYvoY715blIKEpejEdy9VY/edit?usp=sharing) shows the desired 10 initial services for each provider. All you have to do to get started is open up an issue with the name of the provider you want to build so everyone knows it's claimed and we will be in touch. Thanks for helping to make OSS a better place!
 
 ## Getting Started
