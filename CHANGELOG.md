@@ -1,3 +1,10 @@
+## [0.15.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.2...0.15.3) (2021-12-10)
+
+
+### Bug Fixes
+
+* **conflicts:** fixing merge conflict ([f0473c5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f0473c5880348856eee89f22b3fd3abdda0509c2))
+
 ## [0.15.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.1...0.15.2) (2021-12-09)
 
 
