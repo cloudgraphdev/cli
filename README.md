@@ -47,7 +47,7 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 
 <br />
 
-# Amazing companies using CloudGraph**
+# Amazing companies using CloudGraph\*\*
 
 - [AWS](https://aws.amazon.com/)
 - [Google](https://cloud.google.com/)
@@ -62,7 +62,7 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 - [Siemens](https://www.siemens.com/)
 - [MasterCard](https://www.mastercard.us/en-us.html)
 
-** usage does not imply endorsement
+\*\* usage does not imply endorsement
 
 # Why CloudGraph
 
@@ -136,8 +136,8 @@ CloudGraph currently supports AWS and Azure with GCP/K8s (and several others) co
 
 **System Requirements**
 
- - Node 14+
- - Docker
+- Node 14+
+- Docker
 
 Use this command to install and update CloudGraph to the latest version.
 
@@ -947,6 +947,79 @@ query {
 
 <br />
 
+## AWS CloudWatch example:
+
+CloudGraph ingests your CloudWatch Metric data and stores it along with select AWS services, for example, you can do the following for EC2:
+
+```graphql
+query {
+  queryawsEc2 {
+    arn
+    cloudWatchMetricData {
+      lastWeek {
+        cpuUtilizationAverage
+        networkInAverage
+        networkOutAverage
+        networkPacketsInAverage
+        networkPacketsOutAverage
+        statusCheckFailedSum
+        statusCheckFailedInstanceSum
+        statusCheckFailedSystemSum
+        diskReadOpsAverage
+        diskWriteOpsAverage
+        diskReadBytesAverage
+        diskWriteBytesAverage
+      }
+
+      lastMonth {
+        cpuUtilizationAverage
+        networkInAverage
+        networkOutAverage
+        networkPacketsInAverage
+        networkPacketsOutAverage
+        statusCheckFailedSum
+        statusCheckFailedInstanceSum
+        statusCheckFailedSystemSum
+        diskReadOpsAverage
+        diskWriteOpsAverage
+        diskReadBytesAverage
+        diskWriteBytesAverage
+      }
+      last6Hours {
+        cpuUtilizationAverage
+        networkInAverage
+        networkOutAverage
+        networkPacketsInAverage
+        networkPacketsOutAverage
+        statusCheckFailedSum
+        statusCheckFailedInstanceSum
+        statusCheckFailedSystemSum
+        diskReadOpsAverage
+        diskWriteOpsAverage
+        diskReadBytesAverage
+        diskWriteBytesAverage
+      }
+      last24Hours {
+        cpuUtilizationAverage
+        networkInAverage
+        networkOutAverage
+        networkPacketsInAverage
+        networkPacketsOutAverage
+        statusCheckFailedSum
+        statusCheckFailedInstanceSum
+        statusCheckFailedSystemSum
+        diskReadOpsAverage
+        diskWriteOpsAverage
+        diskReadBytesAverage
+        diskWriteBytesAverage
+      }
+    }
+  }
+}
+```
+
+<br />
+
 ## Thinking in terms of a graph:
 
 <br />
@@ -1106,19 +1179,20 @@ There are some common errors you may see when running CloudGraph that are usuall
 # Commands
 
 <!-- commands -->
-* [`cg help [COMMAND]`](#cg-help-command)
-* [`cg init [PROVIDER]`](#cg-init-provider)
-* [`cg launch [PROVIDER]`](#cg-launch-provider)
-* [`cg load [PROVIDER]`](#cg-load-provider)
-* [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-* [`cg scan [PROVIDER]`](#cg-scan-provider)
-* [`cg serve [PROVIDER]`](#cg-serve-provider)
-* [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+
+- [`cg help [COMMAND]`](#cg-help-command)
+- [`cg init [PROVIDER]`](#cg-init-provider)
+- [`cg launch [PROVIDER]`](#cg-launch-provider)
+- [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg provider [PROVIDER]`](#cg-provider-provider)
+- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
+- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
+- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
+- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
+- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg scan [PROVIDER]`](#cg-scan-provider)
+- [`cg serve [PROVIDER]`](#cg-serve-provider)
+- [`cg teardown [PROVIDER]`](#cg-teardown-provider)
 
 ## `cg help [COMMAND]`
 
