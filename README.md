@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png">
-    <img alt="CloudGraph" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png" width="75%" style="display: block; margin: auto" />
+    <img alt="CloudGraph" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png" width="75%" style="display: block; margin: auto" />
   </a>
 </p>
 
@@ -26,23 +26,24 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 [![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/master/package.json)
 
 <!-- toc -->
-* [Amazing companies using CloudGraph**](#amazing-companies-using-cloudgraph)
-* [Why CloudGraph](#why-cloudgraph)
-* [How It Works](#how-it-works)
-* [Authentication and Permissions](#authentication-and-permissions)
-* [Install](#install)
-* [Quick Start](#quick-start)
-* [Loading Previous Versions](#loading-previous-versions)
-* [Supported Services](#supported-services)
-* [Example Queries](#example-queries)
-* [Query Tools](#query-tools)
-* [Community](#community)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Deployment Options](#deployment-options)
-* [Hosted Version](#hosted-version)
-* [Debugging](#debugging)
-* [Common Errors](#common-errors)
-* [Commands](#commands)
+
+- [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
+- [Why CloudGraph](#why-cloudgraph)
+- [How It Works](#how-it-works)
+- [Authentication and Permissions](#authentication-and-permissions)
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Loading Previous Versions](#loading-previous-versions)
+- [Supported Services](#supported-services)
+- [Example Queries](#example-queries)
+- [Query Tools](#query-tools)
+- [Community](#community)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Deployment Options](#deployment-options)
+- [Hosted Version](#hosted-version)
+- [Debugging](#debugging)
+- [Common Errors](#common-errors)
+- [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -74,13 +75,13 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers. Here are some more examples:
+CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers. Here are some more examples:
 
 <br />
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg">
-    <img alt="exampleQuery1" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg" width="95%" style="display: block; margin: auto"/>
+    <img alt="exampleQuery1" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -88,7 +89,7 @@ CloudGraph lets any cloud professional answer questions like, "What KMS keys do 
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg">
-    <img alt="exampleQuery2" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg" width="95%" style="display: block; margin: auto"/>
+    <img alt="exampleQuery2" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -96,7 +97,7 @@ CloudGraph lets any cloud professional answer questions like, "What KMS keys do 
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg">
-    <img alt="exampleQuery3" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg" width="95%" style="display: block; margin: auto"/>
+    <img alt="exampleQuery3" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -104,7 +105,7 @@ CloudGraph lets any cloud professional answer questions like, "What KMS keys do 
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg">
-    <img alt="exampleQuery4" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg" width="95%" style="display: block; margin: auto"/>
+    <img alt="exampleQuery4" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -116,7 +117,7 @@ Note that CloudGraph requires **READ ONLY** permissions to run and as such can *
 
 <br />
 
-Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all of the configuration data, processes it, and stores a copy of this data for you in [Dgraph](https://dgraph.io/). It then exposes an endpoint at `http://localhost:8997` that allows you to write GraphQL Queries against your stored data. These queries not only allow you do to anything that you would do with say, the AWS SDK/CLI, but they also allow you to run much more powerful queries as well. CloudGraph ships with pre-packaged GraphQL query tools including [GraphQL Playground](https://github.com/graphql/graphql-playground) and [Altair](https://github.com/altair-viz/altair) but you can also feel free to use your own. It also includes a schema visualization tool called [Voyager](https://github.com/APIs-guru/graphql-voyager) so you can understand relationships between entities.
+Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all of the configuration data, processes it, and stores a copy of this data for you in [Dgraph](https://dgraph.io/). It then exposes an endpoint at `http://localhost:8997` that allows you to write GraphQL Queries against your stored data. These queries not only allow you do to anything that you would do with say, the AWS SDK/CLI, but they also allow you to run much more powerful queries as well. CloudGraph ships with pre-packaged GraphQL query tools including [GraphQL Playground](https://github.com/graphql/graphql-playground) and [Altair](https://github.com/altair-viz/altair) but you can also feel free to use your own. It also includes a schema visualization tool called [Voyager](https://github.com/APIs-guru/graphql-voyager) so you can understand relationships between entities.
 
 <br />
 
@@ -167,7 +168,7 @@ cg init
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png">
-    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -187,14 +188,14 @@ cg launch
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png">
-    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
 ```bash
-  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000
+  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000
   --label cloudgraph-cli-dgraph-standalone -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1
 ```
 
@@ -212,7 +213,7 @@ cg scan
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
-    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -254,13 +255,13 @@ cg teardown --delete-image
 
 <br />
 
-CloudGraph stores as many previous versions of your data as you configured in the `cg init` command. In order to load and query a previous version of your data simply run the `cg load` command and select the version of your data you wish to inspect like so:
+CloudGraph stores as many previous versions of your data as you configured in the `cg init` command. In order to load and query a previous version of your data simply run the `cg load` command and select the version of your data you wish to inspect like so:
 
 <br />
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png">
-    <img alt="load" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="load" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -294,12 +295,12 @@ To explain how CloudGraph works consider the following query that you can run to
 
 ```graphql
 query {
-  getawsEc2(
-    arn: "arn:aws:ec2:us-east-1:123445678997:instance/i-12345567889012234"
-  ) {
-    id
-    arn
-  }
+  getawsEc2(
+    arn: "arn:aws:ec2:us-east-1:123445678997:instance/i-12345567889012234"
+  ) {
+    id
+    arn
+  }
 }
 ```
 
@@ -329,10 +330,10 @@ Get the `ID` and `ARN` of each `EC2` in all the AWS accounts you have scanned:
 
 ```graphql
 query {
-  queryawsEc2 {
-    id
-    arn
-  }
+  queryawsEc2 {
+    id
+    arn
+  }
 }
 ```
 
@@ -342,10 +343,10 @@ Get the `ID` and `ARN` of all `EC2` instances in one of your AWS accounts by fil
 
 ```graphql
 query {
-  queryawsEc2(filter: { accountId: { eq: "123456" } }) {
-    id
-    arn
-  }
+  queryawsEc2(filter: { accountId: { eq: "123456" } }) {
+    id
+    arn
+  }
 }
 ```
 
@@ -355,10 +356,10 @@ Get the `ID` and `ARN` of each `EC2` in `"us-east-1"` using a regex to search th
 
 ```graphql
 query {
-  queryawsEc2(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
-    id
-    arn
-  }
+  queryawsEc2(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
+    id
+    arn
+  }
 }
 ```
 
@@ -368,10 +369,10 @@ Do the same thing but checking to see that the `region` is equal to `"us-east-1"
 
 ```graphql
 query {
-  queryawsEc2(filter: { region: { eq: "us-east-1" } }) {
-    id
-    arn
-  }
+  queryawsEc2(filter: { region: { eq: "us-east-1" } }) {
+    id
+    arn
+  }
 }
 ```
 
@@ -381,10 +382,10 @@ Do the same thing but checking to see that the `region` contains `"us-east-1"` i
 
 ```graphql
 query {
-  queryawsEc2(filter: { region: { in: "us-east-1" } }) {
-    id
-    arn
-  }
+  queryawsEc2(filter: { region: { in: "us-east-1" } }) {
+    id
+    arn
+  }
 }
 ```
 
@@ -394,12 +395,12 @@ Get the `ID` and `ARN` of each `M5` series `EC2 instance` in `"us-east-1"`
 
 ```graphql
 query {
-  queryawsEc2(
-    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
-  ) {
-    id
-    arn
-  }
+  queryawsEc2(
+    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
+  ) {
+    id
+    arn
+  }
 }
 ```
 
@@ -409,15 +410,15 @@ Do the same thing but skip the first found result (i.e. `offset: 1`) and then on
 
 ```graphql
 query {
-  queryawsEc2(
-    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
-    order: { asc: availabilityZone }
-    first: 2
-    offset: 1
-  ) {
-    id
-    arn
-  }
+  queryawsEc2(
+    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
+    order: { asc: availabilityZone }
+    first: 2
+    offset: 1
+  ) {
+    id
+    arn
+  }
 }
 ```
 
@@ -427,20 +428,20 @@ Do the same thing but also include the `EBS Volume` that is the boot disk for ea
 
 ```graphql
 query {
-  queryawsEc2(
-    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
-    order: { asc: availabilityZone }
-    first: 2
-    offset: 1
-  ) {
-    id
-    arn
-    ebs(filter: { isBootDisk: true }, first: 1) {
-      id
-      arn
-      isBootDisk
-    }
-  }
+  queryawsEc2(
+    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
+    order: { asc: availabilityZone }
+    first: 2
+    offset: 1
+  ) {
+    id
+    arn
+    ebs(filter: { isBootDisk: true }, first: 1) {
+      id
+      arn
+      isBootDisk
+    }
+  }
 }
 ```
 
@@ -450,32 +451,32 @@ Do the same thing, but also include the `SGs` and `ALBs` for each `EC2`. For the
 
 ```graphql
 query {
-  queryawsEc2(
-    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
-    order: { asc: availabilityZone }
-    first: 2
-    offset: 1
-  ) {
-    id
-    arn
-    ebs(filter: { isBootDisk: true }, first: 1) {
-      id
-      arn
-      isBootDisk
-    }
-    securityGroups {
-      id
-      arn
-    }
-    alb {
-      id
-      arn
-      ec2Instance {
-        id
-        arn
-      }
-    }
-  }
+  queryawsEc2(
+    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
+    order: { asc: availabilityZone }
+    first: 2
+    offset: 1
+  ) {
+    id
+    arn
+    ebs(filter: { isBootDisk: true }, first: 1) {
+      id
+      arn
+      isBootDisk
+    }
+    securityGroups {
+      id
+      arn
+    }
+    alb {
+      id
+      arn
+      ec2Instance {
+        id
+        arn
+      }
+    }
+  }
 }
 ```
 
@@ -529,12 +530,12 @@ Find all the unencrypted `EBS Volumes`:
 
 ```graphql
 query {
-  queryawsEbs(filter: { encrypted: false }) {
-    id
-    arn
-    availabilityZone
-    encrypted
-  }
+  queryawsEbs(filter: { encrypted: false }) {
+    id
+    arn
+    availabilityZone
+    encrypted
+  }
 }
 ```
 
@@ -572,16 +573,16 @@ Find all the `KMS` keys in `"us-east-1"`:
 
 ```graphql
 query {
-  queryawsKms(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
-    id
-    arn
-    description
-    keyRotationEnabled
-    tags {
-      key
-      value
-    }
-  }
+  queryawsKms(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
+    id
+    arn
+    description
+    keyRotationEnabled
+    tags {
+      key
+      value
+    }
+  }
 }
 ```
 
@@ -591,12 +592,12 @@ Find all the burstable `T` series instances:
 
 ```graphql
 query {
-  queryawsEc2(filter: { instanceType: { regexp: "/^t.*/" } }) {
-    id
-    arn
-    availabilityZone
-    instanceType
-  }
+  queryawsEc2(filter: { instanceType: { regexp: "/^t.*/" } }) {
+    id
+    arn
+    availabilityZone
+    instanceType
+  }
 }
 ```
 
@@ -606,12 +607,12 @@ Find the default `VPCs`:
 
 ```graphql
 query {
-  queryawsVpc(filter: { defaultVpc: true }) {
-    id
-    arn
-    defaultVpc
-    state
-  }
+  queryawsVpc(filter: { defaultVpc: true }) {
+    id
+    arn
+    defaultVpc
+    state
+  }
 }
 ```
 
@@ -621,16 +622,16 @@ Find the public `ALBs`:
 
 ```graphql
 query {
-  queryawsAlb(filter: { scheme: { eq: "internet-facing" } }) {
-    id
-    arn
-    dnsName
-    createdAt
-    tags {
-      key
-      value
-    }
-  }
+  queryawsAlb(filter: { scheme: { eq: "internet-facing" } }) {
+    id
+    arn
+    dnsName
+    createdAt
+    tags {
+      key
+      value
+    }
+  }
 }
 ```
 
@@ -640,22 +641,22 @@ Find all of the `EC2s`, `Lambdas`, and `VPCs` that have a `Tag` value of `"Produ
 
 ```graphql
 query {
-  queryawsTag(filter: { value: { eq: "Production" } }) {
-    key
-    value
-    ec2Instance {
-      id
-      arn
-    }
-    lambda {
-      id
-      arn
-    }
-    vpc {
-      id
-      arn
-    }
-  }
+  queryawsTag(filter: { value: { eq: "Production" } }) {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
 }
 ```
 
@@ -665,24 +666,24 @@ Do the same thing but look for both a `key` and a `value`:
 
 ```graphql
 query {
-  queryawsTag(
-    filter: {  key: { eq: "Environment" }, value: { eq: "Production" } }
-  ) {
-    key
-    value
-    ec2Instance {
-      id
-      arn
-    }
-    lambda {
-      id
-      arn
-    }
-    vpc {
-      id
-      arn
-    }
-  }
+  queryawsTag(
+    filter: { key: { eq: "Environment" }, value: { eq: "Production" } }
+  ) {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
 }
 ```
 
@@ -692,22 +693,22 @@ Do the same thing using `getawsTag` instead of `queryawsTag`. Note that when sea
 
 ```graphql
 query {
-  getawsTag(id: "Environment:Production") {
-    key
-    value
-    ec2Instance {
-      id
-      arn
-    }
-    lambda {
-      id
-      arn
-    }
-    vpc {
-      id
-      arn
-    }
-  }
+  getawsTag(id: "Environment:Production") {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
 }
 ```
 
@@ -1055,14 +1056,14 @@ Today, the biggest limitation with CloudGraph and our query abilities is we don'
 
 ```graphql
 query {
-  queryawsEc2(filter: { ebs: { isBootDisk: true } }) {
-    id
-    arn
-    ebs {
-      id
-      arn
-    }
-  }
+  queryawsEc2(filter: { ebs: { isBootDisk: true } }) {
+    id
+    arn
+    ebs {
+      id
+      arn
+    }
+  }
 }
 ```
 
@@ -1088,7 +1089,7 @@ GraphQL playground has a fluid and engaging UX that is great for querying a Grap
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png">
-    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1102,7 +1103,7 @@ Altair is another great GraphQL query tool that packs a ton of [features](https:
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png">
-    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1116,7 +1117,7 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png">
-    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1152,7 +1153,7 @@ Interested in a fully managed SaaS/self hosted version of CloudGraph that has bu
 
 <p align="center">
   <a href="https://www.autocloud.dev">
-    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1535,4 +1536,5 @@ EXAMPLES
 ```
 
 _See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/teardown.ts)_
+
 <!-- commandsstop -->
