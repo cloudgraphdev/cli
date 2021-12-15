@@ -1,3 +1,10 @@
+## [0.15.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.3...0.15.4) (2021-12-15)
+
+
+### Bug Fixes
+
+* Improved error message when npm is down ([c29dc2a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c29dc2a2a49ed5a6f8735c65e9124144a944a923))
+
 ## [0.15.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.2...0.15.3) (2021-12-10)
 
 

@@ -26,24 +26,23 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 [![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/master/package.json)
 
 <!-- toc -->
-
-- [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
-- [Why CloudGraph](#why-cloudgraph)
-- [How It Works](#how-it-works)
-- [Authentication and Permissions](#authentication-and-permissions)
-- [Install](#install)
-- [Quick Start](#quick-start)
-- [Loading Previous Versions](#loading-previous-versions)
-- [Supported Services](#supported-services)
-- [Example Queries](#example-queries)
-- [Query Tools](#query-tools)
-- [Community](#community)
-- [Contribution Guidelines](#contribution-guidelines)
-- [Deployment Options](#deployment-options)
-- [Hosted Version](#hosted-version)
-- [Debugging](#debugging)
-- [Common Errors](#common-errors)
-- [Commands](#commands)
+* [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
+* [Why CloudGraph](#why-cloudgraph)
+* [How It Works](#how-it-works)
+* [Authentication and Permissions](#authentication-and-permissions)
+* [Install](#install)
+* [Quick Start](#quick-start)
+* [Loading Previous Versions](#loading-previous-versions)
+* [Supported Services](#supported-services)
+* [Example Queries](#example-queries)
+* [Query Tools](#query-tools)
+* [Community](#community)
+* [Contribution Guidelines](#contribution-guidelines)
+* [Deployment Options](#deployment-options)
+* [Hosted Version](#hosted-version)
+* [Debugging](#debugging)
+* [Common Errors](#common-errors)
+* [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -1180,20 +1179,19 @@ There are some common errors you may see when running CloudGraph that are usuall
 # Commands
 
 <!-- commands -->
-
-- [`cg help [COMMAND]`](#cg-help-command)
-- [`cg init [PROVIDER]`](#cg-init-provider)
-- [`cg launch [PROVIDER]`](#cg-launch-provider)
-- [`cg load [PROVIDER]`](#cg-load-provider)
-- [`cg provider [PROVIDER]`](#cg-provider-provider)
-- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-- [`cg scan [PROVIDER]`](#cg-scan-provider)
-- [`cg serve [PROVIDER]`](#cg-serve-provider)
-- [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+* [`cg help [COMMAND]`](#cg-help-command)
+* [`cg init [PROVIDER]`](#cg-init-provider)
+* [`cg launch [PROVIDER]`](#cg-launch-provider)
+* [`cg load [PROVIDER]`](#cg-load-provider)
+* [`cg provider [PROVIDER]`](#cg-provider-provider)
+* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
+* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
+* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
+* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
+* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+* [`cg scan [PROVIDER]`](#cg-scan-provider)
+* [`cg serve [PROVIDER]`](#cg-serve-provider)
+* [`cg teardown [PROVIDER]`](#cg-teardown-provider)
 
 ## `cg help [COMMAND]`
 
@@ -1238,7 +1236,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -1263,7 +1261,7 @@ EXAMPLE
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1289,7 +1287,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/load.ts)_
 
 ## `cg provider [PROVIDER]`
 
@@ -1311,7 +1309,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/index.ts)_
 
 ## `cg provider:add [PROVIDER]`
 
@@ -1340,7 +1338,7 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
-_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/provider/add.ts)_
+_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/add.ts)_
 
 ## `cg provider:install [PROVIDER]`
 
@@ -1368,7 +1366,7 @@ EXAMPLE
   $ cg provider install
 ```
 
-_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/provider/install.ts)_
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/install.ts)_
 
 ## `cg provider:list [PROVIDER]`
 
@@ -1399,7 +1397,7 @@ EXAMPLES
   $ cg provider list aws
 ```
 
-_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/provider/list.ts)_
+_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/list.ts)_
 
 ## `cg provider:remove [PROVIDER]`
 
@@ -1434,7 +1432,7 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
-_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/provider/remove.ts)_
+_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/remove.ts)_
 
 ## `cg provider:update [PROVIDER]`
 
@@ -1464,7 +1462,7 @@ EXAMPLES
   $cg provider update aws@0.12.0
 ```
 
-_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/provider/update.ts)_
+_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/update.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -1492,7 +1490,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -1517,7 +1515,7 @@ EXAMPLE
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 
@@ -1535,6 +1533,5 @@ EXAMPLES
   $ cg teardown --delete-image
 ```
 
-_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.3/src/commands/teardown.ts)_
-
+_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/teardown.ts)_
 <!-- commandsstop -->
