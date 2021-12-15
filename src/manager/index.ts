@@ -135,8 +135,13 @@ export class Manager {
   }
 
   async queryRemoteVersion(importPath: string): Promise<string> {
-    const info = await this.pluginManager.queryPackage(importPath)
-    return info.version
+    try {
+      const info = await this.pluginManager.queryPackage(importPath)
+      return info.version
+    } catch (error) {
+      this.logger.error('There was an error checking the latest version')
+      return '0.0.0'
+    }
   }
 
   async getVersion(importPath: string): Promise<string> {
