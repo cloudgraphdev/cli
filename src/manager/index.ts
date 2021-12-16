@@ -135,8 +135,13 @@ export class Manager {
   }
 
   async queryRemoteVersion(importPath: string): Promise<string> {
-    const info = await this.pluginManager.queryPackage(importPath)
-    return info.version
+    try {
+      const info = await this.pluginManager.queryPackage(importPath)
+      return info.version
+    } catch (error) {
+      this.logger.error('There was an error checking the latest version')
+      return '0.0.0'
+    }
   }
 
   async getVersion(importPath: string): Promise<string> {
@@ -160,25 +165,22 @@ export class Manager {
   }
 
   async checkRequiredVersion(importPath: string): Promise<boolean> {
-    let pluginInfo
-    if (process.env.NODE_ENV === 'development' || this.devMode) {
-      pluginInfo = await import(`${importPath}/package.json`)
-    } else {
-      pluginInfo = await import(`${importPath}/package.json`)
-    }
+    const pluginInfo = await import(`${importPath}/package.json`)
     const pluginVersion = pluginInfo?.version
 
-    const latestRemoveVersion = await this.queryRemoteVersion(importPath)
+    if (process.env.NODE_ENV !== 'development' && !this.devMode) {
+      const latestRemoteVersion = await this.queryRemoteVersion(importPath)
 
-    if (gt(latestRemoveVersion, pluginVersion)) {
-      const stoppedMsg = this.logger.stopSpinner()
-      printBoxMessage(
-        `Update for ${chalk.italic.green(
-          importPath
-        )} is available: ${pluginVersion} -> ${latestRemoveVersion}. \n
-Run ${chalk.italic.green('cg update')} to install`
-      )
-      this.logger.startSpinner(stoppedMsg)
+      if (gt(latestRemoteVersion, pluginVersion)) {
+        const stoppedMsg = this.logger.stopSpinner()
+        printBoxMessage(
+          `Update for ${chalk.italic.green(
+            importPath
+          )} is available: ${pluginVersion} -> ${latestRemoteVersion}. \n
+          Run ${chalk.italic.green('cg update')} to install`
+        )
+        this.logger.startSpinner(stoppedMsg)
+      }
     }
     const requiredVersion = pluginInfo?.cloudGraph?.version
     if (!requiredVersion) {

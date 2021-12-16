@@ -239,7 +239,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       }
       const client = new Client({
         logger: this.logger,
-        provider: this.getCGConfig(provider),
+        provider: this.buildProviderConfig(provider),
       })
       this.providers[provider] = { client, schemasMap, serviceKey }
       return { client, schemasMap, serviceKey }
@@ -311,6 +311,18 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       return null
     } catch (error: any) {
       return null
+    }
+  }
+
+  buildProviderConfig(provider: string): any {
+    const {
+      flags
+    } = this.parse(this.constructor as Input<any>)
+    const providerConfig = this.getCGConfig(provider) ?? {}
+    return {
+      ...providerConfig,
+      flags,
+      cloudGraphConfig: this.getCGConfig('cloudGraph')
     }
   }
 

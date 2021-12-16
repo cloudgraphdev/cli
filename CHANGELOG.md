@@ -1,3 +1,38 @@
+## [0.15.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.3...0.15.4) (2021-12-15)
+
+
+### Bug Fixes
+
+* Improved error message when npm is down ([c29dc2a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c29dc2a2a49ed5a6f8735c65e9124144a944a923))
+
+## [0.15.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.2...0.15.3) (2021-12-10)
+
+
+### Bug Fixes
+
+* **conflicts:** fixing merge conflict ([f0473c5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f0473c5880348856eee89f22b3fd3abdda0509c2))
+
+## [0.15.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.1...0.15.2) (2021-12-09)
+
+
+### Bug Fixes
+
+* **config:** update provider config obj to include flags and cg config for more flexibility ([12f76c6](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/12f76c68ac20d0a292c1233c879d89902a854999))
+
+## [0.15.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.0...0.15.1) (2021-12-08)
+
+
+### Bug Fixes
+
+* **manager:** add gcp choice, bypass version check in dev ([fb4b223](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/fb4b2238f65b10aa0341d4c7a3d3a5bc648c0c6e))
+
+# [0.15.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.7...0.15.0) (2021-12-07)
+
+
+### Features
+
+* add multiple strategies to generate entities mutations ([d7a4f28](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d7a4f284cdc55c9ee09c28cb38b2f10cb137ab66))
+
 ## [0.14.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.14.6...0.14.7) (2021-12-07)
 
 
