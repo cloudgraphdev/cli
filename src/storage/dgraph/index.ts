@@ -1,6 +1,10 @@
 import { ExecutionResult } from 'graphql'
+import {
+  StorageEngineConfig,
+  StorageEngine,
+  GraphQLInputData,
+} from '@cloudgraph/sdk'
 
-import { GraphQLInputData, StorageEngine, StorageEngineConfig } from '../types'
 import DGraphClientWrapper from './base'
 import {
   GET_SCHEMA_QUERY,
