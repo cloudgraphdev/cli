@@ -52,18 +52,17 @@ export default class Init extends Command {
    * asks for config details if not found or if the user chooses to overwrite the existent config
    */
   async checkProviderConfig(provider: string, client: any): Promise<any> {
-    const { flags } = this.parse(Init)
     const config = this.getCGConfig(provider)
     if (config) {
       this.logger.info(`Config for ${provider} already exists`)
       const { overwrite } = await this.promptForConfigOverwrite(`${provider}'s`)
       if (overwrite) {
-        return client.configure(flags)
+        return client.configure()
       }
       this.logger.warn(`Init command for ${provider} aborted`)
       return config
     }
-    return client.configure(flags)
+    return client.configure()
   }
 
   async askForDGraphConfig(overwrite = false): Promise<{

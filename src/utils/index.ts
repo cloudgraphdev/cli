@@ -1,5 +1,3 @@
-// import CloudGraph, { Opts } from '@cloudgraph/sdk'
-import CloudGraph from '@cloudgraph/sdk'
 import { loadFilesSync } from '@graphql-tools/load-files'
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import { print } from 'graphql'
@@ -10,14 +8,10 @@ import { exec } from 'child_process'
 import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
-import isEmpty from 'lodash/isEmpty'
 import detect from 'detect-port'
 
-import scanReport, { scanDataType, scanResult } from '../scanReport'
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
-import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
-
-const { logger } = CloudGraph
+import { StorageEngineConnectionConfig } from '../storage/types'
 
 export const getKeyByValue = (
   object: Record<string, unknown>,
@@ -49,12 +43,8 @@ export function getProviderDataFile(
 const mapFileNameToHumanReadable = (file: string): string => {
   const fileNameParts = file.split('/')
   const fileName = fileNameParts[fileNameParts.length - 1]
-  const [providerName, timestamp] = fileName
-    .replace('.json', '')
-    .split('_')
-  return `${providerName} ${new Date(
-    Number(timestamp)
-  ).toISOString()}`
+  const [providerName, timestamp] = fileName.replace('.json', '').split('_')
+  return `${providerName} ${new Date(Number(timestamp)).toISOString()}`
 }
 
 // TODO: this could be refactored to go right to the correct version folder (avoid line 70)
@@ -89,90 +79,6 @@ export function writeGraphqlSchemaToFile(
     ),
     schema
   )
-}
-
-export function getConnectedEntity(
-  service: any,
-  { entities, connections: allConnections }: any,
-  initiatorServiceName: string
-): Record<string, unknown> {
-  // opts: Opts
-  logger.debug(
-    `Getting connected entities for ${chalk.green(
-      initiatorServiceName
-    )} id = ${chalk.green(service.id)}`
-  )
-  const connections = allConnections[service.id]
-  const connectedEntity = {
-    ...service,
-  }
-  let connectionsStatus = scanResult.pass
-  if (connections) {
-    for (const connection of connections) {
-      const entityData = entities.find(
-        ({ name }: { name: string }) => name === connection.resourceType
-      )
-      if (entityData && entityData.data) {
-        const entityForConnection = entityData.data.find(
-          ({ id }: { id: string }) => connection.id === id
-        )
-        if (!isEmpty(entityForConnection)) {
-          if (!connectedEntity[connection.field]) {
-            connectedEntity[connection.field] = []
-          }
-          connectedEntity[connection.field].push(entityForConnection)
-          logger.debug(
-            `(${initiatorServiceName}) ${service.id} ${chalk.green(
-              '<----->'
-            )} ${connection.id} (${connection.resourceType})`
-          )
-        } else {
-          connectionsStatus = scanResult.warn
-          const error = `Malformed connection found between ${chalk.red(
-            initiatorServiceName
-          )} && ${chalk.red(connection.resourceType)} services.`
-          logger.warn(error)
-          logger.warn(
-            `(${initiatorServiceName}) ${service.id} ${chalk.red('<-///->')} ${
-              connection.id
-            } (${connection.resourceType})`
-          )
-        }
-      }
-    }
-  }
-  scanReport.pushData({
-    service: initiatorServiceName,
-    type: scanDataType.status,
-    result: connectionsStatus,
-  })
-  return connectedEntity
-}
-
-export function processConnectionsBetweenEntities(
-  providerData: any,
-  storageEngine: StorageEngine,
-  storageRunning: boolean
-): void {
-  for (const entity of providerData.entities) {
-    const { mutation, data, name } = entity
-    const connectedData = data.map((service: any) => {
-      scanReport.pushData({
-        service: name,
-        type: scanDataType.count,
-        result: scanResult.pass,
-      })
-      return getConnectedEntity(service, providerData, name)
-    })
-    if (storageRunning) {
-      // Add service mutation to promises array
-      storageEngine.push({
-        query: mutation,
-        connectedData,
-        name,
-      })
-    }
-  }
 }
 
 export function printWelcomeMessage(): void {
@@ -232,10 +138,16 @@ export function getVersionFolders(
   return []
 }
 
-export function getSchemaFromFolder(dirPath: string, provider?: string): string {
-  const typesArray = loadFilesSync(path.join(dirPath, provider ? `${provider}*` : ''), {
-    extensions: ['graphql'],
-  })
+export function getSchemaFromFolder(
+  dirPath: string,
+  provider?: string
+): string {
+  const typesArray = loadFilesSync(
+    path.join(dirPath, provider ? `${provider}*` : ''),
+    {
+      extensions: ['graphql'],
+    }
+  )
   return print(mergeTypeDefs(typesArray))
 }
 
