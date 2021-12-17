@@ -2,20 +2,21 @@
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png">
-    <img alt="CloudGraph" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png" width="75%" style="display: block; margin: auto" />
+    <img alt="CloudGraph" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png" width="75%" style="display: block; margin: auto" />
   </a>
 </p>
 
 <br />
 <br />
 
-The **GraphQL** API for AWS - solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+The **GraphQL** API for AWS and Azure - solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
 <br />
 
-🌐 Website: https://www.cloudgraph.dev
-<br />
+🌐 [Website](https://www.cloudgraph.dev)
 
-💻 Documentation: https://docs.cloudgraph.dev
+💻 [Documentation](https://docs.cloudgraph.dev)
+
+💰 [Get paid to build CloudGraph providers](https://github.com/cloudgraphdev/cli/blob/master/CONTRIBUTING.md)
 
 <br />
 
@@ -26,9 +27,10 @@ The **GraphQL** API for AWS - solve a host of complex security, compliance, and 
 
 <!-- toc -->
 
+- [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
 - [Why CloudGraph](#why-cloudgraph)
 - [How It Works](#how-it-works)
-- [Authentication](#authentication)
+- [Authentication and Permissions](#authentication-and-permissions)
 - [Install](#install)
 - [Quick Start](#quick-start)
 - [Loading Previous Versions](#loading-previous-versions)
@@ -46,6 +48,23 @@ The **GraphQL** API for AWS - solve a host of complex security, compliance, and 
 
 <br />
 
+# Amazing companies using CloudGraph\*\*
+
+- [AWS](https://aws.amazon.com/)
+- [Google](https://cloud.google.com/)
+- [Microsoft](https://www.microsoft.com/)
+- [Oracle](https://www.oracle.com/index.html)
+- [NASA](https://www.nasa.gov/)
+- [Grafana](https://grafana.com/)
+- [Pinterest](https://www.pinterest.com/)
+- [Zendesk](https://www.zendesk.com/)
+- [McKinsey](https://www.mckinsey.com/)
+- [Pulumi](https://www.pulumi.com/)
+- [Siemens](https://www.siemens.com/)
+- [MasterCard](https://www.mastercard.us/en-us.html)
+
+\*\* usage does not imply endorsement
+
 # Why CloudGraph
 
 Whether you're a cloud architect with 15 years of experience or someone who is just getting started on their cloud journey, there is no denying that staying on top of security, compliance, governance, FinOps, operations...etc., is challenging, time-consuming work. Even answering basic questions like, "What all is running in the us-east-1 region?", "Are my RDS clusters properly secured and compliant?", or "How much is this EKS/AKS/GKE cluster going to cost me this month?" requires both time and expertise, or expensive 3rd party software.
@@ -56,13 +75,13 @@ Whether you're a cloud architect with 15 years of experience or someone who is j
 
 <br />
 
-CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers. Here are some more examples:
+CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers. Here are some more examples:
 
 <br />
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg">
-    <img alt="exampleQuery1" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg" width="95%" style="display: block; margin: auto"/>
+    <img alt="exampleQuery1" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -70,7 +89,7 @@ CloudGraph lets any cloud professional answer questions like, "What KMS keys do 
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg">
-    <img alt="exampleQuery2" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg" width="95%" style="display: block; margin: auto"/>
+    <img alt="exampleQuery2" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -78,7 +97,7 @@ CloudGraph lets any cloud professional answer questions like, "What KMS keys do 
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg">
-    <img alt="exampleQuery3" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg" width="95%" style="display: block; margin: auto"/>
+    <img alt="exampleQuery3" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -86,7 +105,7 @@ CloudGraph lets any cloud professional answer questions like, "What KMS keys do 
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg">
-    <img alt="exampleQuery4" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg" width="95%" style="display: block; margin: auto"/>
+    <img alt="exampleQuery4" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -98,23 +117,28 @@ Note that CloudGraph requires **READ ONLY** permissions to run and as such can *
 
 <br />
 
-Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all of the configuration data, processes it, and stores a copy of this data for you in [Dgraph](https://dgraph.io/). It then exposes an endpoint at `http://localhost:8997` that allows you to write GraphQL Queries against your stored data. These queries not only allow you do to anything that you would do with say, the AWS SDK/CLI, but they also allow you to run much more powerful queries as well. CloudGraph ships with pre-packaged GraphQL query tools including [GraphQL Playground](https://github.com/graphql/graphql-playground) and [Altair](https://github.com/altair-viz/altair) but you can also feel free to use your own. It also includes a schema visualization tool called [Voyager](https://github.com/APIs-guru/graphql-voyager) so you can understand relationships between entities.
+Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all of the configuration data, processes it, and stores a copy of this data for you in [Dgraph](https://dgraph.io/). It then exposes an endpoint at `http://localhost:8997` that allows you to write GraphQL Queries against your stored data. These queries not only allow you do to anything that you would do with say, the AWS SDK/CLI, but they also allow you to run much more powerful queries as well. CloudGraph ships with pre-packaged GraphQL query tools including [GraphQL Playground](https://github.com/graphql/graphql-playground) and [Altair](https://github.com/altair-viz/altair) but you can also feel free to use your own. It also includes a schema visualization tool called [Voyager](https://github.com/APIs-guru/graphql-voyager) so you can understand relationships between entities.
 
 <br />
 
-# Authentication
+# Authentication and Permissions
 
-CloudGraph currently supports AWS with Azure/GCP (and several others) coming soon. For more information on generating the necessary permission for each cloud provider please view our current provider repos:
+CloudGraph currently supports AWS and Azure with GCP/K8s (and several others) coming soon. CloudGraph needs read permissions in order to ingest your data. To keep things easy you can use the same permissions that we use internally when we run CloudGraph to power AutoCloud. Here are the auth guides and details for how to generate credentials for each provider (feel free to leave out AutoCloud specific configuration):
 
 <br />
 
-#### [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws)
-
-AWS TLDR; For AWS need you an IAM User with the AWS Managed "ReadOnlyAccess" policy attached. CloudGraph will check to see what AWS user you are using in your current terminal session and use those credentials.
+- [AWS Docs](https://docs.autocloud.dev/connect-an-environment/aws)
+- [Azure Docs](https://docs.autocloud.dev/connect-an-environment/azure)
+- [GCP Docs](https://docs.autocloud.dev/connect-an-environment/gcp)
 
 <br />
 
 # Install
+
+**System Requirements**
+
+- Node 14+
+- Docker
 
 Use this command to install and update CloudGraph to the latest version.
 
@@ -144,7 +168,7 @@ cg init
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png">
-    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -164,14 +188,14 @@ cg launch
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png">
-    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
 Note that if you do not want to use this command, for example, if you want to launch the Dgraph container in interactive mode, you can use the docker command below.
 
 ```bash
-  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000
+  docker run -it -p 8995:5080 -p 8996:6080 -p 8997:8080 -p 8998:9080 -p 8999:8000
   --label cloudgraph-cli-dgraph-standalone -v ~/dgraph:/dgraph --name dgraph dgraph/standalone:v21.03.1
 ```
 
@@ -189,7 +213,7 @@ cg scan
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
-    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -231,13 +255,13 @@ cg teardown --delete-image
 
 <br />
 
-CloudGraph stores as many previous versions of your data as you configured in the `cg init` command. In order to load and query a previous version of your data simply run the `cg load` command and select the version of your data you wish to inspect like so:
+CloudGraph stores as many previous versions of your data as you configured in the `cg init` command. In order to load and query a previous version of your data simply run the `cg load` command and select the version of your data you wish to inspect like so:
 
 <br />
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png">
-    <img alt="load" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="load" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -271,12 +295,12 @@ To explain how CloudGraph works consider the following query that you can run to
 
 ```graphql
 query {
-  getawsEc2(
-    arn: "arn:aws:ec2:us-east-1:123445678997:instance/i-12345567889012234"
-  ) {
-    id
-    arn
-  }
+  getawsEc2(
+    arn: "arn:aws:ec2:us-east-1:123445678997:instance/i-12345567889012234"
+  ) {
+    id
+    arn
+  }
 }
 ```
 
@@ -306,10 +330,10 @@ Get the `ID` and `ARN` of each `EC2` in all the AWS accounts you have scanned:
 
 ```graphql
 query {
-  queryawsEc2 {
-    id
-    arn
-  }
+  queryawsEc2 {
+    id
+    arn
+  }
 }
 ```
 
@@ -319,10 +343,10 @@ Get the `ID` and `ARN` of all `EC2` instances in one of your AWS accounts by fil
 
 ```graphql
 query {
-  queryawsEc2(filter: { accountId: { eq: "123456" } }) {
-    id
-    arn
-  }
+  queryawsEc2(filter: { accountId: { eq: "123456" } }) {
+    id
+    arn
+  }
 }
 ```
 
@@ -332,10 +356,10 @@ Get the `ID` and `ARN` of each `EC2` in `"us-east-1"` using a regex to search th
 
 ```graphql
 query {
-  queryawsEc2(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
-    id
-    arn
-  }
+  queryawsEc2(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
+    id
+    arn
+  }
 }
 ```
 
@@ -345,10 +369,10 @@ Do the same thing but checking to see that the `region` is equal to `"us-east-1"
 
 ```graphql
 query {
-  queryawsEc2(filter: { region: { eq: "us-east-1" } }) {
-    id
-    arn
-  }
+  queryawsEc2(filter: { region: { eq: "us-east-1" } }) {
+    id
+    arn
+  }
 }
 ```
 
@@ -358,10 +382,10 @@ Do the same thing but checking to see that the `region` contains `"us-east-1"` i
 
 ```graphql
 query {
-  queryawsEc2(filter: { region: { in: "us-east-1" } }) {
-    id
-    arn
-  }
+  queryawsEc2(filter: { region: { in: "us-east-1" } }) {
+    id
+    arn
+  }
 }
 ```
 
@@ -371,12 +395,12 @@ Get the `ID` and `ARN` of each `M5` series `EC2 instance` in `"us-east-1"`
 
 ```graphql
 query {
-  queryawsEc2(
-    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
-  ) {
-    id
-    arn
-  }
+  queryawsEc2(
+    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
+  ) {
+    id
+    arn
+  }
 }
 ```
 
@@ -386,15 +410,15 @@ Do the same thing but skip the first found result (i.e. `offset: 1`) and then on
 
 ```graphql
 query {
-  queryawsEc2(
-    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
-    order: { asc: availabilityZone }
-    first: 2
-    offset: 1
-  ) {
-    id
-    arn
-  }
+  queryawsEc2(
+    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
+    order: { asc: availabilityZone }
+    first: 2
+    offset: 1
+  ) {
+    id
+    arn
+  }
 }
 ```
 
@@ -404,20 +428,20 @@ Do the same thing but also include the `EBS Volume` that is the boot disk for ea
 
 ```graphql
 query {
-  queryawsEc2(
-    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
-    order: { asc: availabilityZone }
-    first: 2
-    offset: 1
-  ) {
-    id
-    arn
-    ebs(filter: { isBootDisk: true }, first: 1) {
-      id
-      arn
-      isBootDisk
-    }
-  }
+  queryawsEc2(
+    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
+    order: { asc: availabilityZone }
+    first: 2
+    offset: 1
+  ) {
+    id
+    arn
+    ebs(filter: { isBootDisk: true }, first: 1) {
+      id
+      arn
+      isBootDisk
+    }
+  }
 }
 ```
 
@@ -427,32 +451,32 @@ Do the same thing, but also include the `SGs` and `ALBs` for each `EC2`. For the
 
 ```graphql
 query {
-  queryawsEc2(
-    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
-    order: { asc: availabilityZone }
-    first: 2
-    offset: 1
-  ) {
-    id
-    arn
-    ebs(filter: { isBootDisk: true }, first: 1) {
-      id
-      arn
-      isBootDisk
-    }
-    securityGroups {
-      id
-      arn
-    }
-    alb {
-      id
-      arn
-      ec2Instance {
-        id
-        arn
-      }
-    }
-  }
+  queryawsEc2(
+    filter: { region: { eq: "us-east-1" }, instanceType: { regexp: "/^m5a*/" } }
+    order: { asc: availabilityZone }
+    first: 2
+    offset: 1
+  ) {
+    id
+    arn
+    ebs(filter: { isBootDisk: true }, first: 1) {
+      id
+      arn
+      isBootDisk
+    }
+    securityGroups {
+      id
+      arn
+    }
+    alb {
+      id
+      arn
+      ec2Instance {
+        id
+        arn
+      }
+    }
+  }
 }
 ```
 
@@ -506,12 +530,12 @@ Find all the unencrypted `EBS Volumes`:
 
 ```graphql
 query {
-  queryawsEbs(filter: { encrypted: false }) {
-    id
-    arn
-    availabilityZone
-    encrypted
-  }
+  queryawsEbs(filter: { encrypted: false }) {
+    id
+    arn
+    availabilityZone
+    encrypted
+  }
 }
 ```
 
@@ -549,16 +573,16 @@ Find all the `KMS` keys in `"us-east-1"`:
 
 ```graphql
 query {
-  queryawsKms(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
-    id
-    arn
-    description
-    keyRotationEnabled
-    tags {
-      key
-      value
-    }
-  }
+  queryawsKms(filter: { arn: { regexp: "/.*us-east-1.*/" } }) {
+    id
+    arn
+    description
+    keyRotationEnabled
+    tags {
+      key
+      value
+    }
+  }
 }
 ```
 
@@ -568,12 +592,12 @@ Find all the burstable `T` series instances:
 
 ```graphql
 query {
-  queryawsEc2(filter: { instanceType: { regexp: "/^t.*/" } }) {
-    id
-    arn
-    availabilityZone
-    instanceType
-  }
+  queryawsEc2(filter: { instanceType: { regexp: "/^t.*/" } }) {
+    id
+    arn
+    availabilityZone
+    instanceType
+  }
 }
 ```
 
@@ -583,12 +607,12 @@ Find the default `VPCs`:
 
 ```graphql
 query {
-  queryawsVpc(filter: { defaultVpc: true }) {
-    id
-    arn
-    defaultVpc
-    state
-  }
+  queryawsVpc(filter: { defaultVpc: true }) {
+    id
+    arn
+    defaultVpc
+    state
+  }
 }
 ```
 
@@ -598,16 +622,16 @@ Find the public `ALBs`:
 
 ```graphql
 query {
-  queryawsAlb(filter: { scheme: { eq: "internet-facing" } }) {
-    id
-    arn
-    dnsName
-    createdAt
-    tags {
-      key
-      value
-    }
-  }
+  queryawsAlb(filter: { scheme: { eq: "internet-facing" } }) {
+    id
+    arn
+    dnsName
+    createdAt
+    tags {
+      key
+      value
+    }
+  }
 }
 ```
 
@@ -617,22 +641,22 @@ Find all of the `EC2s`, `Lambdas`, and `VPCs` that have a `Tag` value of `"Produ
 
 ```graphql
 query {
-  queryawsTag(filter: { value: { eq: "Production" } }) {
-    key
-    value
-    ec2Instance {
-      id
-      arn
-    }
-    lambda {
-      id
-      arn
-    }
-    vpc {
-      id
-      arn
-    }
-  }
+  queryawsTag(filter: { value: { eq: "Production" } }) {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
 }
 ```
 
@@ -642,24 +666,24 @@ Do the same thing but look for both a `key` and a `value`:
 
 ```graphql
 query {
-  queryawsTag(
-    filter: {  key: { eq: "Environment" }, value: { eq: "Production" } }
-  ) {
-    key
-    value
-    ec2Instance {
-      id
-      arn
-    }
-    lambda {
-      id
-      arn
-    }
-    vpc {
-      id
-      arn
-    }
-  }
+  queryawsTag(
+    filter: { key: { eq: "Environment" }, value: { eq: "Production" } }
+  ) {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
 }
 ```
 
@@ -669,22 +693,22 @@ Do the same thing using `getawsTag` instead of `queryawsTag`. Note that when sea
 
 ```graphql
 query {
-  getawsTag(id: "Environment:Production") {
-    key
-    value
-    ec2Instance {
-      id
-      arn
-    }
-    lambda {
-      id
-      arn
-    }
-    vpc {
-      id
-      arn
-    }
-  }
+  getawsTag(id: "Environment:Production") {
+    key
+    value
+    ec2Instance {
+      id
+      arn
+    }
+    lambda {
+      id
+      arn
+    }
+    vpc {
+      id
+      arn
+    }
+  }
 }
 ```
 
@@ -924,6 +948,79 @@ query {
 
 <br />
 
+## AWS CloudWatch example:
+
+CloudGraph ingests your CloudWatch Metric data and stores it along with select AWS services, for example, you can do the following for EC2:
+
+```graphql
+query {
+  queryawsEc2 {
+    arn
+    cloudWatchMetricData {
+      lastWeek {
+        cpuUtilizationAverage
+        networkInAverage
+        networkOutAverage
+        networkPacketsInAverage
+        networkPacketsOutAverage
+        statusCheckFailedSum
+        statusCheckFailedInstanceSum
+        statusCheckFailedSystemSum
+        diskReadOpsAverage
+        diskWriteOpsAverage
+        diskReadBytesAverage
+        diskWriteBytesAverage
+      }
+
+      lastMonth {
+        cpuUtilizationAverage
+        networkInAverage
+        networkOutAverage
+        networkPacketsInAverage
+        networkPacketsOutAverage
+        statusCheckFailedSum
+        statusCheckFailedInstanceSum
+        statusCheckFailedSystemSum
+        diskReadOpsAverage
+        diskWriteOpsAverage
+        diskReadBytesAverage
+        diskWriteBytesAverage
+      }
+      last6Hours {
+        cpuUtilizationAverage
+        networkInAverage
+        networkOutAverage
+        networkPacketsInAverage
+        networkPacketsOutAverage
+        statusCheckFailedSum
+        statusCheckFailedInstanceSum
+        statusCheckFailedSystemSum
+        diskReadOpsAverage
+        diskWriteOpsAverage
+        diskReadBytesAverage
+        diskWriteBytesAverage
+      }
+      last24Hours {
+        cpuUtilizationAverage
+        networkInAverage
+        networkOutAverage
+        networkPacketsInAverage
+        networkPacketsOutAverage
+        statusCheckFailedSum
+        statusCheckFailedInstanceSum
+        statusCheckFailedSystemSum
+        diskReadOpsAverage
+        diskWriteOpsAverage
+        diskReadBytesAverage
+        diskWriteBytesAverage
+      }
+    }
+  }
+}
+```
+
+<br />
+
 ## Thinking in terms of a graph:
 
 <br />
@@ -959,14 +1056,14 @@ Today, the biggest limitation with CloudGraph and our query abilities is we don'
 
 ```graphql
 query {
-  queryawsEc2(filter: { ebs: { isBootDisk: true } }) {
-    id
-    arn
-    ebs {
-      id
-      arn
-    }
-  }
+  queryawsEc2(filter: { ebs: { isBootDisk: true } }) {
+    id
+    arn
+    ebs {
+      id
+      arn
+    }
+  }
 }
 ```
 
@@ -992,7 +1089,7 @@ GraphQL playground has a fluid and engaging UX that is great for querying a Grap
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png">
-    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1006,7 +1103,7 @@ Altair is another great GraphQL query tool that packs a ton of [features](https:
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png">
-    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1020,7 +1117,7 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 
 <p align="center">
   <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png">
-    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1056,7 +1153,7 @@ Interested in a fully managed SaaS/self hosted version of CloudGraph that has bu
 
 <p align="center">
   <a href="https://www.autocloud.dev">
-    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1088,12 +1185,19 @@ There are some common errors you may see when running CloudGraph that are usuall
 - [`cg init [PROVIDER]`](#cg-init-provider)
 - [`cg launch [PROVIDER]`](#cg-launch-provider)
 - [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg policy [PROVIDER]`](#cg-policy-provider)
+- [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
+- [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
+- [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
+- [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
+- [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
 - [`cg provider [PROVIDER]`](#cg-provider-provider)
 - [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
 - [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
 - [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
 - [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
 - [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg rules [PROVIDER]`](#cg-rules-provider)
 - [`cg scan [PROVIDER]`](#cg-scan-provider)
 - [`cg serve [PROVIDER]`](#cg-serve-provider)
 - [`cg teardown [PROVIDER]`](#cg-teardown-provider)
@@ -1141,7 +1245,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -1166,7 +1270,7 @@ EXAMPLE
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1192,7 +1296,182 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/load.ts)_
+
+## `cg policy [PROVIDER]`
+
+Commands to manage policy pack modules, run $ cg policy for more info.
+
+```
+USAGE
+  $ cg policy [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+```
+
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/index.ts)_
+
+## `cg policy:add [PROVIDER]`
+
+Add new policy packs
+
+```
+USAGE
+  $ cg policy add [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg add
+
+EXAMPLES
+  $ cg policy add aws
+  $ cg policy add aws@0.12.0
+```
+
+_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/add.ts)_
+
+## `cg policy:install [PROVIDER]`
+
+Install policy packs based on the lock file
+
+```
+USAGE
+  $ cg policy install [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg install
+
+EXAMPLE
+  $ cg policy install
+```
+
+_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/install.ts)_
+
+## `cg policy:list [PROVIDER]`
+
+List currently installed policy packs and versions
+
+```
+USAGE
+  $ cg policy list [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg policy ls
+  $ cg list
+  $ cg ls
+
+EXAMPLES
+  $ cg policy list
+  $ cg policy list aws
+```
+
+_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/list.ts)_
+
+## `cg policy:remove [PROVIDER]`
+
+Remove currently installed policy pack
+
+```
+USAGE
+  $ cg policy remove [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg remove
+  $ cg rm
+  $ cg del
+  $ cg policy rm
+  $ cg policy del
+
+EXAMPLES
+  $ cg policy delete
+  $ cg policy delete aws
+  $ cg policy delete aws --no-save
+```
+
+_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/remove.ts)_
+
+## `cg policy:update [PROVIDER]`
+
+Update currently installed policy packs
+
+```
+USAGE
+  $ cg policy update [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg update
+
+EXAMPLES
+  $ cg provider update
+  $ cg provider update aws
+  $cg provider update aws@0.12.0
+```
+
+_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/update.ts)_
 
 ## `cg provider [PROVIDER]`
 
@@ -1214,7 +1493,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/index.ts)_
 
 ## `cg provider:add [PROVIDER]`
 
@@ -1243,7 +1522,7 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
-_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/provider/add.ts)_
+_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/add.ts)_
 
 ## `cg provider:install [PROVIDER]`
 
@@ -1271,7 +1550,7 @@ EXAMPLE
   $ cg provider install
 ```
 
-_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/provider/install.ts)_
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/install.ts)_
 
 ## `cg provider:list [PROVIDER]`
 
@@ -1302,7 +1581,7 @@ EXAMPLES
   $ cg provider list aws
 ```
 
-_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/provider/list.ts)_
+_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/list.ts)_
 
 ## `cg provider:remove [PROVIDER]`
 
@@ -1337,7 +1616,7 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
-_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/provider/remove.ts)_
+_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/remove.ts)_
 
 ## `cg provider:update [PROVIDER]`
 
@@ -1367,7 +1646,7 @@ EXAMPLES
   $cg provider update aws@0.12.0
 ```
 
-_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/provider/update.ts)_
+_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/provider/update.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -1395,7 +1674,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -1420,7 +1699,7 @@ EXAMPLE
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 
@@ -1438,6 +1717,6 @@ EXAMPLES
   $ cg teardown --delete-image
 ```
 
-_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.14.1/src/commands/teardown.ts)_
+_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/teardown.ts)_
 
 <!-- commandsstop -->

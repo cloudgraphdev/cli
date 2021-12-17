@@ -4,7 +4,9 @@ import path from 'path'
 import { isEmpty } from 'lodash'
 
 import Command from './base'
-import { fileUtils, processConnectionsBetweenEntities } from '../utils'
+import { fileUtils } from '../utils'
+import { getSchemaFromFolder } from '../utils/schema'
+import { processConnectionsBetweenEntities } from '../utils/data'
 
 export default class Load extends Command {
   static description = 'Load a specific version of your CloudGraph data'
@@ -79,7 +81,7 @@ export default class Load extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('LOAD')} for ${provider}`
       )
-      const { client } = await this.getProviderClient(provider)
+      const { client, schemasMap } = await this.getProviderClient(provider)
       if (!client) {
         continue // eslint-disable-line no-continue
       }
@@ -143,7 +145,7 @@ export default class Load extends Command {
           version = versionString.split('-')[1] // eslint-disable-line prefer-destructuring
           file = fileUtils.findProviderFileLocation(
             path.join(dataDir, this.versionDirectory),
-            fileName,
+            fileName
           )
           const foundFile = files.find(val => val.name === file)
           if (!foundFile) {
@@ -169,7 +171,7 @@ export default class Load extends Command {
         )}`
       )
       const providerData = JSON.parse(fs.readFileSync(file, 'utf8'))
-      const providerSchema = fileUtils.getSchemaFromFolder(version, provider)
+      const providerSchema = getSchemaFromFolder(version, provider)
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
         continue // eslint-disable-line no-continue
@@ -195,7 +197,13 @@ export default class Load extends Command {
       this.logger.startSpinner(
         `Making service connections for ${chalk.italic.green(provider)}`
       )
-      processConnectionsBetweenEntities(providerData, storageEngine, storageRunning)
+      processConnectionsBetweenEntities({
+        provider,
+        providerData,
+        storageEngine,
+        storageRunning,
+        schemaMap: schemasMap,
+      })
       this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
