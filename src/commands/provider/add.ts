@@ -23,7 +23,6 @@ export default class Add extends Command {
     const { argv } = this.parse(Add)
     const allProviders = argv
     const manager = this.getPluginManager(PluginType.Provider)
-
     for (let key of allProviders) {
       let version = 'latest'
       if (key.includes('@')) {

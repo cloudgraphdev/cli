@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import { GraphQLError } from 'graphql'
 
 import { GraphQLFormattedQuery } from '../types'
-import scanReport, {scanDataType, scanResult } from '../../scanReport'
+import { scanReport, scanDataType, scanResult } from '../../reports'
 
 const { logger } = CloudGraph
 
@@ -14,6 +14,11 @@ mutation($schema: String!) {
     gqlSchema {
       schema
     }
+  }
+}`
+export const GET_SCHEMA_QUERY = `{
+  getGQLSchema {
+    schema
   }
 }`
 

@@ -1,4 +1,4 @@
-import CloudGraph, { ProviderData } from '@cloudgraph/sdk'
+import { StorageEngineConnectionConfig } from '@cloudgraph/sdk'
 import { loadFilesSync } from '@graphql-tools/load-files'
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import { print } from 'graphql'
@@ -9,16 +9,9 @@ import { exec } from 'child_process'
 import fs from 'fs'
 import glob from 'glob'
 import path from 'path'
-import isEmpty from 'lodash/isEmpty'
 import detect from 'detect-port'
 
-import scanReport, { scanDataType, scanResult } from '../scanReport'
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
-import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
-import { SchemaMap } from '../types'
-import { generateMutation } from './mutation'
-
-const { logger } = CloudGraph
 
 export const getKeyByValue = (
   object: Record<string, unknown>,
@@ -86,100 +79,6 @@ export function writeGraphqlSchemaToFile(
     ),
     schema
   )
-}
-
-export function getConnectedEntity(
-  service: any,
-  { entities, connections: allConnections }: ProviderData,
-  initiatorServiceName: string
-): Record<string, unknown> {
-  // opts: Opts
-  logger.debug(
-    `Getting connected entities for ${chalk.green(
-      initiatorServiceName
-    )} id = ${chalk.green(service.id)}`
-  )
-  const connections = allConnections[service.id]
-  const connectedEntity = {
-    ...service,
-  }
-  let connectionsStatus = scanResult.pass
-  if (connections) {
-    for (const connection of connections) {
-      const entityData = entities.find(
-        ({ name }: { name: string }) => name === connection.resourceType
-      )
-      if (entityData && entityData.data) {
-        const entityForConnection = entityData.data.find(
-          ({ id }: { id: string }) => connection.id === id
-        )
-        if (!isEmpty(entityForConnection)) {
-          if (!connectedEntity[connection.field]) {
-            connectedEntity[connection.field] = []
-          }
-          connectedEntity[connection.field].push(entityForConnection)
-          logger.debug(
-            `(${initiatorServiceName}) ${service.id} ${chalk.green(
-              '<----->'
-            )} ${connection.id} (${connection.resourceType})`
-          )
-        } else {
-          connectionsStatus = scanResult.warn
-          const error = `Malformed connection found between ${chalk.red(
-            initiatorServiceName
-          )} && ${chalk.red(connection.resourceType)} services.`
-          logger.warn(error)
-          logger.warn(
-            `(${initiatorServiceName}) ${service.id} ${chalk.red('<-///->')} ${
-              connection.id
-            } (${connection.resourceType})`
-          )
-        }
-      }
-    }
-  }
-  scanReport.pushData({
-    service: initiatorServiceName,
-    type: scanDataType.status,
-    result: connectionsStatus,
-  })
-  return connectedEntity
-}
-
-export function processConnectionsBetweenEntities({
-  provider,
-  providerData,
-  storageEngine,
-  storageRunning,
-  schemaMap,
-}: {
-  provider: string
-  providerData: ProviderData
-  storageEngine: StorageEngine
-  storageRunning: boolean
-  schemaMap: SchemaMap | undefined
-}): void {
-  for (const entity of providerData.entities) {
-    const { data, name, mutation } = entity
-    const connectedData = data.map((service: any) => {
-      scanReport.pushData({
-        service: name,
-        type: scanDataType.count,
-        result: scanResult.pass,
-      })
-      return getConnectedEntity(service, providerData, name)
-    })
-    if (storageRunning) {
-      // Add service mutation to promises array
-      storageEngine.push({
-        query:
-          mutation ||
-          generateMutation({ type: 'add', provider, entity, schemaMap }),
-        connectedData,
-        name,
-      })
-    }
-  }
 }
 
 export function printWelcomeMessage(): void {

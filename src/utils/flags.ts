@@ -14,7 +14,7 @@ export default {
     char: 's',
     description:
       'Select a storage engine to use. Currently only supports Dgraph',
-    options: ['dgraph']
+    options: ['dgraph'],
   }),
   // dir to store cloud graph data versions in
   directory: flags.string({
@@ -36,7 +36,7 @@ export default {
   'query-engine': flags.string({
     char: 'q',
     description: 'Query engine to launch',
-    options: ['playground', 'altair']
+    options: ['playground', 'altair'],
   }),
   // version limit
   'version-limit': flags.string({
@@ -47,6 +47,12 @@ export default {
   // use roles flag (AWS only)
   'use-roles': flags.boolean({
     default: false,
-    description: 'Set to true to use roleARNs instead of profiles for AWS credentials'
-  })
+    description:
+      'Set to true to use roleARNs instead of profiles for AWS credentials',
+  }),
+  // Policy packs to use
+  policies: flags.string({
+    char: 'P',
+    description: 'Policy Packs to execute during scan',
+  }),
 }

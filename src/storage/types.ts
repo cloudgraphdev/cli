@@ -1,5 +1,6 @@
 import { Logger } from '@cloudgraph/sdk'
-import { Method } from 'axios';
+import { Method } from 'axios'
+import { ExecutionResult } from 'graphql'
 
 export interface RequestConfig {
   baseUrl?: string
@@ -36,6 +37,8 @@ export interface StorageEngine {
   logger: Logger
   healthCheck: (showInitialStatus?: boolean) => Promise<boolean>
   setSchema: (schema: string[]) => Promise<void>
+  dropAll: () => Promise<ExecutionResult>
+  dropData: () => Promise<ExecutionResult>
   push: (data: any) => void
   run: (dropData?: boolean) => Promise<void>
 }

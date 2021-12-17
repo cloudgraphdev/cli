@@ -1185,12 +1185,19 @@ There are some common errors you may see when running CloudGraph that are usuall
 - [`cg init [PROVIDER]`](#cg-init-provider)
 - [`cg launch [PROVIDER]`](#cg-launch-provider)
 - [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg policy [PROVIDER]`](#cg-policy-provider)
+- [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
+- [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
+- [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
+- [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
+- [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
 - [`cg provider [PROVIDER]`](#cg-provider-provider)
 - [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
 - [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
 - [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
 - [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
 - [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg rules [PROVIDER]`](#cg-rules-provider)
 - [`cg scan [PROVIDER]`](#cg-scan-provider)
 - [`cg serve [PROVIDER]`](#cg-serve-provider)
 - [`cg teardown [PROVIDER]`](#cg-teardown-provider)
@@ -1290,6 +1297,181 @@ EXAMPLES
 ```
 
 _See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.15.4/src/commands/load.ts)_
+
+## `cg policy [PROVIDER]`
+
+Commands to manage policy pack modules, run $ cg policy for more info.
+
+```
+USAGE
+  $ cg policy [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+```
+
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/index.ts)_
+
+## `cg policy:add [PROVIDER]`
+
+Add new policy packs
+
+```
+USAGE
+  $ cg policy add [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg add
+
+EXAMPLES
+  $ cg policy add aws
+  $ cg policy add aws@0.12.0
+```
+
+_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/add.ts)_
+
+## `cg policy:install [PROVIDER]`
+
+Install policy packs based on the lock file
+
+```
+USAGE
+  $ cg policy install [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg install
+
+EXAMPLE
+  $ cg policy install
+```
+
+_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/install.ts)_
+
+## `cg policy:list [PROVIDER]`
+
+List currently installed policy packs and versions
+
+```
+USAGE
+  $ cg policy list [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg policy ls
+  $ cg list
+  $ cg ls
+
+EXAMPLES
+  $ cg policy list
+  $ cg policy list aws
+```
+
+_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/list.ts)_
+
+## `cg policy:remove [PROVIDER]`
+
+Remove currently installed policy pack
+
+```
+USAGE
+  $ cg policy remove [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg remove
+  $ cg rm
+  $ cg del
+  $ cg policy rm
+  $ cg policy del
+
+EXAMPLES
+  $ cg policy delete
+  $ cg policy delete aws
+  $ cg policy delete aws --no-save
+```
+
+_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/remove.ts)_
+
+## `cg policy:update [PROVIDER]`
+
+Update currently installed policy packs
+
+```
+USAGE
+  $ cg policy update [PROVIDER]
+
+OPTIONS
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg update
+
+EXAMPLES
+  $ cg provider update
+  $ cg provider update aws
+  $cg provider update aws@0.12.0
+```
+
+_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.11.6/src/commands/policy/update.ts)_
 
 ## `cg provider [PROVIDER]`
 

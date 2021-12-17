@@ -220,7 +220,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
 
   async getProviderClient(
     provider: string
-  ): Promise<{ client: any; schemasMap?: SchemaMap }> {
+  ): Promise<{ client: any; schemasMap?: SchemaMap; serviceKey?: string }> {
     try {
       const manager = this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
@@ -229,6 +229,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       const {
         default: Client,
         enums: { schemasMap },
+        serviceKey,
       } = (await manager.getPlugin(provider)) ?? {}
       if (!Client || !(Client instanceof Function)) {
         // TODO: how can we better type this for the base Provider class from sdk
@@ -240,8 +241,8 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
         logger: this.logger,
         provider: this.buildProviderConfig(provider),
       })
-      this.providers[provider] = { client, schemasMap }
-      return { client, schemasMap }
+      this.providers[provider] = { client, schemasMap, serviceKey }
+      return { client, schemasMap, serviceKey }
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(
@@ -254,14 +255,10 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     }
   }
 
-  async getPolicyPackClient({
+  async getPolicyPackPackage({
     policyPack,
-  }: // mappings,
-  // provider,
-  {
+  }: {
     policyPack: string
-    provider: string
-    mappings: { [schemaName: string]: string }
   }): Promise<any> {
     try {
       const manager = this.getPluginManager(PluginType.PolicyPack)
@@ -274,19 +271,13 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       } = (await manager.getPlugin(policyPack)) ?? {}
 
       if (!rules) {
-        // TODO: how can we better type this for the base Provider class from sdk
         throw new Error(
           `The policy pack ${policyPack} did not return a valid set of rules`
         )
       }
-      // const client = new CloudGraph.RulesEngine(
-      //   rules,
-      //   mappings,
-      //   `${provider}Finding`
-      // )
-      // this.policyPacks[policyPack] = client
-      // return client
-      return null
+
+      this.policyPacks[policyPack] = rules
+      return rules
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(

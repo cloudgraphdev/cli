@@ -1,13 +1,15 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import { Opts } from '@cloudgraph/sdk'
-import { range } from 'lodash'
+import CloudGraph, { Opts, RuleFinding, Engine } from '@cloudgraph/sdk'
+import { isEmpty, range, groupBy } from 'lodash'
 
 import Command from './base'
-import { fileUtils, processConnectionsBetweenEntities } from '../utils'
+import { fileUtils } from '../utils'
+import { generateSchemaMapDynamically, mergeSchemas } from '../utils/schema'
+import { processConnectionsBetweenEntities } from '../utils/data'
 import DgraphEngine from '../storage/dgraph'
-import scanReport from '../scanReport'
+import { scanReport } from '../reports'
 
 export default class Scan extends Command {
   static description =
@@ -33,14 +35,20 @@ export default class Scan extends Command {
   async run() {
     const {
       argv,
-      flags: { dev: devMode },
+      flags: { dev: devMode, policies: policyPacks = '' },
     } = this.parse(Scan)
     const { dataDir } = this.config
     const opts: Opts = { logger: this.logger, debug: true, devMode }
     let allProviders = argv
+    const policyPacksPlugins: {
+      [policyPackName: string]: {
+        engine: Engine
+        rules: any
+      }
+    } = {}
 
     // Run dgraph health check
-    const storageEngine = this.getStorageEngine()
+    const storageEngine = this.getStorageEngine() as DgraphEngine
     const storageRunning = await storageEngine.healthCheck()
     /**
      * Handle 2 methods of scanning, either for explicitly passed providers OR
@@ -108,7 +116,9 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client, schemasMap } = await this.getProviderClient(provider)
+      const { client, schemasMap, serviceKey } = await this.getProviderClient(
+        provider
+      )
       if (!client) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
@@ -159,6 +169,7 @@ export default class Scan extends Command {
             if (storageEngine instanceof DgraphEngine) {
               await storageEngine.validateSchema(schema, dataFolder)
             }
+            await storageEngine.dropAll() // Delete schema before change it
             await storageEngine.setSchema(schema)
           } catch (error: any) {
             this.logger.error(
@@ -204,6 +215,67 @@ export default class Scan extends Command {
       this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
+
+      // Rules
+      let allPolicyPacks = isEmpty(policyPacks) ? [] : policyPacks.split(',')
+
+      if (allPolicyPacks.length >= 1) {
+        this.logger.debug(`Executing rules for policy packs: ${allPolicyPacks}`)
+      } else {
+        allPolicyPacks = config.policies || []
+        this.logger.debug(
+          `Executing rules for policy packs found in config: ${allPolicyPacks}`
+        )
+      }
+
+      if (allPolicyPacks.length === 0) {
+        this.logger.warn(
+          'There are no policy packs configured and none were passed to execute'
+        )
+      }
+
+      const failedPolicyPackList: string[] = []
+
+      let resources
+      if (serviceKey) {
+        // Uses custom service key
+        resources = config[serviceKey].split(',')
+      } else {
+        // Uses default resources key
+        resources = config.resources.split(',')
+      }
+
+      // Generate schema mapping
+      const resourceTypeNamesToFieldsMap =
+        schemasMap || generateSchemaMapDynamically(provider, resources)
+
+      // Initialize RulesEngine
+      const rulesEngine = new CloudGraph.RulesEngine(
+        resourceTypeNamesToFieldsMap,
+        `${provider}Findings`
+      )
+
+      for (const policyPack of allPolicyPacks) {
+        this.logger.info(
+          `Beginning ${chalk.italic.green('RULES')} for ${policyPack}`
+        )
+
+        const policyPackRules = await this.getPolicyPackPackage({
+          policyPack,
+        })
+        if (!policyPackRules) {
+          failedPolicyPackList.push(policyPack)
+          this.logger.warn(
+            `No valid rules found for ${policyPack}, skipping...`
+          )
+          continue // eslint-disable-line no-continue
+        }
+
+        policyPacksPlugins[policyPack] = {
+          engine: rulesEngine,
+          rules: policyPackRules,
+        }
+      }
     }
 
     // If every provider that has been passed is a failure, just exit
@@ -221,15 +293,102 @@ export default class Scan extends Command {
       )
       // Execute services mutations promises
       await storageEngine.run()
-      this.logger.successSpinner('Data insertion into Dgraph complete')
-    }
 
+      this.logger.successSpinner('Data insertion into Dgraph complete')
+
+      for (const policyPack in policyPacksPlugins) {
+        if (policyPack && policyPacksPlugins[policyPack]) {
+          this.logger.startSpinner(
+            `${chalk.italic.green('EXECUTING')} rules for ${chalk.italic.green(
+              policyPack
+            )}`
+          )
+
+          // Update Schema:
+          const currentSchema: string = await storageEngine.getSchema()
+          const findingsSchema: string[] =
+            policyPacksPlugins[policyPack]?.engine?.getSchema() || []
+
+          await storageEngine.setSchema([
+            mergeSchemas(currentSchema, findingsSchema),
+          ])
+
+          const findings: RuleFinding[] = []
+          const rules = policyPacksPlugins[policyPack]?.rules || []
+
+          // Run rules:
+          for (const rule of rules) {
+            try {
+              const { data } = await storageEngine.query(rule.gql)
+              const results = (await policyPacksPlugins[
+                policyPack
+              ]?.engine?.processRule(rule, data)) as RuleFinding[]
+
+              findings.push(...results)
+            } catch (error) {
+              this.logger.debug(
+                `Error processing rule ${rule.ruleId} for ${policyPack} policy pack`
+              )
+            }
+          }
+
+          // Update data
+          const updatedData =
+            policyPacksPlugins[policyPack]?.engine?.prepareMutations(findings)
+
+          // Save connections
+          processConnectionsBetweenEntities({
+            providerData: updatedData,
+            storageEngine,
+            storageRunning,
+          })
+          await storageEngine.run(false)
+
+          this.logger.successSpinner(
+            `${chalk.italic.green(policyPack)} rules excuted successfully`
+          )
+
+          const results = findings.filter(
+            finding => finding.result === CloudGraph.Result.FAIL
+          )
+
+          if (!isEmpty(results)) {
+            const { warning, danger } = groupBy(results, 'severity')
+            warning &&
+              this.logger.warn(
+                `${chalk.italic.yellow(
+                  `${warning.length || 0} warning${
+                    warning.length > 1 ? 's' : ''
+                  }`
+                )}  found during rules execution.`
+              )
+            danger &&
+              this.logger.error(
+                `${chalk.italic.redBright.red(
+                  `${danger.length || 0} vulnerabilit${
+                    danger.length > 1 ? 'ies' : 'y'
+                  }`
+                )}  found during rules execution.`
+              )
+            this.logger.info(
+              `For more information, you can query query ${chalk.italic.green(
+                allProviders
+                  .map(provider => `query${provider}Findings`)
+                  .join(', ')
+              )} in the GraphQL query tool`
+            )
+          }
+        }
+      }
+    }
     scanReport.print()
+
     this.logger.success(
       `Your data for ${allProviders.join(
         ' | '
       )} has been saved to ${chalk.italic.green(dataStorageLocation)}`
     )
+
     if (storageRunning) {
       this.logger.success(
         `Your data for ${allProviders.join(

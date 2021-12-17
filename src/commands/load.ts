@@ -4,7 +4,9 @@ import path from 'path'
 import { isEmpty } from 'lodash'
 
 import Command from './base'
-import { fileUtils, processConnectionsBetweenEntities } from '../utils'
+import { fileUtils } from '../utils'
+import { getSchemaFromFolder } from '../utils/schema'
+import { processConnectionsBetweenEntities } from '../utils/data'
 
 export default class Load extends Command {
   static description = 'Load a specific version of your CloudGraph data'
@@ -169,7 +171,7 @@ export default class Load extends Command {
         )}`
       )
       const providerData = JSON.parse(fs.readFileSync(file, 'utf8'))
-      const providerSchema = fileUtils.getSchemaFromFolder(version, provider)
+      const providerSchema = getSchemaFromFolder(version, provider)
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
         continue // eslint-disable-line no-continue
