@@ -1,3 +1,10 @@
+# [0.13.0-alpha.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.6...0.13.0-alpha.7) (2021-12-20)
+
+
+### Bug Fixes
+
+* Fixed empty policies key on CloudGraph config file ([ec92905](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ec92905b0ae070f5bd575f87e813f1b4472db631))
+
 # [0.13.0-alpha.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.5...0.13.0-alpha.6) (2021-12-17)
 
 
