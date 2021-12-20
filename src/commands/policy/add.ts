@@ -36,9 +36,9 @@ export default class Add extends Command {
       } = await manager.getPlugin(key, version)
       const config = this.getCGConfig()
       if (config[provider]) {
-        config[provider].policies = [
-          ...new Set([...config[provider].policies, key]),
-        ]
+        config[provider].policies = config[provider].policies
+          ? [...new Set([...config[provider].policies, key])]
+          : [key]
         this.saveCloudGraphConfigFile(config)
       }
       this.logger.info(
