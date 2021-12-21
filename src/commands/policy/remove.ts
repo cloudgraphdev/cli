@@ -1,7 +1,7 @@
+import { PluginType } from '@cloudgraph/sdk'
 import { isEmpty } from 'lodash'
 import { flags } from '@oclif/command'
 import Command from '../base'
-import { PluginType } from '../../utils/constants'
 
 export default class Remove extends Command {
   static description = 'Remove currently installed policy pack'

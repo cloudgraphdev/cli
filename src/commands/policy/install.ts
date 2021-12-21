@@ -1,5 +1,5 @@
+import { PluginType } from '@cloudgraph/sdk'
 import { isEmpty } from 'lodash'
-import { PluginType } from '../../utils/constants'
 import Command from '../base'
 
 export default class Install extends Command {
