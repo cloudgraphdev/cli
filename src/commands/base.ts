@@ -1,6 +1,12 @@
 import Command from '@oclif/command'
 import { Input } from '@oclif/parser'
-import CloudGraph, { Logger } from '@cloudgraph/sdk'
+import CloudGraph, {
+  Logger,
+  StorageEngine,
+  StorageEngineConnectionConfig,
+  PluginType,
+  SchemaMap,
+} from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
 import chalk from 'chalk'
 import fs from 'fs'
@@ -10,7 +16,6 @@ import gt from 'semver/functions/gt'
 import Manager from '../manager'
 import EngineMap from '../storage'
 import QueryEngine from '../server'
-import { StorageEngine, StorageEngineConnectionConfig } from '../storage/types'
 import {
   getDefaultEndpoint,
   getDefaultStorageEngineConnectionConfig,
@@ -22,8 +27,7 @@ import {
 } from '../utils'
 import flagsDefinition from '../utils/flags'
 import openBrowser from '../utils/open'
-import { PluginType } from '../utils/constants'
-import { CloudGraphConfig, SchemaMap } from '../types'
+import { CloudGraphConfig } from '../types'
 
 export default abstract class BaseCommand extends Command {
   constructor(argv: any, config: any) {
@@ -315,14 +319,12 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
   }
 
   buildProviderConfig(provider: string): any {
-    const {
-      flags
-    } = this.parse(this.constructor as Input<any>)
+    const { flags } = this.parse(this.constructor as Input<any>)
     const providerConfig = this.getCGConfig(provider) ?? {}
     return {
       ...providerConfig,
       flags,
-      cloudGraphConfig: this.getCGConfig('cloudGraph')
+      cloudGraphConfig: this.getCGConfig('cloudGraph'),
     }
   }
 

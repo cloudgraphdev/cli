@@ -1,7 +1,7 @@
+import { PluginType } from '@cloudgraph/sdk'
 import { pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
-import { PluginType } from '../../utils/constants'
 
 const getPolicy = (val: string): string =>
   val.includes('@') ? val.split('@')[0] : val

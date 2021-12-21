@@ -1,4 +1,4 @@
-import { Logger } from '@cloudgraph/sdk'
+import { Logger, PluginModule, PluginType } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
 import { IConfig } from '@oclif/config'
 import path from 'path'
@@ -7,7 +7,6 @@ import fs from 'fs'
 import satisfies from 'semver/functions/satisfies'
 import gt from 'semver/functions/gt'
 import { printBoxMessage, fileUtils } from '../utils'
-import { PluginModule, PluginType } from '../utils/constants'
 import NpmManager from './npm'
 
 export class Manager {
