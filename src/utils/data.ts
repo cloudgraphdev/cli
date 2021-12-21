@@ -105,7 +105,8 @@ export const processConnectionsBetweenEntities = ({
         query:
           mutation ||
           (provider &&
-            generateMutation({ type: 'add', provider, entity, schemaMap })),
+            generateMutation({ type: 'add', provider, entity, schemaMap })) ||
+          '',
         connectedData,
         name,
       })
