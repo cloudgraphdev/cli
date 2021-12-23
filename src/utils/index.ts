@@ -89,8 +89,30 @@ export function writeGraphqlSchemaToFile(
   )
 }
 
+/**
+ * Filters connections acording to the afterNodeInsertion boolean
+ * this is used to filter connections that need to:
+ * 1. Be inserted in the add mutation, afterNodeInsertion = false
+ * 2. Be inserted in the patch mutation, afterNodeInsertion = true
+ */
+export const filterConnectionsByPriorityOfInsertion = (
+  connections: { [key: string]: ServiceConnection[] },
+  afterNodeInsertion: boolean
+): { [key: string]: ServiceConnection[] } => {
+  const filteredConnections: { [key: string]: ServiceConnection[] } = {}
+  Object.entries(connections).map(([id, sConnections]) => {
+    const fConnections = sConnections.filter(
+      (i: ServiceConnection) =>
+        !!i.insertAfterNodeInsertion === afterNodeInsertion
+    )
+    if (!isEmpty(fConnections)) {
+      filteredConnections[id] = fConnections
+    }
+  })
+  return filteredConnections
+}
+
 export function getConnectedEntity(
-  providerClient: any,
   service: any,
   { entities, connections: allConnections }: ProviderData,
   initiatorServiceName: string,
@@ -102,10 +124,9 @@ export function getConnectedEntity(
     )} id = ${chalk.green(service.id)}`
   )
   const connections: ServiceConnection[] =
-    providerClient.filterConnectionsByPriorityOfInsertion(
-      allConnections,
-      afterNodeInsertion
-    )[service.id]
+    filterConnectionsByPriorityOfInsertion(allConnections, afterNodeInsertion)[
+      service.id
+    ]
   const connectedEntity: any = { ...(afterNodeInsertion ? {} : service) }
   let connectionsStatus = scanResult.pass
   if (!isEmpty(connections)) {
@@ -150,16 +171,13 @@ export function getConnectedEntity(
   return connectedEntity
 }
 
-export function insertEntitiesAndConnections(
-  providerClient: Client,
-  {
-    provider,
-    providerData,
-    storageEngine,
-    storageRunning,
-    schemaMap,
-  }: DataToLoad
-): void {
+export function insertEntitiesAndConnections({
+  provider,
+  providerData,
+  storageEngine,
+  storageRunning,
+  schemaMap,
+}: DataToLoad): void {
   try {
     for (const entity of providerData.entities) {
       const { data, mutation, name } = entity
@@ -169,7 +187,7 @@ export function insertEntitiesAndConnections(
           type: scanDataType.count,
           result: scanResult.pass,
         })
-        return getConnectedEntity(providerClient, service, providerData, name)
+        return getConnectedEntity(service, providerData, name)
       })
       if (storageRunning) {
         const query =
@@ -183,23 +201,17 @@ export function insertEntitiesAndConnections(
   }
 }
 
-export function processConnectionsAfterInitialInsertion(
-  providerClient: any,
-  {
-    provider,
-    providerData,
-    storageEngine,
-    storageRunning,
-    schemaMap,
-  }: DataToLoad
-): void {
+export function processConnectionsAfterInitialInsertion({
+  provider,
+  providerData,
+  storageEngine,
+  storageRunning,
+  schemaMap,
+}: DataToLoad): void {
   try {
     const additionalConnections: {
       [key: string]: ServiceConnection[]
-    } = providerClient.filterConnectionsByPriorityOfInsertion(
-      providerData.connections,
-      true
-    )
+    } = filterConnectionsByPriorityOfInsertion(providerData.connections, true)
     if (!isEmpty(additionalConnections)) {
       // Filter resourceTypes that have additional connections to process
       const resourcesWithAdditionalConnections = new Set(
@@ -215,7 +227,6 @@ export function processConnectionsAfterInitialInsertion(
         const { data, name } = entity
         data.map((service: any) => {
           const connections = getConnectedEntity(
-            providerClient,
             service,
             providerData,
             name,
@@ -253,7 +264,7 @@ export const loadAllData = (
       data.provider
     )}`
   )
-  insertEntitiesAndConnections(providerClient, data)
+  insertEntitiesAndConnections(data)
   loggerInstance.successSpinner(
     `Entities and connections inserted successfully for ${chalk.italic.green(
       data.provider
@@ -264,7 +275,7 @@ export const loadAllData = (
       data.provider
     )}`
   )
-  processConnectionsAfterInitialInsertion(providerClient, data)
+  processConnectionsAfterInitialInsertion(data)
   loggerInstance.successSpinner(
     `Additional connections processed successfully for ${chalk.italic.green(
       data.provider
