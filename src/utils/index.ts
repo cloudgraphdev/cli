@@ -1,4 +1,12 @@
-import { StorageEngineConnectionConfig } from '@cloudgraph/sdk'
+import CloudGraph, {
+  Client,
+  Logger,
+  ProviderData,
+  ServiceConnection,
+} from '@cloudgraph/sdk'
+import { loadFilesSync } from '@graphql-tools/load-files'
+import { mergeTypeDefs } from '@graphql-tools/merge'
+import { print } from 'graphql'
 import boxen from 'boxen'
 import CFonts from 'cfonts'
 import chalk from 'chalk'
@@ -9,6 +17,9 @@ import path from 'path'
 import detect from 'detect-port'
 
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
+import { StorageEngineConnectionConfig } from '../storage/types'
+import { DataToLoad } from '../types'
+import { generateMutation, generateUpdateVarsObject } from './mutation'
 
 export const getKeyByValue = (
   object: Record<string, unknown>,
@@ -75,6 +86,189 @@ export function writeGraphqlSchemaToFile(
       provider ? `/${provider}_schema.graphql` : '/schema.graphql'
     ),
     schema
+  )
+}
+
+export function getConnectedEntity(
+  providerClient: any,
+  service: any,
+  { entities, connections: allConnections }: ProviderData,
+  initiatorServiceName: string,
+  afterNodeInsertion = false
+): Record<string, unknown> {
+  logger.debug(
+    `Getting connected entities for ${chalk.green(
+      initiatorServiceName
+    )} id = ${chalk.green(service.id)}`
+  )
+  const connections: ServiceConnection[] =
+    providerClient.filterConnectionsByPriorityOfInsertion(
+      allConnections,
+      afterNodeInsertion
+    )[service.id]
+  const connectedEntity: any = { ...(afterNodeInsertion ? {} : service) }
+  let connectionsStatus = scanResult.pass
+  if (!isEmpty(connections)) {
+    for (const connection of connections) {
+      const entityData = entities.find(
+        ({ name }: { name: string }) => name === connection.resourceType
+      )
+      if (entityData && entityData.data) {
+        const entityForConnection = entityData.data.find(
+          ({ id }: { id: string }) => connection.id === id
+        )
+        if (!isEmpty(entityForConnection)) {
+          if (!connectedEntity[connection.field]) {
+            connectedEntity[connection.field] = []
+          }
+          connectedEntity[connection.field].push(entityForConnection)
+          logger.debug(
+            `(${initiatorServiceName}) ${service.id} ${chalk.green(
+              '<----->'
+            )} ${connection.id} (${connection.resourceType})`
+          )
+        } else {
+          connectionsStatus = scanResult.warn
+          const error = `Malformed connection found between ${chalk.red(
+            initiatorServiceName
+          )} && ${chalk.red(connection.resourceType)} services.`
+          logger.warn(error)
+          logger.warn(
+            `(${initiatorServiceName}) ${service.id} ${chalk.red('<-///->')} ${
+              connection.id
+            } (${connection.resourceType})`
+          )
+        }
+      }
+    }
+  }
+  scanReport.pushData({
+    service: initiatorServiceName,
+    type: scanDataType.status,
+    result: connectionsStatus,
+  })
+  return connectedEntity
+}
+
+export function insertEntitiesAndConnections(
+  providerClient: Client,
+  {
+    provider,
+    providerData,
+    storageEngine,
+    storageRunning,
+    schemaMap,
+  }: DataToLoad
+): void {
+  try {
+    for (const entity of providerData.entities) {
+      const { data, mutation, name } = entity
+      const connectedData = data.map((service: any) => {
+        scanReport.pushData({
+          service: name,
+          type: scanDataType.count,
+          result: scanResult.pass,
+        })
+        return getConnectedEntity(providerClient, service, providerData, name)
+      })
+      if (storageRunning) {
+        const query =
+          mutation ||
+          generateMutation({ type: 'add', provider, entity, schemaMap })
+        storageEngine.push({ query, input: connectedData, name })
+      }
+    }
+  } catch (error) {
+    logger.debug(JSON.stringify(error))
+  }
+}
+
+export function processConnectionsAfterInitialInsertion(
+  providerClient: any,
+  {
+    provider,
+    providerData,
+    storageEngine,
+    storageRunning,
+    schemaMap,
+  }: DataToLoad
+): void {
+  try {
+    const additionalConnections: {
+      [key: string]: ServiceConnection[]
+    } = providerClient.filterConnectionsByPriorityOfInsertion(
+      providerData.connections,
+      true
+    )
+    if (!isEmpty(additionalConnections)) {
+      // Filter resourceTypes that have additional connections to process
+      const resourcesWithAdditionalConnections = new Set(
+        Object.values(additionalConnections)
+          .flat()
+          .map(({ resourceType }) => resourceType)
+      )
+      // Filter entities that match filtered resourceTypes
+      const entities = providerData.entities.filter(({ name }) =>
+        resourcesWithAdditionalConnections.has(name)
+      )
+      for (const entity of entities) {
+        const { data, name } = entity
+        data.map((service: any) => {
+          const connections = getConnectedEntity(
+            providerClient,
+            service,
+            providerData,
+            name,
+            true
+          )
+          if (!isEmpty(connections)) {
+            // REPORT STUFF?
+            if (storageRunning) {
+              const query = generateMutation({
+                type: 'update',
+                provider,
+                entity,
+                schemaMap,
+              })
+              const patch = generateUpdateVarsObject(service, connections)
+              // Add service mutation to promises array
+              storageEngine.push({ query, patch, name })
+            }
+          }
+        })
+      }
+    }
+  } catch (error) {
+    logger.debug(JSON.stringify(error))
+  }
+}
+
+export const loadAllData = (
+  providerClient: Client,
+  data: DataToLoad,
+  loggerInstance: Logger
+): void => {
+  loggerInstance.startSpinner(
+    `Inserting entities and connections for ${chalk.italic.green(
+      data.provider
+    )}`
+  )
+  insertEntitiesAndConnections(providerClient, data)
+  loggerInstance.successSpinner(
+    `Entities and connections inserted successfully for ${chalk.italic.green(
+      data.provider
+    )}`
+  )
+  loggerInstance.startSpinner(
+    `Processing additional service connections for ${chalk.italic.green(
+      data.provider
+    )}`
+  )
+  processConnectionsAfterInitialInsertion(providerClient, data)
+  loggerInstance.successSpinner(
+    `Additional connections processed successfully for ${chalk.italic.green(
+      data.provider
+    )}`
   )
 }
 

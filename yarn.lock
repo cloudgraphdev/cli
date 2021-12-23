@@ -377,10 +377,28 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+<<<<<<< refs/remotes/origin/master
 "@cloudgraph/sdk@0.10.4":
+=======
+<<<<<<< refs/remotes/origin/master
+"@cloudgraph/sdk@^0.10.4":
+>>>>>>> feat: add additional connections mutation to insert edges between existing entities
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.10.4.tgz#9bc4d8ef74934b92fa1d4b4cfefd107d1cffd3c2"
   integrity sha512-bcUiReutpllmPnt8OqySh09nMm9/lHHSAMUwvvP19RJkAf5y4hcHxGfj4Ls0Fv50FjUhAc5AZwAF8MPNk3MrRw==
+=======
+<<<<<<< refs/remotes/origin/master
+"@cloudgraph/sdk@^0.10.3":
+  version "0.10.3"
+  resolved "https://registry.npmjs.org/@cloudgraph/sdk/-/sdk-0.10.3.tgz"
+  integrity sha512-bifI+Yn2DXNv4cLXjOrtXOcC+Yj64q7OuZfz5spBGIirHlZgn3TW/Hb50Lv3XwZ9RLt9wokciRSRRlEqE1XfJA==
+=======
+"@cloudgraph/sdk@0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.6.1.tgz#871d578561e37eccf67592931ba97835aeb64cc9"
+  integrity sha512-D37prP4eXzMvezYFuqB1ex0xSLGsFOvLZhhFLIooF0ZFHZJd8Lg5Nc4dg+QLWIYWo9fW+iGpT6R1U3ril9SndA==
+>>>>>>> feat: add additional connections mutation to insert edges between existing entities
+>>>>>>> feat: add additional connections mutation to insert edges between existing entities
   dependencies:
     "@graphql-tools/load-files" "^6.5.3"
     "@graphql-tools/merge" "^8.2.1"

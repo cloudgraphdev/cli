@@ -5,8 +5,7 @@ import { cloudGraphPlugin, Opts, pluginMap } from '@cloudgraph/sdk'
 import { range } from 'lodash'
 
 import Command from './base'
-import { fileUtils } from '../utils'
-import { processConnectionsBetweenEntities } from '../utils/data'
+import { fileUtils, loadAllData } from '../utils'
 import DgraphEngine from '../storage/dgraph'
 import { scanReport } from '../reports'
 
@@ -112,10 +111,10 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client, schemasMap, serviceKey } = await this.getProviderClient(
+      const { client: providerClient, schemasMap: schemaMap } = await this.getProviderClient(
         provider
       )
-      if (!client) {
+      if (!providerClient) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
         continue // eslint-disable-line no-continue
@@ -167,7 +166,7 @@ export default class Scan extends Command {
           provider
         )}`
       )
-      const providerData = await client.getData({
+      const providerData = await providerClient.getData({
         opts,
       })
       this.logger.successSpinner(
@@ -180,7 +179,7 @@ export default class Scan extends Command {
           provider
         )}`
       )
-      const providerSchema: string = client.getSchema()
+      const providerSchema: string = providerClient.getSchema()
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
         continue // eslint-disable-line no-continue
@@ -231,18 +230,16 @@ export default class Scan extends Command {
         this.exit()
       }
 
-      this.logger.startSpinner(
-        `Making service connections for ${chalk.italic.green(provider)}`
-      )
-      processConnectionsBetweenEntities({
-        provider,
-        providerData,
-        storageEngine,
-        storageRunning,
-        schemaMap: schemasMap,
-      })
-      this.logger.successSpinner(
-        `Connections made successfully for ${chalk.italic.green(provider)}`
+      loadAllData(
+        providerClient,
+        {
+          provider,
+          providerData,
+          storageEngine,
+          storageRunning,
+          schemaMap,
+        },
+        this.logger
       )
     }
 

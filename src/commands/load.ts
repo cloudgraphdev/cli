@@ -5,8 +5,7 @@ import path from 'path'
 import { isEmpty } from 'lodash'
 
 import Command from './base'
-import { fileUtils } from '../utils'
-import { processConnectionsBetweenEntities } from '../utils/data'
+import { fileUtils, loadAllData } from '../utils'
 
 export default class Load extends Command {
   static description = 'Load a specific version of your CloudGraph data'
@@ -81,8 +80,10 @@ export default class Load extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('LOAD')} for ${provider}`
       )
-      const { client, schemasMap } = await this.getProviderClient(provider)
-      if (!client) {
+      const { client: providerClient, schemasMap: schemaMap } = await this.getProviderClient(
+        provider
+      )
+      if (!providerClient) {
         continue // eslint-disable-line no-continue
       }
 
@@ -186,26 +187,16 @@ export default class Load extends Command {
         )} loaded successfully for ${chalk.italic.green(provider)}`
       )
 
-      /**
-       * Loop through the providerData entities and for each entity:
-       * Look in providerData.connections for [key = entity.id]
-       * Loop through the connections for entity and determine its resource type
-       * Find entity in providerData.entities that matches the id found in connections
-       * Build connectedEntity by pushing the matched entity into the field corresponding to that entity (alb.ec2Instance => [ec2Instance])
-       * Push connected entity into dgraph
-       */
-      this.logger.startSpinner(
-        `Making service connections for ${chalk.italic.green(provider)}`
-      )
-      processConnectionsBetweenEntities({
-        provider,
-        providerData,
-        storageEngine,
-        storageRunning,
-        schemaMap: schemasMap,
-      })
-      this.logger.successSpinner(
-        `Connections made successfully for ${chalk.italic.green(provider)}`
+      loadAllData(
+        providerClient,
+        {
+          provider,
+          providerData,
+          storageEngine,
+          storageRunning,
+          schemaMap,
+        },
+        this.logger
       )
     }
 

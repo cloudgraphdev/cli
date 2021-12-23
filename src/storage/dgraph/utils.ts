@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import { GraphQLError } from 'graphql'
 
 import { GraphQLFormattedQuery } from '../types'
-import { scanReport, scanDataType, scanResult } from '../../reports'
+import scanReport, { scanDataType, scanResult } from '../../scanReport'
 
 const { logger } = CloudGraph
 
@@ -95,17 +95,32 @@ export function processGQLExecutionResult({
     let executedMutationNames: string[] = []
     if (!isEmpty(mutationResultData)) {
       executedMutationNames = Object.keys(mutationResultData) || []
-      executedMutationNames.forEach(mutationName => {
-        if (mutationResultData[mutationName]) {
-          const { numUids } = mutationResultData[mutationName]
-          const numUidsString = numUids ? `numUids affected: ${numUids}` : ''
-          logger.debug(
-            `mutation ${chalk.green(
-              mutationName
-            )} completed successfully. ${numUidsString}`
-          )
-        }
-      })
+      if (
+        !isEmpty(executedMutationNames) &&
+        executedMutationNames[0].includes('add')
+      ) {
+        executedMutationNames.forEach(mutationName => {
+          if (mutationResultData[mutationName]) {
+            const { numUids } = mutationResultData[mutationName]
+            const numUidsString = numUids ? `numUids affected: ${numUids}` : ''
+            logger.debug(
+              `mutation ${chalk.green(
+                mutationName
+              )} completed successfully. ${numUidsString}`
+            )
+          }
+        })
+      }
+      // if (executedMutationNames[0].includes('update')) {
+      //   executedMutationNames.forEach(mutation => {
+      //     const serviceName = mutation.split('update')[1]
+      //     const filter = mutationResultData[mutation][serviceName]
+      //     if (filter && filter[0]) {
+      //       const { id } = filter[0]
+      //       logger.debug(`Connections added for id ${chalk.green(id)}.`)
+      //     }
+      //   })
+      // }
     }
     processErrorArrayIfExists({
       errors: dataErrors,
