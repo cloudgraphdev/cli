@@ -1,8 +1,14 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import { cloudGraphPlugin, Opts, pluginMap } from '@cloudgraph/sdk'
-import { range } from 'lodash'
+import CloudGraph, {
+  cloudGraphPlugin,
+  Engine,
+  generateSchemaMapDynamically,
+  Opts,
+  pluginMap,
+} from '@cloudgraph/sdk'
+import { isEmpty, range } from 'lodash'
 
 import Command from './base'
 import { fileUtils } from '../utils'
@@ -40,6 +46,12 @@ export default class Scan extends Command {
     const opts: Opts = { logger: this.logger, debug: true, devMode }
     const configuredPlugins = []
     let allProviders = argv
+    const policyPacksPlugins: {
+      [policyPackName: string]: {
+        engine: Engine
+        rules: any
+      }
+    } = {}
 
     // Run dgraph health check
     const storageEngine = this.getStorageEngine() as DgraphEngine
@@ -243,6 +255,67 @@ export default class Scan extends Command {
       this.logger.successSpinner(
         `Connections made successfully for ${chalk.italic.green(provider)}`
       )
+
+      // Rules
+      let allPolicyPacks = isEmpty(policyPacks) ? [] : policyPacks.split(',')
+
+      if (allPolicyPacks.length >= 1) {
+        this.logger.debug(`Executing rules for policy packs: ${allPolicyPacks}`)
+      } else {
+        allPolicyPacks = config.policies || []
+        this.logger.debug(
+          `Executing rules for policy packs found in config: ${allPolicyPacks}`
+        )
+      }
+
+      if (allPolicyPacks.length === 0) {
+        this.logger.warn(
+          'There are no policy packs configured and none were passed to execute'
+        )
+      }
+
+      const failedPolicyPackList: string[] = []
+
+      let resources
+      if (serviceKey) {
+        // Uses custom service key
+        resources = config[serviceKey].split(',')
+      } else {
+        // Uses default resources key
+        resources = config.resources.split(',')
+      }
+
+      // Generate schema mapping
+      const resourceTypeNamesToFieldsMap =
+        schemasMap || generateSchemaMapDynamically(provider, resources)
+
+      // Initialize RulesEngine
+      const rulesEngine = new CloudGraph.RulesEngine(
+        resourceTypeNamesToFieldsMap,
+        `${provider}Findings`
+      )
+
+      for (const policyPack of allPolicyPacks) {
+        this.logger.info(
+          `Beginning ${chalk.italic.green('RULES')} for ${policyPack}`
+        )
+
+        const policyPackRules = await this.getPolicyPackPackage({
+          policyPack,
+        })
+        if (!policyPackRules) {
+          failedPolicyPackList.push(policyPack)
+          this.logger.warn(
+            `No valid rules found for ${policyPack}, skipping...`
+          )
+          continue // eslint-disable-line no-continue
+        }
+
+        policyPacksPlugins[policyPack] = {
+          engine: rulesEngine,
+          rules: policyPackRules,
+        }
+      }
     }
 
     // If every provider that has been passed is a failure, just exit
