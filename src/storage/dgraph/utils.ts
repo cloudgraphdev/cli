@@ -111,6 +111,9 @@ export function processGQLExecutionResult({
           }
         })
       }
+      // Leaving this block here in case we need/want
+      // to print the output the result of the patch mutations
+      //
       // if (executedMutationNames[0].includes('update')) {
       //   executedMutationNames.forEach(mutation => {
       //     const serviceName = mutation.split('update')[1]

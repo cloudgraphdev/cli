@@ -111,7 +111,10 @@ export const filterConnectionsByPriorityOfInsertion = (
   })
   return filteredConnections
 }
-
+// the afterNodeInsertion flag provides input
+// to whether filter connections that need to be inserted
+// in the main add mutation(batch mutation, that pushes fresh nodes and connections)
+// or in the patch mutation(list of mutations that patches each node and its connections with others)
 export function getConnectedEntity(
   service: any,
   { entities, connections: allConnections }: ProviderData,
@@ -178,8 +181,8 @@ export function insertEntitiesAndConnections({
   storageRunning,
   schemaMap,
 }: DataToLoad): void {
-  try {
-    for (const entity of providerData.entities) {
+  for (const entity of providerData.entities) {
+    try {
       const { data, mutation, name } = entity
       const connectedData = data.map((service: any) => {
         scanReport.pushData({
@@ -195,9 +198,9 @@ export function insertEntitiesAndConnections({
           generateMutation({ type: 'add', provider, entity, schemaMap })
         storageEngine.push({ query, input: connectedData, name })
       }
+    } catch (error) {
+      logger.debug(error)
     }
-  } catch (error) {
-    logger.debug(JSON.stringify(error))
   }
 }
 
@@ -208,22 +211,22 @@ export function processConnectionsAfterInitialInsertion({
   storageRunning,
   schemaMap,
 }: DataToLoad): void {
-  try {
-    const additionalConnections: {
-      [key: string]: ServiceConnection[]
-    } = filterConnectionsByPriorityOfInsertion(providerData.connections, true)
-    if (!isEmpty(additionalConnections)) {
-      // Filter resourceTypes that have additional connections to process
-      const resourcesWithAdditionalConnections = new Set(
-        Object.values(additionalConnections)
-          .flat()
-          .map(({ resourceType }) => resourceType)
-      )
-      // Filter entities that match filtered resourceTypes
-      const entities = providerData.entities.filter(({ name }) =>
-        resourcesWithAdditionalConnections.has(name)
-      )
-      for (const entity of entities) {
+  const additionalConnections: {
+    [key: string]: ServiceConnection[]
+  } = filterConnectionsByPriorityOfInsertion(providerData.connections, true)
+  if (!isEmpty(additionalConnections)) {
+    // Filter resourceTypes that have additional connections to process
+    const resourcesWithAdditionalConnections = new Set(
+      Object.values(additionalConnections)
+        .flat()
+        .map(({ resourceType }) => resourceType)
+    )
+    // Filter entities that match filtered resourceTypes
+    const entities = providerData.entities.filter(({ name }) =>
+      resourcesWithAdditionalConnections.has(name)
+    )
+    for (const entity of entities) {
+      try {
         const { data, name } = entity
         data.map((service: any) => {
           const connections = getConnectedEntity(
@@ -233,7 +236,6 @@ export function processConnectionsAfterInitialInsertion({
             true
           )
           if (!isEmpty(connections)) {
-            // REPORT STUFF?
             if (storageRunning) {
               const query = generateMutation({
                 type: 'update',
@@ -247,10 +249,10 @@ export function processConnectionsAfterInitialInsertion({
             }
           }
         })
+      } catch (error) {
+        logger.debug(error)
       }
     }
-  } catch (error) {
-    logger.debug(JSON.stringify(error))
   }
 }
 
