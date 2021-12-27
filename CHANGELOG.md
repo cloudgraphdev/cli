@@ -1,3 +1,10 @@
+# [0.13.0-alpha.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.7...0.13.0-alpha.8) (2021-12-27)
+
+
+### Bug Fixes
+
+* Fixed issue getting plugin version from lockfile ([b8fe334](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b8fe33412d1b43c2658fd2fdb17535dfd0b87f86))
+
 # [0.13.0-alpha.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.6...0.13.0-alpha.7) (2021-12-20)
 
 ### Bug Fixes

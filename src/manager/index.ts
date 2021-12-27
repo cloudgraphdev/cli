@@ -210,11 +210,11 @@ export class Manager {
     } catch (error: any) {
       this.logger.info('No lock file found for Cloud Graph, creating one...')
     }
-    if (!config?.config?.[plugin]) {
+    const lockVersion = config?.config[this.pluginType]?.[plugin]
+    if (!lockVersion) {
       return 'latest'
     }
-    const lockFile = config.config
-    return lockFile[plugin]
+    return lockVersion
   }
 
   removeFromLockFile(plugin: string): void {
