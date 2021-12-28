@@ -22,8 +22,21 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@cloudgraph/cli.svg)](https://npmjs.org/package/@cloudgraph/cli)
+![node-current](https://img.shields.io/node/v/@cloudgraph/cli)
 [![Downloads/week](https://img.shields.io/npm/dw/@cloudgraph/cli.svg)](https://npmjs.org/package/@cloudgraph/cli)
 [![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/master/package.json)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/y/cloudgraphdev/cli)
+![GitHub contributors](https://img.shields.io/github/contributors/cloudgraphdev/cli)
+![GitHub issues](https://img.shields.io/github/issues/cloudgraphdev/cli)
+
+<br />
+
+<h2 align="center">Join the conversation</h2>
+
+[![Slack](https://img.shields.io/badge/slack-chat-E01563)](https://cloudgraph-workspace.slack.com)
+[![Tweet](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2Fcloudgraphdev%2Fcli)
+](https://twitter.com/share?ref_src=twsrc%5Etfw&text=Check%20out%20CloudGraph.%20The%20GraphQL%20api%20for%20AWS,%20Azure,%20GCP,%20and%20more!)
+![Twitter Follow](https://img.shields.io/twitter/follow/AutoCloudDev?style=social)
 
 <!-- toc -->
 * [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
