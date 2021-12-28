@@ -137,7 +137,7 @@ export default class Scan extends Command {
                 schemasMap,
                 serviceKey,
               },
-              flags,
+              flags: flags as { [flag: string]: any },
               logger: this.logger,
             })
 
