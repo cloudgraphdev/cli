@@ -1,5 +1,5 @@
+import { PluginType } from '@cloudgraph/sdk'
 import chalk from 'chalk'
-import { PluginType } from '../../utils/constants'
 import Command from '../base'
 
 export default class Add extends Command {

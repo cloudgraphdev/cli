@@ -1,3 +1,4 @@
+import { StorageEngineConnectionConfig } from '@cloudgraph/sdk'
 import { loadFilesSync } from '@graphql-tools/load-files'
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import { print } from 'graphql'
@@ -11,7 +12,6 @@ import path from 'path'
 import detect from 'detect-port'
 
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
-import { StorageEngineConnectionConfig } from '../storage/types'
 
 export const getKeyByValue = (
   object: Record<string, unknown>,

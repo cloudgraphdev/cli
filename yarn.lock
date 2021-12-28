@@ -462,12 +462,16 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cloudgraph/sdk@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.6.1.tgz#871d578561e37eccf67592931ba97835aeb64cc9"
-  integrity sha512-D37prP4eXzMvezYFuqB1ex0xSLGsFOvLZhhFLIooF0ZFHZJd8Lg5Nc4dg+QLWIYWo9fW+iGpT6R1U3ril9SndA==
+"@cloudgraph/sdk@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.7.0.tgz#5be735b9d6fd96277cbe0e5bf0e1612e99fecf8b"
+  integrity sha512-9W7NZLn0C5qSl3UYlftR+oh9HuXO+QFomQ4z9FiVRKk2EBTdGBc3G9kEPFJyh8yilD+yTzQ8/UkveRf8s2Kjew==
   dependencies:
+    "@graphql-tools/load-files" "^6.5.3"
+    "@graphql-tools/merge" "^8.2.1"
+    chalk "^4.1.1"
     date-fns "^2.25.0"
+    graphql "^16.2.0"
     inquirer "^8.1.2"
     jsonpath "^1.1.1"
     lodash "^4.17.21"
@@ -509,6 +513,15 @@
   version "6.5.2"
   resolved "https://registry.npmjs.org/@graphql-tools/load-files/-/load-files-6.5.2.tgz"
   integrity sha512-ZU/v0HA7L3jCgizK5r3JHTg4ZQg+b+t3lSakU1cYT78kHT98milhlU+YF2giS7XP9KcS6jGTAalQbbX2yQA1sg==
+  dependencies:
+    globby "11.0.4"
+    tslib "~2.3.0"
+    unixify "1.0.0"
+
+"@graphql-tools/load-files@^6.5.3":
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/load-files/-/load-files-6.5.3.tgz#aa0debfae7fe5e63c4d95e63e4b8adc78bbf53f8"
+  integrity sha512-hu6hw2fj3ltno7ezbyAQc5VdLCymgx0XIwvk0l9sWAlV2xnaNcX7p/z1qm6U/db2MiCumRBBIm/QuR7Jn71qZg==
   dependencies:
     globby "11.0.4"
     tslib "~2.3.0"
@@ -4391,6 +4404,11 @@ graphql@^15.5.1, graphql@^15.6.1:
   version "15.7.2"
   resolved "https://registry.npmjs.org/graphql/-/graphql-15.7.2.tgz"
   integrity sha512-AnnKk7hFQFmU/2I9YSQf3xw44ctnSFCfp3zE0N6W174gqe9fWG/2rKaKxROK7CcI3XtERpjEKFqts8o319Kf7A==
+
+graphql@^16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.2.0.tgz#de3150e80f1fc009590b92a9d16ab1b46e12b656"
+  integrity sha512-MuQd7XXrdOcmfwuLwC2jNvx0n3rxIuNYOxUtiee5XOmfrWo613ar2U8pE7aHAKh8VwfpifubpD9IP+EdEAEOsA==
 
 handlebars@^4.7.6:
   version "4.7.7"

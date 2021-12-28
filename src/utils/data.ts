@@ -1,10 +1,12 @@
 import chalk from 'chalk'
 import isEmpty from 'lodash/isEmpty'
-import CloudGraph, { ProviderData } from '@cloudgraph/sdk'
+import CloudGraph, {
+  ProviderData,
+  StorageEngine,
+  SchemaMap,
+} from '@cloudgraph/sdk'
 
-import { StorageEngine } from '../storage/types'
 import { scanReport, scanDataType, scanResult } from '../reports'
-import { SchemaMap } from '../types'
 import { generateMutation } from './mutation'
 
 const { logger } = CloudGraph
@@ -103,7 +105,8 @@ export const processConnectionsBetweenEntities = ({
         query:
           mutation ||
           (provider &&
-            generateMutation({ type: 'add', provider, entity, schemaMap })),
+            generateMutation({ type: 'add', provider, entity, schemaMap })) ||
+          '',
         connectedData,
         name,
       })

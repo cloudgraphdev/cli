@@ -1,3 +1,4 @@
+import { getSchemaFromFolder } from '@cloudgraph/sdk'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -5,7 +6,6 @@ import { isEmpty } from 'lodash'
 
 import Command from './base'
 import { fileUtils } from '../utils'
-import { getSchemaFromFolder } from '../utils/schema'
 import { processConnectionsBetweenEntities } from '../utils/data'
 
 export default class Load extends Command {
