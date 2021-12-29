@@ -49,6 +49,7 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 * [Supported Services](#supported-services)
 * [Example Queries](#example-queries)
 * [Query Tools](#query-tools)
+* [Compliance](#compliance)
 * [Community](#community)
 * [Contribution Guidelines](#contribution-guidelines)
 * [Deployment Options](#deployment-options)
@@ -1136,6 +1137,116 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 <!-- querytoolsstop -->
 
 <br />
+
+# Compliance
+
+<!-- compliance -->
+
+Policy Packs are our way to guarantee compliance across the existing infrastructure of your cloud provider. They are packages based on a set of rules or benchmarks provided by security entities or by third-parties with the objective of keeping our infrastructure up-to-date with the standards of the industry. Each time you run a scan it will execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
+
+For example, if you want to understand the rules applies for a particular IAM User you can use the following query:
+
+```graphql
+query {
+  getawsIamUser(id: "123456789") {
+    name
+    findings {
+      severity
+      description
+      ruleId
+      result
+
+    }
+  }
+}
+```
+
+The following output indicates that we found one warning and one vulnerability for the `aws_iam_user` that should be taken care of:
+
+```graphql
+query {
+  "data": {
+    "getawsIamUser": {
+      "name": "aws_iam_user",
+      "findings": [
+        {
+          "severity": "warning",
+          "description": "This rule should pass",
+          "ruleId": "aws-cis-1.2.0-1.8",
+          "result": "PASS"
+        },
+        {
+          "severity": "warning",
+          "description": "This rule should fail",
+          "ruleId": "aws-cis-1.2.0-1.9",
+          "result": "FAIL"
+        },
+        {
+          "severity": "danger",
+          "description": "This rule should never fail",
+          "ruleId": "aws-cis-1.2.0-1.10",
+          "result": "FAIL"
+        }
+      ]
+    }
+  }
+}
+```
+
+We can also query findings directly like so:
+
+```graphql
+query {
+  queryawsFindings {
+    ruleId
+    description
+    result
+    iamUser {
+      name
+    }
+  }
+}
+```
+
+The output will show a list of findings like this:
+
+```graphql
+query {
+  "data": {
+    "queryawsFindings": [
+      {
+        "ruleId": "aws-cis-1.2.0-1.8",
+        "description": "This rule should pass",
+        "result": "PASS",
+        "iamUser": [
+          {
+            "name": "aws_iam_user"
+          }
+        ]
+      },
+      {
+        "ruleId": "aws-cis-1.2.0-1.10",
+        "description": "This rule should fail",
+        "result": "FAIL",
+        "iamUser": [
+          {
+            "name": "aws_iam_user"
+          }
+        ]
+      }
+    }
+}
+```
+
+
+<br />
+
+
+<!-- compliancestop -->
+
+<br />
+
+
 
 # Community
 
