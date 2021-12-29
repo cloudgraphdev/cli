@@ -1152,6 +1152,7 @@ query {
     name
     findings {
       severity
+      description
       ruleId
       result
 
@@ -1170,16 +1171,19 @@ query {
       "findings": [
         {
           "severity": "warning",
+          "description": "This rule should pass",
           "ruleId": "aws-cis-1.2.0-1.8",
           "result": "PASS"
         },
         {
           "severity": "warning",
+          "description": "This rule should fail",
           "ruleId": "aws-cis-1.2.0-1.9",
           "result": "FAIL"
         },
         {
           "severity": "danger",
+          "description": "This rule should never fail",
           "ruleId": "aws-cis-1.2.0-1.10",
           "result": "FAIL"
         }
@@ -1194,6 +1198,8 @@ We can also query findings directly like so:
 ```graphql
 query {
   queryawsFindings {
+    ruleId
+    description
     result
     iamUser {
       name
@@ -1209,6 +1215,8 @@ query {
   "data": {
     "queryawsFindings": [
       {
+        "ruleId": "aws-cis-1.2.0-1.8",
+        "description": "This rule should pass",
         "result": "PASS",
         "iamUser": [
           {
@@ -1217,6 +1225,8 @@ query {
         ]
       },
       {
+        "ruleId": "aws-cis-1.2.0-1.10",
+        "description": "This rule should fail",
         "result": "FAIL",
         "iamUser": [
           {
