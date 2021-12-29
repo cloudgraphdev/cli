@@ -49,6 +49,7 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 * [Supported Services](#supported-services)
 * [Example Queries](#example-queries)
 * [Query Tools](#query-tools)
+* [Compliance](#compliance)
 * [Community](#community)
 * [Contribution Guidelines](#contribution-guidelines)
 * [Deployment Options](#deployment-options)
@@ -1136,6 +1137,106 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 <!-- querytoolsstop -->
 
 <br />
+
+# Compliance
+
+<!-- compliance -->
+
+Policy Packs are our way to guarantee compliance across the existing infrastructure of your cloud provider. They are packages based on a set of rules or benchmarks provided by security entities or by third-parties with the objective of keep our infraestructure up-to-date with the standards of the industry. Each time you run a scan it will execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making easy query over them.
+
+For example, if you want to understand the rules applies for a particular IAM User you can use the following query
+
+```graphql
+query {
+  getawsIamUser(id: "123456789") {
+    name
+    findings {
+      severity
+      ruleId
+      result
+
+    }
+  }
+}
+```
+
+The following output indicates that we found one warning and one vulnerability for the `aws_iam_user` that should be take care.
+
+```graphql
+query {
+  "data": {
+    "getawsIamUser": {
+      "name": "aws_iam_user",
+      "findings": [
+        {
+          "severity": "warning",
+          "ruleId": "aws-cis-1.2.0-1.8",
+          "result": "PASS"
+        },
+        {
+          "severity": "warning",
+          "ruleId": "aws-cis-1.2.0-1.9",
+          "result": "FAIL"
+        },
+        {
+          "severity": "danger",
+          "ruleId": "aws-cis-1.2.0-1.10",
+          "result": "FAIL"
+        }
+      ]
+    }
+  }
+}
+```
+
+We can query findings in both ways, by resource as we ilustrate above and by rule as it shows in the example below:
+
+```graphql
+query {
+  queryawsFindings {
+    result
+    iamUser {
+      name
+    }
+  }
+}
+```
+
+The output will show a list of findings like this
+
+```graphql
+query {
+  "data": {
+    "queryawsFindings": [
+      {
+        "result": "PASS",
+        "iamUser": [
+          {
+            "name": "aws_iam_user"
+          }
+        ]
+      },
+      {
+        "result": "FAIL",
+        "iamUser": [
+          {
+            "name": "aws_iam_user"
+          }
+        ]
+      }
+    }
+}
+```
+
+
+<br />
+
+
+<!-- compliancestop -->
+
+<br />
+
+
 
 # Community
 
