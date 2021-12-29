@@ -1142,9 +1142,9 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 
 <!-- compliance -->
 
-Policy Packs are our way to guarantee compliance across the existing infrastructure of your cloud provider. They are packages based on a set of rules or benchmarks provided by security entities or by third-parties with the objective of keep our infraestructure up-to-date with the standards of the industry. Each time you run a scan it will execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making easy query over them.
+Policy Packs are our way to guarantee compliance across the existing infrastructure of your cloud provider. They are packages based on a set of rules or benchmarks provided by security entities or by third-parties with the objective of keeping our infrastructure up-to-date with the standards of the industry. Each time you run a scan it will execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
 
-For example, if you want to understand the rules applies for a particular IAM User you can use the following query
+For example, if you want to understand the rules applies for a particular IAM User you can use the following query:
 
 ```graphql
 query {
@@ -1160,7 +1160,7 @@ query {
 }
 ```
 
-The following output indicates that we found one warning and one vulnerability for the `aws_iam_user` that should be take care.
+The following output indicates that we found one warning and one vulnerability for the `aws_iam_user` that should be taken care of:
 
 ```graphql
 query {
@@ -1189,7 +1189,7 @@ query {
 }
 ```
 
-We can query findings in both ways, by resource as we ilustrate above and by rule as it shows in the example below:
+We can also query findings directly like so:
 
 ```graphql
 query {
@@ -1202,7 +1202,7 @@ query {
 }
 ```
 
-The output will show a list of findings like this
+The output will show a list of findings like this:
 
 ```graphql
 query {
