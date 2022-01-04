@@ -1,3 +1,10 @@
+## [0.15.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.4...0.15.5) (2022-01-04)
+
+
+### Bug Fixes
+
+* **deps:** update version of oclif help plugin to fixed 3.2.17 ([901cb05](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/901cb05fdedea46e93422c5cfcffa8db83855d63))
+
 ## [0.15.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.3...0.15.4) (2021-12-15)
 
 
