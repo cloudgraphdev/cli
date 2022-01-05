@@ -6,8 +6,6 @@ import Command from '../base'
 export default class Remove extends Command {
   static description = 'Remove currently installed policy pack'
 
-  static aliases = []
-
   static examples = [
     '$ cg policy delete',
     '$ cg policy delete aws-cis-1.2.0',

@@ -5,8 +5,6 @@ import Command from '../base'
 export default class Install extends Command {
   static description = 'Install policy packs based on the lock file'
 
-  static aliases = []
-
   static examples = ['$ cg policy install']
 
   static strict = false

@@ -9,8 +9,6 @@ const getPolicy = (val: string): string =>
 export default class Update extends Command {
   static description = 'Update currently installed policy packs'
 
-  static aliases = []
-
   static examples = [
     '$ cg policy update',
     '$ cg policy update aws-cis-1.2.0',

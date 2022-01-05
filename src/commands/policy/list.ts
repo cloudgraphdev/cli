@@ -6,8 +6,6 @@ import Command from '../base'
 export default class List extends Command {
   static description = 'List currently installed policy packs and versions'
 
-  static aliases = []
-
   static examples = ['$ cg policy list', '$ cg policy list aws']
 
   static strict = false
