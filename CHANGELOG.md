@@ -1,3 +1,11 @@
+# [0.16.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.0-alpha.1...0.16.0-alpha.2) (2022-01-05)
+
+
+### Bug Fixes
+
+* Updated SDK version and docs for policy packs ([4414818](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4414818e83ffdc453a7675fbf730d6e1dcedf61c))
+* **deps:** update version of oclif help plugin to fixed 3.2.17 ([901cb05](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/901cb05fdedea46e93422c5cfcffa8db83855d63))
+
 # [0.16.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.4...0.16.0-alpha.1) (2021-12-28)
 
 ### Bug Fixes

@@ -39,25 +39,24 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 ![Twitter Follow](https://img.shields.io/twitter/follow/AutoCloudDev?style=social)
 
 <!-- toc -->
-
-- [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
-- [Why CloudGraph](#why-cloudgraph)
-- [How It Works](#how-it-works)
-- [Authentication and Permissions](#authentication-and-permissions)
-- [Install](#install)
-- [Quick Start](#quick-start)
-- [Loading Previous Versions](#loading-previous-versions)
-- [Supported Services](#supported-services)
-- [Example Queries](#example-queries)
-- [Query Tools](#query-tools)
-- [Compliance](#compliance)
-- [Community](#community)
-- [Contribution Guidelines](#contribution-guidelines)
-- [Deployment Options](#deployment-options)
-- [Hosted Version](#hosted-version)
-- [Debugging](#debugging)
-- [Common Errors](#common-errors)
-- [Commands](#commands)
+* [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
+* [Why CloudGraph](#why-cloudgraph)
+* [How It Works](#how-it-works)
+* [Authentication and Permissions](#authentication-and-permissions)
+* [Install](#install)
+* [Quick Start](#quick-start)
+* [Loading Previous Versions](#loading-previous-versions)
+* [Supported Services](#supported-services)
+* [Example Queries](#example-queries)
+* [Query Tools](#query-tools)
+* [Compliance](#compliance)
+* [Community](#community)
+* [Contribution Guidelines](#contribution-guidelines)
+* [Deployment Options](#deployment-options)
+* [Hosted Version](#hosted-version)
+* [Debugging](#debugging)
+* [Common Errors](#common-errors)
+* [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -1349,26 +1348,25 @@ There are some common errors you may see when running CloudGraph that are usuall
 # Commands
 
 <!-- commands -->
-
-- [`cg help [COMMAND]`](#cg-help-command)
-- [`cg init [PROVIDER]`](#cg-init-provider)
-- [`cg launch [PROVIDER]`](#cg-launch-provider)
-- [`cg load [PROVIDER]`](#cg-load-provider)
-- [`cg policy [PROVIDER]`](#cg-policy-provider)
-- [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
-- [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
-- [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
-- [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
-- [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
-- [`cg provider [PROVIDER]`](#cg-provider-provider)
-- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-- [`cg scan [PROVIDER]`](#cg-scan-provider)
-- [`cg serve [PROVIDER]`](#cg-serve-provider)
-- [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+* [`cg help [COMMAND]`](#cg-help-command)
+* [`cg init [PROVIDER]`](#cg-init-provider)
+* [`cg launch [PROVIDER]`](#cg-launch-provider)
+* [`cg load [PROVIDER]`](#cg-load-provider)
+* [`cg policy [PROVIDER]`](#cg-policy-provider)
+* [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
+* [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
+* [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
+* [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
+* [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
+* [`cg provider [PROVIDER]`](#cg-provider-provider)
+* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
+* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
+* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
+* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
+* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+* [`cg scan [PROVIDER]`](#cg-scan-provider)
+* [`cg serve [PROVIDER]`](#cg-serve-provider)
+* [`cg teardown [PROVIDER]`](#cg-teardown-provider)
 
 ## `cg help [COMMAND]`
 
@@ -1414,7 +1412,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -1440,7 +1438,7 @@ EXAMPLE
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1467,7 +1465,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/load.ts)_
 
 ## `cg policy [PROVIDER]`
 
@@ -1490,7 +1488,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
-_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/policy/index.ts)_
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/index.ts)_
 
 ## `cg policy:add [PROVIDER]`
 
@@ -1517,7 +1515,7 @@ EXAMPLES
   $ cg policy add aws-cis-1.2.0@0.12.0
 ```
 
-_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/policy/add.ts)_
+_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/add.ts)_
 
 ## `cg policy:install [PROVIDER]`
 
@@ -1543,7 +1541,7 @@ EXAMPLE
   $ cg policy install
 ```
 
-_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/policy/install.ts)_
+_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/install.ts)_
 
 ## `cg policy:list [PROVIDER]`
 
@@ -1573,7 +1571,7 @@ EXAMPLES
   $ cg policy list aws
 ```
 
-_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/policy/list.ts)_
+_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/list.ts)_
 
 ## `cg policy:remove [PROVIDER]`
 
@@ -1606,7 +1604,7 @@ EXAMPLES
   $ cg policy delete aws-cis-1.2.0 --no-save
 ```
 
-_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/policy/remove.ts)_
+_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/remove.ts)_
 
 ## `cg policy:update [PROVIDER]`
 
@@ -1634,7 +1632,7 @@ EXAMPLES
   $cg policy update aws-cis-1.2.0@0.12.0
 ```
 
-_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/policy/update.ts)_
+_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/update.ts)_
 
 ## `cg provider [PROVIDER]`
 
@@ -1657,7 +1655,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/index.ts)_
 
 ## `cg provider:add [PROVIDER]`
 
@@ -1687,7 +1685,7 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
-_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/provider/add.ts)_
+_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/add.ts)_
 
 ## `cg provider:install [PROVIDER]`
 
@@ -1716,7 +1714,7 @@ EXAMPLE
   $ cg provider install
 ```
 
-_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/provider/install.ts)_
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/install.ts)_
 
 ## `cg provider:list [PROVIDER]`
 
@@ -1748,7 +1746,7 @@ EXAMPLES
   $ cg provider list aws
 ```
 
-_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/provider/list.ts)_
+_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/list.ts)_
 
 ## `cg provider:remove [PROVIDER]`
 
@@ -1784,7 +1782,7 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
-_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/provider/remove.ts)_
+_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/remove.ts)_
 
 ## `cg provider:update [PROVIDER]`
 
@@ -1815,7 +1813,7 @@ EXAMPLES
   $cg provider update aws@0.12.0
 ```
 
-_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/provider/update.ts)_
+_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/update.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -1844,7 +1842,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -1870,7 +1868,7 @@ EXAMPLE
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 
@@ -1888,6 +1886,5 @@ EXAMPLES
   $ cg teardown --delete-image
 ```
 
-_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/teardown.ts)_
-
+_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/teardown.ts)_
 <!-- commandsstop -->
