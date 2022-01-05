@@ -1,5 +1,5 @@
 import { PluginType } from '@cloudgraph/sdk'
-import { pickBy } from 'lodash'
+import { isEmpty, pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
 
@@ -33,6 +33,10 @@ export default class Update extends Command {
     const manager = this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()
 
+    if (isEmpty(lockFile?.provider)) {
+      this.logger.info('No providers found in lock file, have you added any?')
+      this.exit()
+    }
     // Get the providers from the lock file that user wants to update
     // If user passes something like aws@1.1.0, filter the lock file to only grab 'aws' entry
     const providersToList =
