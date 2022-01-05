@@ -1,3 +1,11 @@
+## [0.16.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.0...0.16.1) (2022-01-05)
+
+
+### Bug Fixes
+
+* Removed aliases for policy commands ([27adcf3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/27adcf37c34776773032c58c5ffccae24c584957))
+* Validated empty lock file for policy and provider commands ([8a397a5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8a397a5d6170476b14232bae3c0d6ff05fc4beb7))
+
 # [0.16.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.5...0.16.0) (2022-01-05)
 
 
