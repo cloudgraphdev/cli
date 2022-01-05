@@ -1,31 +1,28 @@
 # [0.16.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.4...0.16.0-alpha.1) (2021-12-28)
 
-
 ### Bug Fixes
 
-* Fixed empty policies key on CloudGraph config file ([95f2c69](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/95f2c69fc3294f6db4143d7df57bce1699c4caee))
-* Fixed empty policies key on CloudGraph config file ([ec92905](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ec92905b0ae070f5bd575f87e813f1b4472db631))
-* Fixed issue getting plugin version from lockfile ([b8fe334](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b8fe33412d1b43c2658fd2fdb17535dfd0b87f86))
-* Removed unused code ([ea3aa94](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ea3aa942a9cf7a7240c6721fab12d5ec69fb5e4d))
-* Solved type for flags attribute ([97bd99e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/97bd99ec335789540b304785557d9a17c707c10d))
-* updated references from sdk ([e8c4f1b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e8c4f1b98ad01ebd86c9b1064b829550ffcbb028))
-* Uses missing cwd to fix installed packages issue ([6c5ffa7](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/6c5ffa728e354361ea19e13dab22d83cc3fa6cbc))
-* Uses missing cwd to fix installed packages issue ([e59e86d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e59e86d448dee53b59899072c1738d07e04b31a8))
-
+- Fixed empty policies key on CloudGraph config file ([95f2c69](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/95f2c69fc3294f6db4143d7df57bce1699c4caee))
+- Fixed empty policies key on CloudGraph config file ([ec92905](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ec92905b0ae070f5bd575f87e813f1b4472db631))
+- Fixed issue getting plugin version from lockfile ([b8fe334](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b8fe33412d1b43c2658fd2fdb17535dfd0b87f86))
+- Removed unused code ([ea3aa94](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ea3aa942a9cf7a7240c6721fab12d5ec69fb5e4d))
+- Solved type for flags attribute ([97bd99e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/97bd99ec335789540b304785557d9a17c707c10d))
+- updated references from sdk ([e8c4f1b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e8c4f1b98ad01ebd86c9b1064b829550ffcbb028))
+- Uses missing cwd to fix installed packages issue ([6c5ffa7](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/6c5ffa728e354361ea19e13dab22d83cc3fa6cbc))
+- Uses missing cwd to fix installed packages issue ([e59e86d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e59e86d448dee53b59899072c1738d07e04b31a8))
 
 ### Features
 
-* Implemented generic plugin system ([a538a86](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a538a86041009c1e2f52554d1f7e57d7da0036a1))
-* Policy Packs Alpha version. ([2560f5b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/2560f5b9cbdb61a2f6089dfdfc430319a5127071))
-* Policy Packs Alpha version. ([5abfcd2](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5abfcd2534236792c4ab9038b6d31aeb90bd42a8))
-* Replaced Dgraph types from SDK ([a32bcf5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a32bcf5b8d70a0a31ccf984a62890ee5bccaa065))
+- Implemented generic plugin system ([a538a86](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a538a86041009c1e2f52554d1f7e57d7da0036a1))
+- Policy Packs Alpha version. ([2560f5b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/2560f5b9cbdb61a2f6089dfdfc430319a5127071))
+- Policy Packs Alpha version. ([5abfcd2](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5abfcd2534236792c4ab9038b6d31aeb90bd42a8))
+- Replaced Dgraph types from SDK ([a32bcf5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a32bcf5b8d70a0a31ccf984a62890ee5bccaa065))
 
 # [0.13.0-alpha.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.7...0.13.0-alpha.8) (2021-12-27)
 
-
 ### Bug Fixes
 
-* Fixed issue getting plugin version from lockfile ([b8fe334](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b8fe33412d1b43c2658fd2fdb17535dfd0b87f86))
+- Fixed issue getting plugin version from lockfile ([b8fe334](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b8fe33412d1b43c2658fd2fdb17535dfd0b87f86))
 
 # [0.13.0-alpha.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.13.0-alpha.6...0.13.0-alpha.7) (2021-12-20)
 

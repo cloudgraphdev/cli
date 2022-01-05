@@ -39,24 +39,25 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 ![Twitter Follow](https://img.shields.io/twitter/follow/AutoCloudDev?style=social)
 
 <!-- toc -->
-* [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
-* [Why CloudGraph](#why-cloudgraph)
-* [How It Works](#how-it-works)
-* [Authentication and Permissions](#authentication-and-permissions)
-* [Install](#install)
-* [Quick Start](#quick-start)
-* [Loading Previous Versions](#loading-previous-versions)
-* [Supported Services](#supported-services)
-* [Example Queries](#example-queries)
-* [Query Tools](#query-tools)
-* [Compliance](#compliance)
-* [Community](#community)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Deployment Options](#deployment-options)
-* [Hosted Version](#hosted-version)
-* [Debugging](#debugging)
-* [Common Errors](#common-errors)
-* [Commands](#commands)
+
+- [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
+- [Why CloudGraph](#why-cloudgraph)
+- [How It Works](#how-it-works)
+- [Authentication and Permissions](#authentication-and-permissions)
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Loading Previous Versions](#loading-previous-versions)
+- [Supported Services](#supported-services)
+- [Example Queries](#example-queries)
+- [Query Tools](#query-tools)
+- [Compliance](#compliance)
+- [Community](#community)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Deployment Options](#deployment-options)
+- [Hosted Version](#hosted-version)
+- [Debugging](#debugging)
+- [Common Errors](#common-errors)
+- [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -1144,18 +1145,17 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 
 Policy Packs are our way to guarantee compliance across the existing infrastructure of your cloud provider. They are packages based on a set of rules or benchmarks provided by security entities or by third-parties with the objective of keeping our infrastructure up-to-date with the standards of the industry. Each time you run a scan it will execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
 
-For example, if you want to understand the rules applies for a particular IAM User you can use the following query:
+Findings can be grouped by the entity that defined the benchmark. For example, if you want to understand the CIS rules that applies for a particular IAM User you can use the following query:
 
 ```graphql
 query {
   getawsIamUser(id: "123456789") {
     name
-    findings {
+    CISFindings {
       severity
       description
       ruleId
       result
-
     }
   }
 }
@@ -1168,7 +1168,7 @@ query {
   "data": {
     "getawsIamUser": {
       "name": "aws_iam_user",
-      "findings": [
+      "CISFindings": [
         {
           "severity": "warning",
           "description": "This rule should pass",
@@ -1197,7 +1197,7 @@ We can also query findings directly like so:
 
 ```graphql
 query {
-  queryawsFindings {
+  queryawsCISFindings {
     ruleId
     description
     result
@@ -1213,7 +1213,7 @@ The output will show a list of findings like this:
 ```graphql
 query {
   "data": {
-    "queryawsFindings": [
+    "queryawsCISFindings": [
       {
         "ruleId": "aws-cis-1.2.0-1.8",
         "description": "This rule should pass",
@@ -1238,15 +1238,61 @@ query {
 }
 ```
 
+There's also a way to query all your findings grouping by entity, as we illustrate in the example below:
+
+```graphql
+query {
+  queryawsFindings {
+    CISFindings {
+      severity
+      description
+      ruleId
+      result
+    }
+    AutoCloudFindings {
+      severity
+      description
+      ruleId
+      result
+    }
+  }
+}
+```
+
+It retrieves the following output:
+
+```graphql
+query {
+  "data": {
+    "queryawsFindings": [
+      {
+        "CISFindings": [
+          {
+            "severity": "danger",
+            "description": "This rule should pass",
+            "ruleId": "aws-cis-1.2.0-1.14",
+            "result": "PASS"
+          }
+        ]
+        "AutoCloudFindings": [
+          {
+            "severity": "danger",
+            "description": "This rule should not fail",
+            "ruleId": "aws-autocloud-1.3.0-1.14",
+            "result": "FAIL"
+          }
+        ]
+      }
+    ]
+    }
+}
+```
 
 <br />
-
 
 <!-- compliancestop -->
 
 <br />
-
-
 
 # Community
 
@@ -1303,25 +1349,26 @@ There are some common errors you may see when running CloudGraph that are usuall
 # Commands
 
 <!-- commands -->
-* [`cg help [COMMAND]`](#cg-help-command)
-* [`cg init [PROVIDER]`](#cg-init-provider)
-* [`cg launch [PROVIDER]`](#cg-launch-provider)
-* [`cg load [PROVIDER]`](#cg-load-provider)
-* [`cg policy [PROVIDER]`](#cg-policy-provider)
-* [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
-* [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
-* [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
-* [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
-* [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
-* [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-* [`cg scan [PROVIDER]`](#cg-scan-provider)
-* [`cg serve [PROVIDER]`](#cg-serve-provider)
-* [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+
+- [`cg help [COMMAND]`](#cg-help-command)
+- [`cg init [PROVIDER]`](#cg-init-provider)
+- [`cg launch [PROVIDER]`](#cg-launch-provider)
+- [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg policy [PROVIDER]`](#cg-policy-provider)
+- [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
+- [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
+- [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
+- [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
+- [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
+- [`cg provider [PROVIDER]`](#cg-provider-provider)
+- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
+- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
+- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
+- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
+- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg scan [PROVIDER]`](#cg-scan-provider)
+- [`cg serve [PROVIDER]`](#cg-serve-provider)
+- [`cg teardown [PROVIDER]`](#cg-teardown-provider)
 
 ## `cg help [COMMAND]`
 
@@ -1338,7 +1385,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.3/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.17/src/commands/help.ts)_
 
 ## `cg init [PROVIDER]`
 
@@ -1842,4 +1889,5 @@ EXAMPLES
 ```
 
 _See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.1/src/commands/teardown.ts)_
+
 <!-- commandsstop -->
