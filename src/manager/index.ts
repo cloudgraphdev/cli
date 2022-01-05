@@ -1,4 +1,4 @@
-import { Logger } from '@cloudgraph/sdk'
+import { Logger, PluginModule, PluginType } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
 import { IConfig } from '@oclif/config'
 import path from 'path'
@@ -7,7 +7,6 @@ import fs from 'fs'
 import satisfies from 'semver/functions/satisfies'
 import gt from 'semver/functions/gt'
 import { printBoxMessage, fileUtils } from '../utils'
-import { PluginModule, PluginType } from '../utils/constants'
 import NpmManager from './npm'
 
 export class Manager {
@@ -182,7 +181,6 @@ export class Manager {
         this.logger.startSpinner(stoppedMsg)
       }
     }
-
     const requiredVersion = pluginInfo?.cloudGraph?.version
     if (!requiredVersion) {
       this.logger.warn(
@@ -212,11 +210,11 @@ export class Manager {
     } catch (error: any) {
       this.logger.info('No lock file found for Cloud Graph, creating one...')
     }
-    if (!config?.config?.[plugin]) {
+    const lockVersion = config?.config[this.pluginType]?.[plugin]
+    if (!lockVersion) {
       return 'latest'
     }
-    const lockFile = config.config
-    return lockFile[plugin]
+    return lockVersion
   }
 
   removeFromLockFile(plugin: string): void {

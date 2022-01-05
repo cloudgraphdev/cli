@@ -1,3 +1,4 @@
+import { StorageEngineConnectionConfig } from '@cloudgraph/sdk'
 import { flags as CommandFlags } from '@oclif/command'
 import fs from 'fs'
 import path from 'path'
@@ -6,7 +7,6 @@ import { fileUtils, getStorageEngineConnectionConfig } from '../utils'
 
 import Command from './base'
 import { CloudGraphConfig } from '../types'
-import { StorageEngineConnectionConfig } from '../storage/types'
 import {
   dGraphConfigQuestions,
   getProviderQuestion,

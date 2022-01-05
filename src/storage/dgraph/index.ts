@@ -1,8 +1,16 @@
 import { ExecutionResult } from 'graphql'
+import {
+  StorageEngineConfig,
+  StorageEngine,
+  GraphQLInputData,
+} from '@cloudgraph/sdk'
 
-import { GraphQLInputData, StorageEngine, StorageEngineConfig } from '../types'
 import DGraphClientWrapper from './base'
-import { processGQLExecutionResult, UPDATE_SCHEMA_QUERY } from './utils'
+import {
+  GET_SCHEMA_QUERY,
+  processGQLExecutionResult,
+  UPDATE_SCHEMA_QUERY,
+} from './utils'
 
 export default class DgraphEngine
   extends DGraphClientWrapper
@@ -72,7 +80,6 @@ export default class DgraphEngine
   }
 
   async setSchema(schemas: string[]): Promise<void> {
-    await this.dropAll()
     const data = {
       query: UPDATE_SCHEMA_QUERY,
       variables: {
@@ -110,6 +117,36 @@ export default class DgraphEngine
     }
   }
 
+  async getSchema(): Promise<string> {
+    try {
+      const { data } = await this.query(GET_SCHEMA_QUERY, '/admin')
+      return data?.getGQLSchema?.schema || ''
+    } catch (error: any) {
+      const {
+        response: { data: resData, errors } = { data: null, errors: null },
+        message,
+      } = error ?? {}
+      this.logger.error('There was an issue getting the Dgraph schema')
+      this.logger.debug(message)
+      processGQLExecutionResult({ resData, errors })
+      return ''
+    }
+  }
+
+  query(query: string, path = '/graphql'): Promise<any> {
+    return this.generateAxiosRequest({
+      path,
+      data: {
+        query,
+      },
+    })
+      .then((res: ExecutionResult) => {
+        const { data: resData } = res
+        return resData
+      })
+      .catch(error => Promise.reject(error))
+  }
+
   /**
    * Add Service Mutation to axiosPromises Array
    */
@@ -132,7 +169,7 @@ export default class DgraphEngine
             reqData: queryData,
             resData,
             errors,
-            service: data.name
+            service: data.name,
           })
         })
         .catch(error => Promise.reject(error))
