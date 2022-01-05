@@ -1145,13 +1145,13 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 
 Policy Packs are our way to guarantee compliance across the existing infrastructure of your cloud provider. They are packages based on a set of rules or benchmarks provided by security entities or by third-parties with the objective of keeping our infrastructure up-to-date with the standards of the industry. Each time you run a scan it will execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
 
-For example, if you want to understand the rules applies for a particular IAM User you can use the following query:
+Findings can be grouped by the entity that defined the benchmark. For example, if you want to understand the CIS rules that applies for a particular IAM User you can use the following query:
 
 ```graphql
 query {
   getawsIamUser(id: "123456789") {
     name
-    findings {
+    CISFindings {
       severity
       description
       ruleId
@@ -1168,7 +1168,7 @@ query {
   "data": {
     "getawsIamUser": {
       "name": "aws_iam_user",
-      "findings": [
+      "CISFindings": [
         {
           "severity": "warning",
           "description": "This rule should pass",
@@ -1197,7 +1197,7 @@ We can also query findings directly like so:
 
 ```graphql
 query {
-  queryawsFindings {
+  queryawsCISFindings {
     ruleId
     description
     result
@@ -1213,7 +1213,7 @@ The output will show a list of findings like this:
 ```graphql
 query {
   "data": {
-    "queryawsFindings": [
+    "queryawsCISFindings": [
       {
         "ruleId": "aws-cis-1.2.0-1.8",
         "description": "This rule should pass",
@@ -1234,6 +1234,56 @@ query {
           }
         ]
       }
+    }
+}
+```
+
+There's also a way to query all your findings grouping by entity, as we illustrate in the example below:
+
+```graphql
+query {
+  queryawsFindings {
+    CISFindings {
+      severity
+      description
+      ruleId
+      result
+    }
+    AutoCloudFindings {
+      severity
+      description
+      ruleId
+      result
+    }
+  }
+}
+```
+
+It retrieves the following output:
+
+```graphql
+query {
+  "data": {
+    "queryawsFindings": [
+      {
+        "CISFindings": [
+          {
+            "severity": "danger",
+            "description": "This rule should pass",
+            "ruleId": "aws-cis-1.2.0-1.14",
+            "result": "PASS"
+          }
+        ]
+        "AutoCloudFindings": [
+          {
+            "severity": "danger",
+            "description": "This rule should not fail",
+            "ruleId": "aws-autocloud-1.3.0-1.14",
+            "result": "FAIL"
+          }
+        ]
+      }
+    ]
     }
 }
 ```
