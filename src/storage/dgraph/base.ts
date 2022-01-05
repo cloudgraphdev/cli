@@ -1,12 +1,12 @@
-import { Logger } from '@cloudgraph/sdk'
+import {
+  Logger,
+  StorageEngineConfig,
+  StorageEngineConnectionConfig,
+} from '@cloudgraph/sdk'
 import axios, { AxiosPromise } from 'axios'
 import chalk from 'chalk'
 import { ExecutionResult } from 'graphql'
-import {
-  RequestConfig,
-  StorageEngineConfig,
-  StorageEngineConnectionConfig,
-} from '../types'
+import { RequestConfig } from '../types'
 
 export default class DGraphClientWrapper {
   constructor(config: StorageEngineConfig) {

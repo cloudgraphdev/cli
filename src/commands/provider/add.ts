@@ -1,5 +1,5 @@
+import { PluginType } from '@cloudgraph/sdk'
 import chalk from 'chalk'
-import { PluginType } from '../../utils/constants'
 import Command from '../base'
 
 export default class Add extends Command {
@@ -23,7 +23,6 @@ export default class Add extends Command {
     const { argv } = this.parse(Add)
     const allProviders = argv
     const manager = this.getPluginManager(PluginType.Provider)
-
     for (let key of allProviders) {
       let version = 'latest'
       if (key.includes('@')) {

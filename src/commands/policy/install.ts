@@ -3,11 +3,11 @@ import { isEmpty } from 'lodash'
 import Command from '../base'
 
 export default class Install extends Command {
-  static description = 'Install providers based on the lock file'
+  static description = 'Install policy packs based on the lock file'
 
-  static aliases = ['install']
+  static aliases = []
 
-  static examples = ['$ cg provider install']
+  static examples = ['$ cg policy install']
 
   static strict = false
 
@@ -20,13 +20,15 @@ export default class Install extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const manager = this.getPluginManager(PluginType.Provider)
+    const manager = this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile?.provider)) {
-      this.logger.info('No providers found in lock file, have you added any?')
+    if (isEmpty(lockFile?.policyPack)) {
+      this.logger.info(
+        'No policy packs found in lock file, have you added any?'
+      )
       this.exit()
     }
-    for (const [key, value] of Object.entries(lockFile.provider)) {
+    for (const [key, value] of Object.entries(lockFile.policyPack)) {
       await manager.getPlugin(key, value as string)
     }
   }

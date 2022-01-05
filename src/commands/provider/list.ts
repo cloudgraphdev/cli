@@ -1,7 +1,7 @@
+import { PluginType } from '@cloudgraph/sdk'
 import { isEmpty, pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
-import { PluginType } from '../../utils/constants'
 
 export default class List extends Command {
   static description = 'List currently installed providers and versions'

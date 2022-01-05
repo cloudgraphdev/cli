@@ -1,7 +1,9 @@
-import { ConfirmQuestion, ListQuestion, InputQuestion } from 'inquirer';
+import { ConfirmQuestion, ListQuestion, InputQuestion } from 'inquirer'
 import { getDefaultEndpoint } from '.'
 
-export const overwriteQuestionPrompt = (category: string): ConfirmQuestion[] => [
+export const overwriteQuestionPrompt = (
+  category: string
+): ConfirmQuestion[] => [
   {
     type: 'confirm',
     message: `Would you like to change ${category} config`,
@@ -22,7 +24,8 @@ export const getProviderQuestion: ListQuestion[] = [
 export const dGraphConfigQuestions: InputQuestion[] = [
   {
     type: 'input',
-    message: 'Input your dgraph host url, if you are unsure, use the default by pressing ENTER',
+    message:
+      'Input your dgraph host url, if you are unsure, use the default by pressing ENTER',
     name: 'receivedUrl',
     default: getDefaultEndpoint(),
   },

@@ -1,13 +1,14 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import { Opts } from '@cloudgraph/sdk'
+import { cloudGraphPlugin, Opts, pluginMap } from '@cloudgraph/sdk'
 import { range } from 'lodash'
 
 import Command from './base'
-import { fileUtils, processConnectionsBetweenEntities } from '../utils'
+import { fileUtils } from '../utils'
+import { processConnectionsBetweenEntities } from '../utils/data'
 import DgraphEngine from '../storage/dgraph'
-import scanReport from '../scanReport'
+import { scanReport } from '../reports'
 
 export default class Scan extends Command {
   static description =
@@ -31,16 +32,18 @@ export default class Scan extends Command {
   static args = Command.args
 
   async run() {
-    const {
-      argv,
-      flags: { dev: devMode },
-    } = this.parse(Scan)
+    const { argv, flags } = this.parse(Scan)
+    const { dev: devMode } = flags as {
+      [flag: string]: any
+    }
+
     const { dataDir } = this.config
     const opts: Opts = { logger: this.logger, debug: true, devMode }
+    const configuredPlugins = []
     let allProviders = argv
 
     // Run dgraph health check
-    const storageEngine = this.getStorageEngine()
+    const storageEngine = this.getStorageEngine() as DgraphEngine
     const storageRunning = await storageEngine.healthCheck()
     /**
      * Handle 2 methods of scanning, either for explicitly passed providers OR
@@ -52,6 +55,7 @@ export default class Scan extends Command {
     } else {
       this.logger.debug('Scanning for providers found in config')
       const config = this.getCGConfig()
+
       allProviders = Object.keys(config).filter(
         (val: string) => val !== 'cloudGraph'
       )
@@ -108,13 +112,48 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client, schemasMap } = await this.getProviderClient(provider)
+      const { client, schemasMap, serviceKey } = await this.getProviderClient(
+        provider
+      )
       if (!client) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
         continue // eslint-disable-line no-continue
       }
       const config = this.getCGConfig(provider)
+
+      // Configure installed plugins
+      for (const key in config) {
+        if (cloudGraphPlugin[key]) {
+          try {
+            // Get Plugin Interface
+            const Plugin = pluginMap[cloudGraphPlugin[key]]
+
+            // Initialize
+            const PluginInstance = new Plugin({
+              config,
+              provider: {
+                name: provider,
+                schemasMap,
+                serviceKey,
+              },
+              flags: flags as { [flag: string]: any },
+              logger: this.logger,
+            })
+
+            // Get the Plugin Manager
+            const pluginManager = this.getPluginManager(cloudGraphPlugin[key])
+
+            // Configure
+            PluginInstance.configure(pluginManager)
+
+            // Add to Configured Plugins list
+            configuredPlugins.push(PluginInstance)
+          } catch (error) {
+            this.logger.warn('Plugin not supported by CG')
+          }
+        }
+      }
       this.logger.debug(config)
       if (!config) {
         failedProviderList.push(provider)
@@ -159,6 +198,7 @@ export default class Scan extends Command {
             if (storageEngine instanceof DgraphEngine) {
               await storageEngine.validateSchema(schema, dataFolder)
             }
+            await storageEngine.dropAll() // Delete schema before change it
             await storageEngine.setSchema(schema)
           } catch (error: any) {
             this.logger.error(
@@ -221,15 +261,26 @@ export default class Scan extends Command {
       )
       // Execute services mutations promises
       await storageEngine.run()
-      this.logger.successSpinner('Data insertion into Dgraph complete')
-    }
 
+      this.logger.successSpinner('Data insertion into Dgraph complete')
+
+      // Execute plugins
+      for (const plugin of configuredPlugins) {
+        await plugin.execute({
+          storageRunning,
+          storageEngine,
+          processConnectionsBetweenEntities,
+        })
+      }
+    }
     scanReport.print()
+
     this.logger.success(
       `Your data for ${allProviders.join(
         ' | '
       )} has been saved to ${chalk.italic.green(dataStorageLocation)}`
     )
+
     if (storageRunning) {
       this.logger.success(
         `Your data for ${allProviders.join(
