@@ -1,5 +1,5 @@
 import { PluginType } from '@cloudgraph/sdk'
-import { pickBy } from 'lodash'
+import { isEmpty, pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
 
@@ -33,6 +33,12 @@ export default class Update extends Command {
     const manager = this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
 
+    if (isEmpty(lockFile?.policyPack)) {
+      this.logger.info(
+        'No policy packs found in lock file, have you added any?'
+      )
+      this.exit()
+    }
     // Get the policiess from the lock file that user wants to update
     // If user passes something like aws@1.1.0, filter the lock file to only grab 'aws' entry
     const policyPacksList =
@@ -43,7 +49,7 @@ export default class Update extends Command {
             })
             return policiess.indexOf(key) > -1
           })
-        : lockFile.policyPack
+        : lockFile.policyPack || {}
 
     // Warn the user if they are trying to update policies they have not installed.
     const nonInstalledPoliciess = allPolicyPacks.filter(rawPolicy => {
@@ -66,11 +72,6 @@ export default class Update extends Command {
         [, version] = rawP.split('@')
       }
       await manager.getPlugin(key, version)
-      this.logger.info(
-        `Run ${chalk.italic.green(
-          `$cg init ${key}`
-        )} to ensure you have the latest configuration for this version (including new services).`
-      )
     }
   }
 }

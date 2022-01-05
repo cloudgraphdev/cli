@@ -6,7 +6,7 @@ import Command from '../base'
 export default class List extends Command {
   static description = 'List currently installed policy packs and versions'
 
-  static aliases = ['policy:ls']
+  static aliases = []
 
   static examples = ['$ cg policy list', '$ cg policy list aws']
 
@@ -25,7 +25,7 @@ export default class List extends Command {
     const allPolicyPacks = argv
     const manager = this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile)) {
+    if (isEmpty(lockFile?.policyPack)) {
       this.logger.info('No policy packs found, have you installed any?')
       this.exit()
     }
