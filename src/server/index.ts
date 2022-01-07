@@ -101,7 +101,27 @@ export default class QueryEngine {
       app.use('/voyager', voyagerMiddleware({ endpointUrl: `${host}/graphql` }))
 
       // TODO: rework QueryEngine to do this better and only serve one
-      app.get('/playground', expressPlayground({ endpoint: `${host}/graphql` }))
+      app.get(
+        '/playground',
+        expressPlayground({
+          endpoint: `${host}/graphql`,
+          settings: {
+            'request.globalHeaders': {},
+            'editor.cursorShape': 'line',
+            'editor.fontFamily': '\'Source Code Pro\', \'Consolas\', \'Inconsolata\', \'Droid Sans Mono\', \'Monaco\', monospace',
+            'editor.fontSize': 14,
+            'editor.reuseHeaders': true,
+            'editor.theme': 'dark',
+            'general.betaUpdates': false,
+            'request.credentials': 'omit',
+            'schema.polling.enable': false,
+            'schema.polling.endpointFilter': '',
+            'schema.polling.interval': 100000000,
+            'tracing.hideTracingResponse': true,
+            'tracing.tracingSupported': false,
+          },
+        })
+      )
 
       const server = app.listen(Number(this.port), () => {
         resolve(server)
