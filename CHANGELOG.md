@@ -1,3 +1,10 @@
+## [0.16.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.1...0.16.2) (2022-01-07)
+
+
+### Bug Fixes
+
+* **server:** add settings to playground to stop schema polling ([a8e6f95](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a8e6f9524d22aba784a2517565331f6b1d226711))
+
 ## [0.16.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.0...0.16.1) (2022-01-05)
 
 
