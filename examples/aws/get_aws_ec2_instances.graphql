@@ -1,6 +1,0 @@
-query {
-  queryawsEc2 {
-    id
-    arn
-  }
-}
