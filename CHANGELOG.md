@@ -1,3 +1,10 @@
+## [0.16.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.3...0.16.4) (2022-01-10)
+
+
+### Bug Fixes
+
+* **deps:** add semver as a dep ([c7f493a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c7f493a55fcb68980ad23d5cba1854891f0166a2))
+
 ## [0.16.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.2...0.16.3) (2022-01-10)
 
 
