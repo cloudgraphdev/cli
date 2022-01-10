@@ -41,13 +41,13 @@ export default class Update extends Command {
     // If user passes something like aws@1.1.0, filter the lock file to only grab 'aws' entry
     const policyPacksList =
       allPolicyPacks.length >= 1
-        ? pickBy(lockFile, (_, key) => {
+        ? pickBy(lockFile?.policyPack, (_, key) => {
             const policiess = allPolicyPacks.map(val => {
               return getPolicy(val)
             })
             return policiess.indexOf(key) > -1
           })
-        : lockFile.policyPack || {}
+        : lockFile?.policyPack || {}
 
     // Warn the user if they are trying to update policies they have not installed.
     const nonInstalledPoliciess = allPolicyPacks.filter(rawPolicy => {
