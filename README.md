@@ -166,7 +166,7 @@ npm i -g @cloudgraph/cli
 ```
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/install.png">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/install.gif">
     <img alt="install" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/install.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
