@@ -1,3 +1,10 @@
+## [0.16.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.4...0.16.5) (2022-01-10)
+
+
+### Bug Fixes
+
+* **update:** fix update command when using a arg ([e7f58b7](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e7f58b7a11f1de0e34581d19737c1d763dd5d82b))
+
 ## [0.16.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.3...0.16.4) (2022-01-10)
 
 
