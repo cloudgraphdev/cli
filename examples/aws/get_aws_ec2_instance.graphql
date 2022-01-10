@@ -1,8 +1,0 @@
-query {
-  getawsEc2(
-    arn: "arn:aws:ec2:us-east-1:123445678997:instance/i-12345567889012234"
-  ) {
-    id
-    arn
-  }
-}
