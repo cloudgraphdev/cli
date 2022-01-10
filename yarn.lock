@@ -377,10 +377,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cloudgraph/sdk@^0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.10.0.tgz#244909543080dfe6c15425da3d9e9d40b2d9178c"
-  integrity sha512-0zQBfgHaCw/zNX1LR7+QfpQf9wDi0m7vHAE4+/4PYVwyzqniWmbnv2QQWdM+sW850bHRuc9sk6g7e+h+AXiV4Q==
+"@cloudgraph/sdk@^0.10.1":
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.10.1.tgz#a5ac9522f5c17a6c34fe73699c55ec994ce9267b"
+  integrity sha512-DwLbh6PxKQoEQVuYJHEZ8mD5LCUY4k5OC5yxhi1yieQ+x0beOfk+M21w1juPLrTzQDRGxKXj6ZPOti5M9z3VlA==
   dependencies:
     "@graphql-tools/load-files" "^6.5.3"
     "@graphql-tools/merge" "^8.2.1"
@@ -427,7 +427,7 @@
 
 "@graphql-tools/load-files@^6.3.2", "@graphql-tools/load-files@^6.5.3":
   version "6.5.3"
-  resolved "https://registry.npmjs.org/@graphql-tools/load-files/-/load-files-6.5.3.tgz"
+  resolved "https://registry.yarnpkg.com/@graphql-tools/load-files/-/load-files-6.5.3.tgz#aa0debfae7fe5e63c4d95e63e4b8adc78bbf53f8"
   integrity sha512-hu6hw2fj3ltno7ezbyAQc5VdLCymgx0XIwvk0l9sWAlV2xnaNcX7p/z1qm6U/db2MiCumRBBIm/QuR7Jn71qZg==
   dependencies:
     globby "11.0.4"
@@ -3276,7 +3276,7 @@ data-urls@^2.0.0:
 
 date-fns@^2.25.0:
   version "2.28.0"
-  resolved "https://registry.npmjs.org/date-fns/-/date-fns-2.28.0.tgz"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.28.0.tgz#9570d656f5fc13143e50c975a3b6bbeb46cd08b2"
   integrity sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw==
 
 dateformat@^3.0.0:
@@ -4769,7 +4769,7 @@ graphql@^15.5.1, graphql@^15.6.1:
 
 graphql@^16.2.0:
   version "16.2.0"
-  resolved "https://registry.npmjs.org/graphql/-/graphql-16.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.2.0.tgz#de3150e80f1fc009590b92a9d16ab1b46e12b656"
   integrity sha512-MuQd7XXrdOcmfwuLwC2jNvx0n3rxIuNYOxUtiee5XOmfrWo613ar2U8pE7aHAKh8VwfpifubpD9IP+EdEAEOsA==
 
 handlebars@^4.7.6:
@@ -5121,7 +5121,7 @@ init-package-json@^2.0.5:
 
 inquirer@^8.1.1, inquirer@^8.1.2:
   version "8.2.0"
-  resolved "https://registry.npmjs.org/inquirer/-/inquirer-8.2.0.tgz"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.0.tgz#f44f008dd344bbfc4b30031f45d984e034a3ac3a"
   integrity sha512-0crLweprevJ02tTuA6ThpoAERAGyVILC4sS74uib58Xf/zSr1/ZWtmm7D5CI+bSQEaA04f0K7idaHpQbSWgiVQ==
   dependencies:
     ansi-escapes "^4.2.1"
@@ -8603,7 +8603,7 @@ semver-regex@^3.1.2:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
   integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
 
-semver@7.x, semver@^7.1.1, semver@^7.1.2, semver@^7.1.3, semver@^7.2.1, semver@^7.3.2, semver@^7.3.4:
+semver@7.x, semver@^7.1.1, semver@^7.1.2, semver@^7.1.3, semver@^7.2.1, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5:
   version "7.3.5"
   resolved "https://registry.npmjs.org/semver/-/semver-7.3.5.tgz"
   integrity sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
@@ -8614,13 +8614,6 @@ semver@^6.0.0, semver@^6.3.0:
   version "6.3.0"
   resolved "https://registry.npmjs.org/semver/-/semver-6.3.0.tgz"
   integrity sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
-
-semver@^7.3.5:
-  version "7.3.5"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.5.tgz#0b621c879348d8998e4b0e4be94b3f12e6018ef7"
-  integrity sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
-  dependencies:
-    lru-cache "^6.0.0"
 
 send@0.17.1:
   version "0.17.1"
