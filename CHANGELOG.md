@@ -1,3 +1,12 @@
+## [0.16.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.5...0.16.6) (2022-01-11)
+
+
+### Bug Fixes
+
+* Awaited for plugin installation message ([0fdad5a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0fdad5ad571972920a7f92fe50fbf2f751ce7dd0))
+* Solved issue with repeated mutations ([4b52177](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4b52177f2a0169bb6974f553064c51dd5c47c64b))
+* Updated sdk to latest version ([de3cced](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/de3ccedbb6463795b790ce7b6eb52cd82807336b))
+
 ## [0.16.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.4...0.16.5) (2022-01-10)
 
 
