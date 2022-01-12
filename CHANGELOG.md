@@ -1,3 +1,10 @@
+## [0.16.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9) (2022-01-12)
+
+
+### Bug Fixes
+
+* img src ([62d4dde](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/62d4dde970d8ae4c882caecee77aea4377415ede))
+
 ## [0.16.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.7...0.16.8) (2022-01-12)
 
 
