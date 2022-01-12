@@ -32,6 +32,7 @@ export default class AddPolicy extends OperationBaseCommand {
         if (config) {
           let configuredPolicies =
             config.cloudGraph.plugins?.[PluginType.PolicyPack] || []
+
           if (isEmpty(configuredPolicies)) {
             // Set new Policy Pack Plugin array
             configuredPolicies = [

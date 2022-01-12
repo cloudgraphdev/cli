@@ -30,9 +30,9 @@ export default class Load extends Command {
     const {
       argv,
       // flags: { debug, dev: devMode },
-    } = this.parse(Load)
+    } = await this.parse(Load)
     const { dataDir } = this.config
-    const storageEngine = this.getStorageEngine()
+    const storageEngine = await this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
     if (!storageRunning) {
       this.logger.error(
@@ -125,8 +125,8 @@ export default class Load extends Command {
         this.exit()
       }
       // If there is one file, just load it, otherwise prompt user to pick a version
-      let file: string
-      let version: string
+      let file = '';
+      let version = ''
       if (files.length > 1) {
         // TODO: rework this using choices[].value to not need to do string manipulation to extract answer
         const answer: { file: string } = await this.interface.prompt([
@@ -155,7 +155,7 @@ export default class Load extends Command {
             )
             this.exit()
           }
-          version = foundFile.folder
+          version = foundFile?.folder || ''
           this.logger.debug(file)
           this.logger.debug(version)
         } catch (error: any) {
