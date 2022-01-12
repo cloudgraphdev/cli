@@ -120,7 +120,7 @@ Wouldn't it be great if we as DevOps/Cloud engineers had a simpler way to get ou
 It is for these reasons that we built CloudGraph, the GraphQL API for everything cloud. CloudGraph extracts, normalizes, processes, and enriches your cloud data allowing you to access deep insights across multiple providers effortlessly. Check out our blog post [The GraphQL API for everything](https://www.autocloud.dev/blog/the-graphql-api-for-all-clouds) to learn more.
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQueries.jpg">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQueries.gif">
     <img alt="example queries" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQueries.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
