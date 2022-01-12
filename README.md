@@ -146,7 +146,7 @@ CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming so
 - [AWS Docs](https://docs.autocloud.dev/connect-an-environment/aws)
 - [Azure Docs](https://docs.autocloud.dev/connect-an-environment/azure)
 - [GCP Docs](https://docs.autocloud.dev/connect-an-environment/gcp)
-- [K8s Docs](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)
+- [K8s Docs](https://github.com/cloudgraphdev/cloudgraph-provider-kubernetes)
 
 <br />
 
