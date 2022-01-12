@@ -18,10 +18,9 @@
     "@cloudgraph/sdk": "^0.14.0",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
-    "@oclif/command": "^1",
-    "@oclif/config": "^1",
-    "@oclif/plugin-help": "3.2.17",
-    "@tiagonapoli/oclif-plugin-spaced-commands": "^1.0.1",
+    "@oclif/core": "^1.1.2",
+    "@oclif/plugin-help": "^5.1.10",
+    "@oclif/plugin-plugins": "^2.0.12",
     "@types/lodash": "^4.14.175",
     "altair-express-middleware": "^4.0.8",
     "axios": "^0.21.1",
@@ -105,7 +104,14 @@
     "dirname": "cloudgraph",
     "plugins": [
       "@oclif/plugin-help",
-      "@tiagonapoli/oclif-plugin-spaced-commands"
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "additionalHelpFlags": [
+      "-h"
+    ],
+    "additionalVersionFlags": [
+      "-v"
     ],
     "update": {
       "s3": {
