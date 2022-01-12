@@ -17,7 +17,7 @@ export const getProviderQuestion: ListQuestion[] = [
     type: 'list',
     name: 'provider',
     message: 'Which cloud provider would you like to use?',
-    choices: ['aws', 'azure', 'gcp'],
+    choices: ['aws', 'azure', 'gcp', 'k8s'],
   },
 ]
 
