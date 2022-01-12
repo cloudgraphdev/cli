@@ -9,7 +9,7 @@
 <br />
 <br />
 
-The **GraphQL** API for AWS, Azure, and GCP, - query resources, relationships and insight data to solve security, compliance, asset inventory, and billing challenges. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+The universal **GraphQL** API for **AWS**, **Azure**, **GCP**, and **K8s** - query resources, relationships and insight data to solve security, compliance, asset inventory, and billing challenges. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
 <br />
 
 🌐 [Website](https://www.cloudgraph.dev)
@@ -139,7 +139,7 @@ Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all o
 
 # Authentication and Permissions
 
-CloudGraph currently supports AWS, Azure, and GCP (K8s and several others coming soon). CloudGraph needs read permissions in order to ingest your data. To keep things easy you can use the same permissions that we use internally when we run CloudGraph to power AutoCloud. Here are the auth guides and details for how to generate credentials for each provider (feel free to leave out AutoCloud specific configuration):
+CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming soon). CloudGraph needs read permissions in order to ingest your data. To keep things easy you can use the same permissions that we use internally when we run CloudGraph to power AutoCloud. Here are the auth guides and details for how to generate credentials for each provider (feel free to leave out AutoCloud specific configuration):
 
 <br />
 
@@ -173,12 +173,13 @@ npm i -g @cloudgraph/cli
 
 <br/>
 
-You can then add the providers you want:
+You can then add the providers you want (links to provider repos: [AWS](https://github.com/cloudgraphdev/cloudgraph-provider-aws), [Azure](https://github.com/cloudgraphdev/cloudgraph-provider-azure), [GCP](https://github.com/cloudgraphdev/cloudgraph-provider-gcp), [K8s](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)):
 
 ```bash
 cg provider add aws
 cg provider add azure
 cg provider add gcp
+cg provider add k8s
 ```
 
 And add in compliance policy packs to supplement your data with instant security insights:
@@ -321,7 +322,7 @@ You can find the list of services currently supported for each provider in the f
 
 [GCP Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-gcp)
 
-[K8s Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-kubernetes)
+[K8s Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)
 
 <br />
 
