@@ -15,13 +15,12 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/sdk": "^0.10.3",
+    "@cloudgraph/sdk": "^0.10.4",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
-    "@oclif/command": "^1",
-    "@oclif/config": "^1",
-    "@oclif/plugin-help": "3.2.17",
-    "@tiagonapoli/oclif-plugin-spaced-commands": "^1.0.1",
+    "@oclif/core": "^1.1.2",
+    "@oclif/plugin-help": "^5.1.10",
+    "@oclif/plugin-plugins": "^2.0.12",
     "@types/lodash": "^4.14.175",
     "altair-express-middleware": "^4.0.8",
     "axios": "^0.21.1",
@@ -77,6 +76,7 @@
     "jest": "^27.1.0",
     "jest-diff": "^27.1.0",
     "lint-staged": "^11.1.1",
+    "oclif": "^2",
     "semantic-release": "^17.4.4",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
@@ -101,7 +101,14 @@
     "dirname": "cloudgraph",
     "plugins": [
       "@oclif/plugin-help",
-      "@tiagonapoli/oclif-plugin-spaced-commands"
+      "@oclif/plugin-plugins"
+    ],
+    "topicSeparator": " ",
+    "additionalHelpFlags": [
+      "-h"
+    ],
+    "additionalVersionFlags": [
+      "-v"
     ]
   },
   "repository": "github:cloudgraphdev/cli",
@@ -110,7 +117,7 @@
     "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc.json",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && yarn cpx 'src/scripts/*' lib/scripts",
+    "prepack": "rm -rf lib && tsc -b && oclif manifest && oclif readme && yarn cpx 'src/scripts/*' lib/scripts",
     "run:init": "cross-env NODE_ENV=development ./bin/run init",
     "run:init:aws": "cross-env NODE_ENV=development ./bin/run init aws",
     "run:load": "cross-env NODE_ENV=development ./bin/run load",
@@ -131,7 +138,7 @@
     "run:policy:update": "cross-env NODE_ENV=test ./bin/run policy update",
     "test": "cross-env CG_DEBUG=-1 NODE_ENV=test jest --coverage=true --detectOpenHandles --runInBand --forceExit",
     "test:debug": "cross-env CG_DEBUG=5 NODE_ENV=test jest --coverage=false --detectOpenHandles --runInBand --forceExit",
-    "version": "oclif-dev readme && git add README.md",
+    "version": "oclif readme && git add README.md",
     "lint": "eslint --config .eslintrc.json --ext .js,.ts ./",
     "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./"
   },
