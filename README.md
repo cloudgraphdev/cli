@@ -146,7 +146,7 @@ CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming so
 - [AWS Docs](https://docs.autocloud.dev/connect-an-environment/aws)
 - [Azure Docs](https://docs.autocloud.dev/connect-an-environment/azure)
 - [GCP Docs](https://docs.autocloud.dev/connect-an-environment/gcp)
-- [K8s Docs](https://github.com/cloudgraphdev/cloudgraph-provider-kubernetes)
+- [K8s Docs](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)
 
 <br />
 
@@ -173,7 +173,7 @@ npm i -g @cloudgraph/cli
 
 <br/>
 
-You can then add the providers you want (links to provider repos: [AWS](https://github.com/cloudgraphdev/cloudgraph-provider-aws), [Azure](https://github.com/cloudgraphdev/cloudgraph-provider-azure), [GCP](https://github.com/cloudgraphdev/cloudgraph-provider-gcp), [K8s](https://github.com/cloudgraphdev/cloudgraph-provider-kubernetes)):
+You can then add the providers you want (links to provider repos: [AWS](https://github.com/cloudgraphdev/cloudgraph-provider-aws), [Azure](https://github.com/cloudgraphdev/cloudgraph-provider-azure), [GCP](https://github.com/cloudgraphdev/cloudgraph-provider-gcp), [K8s](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)):
 
 ```bash
 cg provider add aws
@@ -322,7 +322,7 @@ You can find the list of services currently supported for each provider in the f
 
 [GCP Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-gcp)
 
-[K8s Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-kubernetes)
+[K8s Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)
 
 <br />
 
