@@ -20,7 +20,7 @@ export default class Install extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const manager = this.getPluginManager(PluginType.Provider)
+    const manager = await this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()
     if (isEmpty(lockFile?.provider)) {
       this.logger.info('No providers found in lock file, have you added any?')

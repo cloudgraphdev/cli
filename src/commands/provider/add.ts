@@ -20,9 +20,9 @@ export default class Add extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const { argv } = this.parse(Add)
+    const { argv } = await this.parse(Add)
     const allProviders = argv
-    const manager = this.getPluginManager(PluginType.Provider)
+    const manager = await this.getPluginManager(PluginType.Provider)
     for (let key of allProviders) {
       let version = 'latest'
       if (key.includes('@')) {

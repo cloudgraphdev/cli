@@ -31,8 +31,8 @@ export default class Scan extends Command {
 
   static args = Command.args
 
-  async run() {
-    const { argv, flags } = this.parse(Scan)
+  async run() : Promise<void> {
+    const { argv, flags } = await this.parse(Scan)
     const { dev: devMode } = flags as {
       [flag: string]: any
     }
@@ -43,7 +43,7 @@ export default class Scan extends Command {
     let allProviders = argv
 
     // Run dgraph health check
-    const storageEngine = this.getStorageEngine() as DgraphEngine
+    const storageEngine = await this.getStorageEngine() as DgraphEngine
     const storageRunning = await storageEngine.healthCheck()
     /**
      * Handle 2 methods of scanning, either for explicitly passed providers OR
@@ -142,7 +142,7 @@ export default class Scan extends Command {
             })
 
             // Get the Plugin Manager
-            const pluginManager = this.getPluginManager(cloudGraphPlugin[key])
+            const pluginManager = await this.getPluginManager(cloudGraphPlugin[key])
 
             // Configure
             await PluginInstance.configure(pluginManager)

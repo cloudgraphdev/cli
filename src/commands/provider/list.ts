@@ -21,9 +21,9 @@ export default class List extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const { argv } = this.parse(List)
+    const { argv } = await this.parse(List)
     const allProviders = argv
-    const manager = this.getPluginManager(PluginType.Provider)
+    const manager = await this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()
     if (isEmpty(lockFile?.provider)) {
       this.logger.info('No providers found, have you installed any?')

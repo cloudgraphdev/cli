@@ -1,6 +1,6 @@
 import { PluginType } from '@cloudgraph/sdk'
 import { isEmpty } from 'lodash'
-import { flags } from '@oclif/command'
+import { Flags as flags } from '@oclif/core'
 import Command from '../base'
 
 export default class Remove extends Command {
@@ -30,9 +30,9 @@ export default class Remove extends Command {
     const {
       argv,
       flags: { 'no-save': noSave },
-    } = this.parse(Remove)
+    } = await this.parse(Remove)
     const allPolicyPacks = argv
-    const manager = this.getPluginManager(PluginType.PolicyPack)
+    const manager = await this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
     if (isEmpty(lockFile?.policyPack)) {
       this.logger.info('No policy packs found, have you installed any?')
