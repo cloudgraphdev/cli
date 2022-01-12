@@ -1,3 +1,48 @@
+## [0.16.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.7...0.16.8) (2022-01-12)
+
+
+### Bug Fixes
+
+* Updated sdk to latest version ([c4cfc6a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c4cfc6afef38450ab71a03ac15bb440b6b5c521e))
+
+## [0.16.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.6...0.16.7) (2022-01-12)
+
+
+### Bug Fixes
+
+* links ([1ea9c68](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1ea9c689237c2b78e086dd602be700b216815c13))
+* **init:** update init command for k8s ([5fc0068](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5fc0068afa879915ca417a8842d51ade3c9bbc14))
+
+## [0.16.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.5...0.16.6) (2022-01-11)
+
+
+### Bug Fixes
+
+* Awaited for plugin installation message ([0fdad5a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0fdad5ad571972920a7f92fe50fbf2f751ce7dd0))
+* Solved issue with repeated mutations ([4b52177](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4b52177f2a0169bb6974f553064c51dd5c47c64b))
+* Updated sdk to latest version ([de3cced](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/de3ccedbb6463795b790ce7b6eb52cd82807336b))
+
+## [0.16.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.4...0.16.5) (2022-01-10)
+
+
+### Bug Fixes
+
+* **update:** fix update command when using a arg ([e7f58b7](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e7f58b7a11f1de0e34581d19737c1d763dd5d82b))
+
+## [0.16.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.3...0.16.4) (2022-01-10)
+
+
+### Bug Fixes
+
+* **deps:** add semver as a dep ([c7f493a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c7f493a55fcb68980ad23d5cba1854891f0166a2))
+
+## [0.16.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.2...0.16.3) (2022-01-10)
+
+
+### Bug Fixes
+
+* Updated SDK version to latest ([710a7bb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/710a7bb585d794fe8b5ae81719c446b80e9c9b62))
+
 ## [0.16.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.1...0.16.2) (2022-01-07)
 
 

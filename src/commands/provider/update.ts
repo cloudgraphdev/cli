@@ -41,7 +41,7 @@ export default class Update extends Command {
     // If user passes something like aws@1.1.0, filter the lock file to only grab 'aws' entry
     const providersToList =
       allProviders.length >= 1
-        ? pickBy(lockFile, (_, key) => {
+        ? pickBy(lockFile?.provider, (_, key) => {
             const providers = allProviders.map(val => {
               return getProvider(val)
             })
@@ -61,7 +61,6 @@ export default class Update extends Command {
         )} not found in lock file, have you installed it?`
       )
     }
-
     // Loop through providers and try to update them
     for (const [key] of Object.entries(providersToList)) {
       try {

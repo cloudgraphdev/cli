@@ -194,5 +194,8 @@ export default class DgraphEngine
         processGQLExecutionResult({ resData, errors })
       }
     }
+
+    // Ensure mutations array is clean after execution
+    this.axiosPromises = []
   }
 }
