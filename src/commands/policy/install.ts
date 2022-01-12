@@ -18,7 +18,7 @@ export default class Install extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const manager = this.getPluginManager(PluginType.PolicyPack)
+    const manager = await this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
     if (isEmpty(lockFile?.policyPack)) {
       this.logger.info(

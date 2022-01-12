@@ -19,9 +19,9 @@ export default class List extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const { argv } = this.parse(List)
+    const { argv } = await this.parse(List)
     const allPolicyPacks = argv
-    const manager = this.getPluginManager(PluginType.PolicyPack)
+    const manager = await this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
     if (isEmpty(lockFile?.policyPack)) {
       this.logger.info('No policy packs found, have you installed any?')

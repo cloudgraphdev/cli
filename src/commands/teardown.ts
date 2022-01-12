@@ -1,4 +1,4 @@
-import { flags } from '@oclif/command'
+import { Flags as flags } from '@oclif/core'
 import { execCommand, findExistingDGraphContainerId } from '../utils'
 import Command from './base'
 
@@ -25,7 +25,7 @@ export default class Teardown extends Command {
     try {
       const {
         flags: { 'delete-image': rmContainer },
-      } = this.parse(Teardown)
+      } = await this.parse(Teardown)
       let containerToRemove: undefined | string
       const runningContainerId = await findExistingDGraphContainerId('running')
       this.logger.startSpinner('Stopping Dgraph container...')

@@ -1,8 +1,11 @@
 import { existsSync, rmdirSync, unlinkSync } from 'fs'
 import * as path from 'path'
 import CloudGraph from '@cloudgraph/sdk'
-import oclifParse, { parse as oclifParser } from '@oclif/parser'
-import { Config as ConfigCommandClass } from '@oclif/config'
+import {
+  Config as ConfigCommandClass,
+  Parser as oclifParser,
+  Interfaces,
+} from '@oclif/core'
 import { Config } from 'cosmiconfig/dist/types'
 import { cosmiconfigSync } from 'cosmiconfig'
 
@@ -109,13 +112,18 @@ export const saveTestCloudGraphConfigFile = async (
 
 export const parseArgv = (
   InitClass: InitCommandClass
-): oclifParse.Output<
-  any,
-  {
-    [name: string]: string
-  }
+): Promise<
+  Interfaces.ParserOutput<
+    any,
+    {
+      [name: string]: string
+    }
+  >
 > => {
-  return oclifParser(InitClass.argv, { context: this, ...InitClass.ctor })
+  return oclifParser.parse(
+    InitClass.argv,
+    InitClass.ctor as Interfaces.Input<Interfaces.FlagOutput>
+  )
 }
 
 export const flagTestHelper = async (
@@ -129,7 +137,7 @@ export const flagTestHelper = async (
   const flagEntry = `--${flag}${flagInputConcatString}`
   debug && logger.debug(`Full flag arg to test: '${flagEntry}'`)
   const Init = await getInitCommand([flagEntry])
-  const { flags } = parseArgv(Init)
+  const { flags } = await parseArgv(Init)
   debug && logger.debug(`Parsed result: ${flags[flag]}`)
   expect(flags[flag]).toBe(flagInput ?? true)
 }
@@ -286,9 +294,8 @@ export const initDgraphContainer = async (): Promise<void> => {
     await stopDgraphContainer(true)
     fileUtils.makeDirIfNotExists(path.join(dataDir, testDGraphDirectory))
     await execCommand(
-      `docker run -d -p 8995:5080 -p 8996:6080 -p ${testStorageConfig.port}:8080 -p 8998:9080 -p 8999:8000 --label ${
-        DGRAPH_CONTAINER_LABEL
-      } -v ${dataDir}${testDGraphDirectory}:/dgraph --name dgraph ${DGRAPH_DOCKER_IMAGE_NAME}`
+      // eslint-disable-next-line max-len
+      `docker run -d -p 8995:5080 -p 8996:6080 -p ${testStorageConfig.port}:8080 -p 8998:9080 -p 8999:8000 --label ${DGRAPH_CONTAINER_LABEL} -v ${dataDir}${testDGraphDirectory}:/dgraph --name dgraph ${DGRAPH_DOCKER_IMAGE_NAME}`
     )
     logger.debug('DGraph instance started!')
     await LaunchCommand.checkIfInstanceIsRunningReportStatus()
