@@ -1,3 +1,11 @@
+## [0.16.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.6...0.16.7) (2022-01-12)
+
+
+### Bug Fixes
+
+* links ([1ea9c68](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1ea9c689237c2b78e086dd602be700b216815c13))
+* **init:** update init command for k8s ([5fc0068](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5fc0068afa879915ca417a8842d51ade3c9bbc14))
+
 ## [0.16.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.5...0.16.6) (2022-01-11)
 
 
