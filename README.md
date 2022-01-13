@@ -575,7 +575,7 @@ query {
 
 ## AWS security, compliance, and governance examples:
 
-CloudGraph Policy Packs guarantee compliance across existing infrastructure for a given cloud provider. Packs based on sets of rules/benchmarks provided by security organizations like the Center for Internet Security with the objective of keeping your infrastructure up-to-date with industry security standards. Once you have added a policy pack using the `cg policy add` command (i.e. `cg policy add aws-cis-1.2.0`) each time you run a scan CloudGraph will _automatically_ execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
+CloudGraph Policy Packs guarantee compliance across existing infrastructure for a given cloud provider. Packs are based on sets of rules/benchmarks provided by security organizations like the Center for Internet Security with the objective of keeping your infrastructure up-to-date with industry security standards. Once you have added a policy pack using the `cg policy add` command (i.e. `cg policy add aws-cis-1.2.0`) each time you run a scan CloudGraph will _automatically_ execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
 
 For more information on currently available policy packs please visit our [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
 
