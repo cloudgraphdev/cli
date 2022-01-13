@@ -1,5 +1,6 @@
 # [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-01-28)
 ## [0.20.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.0...0.20.1) (2022-02-10)
+## [0.16.9-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9-alpha.1) (2022-01-13)
 
 
 ### Bug Fixes
