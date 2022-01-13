@@ -3,7 +3,7 @@ import { isEmpty, pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
 
-export default class List extends Command {
+export default class ListProvider extends Command {
   static description = 'List currently installed providers and versions'
 
   static aliases = ['provider:ls', 'list', 'ls']
@@ -21,7 +21,7 @@ export default class List extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const { argv } = this.parse(List)
+    const { argv } = this.parse(ListProvider)
     const allProviders = argv
     const manager = this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()

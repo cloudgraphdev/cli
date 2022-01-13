@@ -3,7 +3,7 @@ import { isEmpty, pickBy } from 'lodash'
 import chalk from 'chalk'
 import Command from '../base'
 
-export default class List extends Command {
+export default class ListPolicy extends Command {
   static description = 'List currently installed policy packs and versions'
 
   static examples = ['$ cg policy list', '$ cg policy list aws']
@@ -19,7 +19,7 @@ export default class List extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const { argv } = this.parse(List)
+    const { argv } = this.parse(ListPolicy)
     const allPolicyPacks = argv
     const manager = this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()

@@ -1,7 +1,7 @@
 import { PluginType } from '@cloudgraph/sdk'
 import Command from '../base'
 
-export default class Add extends Command {
+export default class AddPolicy extends Command {
   static description = 'Add new policy packs'
 
   static examples = [
@@ -20,7 +20,7 @@ export default class Add extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const { argv } = this.parse(Add)
+    const { argv } = this.parse(AddPolicy)
     const allPolicyPacks = argv
     const manager = this.getPluginManager(PluginType.PolicyPack)
     for (let key of allPolicyPacks) {
