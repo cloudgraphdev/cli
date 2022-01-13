@@ -1,8 +1,0 @@
-query {
-  queryawsEc2(filter: { instanceType: { regexp: "/^t.*/" } } ) {
-    id
-    arn
-    availabilityZone
-    instanceType
-  }
-}

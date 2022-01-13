@@ -1,11 +1,8 @@
 import { PluginType } from '@cloudgraph/sdk'
-import chalk from 'chalk'
 import Command from '../base'
 
 export default class Add extends Command {
   static description = 'Add new policy packs'
-
-  static aliases = []
 
   static examples = [
     '$ cg policy add aws-cis-1.2.0',
@@ -35,17 +32,12 @@ export default class Add extends Command {
         default: { provider },
       } = await manager.getPlugin(key, version)
       const config = this.getCGConfig()
-      if (config[provider]) {
+      if (config && config[provider]) {
         config[provider].policies = config[provider].policies
           ? [...new Set([...config[provider].policies, key])]
           : [key]
         this.saveCloudGraphConfigFile(config)
       }
-      this.logger.info(
-        `Run ${chalk.italic.green(
-          `$cg init ${key}`
-        )} to setup configuration for this policy pack`
-      )
     }
   }
 }

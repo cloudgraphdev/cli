@@ -9,7 +9,7 @@
 <br />
 <br />
 
-The **GraphQL** API for AWS and Azure - solve a host of complex security, compliance, and governance challenges **10x faster**. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+The universal **GraphQL** API for **AWS**, **Azure**, **GCP**, and **K8s** - query resources, relationships and insight data to solve security, compliance, asset inventory, and billing challenges. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
 <br />
 
 🌐 [Website](https://www.cloudgraph.dev)
@@ -44,12 +44,12 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 * [How It Works](#how-it-works)
 * [Authentication and Permissions](#authentication-and-permissions)
 * [Install](#install)
+* [Currently we support AWS CIS 1.2, but Azure and GCP are coming soon.](#currently-we-support-aws-cis-12-but-azure-and-gcp-are-coming-soon)
 * [Quick Start](#quick-start)
 * [Loading Previous Versions](#loading-previous-versions)
 * [Supported Services](#supported-services)
 * [Example Queries](#example-queries)
 * [Query Tools](#query-tools)
-* [Compliance](#compliance)
 * [Community](#community)
 * [Contribution Guidelines](#contribution-guidelines)
 * [Deployment Options](#deployment-options)
@@ -67,6 +67,7 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 - [Google](https://cloud.google.com/)
 - [Microsoft](https://www.microsoft.com/)
 - [Oracle](https://www.oracle.com/index.html)
+- [IBM](https://www.ibm.com/us-en/)
 - [NASA](https://www.nasa.gov/)
 - [Grafana](https://grafana.com/)
 - [Pinterest](https://www.pinterest.com/)
@@ -80,45 +81,47 @@ The **GraphQL** API for AWS and Azure - solve a host of complex security, compli
 
 # Why CloudGraph
 
-Whether you're a cloud architect with 15 years of experience or someone who is just getting started on their cloud journey, there is no denying that staying on top of security, compliance, governance, FinOps, operations...etc., is challenging, time-consuming work. Even answering basic questions like, "What all is running in the us-east-1 region?", "Are my RDS clusters properly secured and compliant?", or "How much is this EKS/AKS/GKE cluster going to cost me this month?" requires both time and expertise, or expensive 3rd party software.
+AWS, Azure, and GPC have done a wonderful job of building solutions that let engineers like us create systems to power our increasingly interconnected world. Over the last 15 years, products such as EC2, S3, RDS, and Lambda have fundamentally changed how we think about computing, storage, and databasing.
 
 <br />
 
-**Not anymore**
+With the proliferation of Kubernetes and Serverless in the last 5 or so years, cloud services have become increasingly abstract on top of racks of physical servers. To end-users, everything on the cloud is just an API, so we don't necessarily need to know how Lambda Functions or EKS work under the hood to be able to use them for building applications. With a little documentation, API or console access, and a tutorial anyone can pretty much create anything they need.
 
 <br />
 
-CloudGraph lets any cloud professional answer questions like, "What KMS keys do I have in us-west-2?", "How much am I paying for my environment?", and, "What resources in my production environment aren’t tagged correctly?" in the time it takes to put on the pants you should already be wearing for your next zoom meeting. Ask any question about your cloud environments, and get back answers instantly in a single place with a single standardized API, for all of your cloud providers. Here are some more examples:
+These abstractions have led to massive improvements in the overall convenience and breadth of CSP service offerings. What was once a painstaking, time-consuming, and error-prone process of provisioning new servers, databases, or filesystems can now be done in seconds with just the click of a button or deployment of IAC. Since everything is just an API abstraction, when a CAP is ready to introduce a new "product" they simply need to expose a new API - yes, I'm of course simplifying slightly :)
 
 <br />
+
+Anyone familiar with the CSPs knows that service APIs are almost always split into modular namespaces that contain dozens, if not hundreds, of separate API methods for single resources. For example, the AWS EC2 service contains over 500 different API methods, with new ones added occasionally. Any company building substantial systems on a CSP is likely using many, many different services.
+
+<br />
+
+While a masterpiece of datacenter architecture, this choice of hundreds of services and configuration options put the burden of knowledge on how to properly use these services squarely on us engineers. As a result, we find ourselves having to constantly stay up to date and learn about all the service offerings or new changes. This takes a significant amount of time and mental energy. As developers, it can be difficult, time-consuming, and frustrating to use the AWS CLI to make 5 different API calls to describe, as an example, an AWS ECS cluster, its services, task definitions, tasks, container definitions, etc. We often find ourselves lost in documentation and having to use half a dozen of APIs to get answers to questions like "What exactly is running in this VPC?"
+
+<br />
+
+This means that AWS, Azure, and GCP can feel overwhelming quickly even to seasoned cloud architects. While the CSPs are fantastic at building the actual services that power our businesses, not a lot of headway has been into simplifying the day-to-day UX of querying these hundreds of services in a sane manner.
+
+<br />
+
+New solutions like the Cloud Control API for AWS have attempted to create a standardized interface for querying many different types of AWS resources. Unfortunately, the Cloud Control API's usage is severely limited, and users still need to know how to correctly query their data. This means more time spent reading documentation and understanding how services work and are related to one another.
+
+<br />
+
+While the modularity of the CSP APIs is a great logical organization system and does make sense, it's a burden on end-users in terms of the cognitive overhead and learning curve. Having to remember how hundreds of constantly changing services work and are connected leads to a caffeine addiction and time wasted playing detective.
+
+<br />
+
+Wouldn't it be great if we as DevOps/Cloud engineers had a simpler way to get our data out of AWS, Azure, GCP and the others? One that reflected our need to easily query any data about any service in any account without having to spend hours on docs or stack overflow?
+
+<br />
+
+It is for these reasons that we built CloudGraph, the GraphQL API for everything cloud. CloudGraph extracts, normalizes, processes, and enriches your cloud data allowing you to access deep insights across multiple providers effortlessly. Check out our blog post [The GraphQL API for everything](https://www.autocloud.dev/blog/the-graphql-api-for-all-clouds) to learn more.
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg">
-    <img alt="exampleQuery1" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery1.jpg" width="95%" style="display: block; margin: auto"/>
-  </a>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg">
-    <img alt="exampleQuery2" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery2.jpg" width="95%" style="display: block; margin: auto"/>
-  </a>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg">
-    <img alt="exampleQuery3" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery3.jpg" width="95%" style="display: block; margin: auto"/>
-  </a>
-</p>
-
-<br />
-
-<p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg">
-    <img alt="exampleQuery4" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQuery4.jpg" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQueries.jpg">
+    <img alt="example queries" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQueries.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -136,13 +139,14 @@ Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all o
 
 # Authentication and Permissions
 
-CloudGraph currently supports AWS and Azure with GCP/K8s (and several others) coming soon. CloudGraph needs read permissions in order to ingest your data. To keep things easy you can use the same permissions that we use internally when we run CloudGraph to power AutoCloud. Here are the auth guides and details for how to generate credentials for each provider (feel free to leave out AutoCloud specific configuration):
+CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming soon). CloudGraph needs read permissions in order to ingest your data. To keep things easy you can use the same permissions that we use internally when we run CloudGraph to power AutoCloud. Here are the auth guides and details for how to generate credentials for each provider (feel free to leave out AutoCloud specific configuration):
 
 <br />
 
-- [AWS Docs](https://docs.autocloud.dev/connect-an-environment/aws)
-- [Azure Docs](https://docs.autocloud.dev/connect-an-environment/azure)
-- [GCP Docs](https://docs.autocloud.dev/connect-an-environment/gcp)
+- [AWS Docs](https://docs.autocloud.dev/aws-account)
+- [Azure Docs](https://docs.autocloud.dev/azure-subscription)
+- [GCP Docs](https://docs.autocloud.dev/gcp-project)
+- [K8s Docs](https://github.com/cloudgraphdev/cloudgraph-provider-kubernetes)
 
 <br />
 
@@ -158,8 +162,34 @@ Use this command to install and update CloudGraph to the latest version.
 <!-- install -->
 
 ```bash
-npm install -g @cloudgraph/cli
+npm i -g @cloudgraph/cli
 ```
+
+<p align="center">
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/install.gif">
+    <img alt="install" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/install.gif" width="95%" style="display: block; margin: auto"/>
+  </a>
+</p>
+
+<br/>
+
+You can then add the providers you want (links to provider repos: [AWS](https://github.com/cloudgraphdev/cloudgraph-provider-aws), [Azure](https://github.com/cloudgraphdev/cloudgraph-provider-azure), [GCP](https://github.com/cloudgraphdev/cloudgraph-provider-gcp), [K8s](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)):
+
+```bash
+cg provider add aws
+cg provider add azure
+cg provider add gcp
+cg provider add k8s
+```
+
+And add in compliance policy packs to supplement your data with instant security insights:
+
+```bash
+# Currently we support AWS CIS 1.2, but Azure and GCP are coming soon.
+cg policy add aws-cis-1.2.0
+```
+
+You can find a list of currently supported policy packs in the [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
 
 <!-- installstop -->
 
@@ -180,8 +210,8 @@ cg init
 1. This initializes CloudGraph's configuration. This command will ask you a series of questions about what providers you are using and how you would like CloudGraph configured.
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png">
-    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.png" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.gif">
+    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -200,8 +230,8 @@ cg launch
 2. This command launches an instance of [Dgraph](https://dgraph.io/), the graphdb CloudGraph uses to store data under the hood. Note that there are 2 ways to launch an instance. **BOTH** of these require [Docker](https://www.docker.com/) to be installed and running. The preferred solution is to use our `cg launch` convenience command.
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png">
-    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.png" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.gif">
+    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -225,12 +255,12 @@ cg scan
 3. Scan for cloud infrastructure for all configured providers. This command will reach out and read all of the metadata on your cloud infrastructure. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said, if you encounter any problematic errors running CloudGraph you can prepend `CG_DEBUG=5` to the beginning of your command as in, `CG_DEBUG=5 cg scan`. This will print out the verbose logs with more information and save the output to `cg-debug.log`. Please share your logs with us either by opening an [issue on GitHub](https://github.com/cloudgraphdev/cli/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-ytjemoz7-yKWwElynDp1eHAAB55sbpg).
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png">
-    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.png" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.gif">
+    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
-That's it, you are all set to start querying! The query tool you selected during the `cg init` command will then be opened in your preferred browser to run queries, mutations, and visualizations on all of your cloud infrastructure!
+That's it, you are all set to start querying! The query tool you selected during the `cg init` command will then be opened in your preferred browser to run queries, mutations, and visualizations on all of your cloud infrastructure! Note that if you installed any policy packs, such as AWS CIS 1.2, policy pack insight data will be automatically added to your cloud data!
 
 <br/>
 
@@ -284,9 +314,15 @@ CloudGraph stores as many previous versions of your data as you configured in th
 
 <br />
 
-### AWS
+You can find the list of services currently supported for each provider in the following provider repos:
 
-For a list of currently supported AWS services please see the [AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws)
+[AWS Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-aws)
+
+[Azure Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-azure)
+
+[GCP Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-gcp)
+
+[K8s Provider Repo](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)
 
 <br />
 
@@ -300,7 +336,9 @@ To use CloudGraph, you will need to be familiar with [GraphQL](https://graphql.o
 
 <br />
 
-## Basic AWS Query Syntax Examples:
+## Basic Query Syntax Examples:
+
+_Note: this section will focus on AWS, but the same ideas apply other provider like Azure and GCP_
 
 To explain how CloudGraph works consider the following query that you can run to get the `ID` and `ARN` of a single `EC2 instance`. Note that for the purposes of these examples we will just request the `IDs` and `ARNs` of AWS resources to keep things terse, but you can query whatever attributes you want:
 
@@ -339,7 +377,7 @@ This query will return a `JSON` payload that looks like this. All of the followi
 
 <br />
 
-Get the `ID` and `ARN` of each `EC2` in all the AWS accounts you have scanned:
+Get the `ID` and `ARN` of each `EC2` in **all** the AWS accounts you have scanned:
 
 ```graphql
 query {
@@ -352,7 +390,7 @@ query {
 
 <br />
 
-Get the `ID` and `ARN` of all `EC2` instances in one of your AWS accounts by filtering the accountId:
+Get the `ID` and `ARN` of all `EC2` instances in **one** of your AWS accounts by filtering the accountId:
 
 ```graphql
 query {
@@ -537,9 +575,89 @@ query {
 
 ## AWS security, compliance, and governance examples:
 
+CloudGraph Policy Packs guarantee compliance across existing infrastructure for a given cloud provider. Packs based on sets of rules/benchmarks provided by security organizations like the Center for Internet Security with the objective of keeping your infrastructure up-to-date with industry security standards. Once you have added a policy pack using the `cg policy add` command (i.e. `cg policy add aws-cis-1.2.0`) each time you run a scan CloudGraph will _automatically_ execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
+
+For more information on currently available policy packs please visit our [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
+
 <br />
 
-Find all the unencrypted `EBS Volumes`:
+Use the CloudGraph Policy Pack for AWS CIS 1.2 to query all of your CIS findings for all of your AWS Accounts:
+
+```graphql
+query {
+  queryawsCISFindings {
+    ruleId
+    description
+    result
+    severity
+  }
+}
+```
+
+<br />
+
+If you want to query several different compliance findings for a given provider like AWS at once, you can request them like this:
+
+```graphql
+query {
+  queryawsFindings {
+    CISFindings {
+      severity
+      description
+      ruleId
+      result
+    }
+    AutoCloudFindings {
+      severity
+      description
+      ruleId
+      result
+    }
+  }
+}
+```
+
+<br />
+
+For each CIS rule, get the resources that the rule is associated with, in this case we are quering IAM user's data to see which pass and fail:
+
+```graphql
+query {
+  queryawsCISFindings {
+    ruleId
+    description
+    result
+    severity
+    iamUser {
+      id
+      arn
+      name
+    }
+  }
+}
+```
+
+<br />
+
+If you wanted to understand the CIS rules that apply to a particular IAM User you could use the following query:
+
+```graphql
+query {
+  getawsIamUser(id: "123456789") {
+    name
+    CISFindings {
+      severity
+      description
+      ruleId
+      result
+    }
+  }
+}
+```
+
+<br />
+
+Even if you don't have any policy packs installed, you can still write powerful security queries like this to find all the unencrypted `EBS Volumes`:
 
 ```graphql
 query {
@@ -731,7 +849,7 @@ query {
 
 <br />
 
-Note that in order to successfully ingest FinOps related data you must have the Cost Explorer API enabled in your AWS Account. [You can view how to do that here](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-access.html)
+Note that billing data is currently only available for AWS. In order to successfully ingest FinOps related data you must have the Cost Explorer API enabled in your AWS Account. [You can view how to do that here](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-access.html)
 
 <br />
 
@@ -963,7 +1081,7 @@ query {
 
 ## AWS CloudWatch example:
 
-CloudGraph ingests your CloudWatch Metric data and stores it along with select AWS services, for example, you can do the following for EC2:
+CloudGraph ingests your CloudWatch Metric data and stores it along with select AWS services. This feature is currently in beta and will work for EC2 only:
 
 ```graphql
 query {
@@ -1069,10 +1187,20 @@ Today, the biggest limitation with CloudGraph and our query abilities is we don'
 
 ```graphql
 query {
+  # This won't work just yet...
   queryawsEc2(filter: { ebs: { isBootDisk: true } }) {
     id
     arn
     ebs {
+      id
+      arn
+    }
+  }
+  # So you have to do this instead :(
+  queryawsEc2 {
+    id
+    arn
+    ebs(filter: { isBootDisk: true }) {
       id
       arn
     }
@@ -1135,161 +1263,6 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 </p>
 
 <!-- querytoolsstop -->
-
-<br />
-
-# Compliance
-
-<!-- compliance -->
-
-Policy Packs are our way to guarantee compliance across the existing infrastructure of your cloud provider. They are packages based on a set of rules or benchmarks provided by security entities or by third-parties with the objective of keeping our infrastructure up-to-date with the standards of the industry. Each time you run a scan it will execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
-
-Findings can be grouped by the entity that defined the benchmark. For example, if you want to understand the CIS rules that applies for a particular IAM User you can use the following query:
-
-```graphql
-query {
-  getawsIamUser(id: "123456789") {
-    name
-    CISFindings {
-      severity
-      description
-      ruleId
-      result
-    }
-  }
-}
-```
-
-The following output indicates that we found one warning and one vulnerability for the `aws_iam_user` that should be taken care of:
-
-```graphql
-query {
-  "data": {
-    "getawsIamUser": {
-      "name": "aws_iam_user",
-      "CISFindings": [
-        {
-          "severity": "warning",
-          "description": "This rule should pass",
-          "ruleId": "aws-cis-1.2.0-1.8",
-          "result": "PASS"
-        },
-        {
-          "severity": "warning",
-          "description": "This rule should fail",
-          "ruleId": "aws-cis-1.2.0-1.9",
-          "result": "FAIL"
-        },
-        {
-          "severity": "danger",
-          "description": "This rule should never fail",
-          "ruleId": "aws-cis-1.2.0-1.10",
-          "result": "FAIL"
-        }
-      ]
-    }
-  }
-}
-```
-
-We can also query findings directly like so:
-
-```graphql
-query {
-  queryawsCISFindings {
-    ruleId
-    description
-    result
-    iamUser {
-      name
-    }
-  }
-}
-```
-
-The output will show a list of findings like this:
-
-```graphql
-query {
-  "data": {
-    "queryawsCISFindings": [
-      {
-        "ruleId": "aws-cis-1.2.0-1.8",
-        "description": "This rule should pass",
-        "result": "PASS",
-        "iamUser": [
-          {
-            "name": "aws_iam_user"
-          }
-        ]
-      },
-      {
-        "ruleId": "aws-cis-1.2.0-1.10",
-        "description": "This rule should fail",
-        "result": "FAIL",
-        "iamUser": [
-          {
-            "name": "aws_iam_user"
-          }
-        ]
-      }
-    }
-}
-```
-
-There's also a way to query all your findings grouping by entity, as we illustrate in the example below:
-
-```graphql
-query {
-  queryawsFindings {
-    CISFindings {
-      severity
-      description
-      ruleId
-      result
-    }
-    AutoCloudFindings {
-      severity
-      description
-      ruleId
-      result
-    }
-  }
-}
-```
-
-It retrieves the following output:
-
-```graphql
-query {
-  "data": {
-    "queryawsFindings": [
-      {
-        "CISFindings": [
-          {
-            "severity": "danger",
-            "description": "This rule should pass",
-            "ruleId": "aws-cis-1.2.0-1.14",
-            "result": "PASS"
-          }
-        ]
-        "AutoCloudFindings": [
-          {
-            "severity": "danger",
-            "description": "This rule should not fail",
-            "ruleId": "aws-autocloud-1.3.0-1.14",
-            "result": "FAIL"
-          }
-        ]
-      }
-    ]
-    }
-}
-```
-
-<br />
-
-<!-- compliancestop -->
 
 <br />
 
@@ -1412,7 +1385,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -1438,7 +1411,7 @@ EXAMPLE
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1465,7 +1438,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/load.ts)_
 
 ## `cg policy [PROVIDER]`
 
@@ -1488,7 +1461,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
-_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/index.ts)_
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/policy/index.ts)_
 
 ## `cg policy:add [PROVIDER]`
 
@@ -1515,7 +1488,7 @@ EXAMPLES
   $ cg policy add aws-cis-1.2.0@0.12.0
 ```
 
-_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/add.ts)_
+_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/policy/add.ts)_
 
 ## `cg policy:install [PROVIDER]`
 
@@ -1541,7 +1514,7 @@ EXAMPLE
   $ cg policy install
 ```
 
-_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/install.ts)_
+_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/policy/install.ts)_
 
 ## `cg policy:list [PROVIDER]`
 
@@ -1563,15 +1536,12 @@ OPTIONS
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
-ALIASES
-  $ cg policy ls
-
 EXAMPLES
   $ cg policy list
   $ cg policy list aws
 ```
 
-_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/list.ts)_
+_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/policy/list.ts)_
 
 ## `cg policy:remove [PROVIDER]`
 
@@ -1594,17 +1564,13 @@ OPTIONS
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
-ALIASES
-  $ cg policy rm
-  $ cg policy del
-
 EXAMPLES
   $ cg policy delete
   $ cg policy delete aws-cis-1.2.0
   $ cg policy delete aws-cis-1.2.0 --no-save
 ```
 
-_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/remove.ts)_
+_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/policy/remove.ts)_
 
 ## `cg policy:update [PROVIDER]`
 
@@ -1632,7 +1598,7 @@ EXAMPLES
   $cg policy update aws-cis-1.2.0@0.12.0
 ```
 
-_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/policy/update.ts)_
+_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/policy/update.ts)_
 
 ## `cg provider [PROVIDER]`
 
@@ -1655,7 +1621,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/provider/index.ts)_
 
 ## `cg provider:add [PROVIDER]`
 
@@ -1685,7 +1651,7 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
-_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/add.ts)_
+_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/provider/add.ts)_
 
 ## `cg provider:install [PROVIDER]`
 
@@ -1714,7 +1680,7 @@ EXAMPLE
   $ cg provider install
 ```
 
-_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/install.ts)_
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/provider/install.ts)_
 
 ## `cg provider:list [PROVIDER]`
 
@@ -1746,7 +1712,7 @@ EXAMPLES
   $ cg provider list aws
 ```
 
-_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/list.ts)_
+_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/provider/list.ts)_
 
 ## `cg provider:remove [PROVIDER]`
 
@@ -1782,7 +1748,7 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
-_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/remove.ts)_
+_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/provider/remove.ts)_
 
 ## `cg provider:update [PROVIDER]`
 
@@ -1813,7 +1779,7 @@ EXAMPLES
   $cg provider update aws@0.12.0
 ```
 
-_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/provider/update.ts)_
+_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/provider/update.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -1842,7 +1808,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -1868,7 +1834,7 @@ EXAMPLE
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 
@@ -1886,5 +1852,5 @@ EXAMPLES
   $ cg teardown --delete-image
 ```
 
-_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.0-alpha.2/src/commands/teardown.ts)_
+_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.8/src/commands/teardown.ts)_
 <!-- commandsstop -->

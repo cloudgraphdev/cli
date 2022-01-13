@@ -6,8 +6,6 @@ import Command from '../base'
 export default class Remove extends Command {
   static description = 'Remove currently installed policy pack'
 
-  static aliases = ['policy:rm', 'policy:del']
-
   static examples = [
     '$ cg policy delete',
     '$ cg policy delete aws-cis-1.2.0',
@@ -36,7 +34,7 @@ export default class Remove extends Command {
     const allPolicyPacks = argv
     const manager = this.getPluginManager(PluginType.PolicyPack)
     const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile)) {
+    if (isEmpty(lockFile?.policyPack)) {
       this.logger.info('No policy packs found, have you installed any?')
       this.exit()
     }

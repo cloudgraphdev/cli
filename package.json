@@ -1,7 +1,7 @@
 {
   "name": "@cloudgraph/cli",
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
-  "version": "0.16.0-alpha.2",
+  "version": "0.16.8",
   "author": "AutoCloud",
   "license": "MPL-2.0",
   "publishConfig": {
@@ -15,7 +15,7 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/sdk": "^0.8.0",
+    "@cloudgraph/sdk": "^0.10.3",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
     "@oclif/command": "^1",
@@ -42,6 +42,7 @@
     "lodash": "^4.17.21",
     "npm": "^8.1.2",
     "open": "^8.2.1",
+    "semver": "^7.3.5",
     "tslib": "^1"
   },
   "devDependencies": {
@@ -65,6 +66,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "chai": "^4.3.4",
+    "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "^6.11.0",
@@ -108,7 +110,7 @@
     "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc.json",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && yarn cpx 'src/scripts/*' lib/scripts",
     "run:init": "cross-env NODE_ENV=development ./bin/run init",
     "run:init:aws": "cross-env NODE_ENV=development ./bin/run init aws",
     "run:load": "cross-env NODE_ENV=development ./bin/run load",

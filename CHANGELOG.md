@@ -1,3 +1,86 @@
+## [0.16.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.7...0.16.8) (2022-01-12)
+
+
+### Bug Fixes
+
+* Updated sdk to latest version ([c4cfc6a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c4cfc6afef38450ab71a03ac15bb440b6b5c521e))
+
+## [0.16.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.6...0.16.7) (2022-01-12)
+
+
+### Bug Fixes
+
+* links ([1ea9c68](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1ea9c689237c2b78e086dd602be700b216815c13))
+* **init:** update init command for k8s ([5fc0068](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5fc0068afa879915ca417a8842d51ade3c9bbc14))
+
+## [0.16.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.5...0.16.6) (2022-01-11)
+
+
+### Bug Fixes
+
+* Awaited for plugin installation message ([0fdad5a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0fdad5ad571972920a7f92fe50fbf2f751ce7dd0))
+* Solved issue with repeated mutations ([4b52177](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4b52177f2a0169bb6974f553064c51dd5c47c64b))
+* Updated sdk to latest version ([de3cced](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/de3ccedbb6463795b790ce7b6eb52cd82807336b))
+
+## [0.16.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.4...0.16.5) (2022-01-10)
+
+
+### Bug Fixes
+
+* **update:** fix update command when using a arg ([e7f58b7](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e7f58b7a11f1de0e34581d19737c1d763dd5d82b))
+
+## [0.16.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.3...0.16.4) (2022-01-10)
+
+
+### Bug Fixes
+
+* **deps:** add semver as a dep ([c7f493a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/c7f493a55fcb68980ad23d5cba1854891f0166a2))
+
+## [0.16.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.2...0.16.3) (2022-01-10)
+
+
+### Bug Fixes
+
+* Updated SDK version to latest ([710a7bb](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/710a7bb585d794fe8b5ae81719c446b80e9c9b62))
+
+## [0.16.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.1...0.16.2) (2022-01-07)
+
+
+### Bug Fixes
+
+* **server:** add settings to playground to stop schema polling ([a8e6f95](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a8e6f9524d22aba784a2517565331f6b1d226711))
+
+## [0.16.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.0...0.16.1) (2022-01-05)
+
+
+### Bug Fixes
+
+* Removed aliases for policy commands ([27adcf3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/27adcf37c34776773032c58c5ffccae24c584957))
+* Validated empty lock file for policy and provider commands ([8a397a5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8a397a5d6170476b14232bae3c0d6ff05fc4beb7))
+
+# [0.16.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.15.5...0.16.0) (2022-01-05)
+
+
+### Bug Fixes
+
+* Fixed empty policies key on CloudGraph config file ([95f2c69](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/95f2c69fc3294f6db4143d7df57bce1699c4caee))
+* Fixed empty policies key on CloudGraph config file ([ec92905](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ec92905b0ae070f5bd575f87e813f1b4472db631))
+* Fixed issue getting plugin version from lockfile ([b8fe334](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b8fe33412d1b43c2658fd2fdb17535dfd0b87f86))
+* Removed unused code ([ea3aa94](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ea3aa942a9cf7a7240c6721fab12d5ec69fb5e4d))
+* Solved type for flags attribute ([97bd99e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/97bd99ec335789540b304785557d9a17c707c10d))
+* updated references from sdk ([e8c4f1b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e8c4f1b98ad01ebd86c9b1064b829550ffcbb028))
+* Updated SDK version and docs for policy packs ([4414818](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4414818e83ffdc453a7675fbf730d6e1dcedf61c))
+* Uses missing cwd to fix installed packages issue ([6c5ffa7](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/6c5ffa728e354361ea19e13dab22d83cc3fa6cbc))
+* Uses missing cwd to fix installed packages issue ([e59e86d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e59e86d448dee53b59899072c1738d07e04b31a8))
+
+
+### Features
+
+* Implemented generic plugin system ([a538a86](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a538a86041009c1e2f52554d1f7e57d7da0036a1))
+* Policy Packs Alpha version. ([2560f5b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/2560f5b9cbdb61a2f6089dfdfc430319a5127071))
+* Policy Packs Alpha version. ([5abfcd2](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5abfcd2534236792c4ab9038b6d31aeb90bd42a8))
+* Replaced Dgraph types from SDK ([a32bcf5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a32bcf5b8d70a0a31ccf984a62890ee5bccaa065))
+
 # [0.16.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.0-alpha.1...0.16.0-alpha.2) (2022-01-05)
 
 

@@ -1,8 +1,0 @@
-query {
-  queryawsVpc( filter: { defaultVpc: true } ) {
-    id
-    arn
-    defaultVpc
-    state
-  }
-}

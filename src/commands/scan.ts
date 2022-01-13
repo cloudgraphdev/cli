@@ -145,7 +145,7 @@ export default class Scan extends Command {
             const pluginManager = this.getPluginManager(cloudGraphPlugin[key])
 
             // Configure
-            PluginInstance.configure(pluginManager)
+            await PluginInstance.configure(pluginManager)
 
             // Add to Configured Plugins list
             configuredPlugins.push(PluginInstance)

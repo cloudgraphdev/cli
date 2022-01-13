@@ -25,7 +25,7 @@ export default class List extends Command {
     const allProviders = argv
     const manager = this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile)) {
+    if (isEmpty(lockFile?.provider)) {
       this.logger.info('No providers found, have you installed any?')
       this.exit()
     }
