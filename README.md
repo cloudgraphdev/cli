@@ -175,17 +175,17 @@ npm i -g @cloudgraph/cli
 You can then add the providers you want (links to provider repos: [AWS](https://github.com/cloudgraphdev/cloudgraph-provider-aws), [Azure](https://github.com/cloudgraphdev/cloudgraph-provider-azure), [GCP](https://github.com/cloudgraphdev/cloudgraph-provider-gcp), [K8s](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)):
 
 ```bash
-cg provider add aws
-cg provider add azure
-cg provider add gcp
-cg provider add k8s
+cg add provider aws
+cg add provider azure
+cg add provider gcp
+cg add provider k8s
 ```
 
 And add in compliance policy packs to supplement your data with instant security insights:
 
 ```bash
 # Currently we support AWS CIS 1.2, but Azure and GCP are coming soon.
-cg policy add aws-cis-1.2.0
+cg add policy aws-cis-1.2.0
 ```
 
 You can find a list of currently supported policy packs in the [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
@@ -574,7 +574,7 @@ query {
 
 ## AWS security, compliance, and governance examples:
 
-CloudGraph Policy Packs guarantee compliance across existing infrastructure for a given cloud provider. Packs are based on sets of rules/benchmarks provided by security organizations like the Center for Internet Security with the objective of keeping your infrastructure up-to-date with industry security standards. Once you have added a policy pack using the `cg policy add` command (i.e. `cg policy add aws-cis-1.2.0`) each time you run a scan CloudGraph will _automatically_ execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
+CloudGraph Policy Packs guarantee compliance across existing infrastructure for a given cloud provider. Packs are based on sets of rules/benchmarks provided by security organizations like the Center for Internet Security with the objective of keeping your infrastructure up-to-date with industry security standards. Once you have added a policy pack using the `cg add policy` command (i.e. `cg add policy aws-cis-1.2.0`) each time you run a scan CloudGraph will _automatically_ execute your configured policies. Those results will be stored at Dgraph and linked to your existing resources, making it easy to query your compliance results alongside your resources.
 
 For more information on currently available policy packs please visit our [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
 
@@ -1311,7 +1311,7 @@ There are some common errors you may see when running CloudGraph that are usuall
 
 - 🚫 unable to store data in Dgraph - This error in the scan report appears when CG tries to insert some cloud provider data into the graph DB and it fails. Any services with this error will be unable to be queried in the GraphQL query tool. This usually happens when CG is unable to grab required data (such as an arn) for a resource due to an error when calling the provider SDK, commonly due to a lack of authorization.
 
-- Provider {name}@${version} requires cli version {version} but cli version is ${version} - This warning means you have incompatible versions of CG and the provider you are trying to use. Try updating CG `npm install -g @cloudgraphdev/cli` and the provider module `cg provider update` so both are at the latest version. You can also check the proivder's `pacakge.json` to see what versions of CG support it.
+- Provider {name}@${version} requires cli version {version} but cli version is ${version} - This warning means you have incompatible versions of CG and the provider you are trying to use. Try updating CG `npm install -g @cloudgraphdev/cli` and the provider module `cg update provider` so both are at the latest version. You can also check the proivder's `pacakge.json` to see what versions of CG support it.
 
 - Manager failed to install plugin for {provider} - This error occurs when CG's plugin manager can not find the provider module you want to use. The manager searches the public NPM registry for the provider module. For offically supported providers, just pass the provider name `CG init aws`. For community supported providers, you must pass the namespace as well `CG init @{providerNamespace}/{provider}`
 
@@ -1320,9 +1320,15 @@ There are some common errors you may see when running CloudGraph that are usuall
 # Commands
 
 <!-- commands -->
+* [`cg add:policy [PROVIDER]`](#cg-addpolicy-provider)
+* [`cg add:provider [PROVIDER]`](#cg-addprovider-provider)
 * [`cg help [COMMAND]`](#cg-help-command)
 * [`cg init [PROVIDER]`](#cg-init-provider)
+* [`cg install:policy [PROVIDER]`](#cg-installpolicy-provider)
+* [`cg install:provider [PROVIDER]`](#cg-installprovider-provider)
 * [`cg launch [PROVIDER]`](#cg-launch-provider)
+* [`cg list:policy [PROVIDER]`](#cg-listpolicy-provider)
+* [`cg list:provider [PROVIDER]`](#cg-listprovider-provider)
 * [`cg load [PROVIDER]`](#cg-load-provider)
 * [`cg plugins`](#cg-plugins)
 * [`cg plugins:inspect PLUGIN...`](#cg-pluginsinspect-plugin)
@@ -1345,6 +1351,8 @@ There are some common errors you may see when running CloudGraph that are usuall
 * [`cg scan [PROVIDER]`](#cg-scan-provider)
 * [`cg serve [PROVIDER]`](#cg-serve-provider)
 * [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+* [`cg update:policy [PROVIDER]`](#cg-updatepolicy-provider)
+* [`cg update:provider [PROVIDER]`](#cg-updateprovider-provider)
 
 ## `cg help [COMMAND]`
 
@@ -1393,6 +1401,9 @@ FLAGS
 DESCRIPTION
   Set initial configuration for providers
 
+ALIASES
+  $ cg add pp
+
 EXAMPLES
   $ cg init
 
@@ -1403,9 +1414,9 @@ EXAMPLES
 
 _See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/init.ts)_
 
-## `cg launch [PROVIDER]`
+## `cg add:provider [PROVIDER]`
 
-Launch an instance of Dgraph to store data
+Add new providers
 
 ```
 USAGE
@@ -1435,9 +1446,9 @@ EXAMPLES
 
 _See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/launch.ts)_
 
-## `cg load [PROVIDER]`
+## `cg help [COMMAND]`
 
-Load a specific version of your CloudGraph data
+display help for cg
 
 ```
 USAGE
@@ -1615,9 +1626,9 @@ DESCRIPTION
   Update installed plugins.
 ```
 
-## `cg policy [PROVIDER]`
+## `cg init [PROVIDER]`
 
-Commands to manage policy pack modules, run $ cg policy for more info.
+Set initial configuration for providers
 
 ```
 USAGE
@@ -1646,7 +1657,7 @@ _See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/b
 
 ## `cg policy add [PROVIDER]`
 
-Add new policy packs
+Install policy packs based on the lock file
 
 ```
 USAGE
@@ -1678,7 +1689,7 @@ EXAMPLES
 
 ## `cg policy install [PROVIDER]`
 
-Install policy packs based on the lock file
+Install providers based on the lock file
 
 ```
 USAGE
@@ -1708,7 +1719,7 @@ EXAMPLES
 
 ## `cg policy list [PROVIDER]`
 
-List currently installed policy packs and versions
+Launch an instance of Dgraph to store data
 
 ```
 USAGE
@@ -1740,7 +1751,7 @@ EXAMPLES
 
 ## `cg policy remove [PROVIDER]`
 
-Remove currently installed policy pack
+List currently installed policy packs and versions
 
 ```
 USAGE
@@ -1765,6 +1776,11 @@ FLAGS
 DESCRIPTION
   Remove currently installed policy pack
 
+ALIASES
+  $ cg ls policy
+  $ cg list pp
+  $ cg ls pp
+
 EXAMPLES
   $ cg policy delete
 
@@ -1775,7 +1791,7 @@ EXAMPLES
 
 ## `cg policy update [PROVIDER]`
 
-Update currently installed policy packs
+List currently installed providers and versions
 
 ```
 USAGE
@@ -1799,6 +1815,11 @@ FLAGS
 DESCRIPTION
   Update currently installed policy packs
 
+ALIASES
+  $ cg ls provider
+  $ cg list p
+  $ cg ls p
+
 EXAMPLES
   $ cg policy update
 
@@ -1809,7 +1830,7 @@ EXAMPLES
 
 ## `cg provider [PROVIDER]`
 
-Commands to manage provider modules, run $ cg provider for more info.
+Load a specific version of your CloudGraph data
 
 ```
 USAGE
@@ -1838,7 +1859,7 @@ _See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli
 
 ## `cg provider add [PROVIDER]`
 
-Add new providers
+Remove currently installed policy pack
 
 ```
 USAGE
@@ -1863,7 +1884,11 @@ DESCRIPTION
   Add new providers
 
 ALIASES
-  $ cg add
+  $ cg remove pp
+  $ cg rm pp
+  $ cg del pp
+  $ cg rm policy
+  $ cg del policy
 
 EXAMPLES
   $ cg provider add aws
@@ -1873,7 +1898,7 @@ EXAMPLES
 
 ## `cg provider install [PROVIDER]`
 
-Install providers based on the lock file
+Remove currently installed provider
 
 ```
 USAGE
@@ -1898,7 +1923,11 @@ DESCRIPTION
   Install providers based on the lock file
 
 ALIASES
-  $ cg install
+  $ cg remove p
+  $ cg rm p
+  $ cg del p
+  $ cg rm provider
+  $ cg del provider
 
 EXAMPLES
   $ cg provider install
@@ -1906,7 +1935,7 @@ EXAMPLES
 
 ## `cg provider list [PROVIDER]`
 
-List currently installed providers and versions
+Scan one or multiple providers data to be queried through Dgraph
 
 ```
 USAGE
@@ -1930,11 +1959,6 @@ FLAGS
 DESCRIPTION
   List currently installed providers and versions
 
-ALIASES
-  $ cg provider ls
-  $ cg list
-  $ cg ls
-
 EXAMPLES
   $ cg provider list
 
@@ -1943,7 +1967,7 @@ EXAMPLES
 
 ## `cg provider remove [PROVIDER]`
 
-Remove currently installed provider
+Serve a GraphQL query tool to query your CloudGraph data.
 
 ```
 USAGE
@@ -1985,7 +2009,7 @@ EXAMPLES
 
 ## `cg provider update [PROVIDER]`
 
-Update currently installed providers
+Stops the Dgraph Docker container.
 
 ```
 USAGE
@@ -2022,7 +2046,7 @@ EXAMPLES
 
 ## `cg scan [PROVIDER]`
 
-Scan one or multiple providers data to be queried through Dgraph
+Update currently installed policy packs
 
 ```
 USAGE
@@ -2046,6 +2070,9 @@ FLAGS
 DESCRIPTION
   Scan one or multiple providers data to be queried through Dgraph
 
+ALIASES
+  $ cg update pp
+
 EXAMPLES
   $ cg scan
 
@@ -2058,9 +2085,9 @@ EXAMPLES
 
 _See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/scan.ts)_
 
-## `cg serve [PROVIDER]`
+## `cg update:provider [PROVIDER]`
 
-Serve a GraphQL query tool to query your CloudGraph data.
+Update currently installed providers
 
 ```
 USAGE
