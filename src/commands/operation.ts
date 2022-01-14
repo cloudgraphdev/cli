@@ -1,9 +1,11 @@
 import { PluginType } from '@cloudgraph/sdk'
+import { flags } from '@oclif/command'
 import { isEmpty, pickBy } from 'lodash'
 import chalk from 'chalk'
 
 import Command from './base'
 import { messages } from '../utils/constants'
+import Manager from '../manager'
 
 const configurationLogs = [PluginType.Provider]
 export default abstract class OperationBaseCommand extends Command {
@@ -12,6 +14,10 @@ export default abstract class OperationBaseCommand extends Command {
   static hidden = true
 
   static flags = {
+    'no-save': flags.boolean({
+      default: false,
+      description: 'Set to not alter lock file, just delete plugin',
+    }),
     ...Command.flags,
   }
 
@@ -71,8 +77,52 @@ export default abstract class OperationBaseCommand extends Command {
     }
   }
 
-  async remove(): Promise<void> {
-    // TODO: remove
+  async remove(type: PluginType): Promise<{
+    manager: Manager
+    noSave: boolean
+    plugins: string[]
+  }> {
+    const {
+      argv,
+      flags: { 'no-save': noSave },
+    } = this.parse(OperationBaseCommand)
+    const allPlugins = argv
+    const manager = this.getPluginManager(type)
+    const lockFile = manager.getLockFile()
+    const plugins = []
+
+    if (isEmpty(lockFile?.[type])) {
+      this.logger.info(
+        `No ${messages[type]?.plural} found, have you installed any?`
+      )
+      this.exit()
+    }
+    for (const key of allPlugins) {
+      this.logger.startSpinner(
+        `Removing ${chalk.italic.green(key)} ${messages[
+          type
+        ]?.singular?.toLowerCase()}`
+      )
+
+      await manager.removePlugin(key)
+
+      this.logger.successSpinner(
+        `${chalk.italic.green(key)} ${messages[
+          type
+        ]?.singular?.toLowerCase()} removed successfully`
+      )
+
+      plugins.push(key)
+
+      if (!noSave) {
+        manager.removeFromLockFile(key)
+      }
+    }
+    return {
+      manager,
+      noSave,
+      plugins,
+    }
   }
 
   async update(type: PluginType): Promise<void> {
