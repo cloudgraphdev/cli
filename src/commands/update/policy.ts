@@ -5,10 +5,12 @@ import OperationBaseCommand from '../operation'
 export default class UpdatePolicy extends OperationBaseCommand {
   static description = 'Update currently installed policy packs'
 
+  static aliases = ['update:pp']
+
   static examples = [
-    '$ cg policy update',
-    '$ cg policy update aws-cis-1.2.0',
-    '$cg policy update aws-cis-1.2.0@0.12.0',
+    '$ cg update policy',
+    '$ cg update policy aws-cis-1.2.0',
+    '$ cg update policy aws-cis-1.2.0@0.12.0',
   ]
 
   static strict = false

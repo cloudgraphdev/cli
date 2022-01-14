@@ -2,13 +2,15 @@ import { PluginType } from '@cloudgraph/sdk'
 
 import OperationBaseCommand from '../operation'
 
-export default class Remove extends OperationBaseCommand {
+export default class RemovePolicy extends OperationBaseCommand {
   static description = 'Remove currently installed policy pack'
 
+  static aliases = ['remove:pp', 'rm:pp', 'del:pp', 'rm:policy', 'del:policy']
+
   static examples = [
-    '$ cg policy delete',
-    '$ cg policy delete aws-cis-1.2.0',
-    '$ cg policy delete aws-cis-1.2.0 --no-save',
+    '$ cg delete policy',
+    '$ cg delete policy aws-cis-1.2.0',
+    '$ cg delete policy aws-cis-1.2.0 --no-save',
   ]
 
   static strict = false

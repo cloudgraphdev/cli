@@ -5,9 +5,11 @@ import OperationBaseCommand from '../operation'
 export default class AddPolicy extends OperationBaseCommand {
   static description = 'Add new policy packs'
 
+  static aliases = ['add:pp']
+
   static examples = [
-    '$ cg policy add aws-cis-1.2.0',
-    '$ cg policy add aws-cis-1.2.0@0.12.0',
+    '$ cg add policy aws-cis-1.2.0',
+    '$ cg add policy aws-cis-1.2.0@0.12.0',
   ]
 
   static strict = false

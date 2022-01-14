@@ -5,7 +5,9 @@ import OperationBaseCommand from '../operation'
 export default class InstallPolicy extends OperationBaseCommand {
   static description = 'Install policy packs based on the lock file'
 
-  static examples = ['$ cg policy install']
+  static aliases = ['install:pp']
+
+  static examples = ['$ cg install policy']
 
   static strict = false
 

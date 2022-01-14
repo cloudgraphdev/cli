@@ -218,7 +218,7 @@ export default abstract class OperationBaseCommand extends Command {
     }
     const pluginsToList =
       allPlugins.length >= 1
-        ? pickBy(lockFile, (_, key) => {
+        ? pickBy(lockFile?.[type], (_, key) => {
             return allPlugins.includes(key)
           })
         : lockFile?.[type] || {}
