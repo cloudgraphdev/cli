@@ -1,11 +1,11 @@
 import { PluginType } from '@cloudgraph/sdk'
-import { isEmpty } from 'lodash'
-import Command from '../base'
 
-export default class Install extends Command {
+import OperationBaseCommand from '../operation'
+
+export default class InstallProvider extends OperationBaseCommand {
   static description = 'Install providers based on the lock file'
 
-  static aliases = ['install']
+  static aliases = ['install:provider']
 
   static examples = ['$ cg provider install']
 
@@ -13,21 +13,11 @@ export default class Install extends Command {
 
   static hidden = false
 
-  static flags = {
-    ...Command.flags,
-  }
-
-  static args = Command.args
-
   async run(): Promise<void> {
-    const manager = await this.getPluginManager(PluginType.Provider)
-    const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile?.provider)) {
-      this.logger.info('No providers found in lock file, have you added any?')
-      this.exit()
-    }
-    for (const [key, value] of Object.entries(lockFile.provider)) {
-      await manager.getPlugin(key, value as string)
+    try {
+      await this.installPlugin(PluginType.Provider)
+    } catch (error) {
+      this.logger.debug(error)
     }
   }
 }
