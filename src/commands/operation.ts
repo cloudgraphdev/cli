@@ -65,7 +65,6 @@ export default abstract class OperationBaseCommand extends Command {
   }
 
   async update(type: PluginType): Promise<void> {
-    // TODO: Update
     const { argv } = this.parse(OperationBaseCommand)
     const allPlugins = argv
     const manager = this.getPluginManager(type)

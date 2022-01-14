@@ -1,12 +1,11 @@
 import { PluginType } from '@cloudgraph/sdk'
-import { isEmpty, pickBy } from 'lodash'
-import chalk from 'chalk'
-import Command from '../base'
 
-export default class List extends Command {
+import OperationBaseCommand from '../operation'
+
+export default class ListProvider extends OperationBaseCommand {
   static description = 'List currently installed providers and versions'
 
-  static aliases = ['provider:ls', 'list', 'ls']
+  static aliases = ['ls:provider', 'list:provider', 'ls:provider']
 
   static examples = ['$ cg provider list', '$ cg provider list aws']
 
@@ -14,31 +13,11 @@ export default class List extends Command {
 
   static hidden = false
 
-  static flags = {
-    ...Command.flags,
-  }
-
-  static args = Command.args
-
   async run(): Promise<void> {
-    const { argv } = await this.parse(List)
-    const allProviders = argv
-    const manager = await this.getPluginManager(PluginType.Provider)
-    const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile?.provider)) {
-      this.logger.info('No providers found, have you installed any?')
-      this.exit()
-    }
-    const providersToList =
-      allProviders.length >= 1
-        ? pickBy(lockFile, (_, key) => {
-            return allProviders.includes(key)
-          })
-        : lockFile?.provider || {}
-    for (const [key, value] of Object.entries(providersToList)) {
-      this.logger.success(
-        `Provider ${chalk.green(`${key}@${value}`)} is installed`
-      )
+    try {
+      await this.list(PluginType.Provider)
+    } catch (error) {
+      this.logger.debug(error)
     }
   }
 }
