@@ -1,8 +1,8 @@
 import { PluginType } from '@cloudgraph/sdk'
-import { isEmpty } from 'lodash'
-import Command from '../base'
 
-export default class Install extends Command {
+import OperationBaseCommand from '../operation'
+
+export default class InstallPolicy extends OperationBaseCommand {
   static description = 'Install policy packs based on the lock file'
 
   static examples = ['$ cg policy install']
@@ -11,23 +11,7 @@ export default class Install extends Command {
 
   static hidden = false
 
-  static flags = {
-    ...Command.flags,
-  }
-
-  static args = Command.args
-
   async run(): Promise<void> {
-    const manager = this.getPluginManager(PluginType.PolicyPack)
-    const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile?.policyPack)) {
-      this.logger.info(
-        'No policy packs found in lock file, have you added any?'
-      )
-      this.exit()
-    }
-    for (const [key, value] of Object.entries(lockFile.policyPack)) {
-      await manager.getPlugin(key, value as string)
-    }
+    await this.installPlugin(PluginType.PolicyPack)
   }
 }
