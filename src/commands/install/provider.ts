@@ -14,6 +14,10 @@ export default class InstallProvider extends OperationBaseCommand {
   static hidden = false
 
   async run(): Promise<void> {
-    await this.installPlugin(PluginType.Provider)
+    try {
+      await this.installPlugin(PluginType.Provider)
+    } catch (error) {
+      this.logger.debug(error)
+    }
   }
 }

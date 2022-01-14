@@ -35,10 +35,16 @@ export default abstract class OperationBaseCommand extends Command {
     }[]
   > {
     const { argv } = this.parse(OperationBaseCommand)
-    console.log(argv)
     const allPlugins = argv
     const manager = this.getPluginManager(type)
-    const plugins = []
+    const addedPlugins = []
+
+    if (isEmpty(allPlugins)) {
+      this.logger.info(
+        `No ${messages[type]?.plural} were passed as a parameter.`
+      )
+    }
+
     for (let key of allPlugins) {
       let version = 'latest'
       if (key.includes('@')) {
@@ -54,13 +60,13 @@ export default abstract class OperationBaseCommand extends Command {
           )} to setup configuration for this ${messages[type]?.singular}`
         )
 
-      plugins.push({
+      addedPlugins.push({
         key,
         version,
         plugin,
       })
     }
-    return plugins
+    return addedPlugins
   }
 
   async installPlugin(type: PluginType): Promise<void> {
@@ -91,12 +97,20 @@ export default abstract class OperationBaseCommand extends Command {
     const lockFile = manager.getLockFile()
     const plugins = []
 
+    if (isEmpty(allPlugins)) {
+      this.logger.info(
+        `No ${messages[type]?.plural} were passed as a parameter.`
+      )
+      this.exit()
+    }
+
     if (isEmpty(lockFile?.[type])) {
       this.logger.info(
         `No ${messages[type]?.plural} found, have you installed any?`
       )
       this.exit()
     }
+
     for (const key of allPlugins) {
       this.logger.startSpinner(
         `Removing ${chalk.italic.green(key)} ${messages[
@@ -113,10 +127,6 @@ export default abstract class OperationBaseCommand extends Command {
       )
 
       plugins.push(key)
-
-      if (!noSave) {
-        manager.removeFromLockFile(key)
-      }
     }
     return {
       manager,
@@ -154,44 +164,44 @@ export default abstract class OperationBaseCommand extends Command {
       const plugin = this.getPlugin(rawPlugin)
       return Object.keys(lockFile).includes(plugin)
     })
+
     for (const plugin of nonInstalledPlugins) {
       this.logger.warn(
         `${chalk.green(
           this.getPlugin(plugin)
         )} not found in lock file, have you installed it?`
       )
+      this.exit()
     }
     // Loop through plugins and try to update them
     for (const [key] of Object.entries(pluginsToList)) {
-      try {
-        let version = 'latest'
-        const rawPlugin = allPlugins.find(val => val.includes(key))
-        if (rawPlugin && rawPlugin.includes('@')) {
-          [, version] = rawPlugin.split('@')
-        }
+      let version = 'latest'
+      const rawPlugin = allPlugins.find(val => val.includes(key))
+      if (rawPlugin && rawPlugin.includes('@')) {
+        [, version] = rawPlugin.split('@')
+      }
 
-        this.logger.startSpinner(
-          `Updating ${chalk.italic.green(key)} ${messages[
-            type
-          ]?.singular?.toLowerCase()} to ${version} version`
-        )
+      this.logger.startSpinner(
+        `Updating ${chalk.italic.green(key)} ${messages[
+          type
+        ]?.singular?.toLowerCase()} to ${version} version`
+      )
 
-        await manager.getPlugin(key, version)
+      await manager.getPlugin(key, version)
 
-        this.logger.successSpinner(
-          `${chalk.italic.green(key)} ${messages[
-            type
-          ]?.singular?.toLowerCase()} updated successfully`
-        )
+      this.logger.successSpinner(
+        `${chalk.italic.green(key)} ${messages[
+          type
+        ]?.singular?.toLowerCase()} updated successfully`
+      )
 
+      // Only shows for certain plugins
+      configurationLogs.includes(type) &&
         this.logger.info(
           `Run ${chalk.italic.green(
             `$cg init ${key}`
           )} to ensure you have the latest configuration for this version (including new services).`
         )
-      } catch (error) {
-        this.logger.stopSpinner()
-      }
     }
   }
 

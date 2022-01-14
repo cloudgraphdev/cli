@@ -12,6 +12,10 @@ export default class ListPolicy extends OperationBaseCommand {
   static hidden = false
 
   async run(): Promise<void> {
-    await this.list(PluginType.PolicyPack)
+    try {
+      await this.list(PluginType.PolicyPack)
+    } catch (error) {
+      this.logger.debug(error)
+    }
   }
 }

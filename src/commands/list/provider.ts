@@ -14,6 +14,10 @@ export default class ListProvider extends OperationBaseCommand {
   static hidden = false
 
   async run(): Promise<void> {
-    await this.list(PluginType.Provider)
+    try {
+      await this.list(PluginType.Provider)
+    } catch (error) {
+      this.logger.debug(error)
+    }
   }
 }

@@ -16,6 +16,11 @@ export default class UpdatePolicy extends OperationBaseCommand {
   static hidden = false
 
   async run(): Promise<void> {
-    await this.update(PluginType.PolicyPack)
+    try {
+      await this.update(PluginType.PolicyPack)
+    } catch (error) {
+      this.logger.stopSpinner()
+      this.logger.debug(error)
+    }
   }
 }

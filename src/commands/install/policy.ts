@@ -12,6 +12,10 @@ export default class InstallPolicy extends OperationBaseCommand {
   static hidden = false
 
   async run(): Promise<void> {
-    await this.installPlugin(PluginType.PolicyPack)
+    try {
+      await this.installPlugin(PluginType.PolicyPack)
+    } catch (error) {
+      this.logger.debug(error)
+    }
   }
 }

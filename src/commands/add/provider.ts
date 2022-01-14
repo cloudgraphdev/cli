@@ -14,6 +14,10 @@ export default class AddProvider extends OperationBaseCommand {
   static hidden = false
 
   async run(): Promise<void> {
-    await this.add(PluginType.Provider)
+    try {
+      await this.add(PluginType.Provider)
+    } catch (error) {
+      this.logger.debug(error)
+    }
   }
 }

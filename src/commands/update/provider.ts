@@ -18,6 +18,11 @@ export default class UpdateProvider extends OperationBaseCommand {
   static hidden = false
 
   async run(): Promise<void> {
-    await this.update(PluginType.Provider)
+    try {
+      await this.update(PluginType.Provider)
+    } catch (error) {
+      this.logger.stopSpinner()
+      this.logger.debug(error)
+    }
   }
 }
