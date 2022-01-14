@@ -64,7 +64,6 @@ The universal **GraphQL** API for **AWS**, **Azure**, **GCP**, and **K8s** - que
 # Amazing companies using CloudGraph\*\*
 
 - [AWS](https://aws.amazon.com/)
-- [Google](https://cloud.google.com/)
 - [Microsoft](https://www.microsoft.com/)
 - [Oracle](https://www.oracle.com/index.html)
 - [IBM](https://www.ibm.com/us-en/)
