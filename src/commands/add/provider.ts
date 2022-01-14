@@ -1,8 +1,8 @@
 import { PluginType } from '@cloudgraph/sdk'
-import chalk from 'chalk'
-import Command from '../base'
 
-export default class AddProvider extends Command {
+import OperationBaseCommand from '../operation'
+
+export default class AddProvider extends OperationBaseCommand {
   static description = 'Add new providers'
 
   static aliases = ['add']
@@ -13,27 +13,7 @@ export default class AddProvider extends Command {
 
   static hidden = false
 
-  static flags = {
-    ...Command.flags,
-  }
-
-  static args = Command.args
-
   async run(): Promise<void> {
-    const { argv } = this.parse(AddProvider)
-    const allProviders = argv
-    const manager = this.getPluginManager(PluginType.Provider)
-    for (let key of allProviders) {
-      let version = 'latest'
-      if (key.includes('@')) {
-        [key, version] = key.split('@')
-      }
-      await manager.getPlugin(key, version)
-      this.logger.info(
-        `Run ${chalk.italic.green(
-          `$cg init ${key}`
-        )} to setup configuration for this provider`
-      )
-    }
+    await this.add(PluginType.Provider)
   }
 }

@@ -1,7 +1,8 @@
 import { PluginType } from '@cloudgraph/sdk'
-import Command from '../base'
 
-export default class AddPolicy extends Command {
+import OperationBaseCommand from '../operation'
+
+export default class AddPolicy extends OperationBaseCommand {
   static description = 'Add new policy packs'
 
   static examples = [
@@ -13,24 +14,16 @@ export default class AddPolicy extends Command {
 
   static hidden = false
 
-  static flags = {
-    ...Command.flags,
-  }
-
-  static args = Command.args
-
   async run(): Promise<void> {
-    const { argv } = this.parse(AddPolicy)
-    const allPolicyPacks = argv
-    const manager = this.getPluginManager(PluginType.PolicyPack)
-    for (let key of allPolicyPacks) {
-      let version = 'latest'
-      if (key.includes('@')) {
-        [key, version] = key.split('@')
-      }
+    const installedPolicies = await this.add(PluginType.PolicyPack)
+
+    for (const installedPolicy of installedPolicies) {
       const {
-        default: { provider },
-      } = await manager.getPlugin(key, version)
+        key,
+        plugin: { default: { provider } } = { default: { provider: '' } },
+      } = installedPolicy
+
+      // Save policy to CG config file
       const config = this.getCGConfig()
       if (config && config[provider]) {
         config[provider].policies = config[provider].policies

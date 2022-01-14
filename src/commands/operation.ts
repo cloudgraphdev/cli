@@ -5,6 +5,7 @@ import chalk from 'chalk'
 import Command from './base'
 import { messages } from '../utils/constants'
 
+const configurationLogs = [PluginType.Provider]
 export default abstract class OperationBaseCommand extends Command {
   static strict = false
 
@@ -20,30 +21,40 @@ export default abstract class OperationBaseCommand extends Command {
     return val.includes('@') ? val.split('@')[0] : val
   }
 
-  async addPlugin(
-    type: PluginType,
+  async add(type: PluginType): Promise<
     {
-      operation,
-    }: {
-      operation: (params: { key: string; version: string; plugin: any }) => void
-    }
-  ): Promise<void> {
+      key: string
+      version: string
+      plugin: any
+    }[]
+  > {
     const { argv } = this.parse(OperationBaseCommand)
     console.log(argv)
     const allPlugins = argv
     const manager = this.getPluginManager(type)
+    const plugins = []
     for (let key of allPlugins) {
       let version = 'latest'
       if (key.includes('@')) {
         [key, version] = key.split('@')
       }
       const plugin = await manager.getPlugin(key, version)
-      operation({
+
+      // Only shows for certain plugins
+      configurationLogs.includes(type) &&
+        this.logger.info(
+          `Run ${chalk.italic.green(
+            `$cg init ${key}`
+          )} to setup configuration for this ${messages[type]?.singular}`
+        )
+
+      plugins.push({
         key,
         version,
         plugin,
       })
     }
+    return plugins
   }
 
   async installPlugin(type: PluginType): Promise<void> {
