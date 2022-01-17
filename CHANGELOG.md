@@ -42,9 +42,25 @@
 
 ## [0.20.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.1...0.20.2) (2022-02-16)
 # [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-01-28)
-## [0.20.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.0...0.20.1) (2022-02-10)
+
 ## [0.16.9-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9-alpha.1) (2022-01-13)
 
+## [0.16.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.10...0.16.11) (2022-01-17)
+
+
+### Bug Fixes
+
+* Fixed display scan results for apigatewaystage service ([128c261](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/128c2617f88bdf52a2b6884c0764ff286d2ca269))
+
+## [0.16.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.9...0.16.10) (2022-01-17)
+
+
+### Bug Fixes
+
+* Moved scripts to root folder ([005bc09](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/005bc096f23046fcbbc78636b1647f632d678bb9))
+* Preserved scripts folder during build ([ca15db3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ca15db3fecdf8ccf4b4d5cce67057cda2b6e36fc))
+
+## [0.16.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9) (2022-01-12)
 
 ### Bug Fixes
 
