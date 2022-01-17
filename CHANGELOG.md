@@ -1,3 +1,11 @@
+## [0.16.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.9...0.16.10) (2022-01-17)
+
+
+### Bug Fixes
+
+* Moved scripts to root folder ([005bc09](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/005bc096f23046fcbbc78636b1647f632d678bb9))
+* Preserved scripts folder during build ([ca15db3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ca15db3fecdf8ccf4b4d5cce67057cda2b6e36fc))
+
 ## [0.16.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9) (2022-01-12)
 
 
