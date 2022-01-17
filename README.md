@@ -1384,7 +1384,11 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/init.ts)_
+=======
+_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/init.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg launch [PROVIDER]`
 
@@ -1410,7 +1414,11 @@ EXAMPLE
   $ cg launch
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/launch.ts)_
+=======
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/launch.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg load [PROVIDER]`
 
@@ -1437,7 +1445,11 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/load.ts)_
+=======
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/load.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg policy [PROVIDER]`
 
@@ -1460,7 +1472,11 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/policy/index.ts)_
+=======
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/policy/index.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg policy:add [PROVIDER]`
 
@@ -1487,7 +1503,11 @@ EXAMPLES
   $ cg policy add aws-cis-1.2.0@0.12.0
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/policy/add.ts)_
+=======
+_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/policy/add.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg policy:install [PROVIDER]`
 
@@ -1513,7 +1533,11 @@ EXAMPLE
   $ cg policy install
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/policy/install.ts)_
+=======
+_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/policy/install.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg policy:list [PROVIDER]`
 
@@ -1540,7 +1564,11 @@ EXAMPLES
   $ cg policy list aws
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/policy/list.ts)_
+=======
+_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/policy/list.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg policy:remove [PROVIDER]`
 
@@ -1569,7 +1597,11 @@ EXAMPLES
   $ cg policy delete aws-cis-1.2.0 --no-save
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/policy/remove.ts)_
+=======
+_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/policy/remove.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg policy:update [PROVIDER]`
 
@@ -1597,7 +1629,11 @@ EXAMPLES
   $cg policy update aws-cis-1.2.0@0.12.0
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/policy/update.ts)_
+=======
+_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/policy/update.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg provider [PROVIDER]`
 
@@ -1620,7 +1656,11 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/provider/index.ts)_
+=======
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/provider/index.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg provider:add [PROVIDER]`
 
@@ -1650,7 +1690,11 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/provider/add.ts)_
+=======
+_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/provider/add.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg provider:install [PROVIDER]`
 
@@ -1679,7 +1723,11 @@ EXAMPLE
   $ cg provider install
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/provider/install.ts)_
+=======
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/provider/install.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg provider:list [PROVIDER]`
 
@@ -1711,7 +1759,11 @@ EXAMPLES
   $ cg provider list aws
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/provider/list.ts)_
+=======
+_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/provider/list.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg provider:remove [PROVIDER]`
 
@@ -1747,7 +1799,11 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/provider/remove.ts)_
+=======
+_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/provider/remove.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg provider:update [PROVIDER]`
 
@@ -1778,7 +1834,11 @@ EXAMPLES
   $cg provider update aws@0.12.0
 ```
 
+<<<<<<< HEAD
 _See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.9-alpha.1/src/commands/provider/update.ts)_
+=======
+_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.11/src/commands/provider/update.ts)_
+>>>>>>> chore(release): 0.16.11
 
 ## `cg scan [PROVIDER]`
 
