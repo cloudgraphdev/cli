@@ -25,7 +25,7 @@ enum statusKeyWords {
   connections = 'connections',
 }
 
-const servicesToIgnore = ['tag', 'billing', 'Finding']
+const servicesToIgnore = [/^tag$/, /^billing$/, /Findings$/]
 
 // TODO: come back and add tests once testing strategy is determined
 export class ScanReport {
@@ -44,8 +44,22 @@ export class ScanReport {
 
   table: Table
 
+  private containsService(
+    ignoreExpression: RegExp,
+    serviceName: string
+  ): boolean {
+    try {
+      const regex = new RegExp(ignoreExpression)
+      return regex.test(serviceName)
+    } catch (error) {
+      return false
+    }
+  }
+
   pushData({ service, type, result }: pushDataParams): void {
-    if (servicesToIgnore.some(ignore => service.includes(ignore))) {
+    if (
+      servicesToIgnore.some(ignore => this.containsService(ignore, service))
+    ) {
       return
     }
     const status = this.getStatus(result)
