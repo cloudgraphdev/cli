@@ -1,3 +1,11 @@
+## [0.16.12](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.11...0.16.12) (2022-01-18)
+
+
+### Bug Fixes
+
+* Removed schema util from CLI ([f38fb60](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f38fb6052a7643597f710d7cb02b9be71ab23f55))
+* Updated sdk to the latest version ([a0f8c74](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a0f8c74fcf881d6be5c8f66aff3160bc75a13ab0))
+
 ## [0.16.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.10...0.16.11) (2022-01-17)
 
 
