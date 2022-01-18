@@ -5,7 +5,8 @@ import path from 'path'
 import { isEmpty } from 'lodash'
 
 import Command from './base'
-import { fileUtils, loadAllData } from '../utils'
+import { fileUtils } from '../utils'
+import { loadAllData } from '../utils/data'
 
 export default class Load extends Command {
   static description = 'Load a specific version of your CloudGraph data'
@@ -80,9 +81,8 @@ export default class Load extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('LOAD')} for ${provider}`
       )
-      const { client: providerClient, schemasMap: schemaMap } = await this.getProviderClient(
-        provider
-      )
+      const { client: providerClient, schemasMap: schemaMap } =
+        await this.getProviderClient(provider)
       if (!providerClient) {
         continue // eslint-disable-line no-continue
       }

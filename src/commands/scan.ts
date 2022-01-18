@@ -5,10 +5,10 @@ import { cloudGraphPlugin, Opts, pluginMap } from '@cloudgraph/sdk'
 import { range } from 'lodash'
 
 import Command from './base'
-import { fileUtils, loadAllData } from '../utils'
+import { fileUtils } from '../utils'
 import DgraphEngine from '../storage/dgraph'
 import { scanReport } from '../reports'
-import { processConnectionsBetweenEntities } from '../utils/data'
+import { loadAllData, processConnectionsBetweenEntities } from '../utils/data'
 
 export default class Scan extends Command {
   static description =
