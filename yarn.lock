@@ -381,6 +381,7 @@
 
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
 "@cloudgraph/sdk@0.10.4":
 =======
 <<<<<<< refs/remotes/origin/master
@@ -408,6 +409,12 @@
   resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.10.5.tgz#6a2bfb51522a64b045b3a00636dec41d98030c6c"
   integrity sha512-NR5CDVdG8pWedcvF5G+WDN0IizlZd4hlVeSe0/81qXfMQDKVsCc1IMu84Oa3A9QhGB+1gNsOqaV/i2q5MJAX0g==
 >>>>>>> bumped sdk to latest version
+=======
+"@cloudgraph/sdk@^0.10.6":
+  version "0.10.6"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.10.6.tgz#f11adc08d8fb8f08301dc4e5ed4c09e3e0733658"
+  integrity sha512-NU0yVSZFBBW/1pUeY2haOc3xK3UnXKPT91b6SeGX6ygMBVtFDUexdbyzfgKo1e1+ySeRb2oKl++Hfh48uysEzg==
+>>>>>>> sdk version bump
   dependencies:
     "@graphql-tools/load-files" "^6.5.3"
     "@graphql-tools/merge" "^8.2.1"
