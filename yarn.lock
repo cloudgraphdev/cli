@@ -387,9 +387,9 @@
   "version" "0.2.3"
 
 "@cloudgraph/sdk@^0.10.4":
-  "integrity" "sha512-NR5CDVdG8pWedcvF5G+WDN0IizlZd4hlVeSe0/81qXfMQDKVsCc1IMu84Oa3A9QhGB+1gNsOqaV/i2q5MJAX0g=="
-  "resolved" "https://registry.npmjs.org/@cloudgraph/sdk/-/sdk-0.10.5.tgz"
-  "version" "0.10.5"
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.10.4.tgz#9bc4d8ef74934b92fa1d4b4cfefd107d1cffd3c2"
+  integrity sha512-bcUiReutpllmPnt8OqySh09nMm9/lHHSAMUwvvP19RJkAf5y4hcHxGfj4Ls0Fv50FjUhAc5AZwAF8MPNk3MrRw==
   dependencies:
     "@graphql-tools/load-files" "^6.5.3"
     "@graphql-tools/merge" "^8.2.1"
