@@ -1372,6 +1372,12 @@ There are some common errors you may see when running CloudGraph that are usuall
 * [`cg init [PROVIDER]`](#cg-init-provider)
 * [`cg launch [PROVIDER]`](#cg-launch-provider)
 * [`cg load [PROVIDER]`](#cg-load-provider)
+* [`cg plugins`](#cg-plugins)
+* [`cg plugins:inspect PLUGIN...`](#cg-pluginsinspect-plugin)
+* [`cg plugins:install PLUGIN...`](#cg-pluginsinstall-plugin)
+* [`cg plugins:link PLUGIN`](#cg-pluginslink-plugin)
+* [`cg plugins:uninstall PLUGIN...`](#cg-pluginsuninstall-plugin)
+* [`cg plugins update`](#cg-plugins-update)
 * [`cg policy [PROVIDER]`](#cg-policy-provider)
 * [`cg policy add [PROVIDER]`](#cg-policy-add-provider)
 * [`cg policy install [PROVIDER]`](#cg-policy-install-provider)
@@ -1395,16 +1401,16 @@ Display help for cg.
 
 ```
 USAGE
-  $ cg help [COMMAND] [--all]
+  $ cg help [COMMAND] [-n]
 
 ARGUMENTS
   COMMAND  Command to show help for.
 
 FLAGS
-  --all  see all commands in CLI
+  -n, --nested-commands  Include all nested commands in the output.
 
 DESCRIPTION
-  display help for cg
+  Display help for cg.
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.11/src/commands/help.ts)_
@@ -1512,6 +1518,152 @@ EXAMPLES
 
 _See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/load.ts)_
 
+## `cg plugins`
+
+List installed plugins.
+
+```
+USAGE
+  $ cg plugins [--core]
+
+FLAGS
+  --core  Show core plugins.
+
+DESCRIPTION
+  List installed plugins.
+
+EXAMPLES
+  $ cg plugins
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.1.0/src/commands/plugins/index.ts)_
+
+## `cg plugins:inspect PLUGIN...`
+
+Displays installation properties of a plugin.
+
+```
+USAGE
+  $ cg plugins:inspect PLUGIN...
+
+ARGUMENTS
+  PLUGIN  [default: .] Plugin to inspect.
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Displays installation properties of a plugin.
+
+EXAMPLES
+  $ cg plugins:inspect myplugin
+```
+
+## `cg plugins:install PLUGIN...`
+
+Installs a plugin into the CLI.
+
+```
+USAGE
+  $ cg plugins:install PLUGIN...
+
+ARGUMENTS
+  PLUGIN  Plugin to install.
+
+FLAGS
+  -f, --force    Run yarn install with force flag.
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Installs a plugin into the CLI.
+
+  Can be installed from npm or a git url.
+
+  Installation of a user-installed plugin will override a core plugin.
+
+  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
+  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
+  the CLI without the need to patch and update the whole CLI.
+
+ALIASES
+  $ cg plugins add
+
+EXAMPLES
+  $ cg plugins:install myplugin 
+
+  $ cg plugins:install https://github.com/someuser/someplugin
+
+  $ cg plugins:install someuser/someplugin
+```
+
+## `cg plugins:link PLUGIN`
+
+Links a plugin into the CLI for development.
+
+```
+USAGE
+  $ cg plugins:link PLUGIN
+
+ARGUMENTS
+  PATH  [default: .] path to plugin
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Links a plugin into the CLI for development.
+
+  Installation of a linked plugin will override a user-installed or core plugin.
+
+  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
+  command will override the user-installed or core plugin implementation. This is useful for development work.
+
+EXAMPLES
+  $ cg plugins:link myplugin
+```
+
+## `cg plugins:uninstall PLUGIN...`
+
+Removes a plugin from the CLI.
+
+```
+USAGE
+  $ cg plugins:uninstall PLUGIN...
+
+ARGUMENTS
+  PLUGIN  plugin to uninstall
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Removes a plugin from the CLI.
+
+ALIASES
+  $ cg plugins unlink
+  $ cg plugins remove
+```
+
+## `cg plugins update`
+
+Update installed plugins.
+
+```
+USAGE
+  $ cg plugins update [-h] [-v]
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Update installed plugins.
+```
+
 ## `cg policy [PROVIDER]`
 
 Commands to manage policy pack modules, run $ cg policy for more info.
@@ -1547,7 +1699,7 @@ Add new policy packs
 
 ```
 USAGE
-  $ cg policy:add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1585,7 +1737,7 @@ Install policy packs based on the lock file
 
 ```
 USAGE
-  $ cg policy:install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1621,7 +1773,7 @@ List currently installed policy packs and versions
 
 ```
 USAGE
-  $ cg policy:list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1660,7 +1812,7 @@ Remove currently installed policy pack
 
 ```
 USAGE
-  $ cg policy:remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1704,7 +1856,7 @@ Update currently installed policy packs
 
 ```
 USAGE
-  $ cg policy:update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1770,7 +1922,7 @@ Add new providers
 
 ```
 USAGE
-  $ cg provider:add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1808,7 +1960,7 @@ Install providers based on the lock file
 
 ```
 USAGE
-  $ cg provider:install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1844,7 +1996,7 @@ List currently installed providers and versions
 
 ```
 USAGE
-  $ cg provider:list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1883,7 +2035,7 @@ Remove currently installed provider
 
 ```
 USAGE
-  $ cg provider:remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1927,7 +2079,7 @@ Update currently installed providers
 
 ```
 USAGE
-  $ cg provider:update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
