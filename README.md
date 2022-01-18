@@ -1354,18 +1354,24 @@ There are some common errors you may see when running CloudGraph that are usuall
 * [`cg init [PROVIDER]`](#cg-init-provider)
 * [`cg launch [PROVIDER]`](#cg-launch-provider)
 * [`cg load [PROVIDER]`](#cg-load-provider)
+* [`cg plugins`](#cg-plugins)
+* [`cg plugins:inspect PLUGIN...`](#cg-pluginsinspect-plugin)
+* [`cg plugins:install PLUGIN...`](#cg-pluginsinstall-plugin)
+* [`cg plugins:link PLUGIN`](#cg-pluginslink-plugin)
+* [`cg plugins:uninstall PLUGIN...`](#cg-pluginsuninstall-plugin)
+* [`cg plugins update`](#cg-plugins-update)
 * [`cg policy [PROVIDER]`](#cg-policy-provider)
-* [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
-* [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
-* [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
-* [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
-* [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
+* [`cg policy add [PROVIDER]`](#cg-policy-add-provider)
+* [`cg policy install [PROVIDER]`](#cg-policy-install-provider)
+* [`cg policy list [PROVIDER]`](#cg-policy-list-provider)
+* [`cg policy remove [PROVIDER]`](#cg-policy-remove-provider)
+* [`cg policy update [PROVIDER]`](#cg-policy-update-provider)
 * [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+* [`cg provider add [PROVIDER]`](#cg-provider-add-provider)
+* [`cg provider install [PROVIDER]`](#cg-provider-install-provider)
+* [`cg provider list [PROVIDER]`](#cg-provider-list-provider)
+* [`cg provider remove [PROVIDER]`](#cg-provider-remove-provider)
+* [`cg provider update [PROVIDER]`](#cg-provider-update-provider)
 * [`cg scan [PROVIDER]`](#cg-scan-provider)
 * [`cg serve [PROVIDER]`](#cg-serve-provider)
 * [`cg teardown [PROVIDER]`](#cg-teardown-provider)
@@ -1373,23 +1379,23 @@ There are some common errors you may see when running CloudGraph that are usuall
 
 ## `cg help [COMMAND]`
 
-display help for cg
+Display help for cg.
 
 ```
 USAGE
-  $ cg help [COMMAND] [--all]
+  $ cg help [COMMAND] [-n]
 
 ARGUMENTS
-  COMMAND  command to show help for
+  COMMAND  Command to show help for.
 
 FLAGS
-  --all  see all commands in CLI
+  -n, --nested-commands  Include all nested commands in the output.
 
 DESCRIPTION
-  display help for cg
+  Display help for cg.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.17/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.11/src/commands/help.ts)_
 
 ## `cg init [PROVIDER]`
 
@@ -1494,6 +1500,152 @@ EXAMPLES
 
 _See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.8/src/commands/load.ts)_
 
+## `cg plugins`
+
+List installed plugins.
+
+```
+USAGE
+  $ cg plugins [--core]
+
+FLAGS
+  --core  Show core plugins.
+
+DESCRIPTION
+  List installed plugins.
+
+EXAMPLES
+  $ cg plugins
+```
+
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.1.0/src/commands/plugins/index.ts)_
+
+## `cg plugins:inspect PLUGIN...`
+
+Displays installation properties of a plugin.
+
+```
+USAGE
+  $ cg plugins:inspect PLUGIN...
+
+ARGUMENTS
+  PLUGIN  [default: .] Plugin to inspect.
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Displays installation properties of a plugin.
+
+EXAMPLES
+  $ cg plugins:inspect myplugin
+```
+
+## `cg plugins:install PLUGIN...`
+
+Installs a plugin into the CLI.
+
+```
+USAGE
+  $ cg plugins:install PLUGIN...
+
+ARGUMENTS
+  PLUGIN  Plugin to install.
+
+FLAGS
+  -f, --force    Run yarn install with force flag.
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Installs a plugin into the CLI.
+
+  Can be installed from npm or a git url.
+
+  Installation of a user-installed plugin will override a core plugin.
+
+  e.g. If you have a core plugin that has a 'hello' command, installing a user-installed plugin with a 'hello' command
+  will override the core plugin implementation. This is useful if a user needs to update core plugin functionality in
+  the CLI without the need to patch and update the whole CLI.
+
+ALIASES
+  $ cg plugins add
+
+EXAMPLES
+  $ cg plugins:install myplugin 
+
+  $ cg plugins:install https://github.com/someuser/someplugin
+
+  $ cg plugins:install someuser/someplugin
+```
+
+## `cg plugins:link PLUGIN`
+
+Links a plugin into the CLI for development.
+
+```
+USAGE
+  $ cg plugins:link PLUGIN
+
+ARGUMENTS
+  PATH  [default: .] path to plugin
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Links a plugin into the CLI for development.
+
+  Installation of a linked plugin will override a user-installed or core plugin.
+
+  e.g. If you have a user-installed or core plugin that has a 'hello' command, installing a linked plugin with a 'hello'
+  command will override the user-installed or core plugin implementation. This is useful for development work.
+
+EXAMPLES
+  $ cg plugins:link myplugin
+```
+
+## `cg plugins:uninstall PLUGIN...`
+
+Removes a plugin from the CLI.
+
+```
+USAGE
+  $ cg plugins:uninstall PLUGIN...
+
+ARGUMENTS
+  PLUGIN  plugin to uninstall
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Removes a plugin from the CLI.
+
+ALIASES
+  $ cg plugins unlink
+  $ cg plugins remove
+```
+
+## `cg plugins update`
+
+Update installed plugins.
+
+```
+USAGE
+  $ cg plugins update [-h] [-v]
+
+FLAGS
+  -h, --help     Show CLI help.
+  -v, --verbose
+
+DESCRIPTION
+  Update installed plugins.
+```
+
 ## `cg policy [PROVIDER]`
 
 Commands to manage policy pack modules, run $ cg policy for more info.
@@ -1523,13 +1675,13 @@ DESCRIPTION
 
 _See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.8/src/commands/policy/index.ts)_
 
-## `cg policy:add [PROVIDER]`
+## `cg policy add [PROVIDER]`
 
 Add new policy packs
 
 ```
 USAGE
-  $ cg policy:add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1551,7 +1703,7 @@ DESCRIPTION
   Add new policy packs
 
 ALIASES
-  $ cg add:policy
+  $ cg add policy
 
 EXAMPLES
   $ cg policy add aws-cis-1.2.0
@@ -1567,7 +1719,7 @@ Install policy packs based on the lock file
 
 ```
 USAGE
-  $ cg policy:install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1589,7 +1741,7 @@ DESCRIPTION
   Install policy packs based on the lock file
 
 ALIASES
-  $ cg install:policy
+  $ cg install policy
 
 EXAMPLES
   $ cg policy install
@@ -1603,7 +1755,7 @@ List currently installed policy packs and versions
 
 ```
 USAGE
-  $ cg policy:list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1625,9 +1777,9 @@ DESCRIPTION
   List currently installed policy packs and versions
 
 ALIASES
-  $ cg ls:policy
-  $ cg list:policy
-  $ cg ls:policy
+  $ cg ls policy
+  $ cg list policy
+  $ cg ls policy
 
 EXAMPLES
   $ cg policy list
@@ -1643,7 +1795,7 @@ Remove currently installed policy pack
 
 ```
 USAGE
-  $ cg policy:remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1665,12 +1817,12 @@ DESCRIPTION
   Remove currently installed policy pack
 
 ALIASES
-  $ cg remove:policy
-  $ cg policy:remove
-  $ cg policy:rm
-  $ cg del:policy
-  $ cg rm:policy
-  $ cg del:policy
+  $ cg remove policy
+  $ cg policy remove
+  $ cg policy rm
+  $ cg del policy
+  $ cg rm policy
+  $ cg del policy
 
 EXAMPLES
   $ cg policy delete
@@ -1688,7 +1840,7 @@ Update currently installed policy packs
 
 ```
 USAGE
-  $ cg policy:update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1748,13 +1900,13 @@ DESCRIPTION
 
 _See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.8/src/commands/provider/index.ts)_
 
-## `cg provider:add [PROVIDER]`
+## `cg provider add [PROVIDER]`
 
 Add new providers
 
 ```
 USAGE
-  $ cg provider:add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1776,7 +1928,7 @@ DESCRIPTION
   Add new providers
 
 ALIASES
-  $ cg add:provider
+  $ cg add provider
 
 EXAMPLES
   $ cg provider add aws
@@ -1792,7 +1944,7 @@ Install providers based on the lock file
 
 ```
 USAGE
-  $ cg provider:install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1814,7 +1966,7 @@ DESCRIPTION
   Install providers based on the lock file
 
 ALIASES
-  $ cg install:provider
+  $ cg install provider
 
 EXAMPLES
   $ cg provider install
@@ -1828,7 +1980,7 @@ List currently installed providers and versions
 
 ```
 USAGE
-  $ cg provider:list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1850,9 +2002,9 @@ DESCRIPTION
   List currently installed providers and versions
 
 ALIASES
-  $ cg ls:provider
-  $ cg list:provider
-  $ cg ls:provider
+  $ cg ls provider
+  $ cg list provider
+  $ cg ls provider
 
 EXAMPLES
   $ cg provider list
@@ -1868,7 +2020,7 @@ Remove currently installed provider
 
 ```
 USAGE
-  $ cg provider:remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1890,12 +2042,12 @@ DESCRIPTION
   Remove currently installed provider
 
 ALIASES
-  $ cg remove:provider
-  $ cg provider:remove
-  $ cg provider:rm
-  $ cg del:provider
-  $ cg rm:provider
-  $ cg del:provider
+  $ cg remove provider
+  $ cg provider remove
+  $ cg provider rm
+  $ cg del provider
+  $ cg rm provider
+  $ cg del provider
 
 EXAMPLES
   $ cg provider delete
@@ -1913,7 +2065,7 @@ Update currently installed providers
 
 ```
 USAGE
-  $ cg provider:update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
