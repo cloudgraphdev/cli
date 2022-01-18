@@ -1,5 +1,4 @@
-import { ProviderData } from '@cloudgraph/sdk';
-import { StorageEngine } from '../storage/types';
+import { ProviderData, StorageEngine } from '@cloudgraph/sdk'
 
 export interface CloudGraphConfig {
   [key: string]: unknown | Record<NonNullable<string | number>, unknown>

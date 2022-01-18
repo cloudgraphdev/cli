@@ -8,6 +8,7 @@ import Command from './base'
 import { fileUtils, loadAllData } from '../utils'
 import DgraphEngine from '../storage/dgraph'
 import { scanReport } from '../reports'
+import { processConnectionsBetweenEntities } from '../utils/data'
 
 export default class Scan extends Command {
   static description =
@@ -111,9 +112,8 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client: providerClient, schemasMap: schemaMap } = await this.getProviderClient(
-        provider
-      )
+      const { client: providerClient, schemasMap } =
+        await this.getProviderClient(provider)
       if (!providerClient) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
@@ -122,11 +122,11 @@ export default class Scan extends Command {
       const config = this.getCGConfig(provider)
 
       // Configure installed plugins
-      for (const key in config) {
-        if (cloudGraphPlugin[key]) {
+      for (const serviceKey in config) {
+        if (cloudGraphPlugin[serviceKey]) {
           try {
             // Get Plugin Interface
-            const Plugin = pluginMap[cloudGraphPlugin[key]]
+            const Plugin = pluginMap[cloudGraphPlugin[serviceKey]]
 
             // Initialize
             const PluginInstance = new Plugin({
@@ -141,7 +141,9 @@ export default class Scan extends Command {
             })
 
             // Get the Plugin Manager
-            const pluginManager = this.getPluginManager(cloudGraphPlugin[key])
+            const pluginManager = this.getPluginManager(
+              cloudGraphPlugin[serviceKey]
+            )
 
             // Configure
             await PluginInstance.configure(pluginManager)
@@ -237,7 +239,7 @@ export default class Scan extends Command {
           providerData,
           storageEngine,
           storageRunning,
-          schemaMap,
+          schemaMap: schemasMap,
         },
         this.logger
       )

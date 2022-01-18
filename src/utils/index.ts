@@ -3,23 +3,24 @@ import CloudGraph, {
   Logger,
   ProviderData,
   ServiceConnection,
+  StorageEngineConnectionConfig,
 } from '@cloudgraph/sdk'
-import { loadFilesSync } from '@graphql-tools/load-files'
-import { mergeTypeDefs } from '@graphql-tools/merge'
-import { print } from 'graphql'
 import boxen from 'boxen'
 import CFonts from 'cfonts'
 import chalk from 'chalk'
 import { exec } from 'child_process'
 import fs from 'fs'
 import glob from 'glob'
+import isEmpty from 'lodash/isEmpty'
 import path from 'path'
 import detect from 'detect-port'
 
 import C, { DEFAULT_CONFIG, DGRAPH_CONTAINER_LABEL } from '../utils/constants'
-import { StorageEngineConnectionConfig } from '../storage/types'
 import { DataToLoad } from '../types'
 import { generateMutation, generateUpdateVarsObject } from './mutation'
+import { scanDataType, scanReport, scanResult } from '../reports'
+
+const {logger} = CloudGraph
 
 export const getKeyByValue = (
   object: Record<string, unknown>,
