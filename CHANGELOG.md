@@ -41,6 +41,7 @@
 * **scan-report:** ignore label service ([efb5f3f](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/efb5f3feb3a009f219b0e7a2becbf72c79c1242b))
 
 ## [0.20.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.1...0.20.2) (2022-02-16)
+# [0.17.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.9-alpha.1...0.17.0-alpha.1) (2022-01-19)
 
 
 ### Bug Fixes
@@ -82,6 +83,11 @@
 * **brew:** updates from PR review. remove unneeded error throw and unused code ([9c11296](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9c11296beb8fb59c422eb3b321f2d97d35493498))
 * **brew:** work on getting aws creds to validate ([566f199](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/566f1999a7930fccfea55a2a0f6e5417d5f688de))
 * **deploy:** update gitlab ci for aws config ([8423d08](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8423d081f60b3561828cff4d5d16e2876d8cf589))
+* Fixed display scan results for apigatewaystage service ([528e2dd](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/528e2dd1b3d2ce1f30be2c709ced51dd59b69783))
+* img src ([497cd13](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/497cd13ea5a9bcd2f6e1d040f9501ac3b7dab7a6))
+* Moved scripts to root folder ([e7009d5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e7009d52e1a7585201ad396923c8a9788a65ebd9))
+* Removed schema util from CLI ([066392c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/066392ccbfb9d203e3312db1713a49febaef736e))
+* Updated sdk to the latest version ([cd7d9ec](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cd7d9ec136e8ae5b4e9044cec164558e93da458d))
 
 
 ### Features
@@ -156,6 +162,8 @@
 * Preserved scripts folder during build ([ca15db3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ca15db3fecdf8ccf4b4d5cce67057cda2b6e36fc))
 
 ## [0.16.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9) (2022-01-12)
+* Update CG to use Oclif core and space for the topicSeparator ([aad2c83](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/aad2c830e218216cbf48a782c337667e6b3832a3))
+
 ## [0.16.9-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9) (2022-01-12)
 
 
