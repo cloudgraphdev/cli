@@ -112,7 +112,7 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client: providerClient, schemasMap } =
+      const { client: providerClient, schemasMap, serviceKey } =
         await this.getProviderClient(provider)
       if (!providerClient) {
         failedProviderList.push(provider)
@@ -122,11 +122,11 @@ export default class Scan extends Command {
       const config = this.getCGConfig(provider)
 
       // Configure installed plugins
-      for (const serviceKey in config) {
-        if (cloudGraphPlugin[serviceKey]) {
+      for (const key in config) {
+        if (cloudGraphPlugin[key]) {
           try {
             // Get Plugin Interface
-            const Plugin = pluginMap[cloudGraphPlugin[serviceKey]]
+            const Plugin = pluginMap[cloudGraphPlugin[key]]
 
             // Initialize
             const PluginInstance = new Plugin({
@@ -142,7 +142,7 @@ export default class Scan extends Command {
 
             // Get the Plugin Manager
             const pluginManager = this.getPluginManager(
-              cloudGraphPlugin[serviceKey]
+              cloudGraphPlugin[key]
             )
 
             // Configure
