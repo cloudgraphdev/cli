@@ -1,5 +1,5 @@
 import { StorageEngineConnectionConfig } from '@cloudgraph/sdk'
-import { flags as CommandFlags } from '@oclif/command'
+import { Flags as CommandFlags } from '@oclif/core'
 import fs from 'fs'
 import path from 'path'
 import chalk from 'chalk'
@@ -71,7 +71,7 @@ export default class Init extends Command {
   }> {
     let {
       flags: { dgraph, 'version-limit': versionLimit = '10' },
-    } = this.parse(Init)
+    } = await this.parse(Init)
     if (!dgraph && overwrite) {
       const { receivedUrl, vLimit } = await this.interface.prompt(
         dGraphConfigQuestions
@@ -100,10 +100,10 @@ export default class Init extends Command {
   }> {
     const {
       flags: { port = '5555' },
-    } = this.parse(Init)
+    } = await this.parse(Init)
     let {
       flags: { 'query-engine': queryEngine },
-    } = this.parse(Init)
+    } = await this.parse(Init)
     if (!queryEngine && overwrite) {
       const { inputQueryEngine } = await this.interface.prompt(
         queryEngineConfigQuestions
@@ -163,7 +163,7 @@ export default class Init extends Command {
   }
 
   async run(): Promise<void> {
-    const { argv } = this.parse(Init)
+    const { argv } = await this.parse(Init)
     const { configDir, dataDir } = this.config
     // const opts: Opts = {logger: this.logger, debug, devMode}
     // First determine the provider if one has not been passed in args

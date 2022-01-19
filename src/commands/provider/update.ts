@@ -28,9 +28,9 @@ export default class Update extends Command {
   static args = Command.args
 
   async run(): Promise<void> {
-    const { argv } = this.parse(Update)
+    const { argv } = await this.parse(Update)
     const allProviders = argv
-    const manager = this.getPluginManager(PluginType.Provider)
+    const manager = await this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()
 
     if (isEmpty(lockFile?.provider)) {

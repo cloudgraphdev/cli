@@ -1,5 +1,4 @@
-import Command from '@oclif/command'
-import { Input } from '@oclif/parser'
+import { Command, Interfaces } from '@oclif/core'
 import CloudGraph, {
   Logger,
   StorageEngine,
@@ -69,24 +68,23 @@ export default abstract class BaseCommand extends Command {
     // Initialize the logger and storage engine
     const {
       flags: { storage = 'dgraph', directory },
-    } = this.parse(
-      this.constructor as Input<{
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{
         dev: boolean
         storage: string
         directory: string
       }>
     )
-
     this.storageEngine = new EngineMap[storage]({
       type: storage,
-      ...this.getConnectionSettings(),
+      ...(await this.getConnectionSettings()),
       logger: this.logger,
     })
     const config = this.getCGConfig('cloudGraph')
     if (!config) {
       printWelcomeMessage()
     }
-    const manager = this.getPluginManager(PluginType.Provider)
+    const manager = await this.getPluginManager(PluginType.Provider)
     const cliLatestVersion = await manager.queryRemoteVersion('@cloudgraph/cli')
     if (gt(cliLatestVersion, this.config.version)) {
       printBoxMessage(`Update for ${chalk.italic.green(
@@ -107,26 +105,30 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     return undefined
   }
 
-  getStorageEngine(): StorageEngine {
+  async getStorageEngine(): Promise<StorageEngine> {
     if (this.storageEngine) {
       return this.storageEngine
     }
     const {
       flags: { storage = 'dgraph' },
-    } = this.parse(this.constructor as Input<{ dev: boolean; storage: string }>)
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{ dev: boolean; storage: string }>
+    )
     const engine = new EngineMap[storage]({
       type: storage,
-      ...this.getConnectionSettings(),
+      ...(await this.getConnectionSettings()),
       logger: this.logger,
     })
     this.storageEngine = engine
     return engine
   }
 
-  getQueryEngine(): string {
+  async getQueryEngine(): Promise<string> {
     const {
       flags: { 'query-engine': queryEngine },
-    } = this.parse(this.constructor as Input<{ 'query-engine': string }>)
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{ 'query-engine': string }>
+    )
     const configEngine = this.getCGConfigKey('queryEngine') ?? 'playground'
     return queryEngine ?? configEngine
   }
@@ -134,8 +136,8 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
   async startQueryEngine(): Promise<void> {
     const {
       flags: { port, 'no-serve': noServe },
-    } = this.parse(
-      this.constructor as Input<{ port: string; 'no-serve': string }>
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{ port: string; 'no-serve': string }>
     )
     if (!noServe) {
       const configPort = this.getCGConfigKey('port') ?? 5555
@@ -147,7 +149,9 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
         )
       }
       const queryEngine = new QueryEngine(availablePort)
-      await queryEngine.startServer(this.getHost(this.getConnectionSettings()))
+      await queryEngine.startServer(
+        this.getHost(await this.getConnectionSettings())
+      )
       this.logger.success(
         `Serving query engine at ${chalk.underline.green(
           `http://localhost:${availablePort}`
@@ -165,13 +169,13 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     }
   }
 
-  getConnectionSettings(
+  async getConnectionSettings(
     showInitialStatus = true
-  ): StorageEngineConnectionConfig {
+  ): Promise<StorageEngineConnectionConfig> {
     const {
       flags: { dgraph: dgraphHost, storage = 'dgraph' },
-    } = this.parse(
-      this.constructor as Input<{
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{
         dev: boolean
         dgraph: string
         storage: string
@@ -207,10 +211,10 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     return `${config.scheme}://${config.host}:${config.port}`
   }
 
-  getPluginManager(pluginType: PluginType): Manager {
+  async getPluginManager(pluginType: PluginType): Promise<Manager> {
     const {
       flags: { dev: devMode },
-    } = this.parse(this.constructor as Input<{ dev: boolean }>)
+    } = await this.parse(this.constructor as Interfaces.Input<{ dev: boolean }>)
 
     this.manager = new Manager({
       logger: this.logger,
@@ -226,7 +230,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     provider: string
   ): Promise<{ client: any; schemasMap?: SchemaMap; serviceKey?: string }> {
     try {
-      const manager = this.getPluginManager(PluginType.Provider)
+      const manager = await this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
         return this.providers[provider]
       }
@@ -265,7 +269,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     policyPack: string
   }): Promise<any> {
     try {
-      const manager = this.getPluginManager(PluginType.PolicyPack)
+      const manager = await this.getPluginManager(PluginType.PolicyPack)
       if (this.policyPacks[policyPack]) {
         return this.policyPacks[policyPack]
       }
@@ -318,8 +322,10 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     }
   }
 
-  buildProviderConfig(provider: string): any {
-    const { flags } = this.parse(this.constructor as Input<any>)
+  async buildProviderConfig(provider: string): Promise<any> {
+    const { flags } = await this.parse(
+      this.constructor as Interfaces.Input<any>
+    )
     const providerConfig = this.getCGConfig(provider) ?? {}
     return {
       ...providerConfig,

@@ -1,7 +1,7 @@
 import { PluginType } from '@cloudgraph/sdk'
 import { isEmpty } from 'lodash'
 import chalk from 'chalk'
-import { flags } from '@oclif/command'
+import { Flags as flags } from '@oclif/core'
 
 import Command from '../base'
 
@@ -34,9 +34,9 @@ export default class Remove extends Command {
     const {
       argv,
       flags: { 'no-save': noSave },
-    } = this.parse(Remove)
+    } = await this.parse(Remove)
     const allProviders = argv
-    const manager = this.getPluginManager(PluginType.Provider)
+    const manager = await this.getPluginManager(PluginType.Provider)
     const lockFile = manager.getLockFile()
     if (isEmpty(lockFile?.provider)) {
       this.logger.info('No providers found, have you installed any?')
