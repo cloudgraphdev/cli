@@ -1,3 +1,19 @@
+# [0.17.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.9-alpha.1...0.17.0-alpha.1) (2022-01-19)
+
+
+### Bug Fixes
+
+* Fixed display scan results for apigatewaystage service ([528e2dd](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/528e2dd1b3d2ce1f30be2c709ced51dd59b69783))
+* img src ([497cd13](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/497cd13ea5a9bcd2f6e1d040f9501ac3b7dab7a6))
+* Moved scripts to root folder ([e7009d5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/e7009d52e1a7585201ad396923c8a9788a65ebd9))
+* Removed schema util from CLI ([066392c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/066392ccbfb9d203e3312db1713a49febaef736e))
+* Updated sdk to the latest version ([cd7d9ec](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cd7d9ec136e8ae5b4e9044cec164558e93da458d))
+
+
+### Features
+
+* Update CG to use Oclif core and space for the topicSeparator ([aad2c83](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/aad2c830e218216cbf48a782c337667e6b3832a3))
+
 ## [0.16.9-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9) (2022-01-12)
 
 
