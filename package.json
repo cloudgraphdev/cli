@@ -41,6 +41,7 @@
     "live-plugin-manager": "0.15.1",
     "lodash": "^4.17.21",
     "npm": "^8.1.2",
+    "oclif": "^2.3.0",
     "open": "^8.2.1",
     "semver": "^7.3.5",
     "tslib": "^1"
@@ -65,6 +66,7 @@
     "@types/pino": "^6.3.8",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "aws-sdk": "^2.1060.0",
     "chai": "^4.3.4",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
@@ -77,6 +79,8 @@
     "jest": "^27.1.0",
     "jest-diff": "^27.1.0",
     "lint-staged": "^11.1.1",
+    "mkdirp": "^1.0.4",
+    "rimraf": "^3.0.2",
     "semantic-release": "^17.4.4",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
@@ -102,15 +106,23 @@
     "plugins": [
       "@oclif/plugin-help",
       "@tiagonapoli/oclif-plugin-spaced-commands"
-    ]
+    ],
+    "update": {
+      "s3": {
+        "bucket": "cloudgraph-production-cli-assets"
+      },
+      "node": {
+        "version": "16.0.0"
+      }
+    }
   },
   "repository": "github:cloudgraphdev/cli",
   "scripts": {
-    "build": "yarn prepack",
+    "build": "oclif-dev pack -t linux-x64,linux-arm,darwin-x64,darwin-arm64 && yarn postpack",
     "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc.json",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme && yarn cpx 'src/scripts/*' lib/scripts",
+    "prepack": "rm -rf lib && npx tsc -b --force && oclif-dev manifest && oclif-dev readme && yarn cpx 'src/scripts/*' lib/scripts",
     "run:init": "cross-env NODE_ENV=development ./bin/run init",
     "run:init:aws": "cross-env NODE_ENV=development ./bin/run init aws",
     "run:load": "cross-env NODE_ENV=development ./bin/run load",
@@ -124,9 +136,10 @@
     "run:policy": "cross-env NODE_ENV=test ./bin/run policy",
     "test": "cross-env CG_DEBUG=-1 NODE_ENV=test jest --coverage=true --detectOpenHandles --runInBand --forceExit",
     "test:debug": "cross-env CG_DEBUG=5 NODE_ENV=test jest --coverage=false --detectOpenHandles --runInBand --forceExit",
-    "version": "oclif-dev readme && git add README.md",
+    "version": "oclif readme && git add README.md",
     "lint": "eslint --config .eslintrc.json --ext .js,.ts ./",
-    "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./"
+    "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./",
+    "release": "node release/scripts/homebrew.js"
   },
   "husky": {
     "hooks": {
