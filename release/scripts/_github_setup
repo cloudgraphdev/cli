@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+# if [[ "${CIRCLECI:-}" != "true" ]]; then
+#   echo "skipping github setup since not on circle"
+#   exit
+# fi
+
+git config --global user.email "149658+cloudgraph-cli@users.noreply.github.com"
+git config --global user.name "cloudgraph-cli"
