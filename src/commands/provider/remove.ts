@@ -5,7 +5,7 @@ import OperationBaseCommand from '../operation'
 export default class RemoveProvider extends OperationBaseCommand {
   static description = 'Remove currently installed provider'
 
-  static aliases = ['remove:p', 'rm:p', 'del:p', 'rm:provider', 'del:provider']
+  static aliases = ['remove', 'rm', 'del', 'rm', 'del']
 
   static examples = [
     '$ cg delete provider',

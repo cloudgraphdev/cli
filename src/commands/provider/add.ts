@@ -5,7 +5,7 @@ import OperationBaseCommand from '../operation'
 export default class AddProvider extends OperationBaseCommand {
   static description = 'Add new providers'
 
-  static aliases = ['add:p']
+  static aliases = ['add']
 
   static examples = ['$ cg add provider aws', '$ cg add provider aws@0.12.0']
 

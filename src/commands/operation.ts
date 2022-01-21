@@ -71,7 +71,7 @@ export default abstract class OperationBaseCommand extends Command {
 
   async installPlugin(type: PluginType): Promise<void> {
     const manager = this.getPluginManager(type)
-    const lockFile = manager.getLockFile()
+    const lockFile = this.getLockFile()
     if (isEmpty(lockFile?.[type])) {
       this.logger.info(
         `No ${messages[type]?.plural} found in lock file, have you added any?`
@@ -94,7 +94,7 @@ export default abstract class OperationBaseCommand extends Command {
     } = this.parse(OperationBaseCommand)
     const allPlugins = argv
     const manager = this.getPluginManager(type)
-    const lockFile = manager.getLockFile()
+    const lockFile = this.getLockFile()
     const plugins = []
 
     if (isEmpty(allPlugins)) {
@@ -139,7 +139,7 @@ export default abstract class OperationBaseCommand extends Command {
     const { argv } = this.parse(OperationBaseCommand)
     const allPlugins = argv
     const manager = this.getPluginManager(type)
-    const lockFile = manager.getLockFile()
+    const lockFile = this.getLockFile()
 
     if (isEmpty(lockFile?.[type])) {
       this.logger.info(
@@ -208,8 +208,7 @@ export default abstract class OperationBaseCommand extends Command {
   async list(type: PluginType): Promise<void> {
     const { argv } = this.parse(OperationBaseCommand)
     const allPlugins = argv
-    const manager = this.getPluginManager(type)
-    const lockFile = manager.getLockFile()
+    const lockFile = this.getLockFile()
     if (isEmpty(lockFile?.[type])) {
       this.logger.info(
         `No ${messages[type]?.plural} found, have you installed any?`

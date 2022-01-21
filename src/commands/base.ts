@@ -345,4 +345,16 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     // or simply return the parent class error handling
     return super.catch(err)
   }
+
+  getLockFile(): any {
+    const lockPath = path.join(this.config.configDir, '.cloud-graph.lock.json')
+    try {
+      const lockFile = cosmiconfigSync('cloud-graph').load(lockPath)
+      return lockFile?.config ?? {}
+    } catch (error: any) {
+      this.logger.info('No lock file found for Cloud Graph')
+      this.logger.debug(error)
+      return {}
+    }
+  }
 }

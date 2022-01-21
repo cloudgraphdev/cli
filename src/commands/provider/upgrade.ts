@@ -2,15 +2,15 @@ import { PluginType } from '@cloudgraph/sdk'
 
 import OperationBaseCommand from '../operation'
 
-export default class UpdateProvider extends OperationBaseCommand {
-  static description = 'Update currently installed providers'
+export default class UpgradeProvider extends OperationBaseCommand {
+  static description = 'Upgrade currently installed providers'
 
-  static aliases = ['update:p']
+  static aliases = []
 
   static examples = [
-    '$ cg update provider',
-    '$ cg update provider aws',
-    '$ cg update provider aws@0.12.0',
+    '$ cg upgrade provider',
+    '$ cg upgrade provider aws',
+    '$ cg upgrade provider aws@0.12.0',
   ]
 
   static strict = false

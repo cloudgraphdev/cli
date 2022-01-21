@@ -2,15 +2,15 @@ import { PluginType } from '@cloudgraph/sdk'
 
 import OperationBaseCommand from '../operation'
 
-export default class UpdatePolicy extends OperationBaseCommand {
-  static description = 'Update currently installed policy packs'
+export default class UpgradePolicy extends OperationBaseCommand {
+  static description = 'Upgrade currently installed policy packs'
 
   static aliases = ['update:pp']
 
   static examples = [
-    '$ cg update policy',
-    '$ cg update policy aws-cis-1.2.0',
-    '$ cg update policy aws-cis-1.2.0@0.12.0',
+    '$ cg upgrade policy',
+    '$ cg upgrade policy aws-cis-1.2.0',
+    '$ cg upgrade policy aws-cis-1.2.0@0.12.0',
   ]
 
   static strict = false
