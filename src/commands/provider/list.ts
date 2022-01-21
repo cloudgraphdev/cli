@@ -5,9 +5,9 @@ import OperationBaseCommand from '../operation'
 export default class ListProvider extends OperationBaseCommand {
   static description = 'List currently installed providers and versions'
 
-  static aliases = ['ls', 'list', 'ls']
+  static aliases = ['ls:provider', 'list:provider', 'ls:provider']
 
-  static examples = ['$ cg list provider', '$ cg list provider aws']
+  static examples = ['$ cg provider list', '$ cg provider list aws']
 
   static strict = false
 

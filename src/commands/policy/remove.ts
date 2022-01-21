@@ -5,12 +5,18 @@ import OperationBaseCommand from '../operation'
 export default class RemovePolicy extends OperationBaseCommand {
   static description = 'Remove currently installed policy pack'
 
-  static aliases = ['remove:pp', 'rm:pp', 'del:pp', 'rm:policy', 'del:policy']
+  static aliases = [
+    'policy:remove',
+    'policy:rm',
+    'del:policy',
+    'rm:policy',
+    'del:policy',
+  ]
 
   static examples = [
-    '$ cg delete policy',
-    '$ cg delete policy aws-cis-1.2.0',
-    '$ cg delete policy aws-cis-1.2.0 --no-save',
+    '$ cg policy delete',
+    '$ cg policy delete aws-cis-1.2.0',
+    '$ cg policy delete aws-cis-1.2.0 --no-save',
   ]
 
   static strict = false

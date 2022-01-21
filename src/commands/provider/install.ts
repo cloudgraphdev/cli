@@ -5,9 +5,9 @@ import OperationBaseCommand from '../operation'
 export default class InstallProvider extends OperationBaseCommand {
   static description = 'Install providers based on the lock file'
 
-  static aliases = ['install']
+  static aliases = ['install:provider']
 
-  static examples = ['$ cg install provider']
+  static examples = ['$ cg provider install']
 
   static strict = false
 

@@ -7,7 +7,7 @@ export default class ListPolicy extends OperationBaseCommand {
 
   static aliases = ['ls:policy', 'list:pp', 'ls:pp']
 
-  static examples = ['$ cg list policy', '$ cg list policy aws']
+  static examples = ['$ cg policy list', '$ cg policy list aws']
 
   static strict = false
 

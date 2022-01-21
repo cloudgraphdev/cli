@@ -5,9 +5,9 @@ import OperationCommand from './operation'
 export default class Upgrade extends OperationCommand {
   static description = 'Upgrade currently installed plugins.'
 
-  static examples = ['$ cg upgrade']
+  static examples = ['$ cg update']
 
-  static aliases = []
+  static aliases = ['update']
 
   static strict = false
 
