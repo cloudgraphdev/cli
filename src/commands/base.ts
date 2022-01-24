@@ -90,7 +90,9 @@ export default abstract class BaseCommand extends Command {
       printBoxMessage(`Update for ${chalk.italic.green(
         '@cloudgraph/cli'
       )} is available: ${this.config.version} -> ${cliLatestVersion}. \n
-Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
+you can update based on how you installed CG \n
+NPM: ${chalk.italic.green('npm i -g @cloudgraph/cli')} \n
+homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     }
     const configDir = this.getCGConfigKey('directory') ?? 'cg'
     this.versionDirectory = directory ?? configDir
