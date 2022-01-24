@@ -1547,8 +1547,8 @@ OPTIONS
 
 ALIASES
   $ cg ls policy
-  $ cg list pp
-  $ cg ls pp
+  $ cg list policy
+  $ cg ls policy
 
 EXAMPLES
   $ cg policy list
@@ -1579,6 +1579,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
+  $ cg remove policy
   $ cg policy remove
   $ cg policy rm
   $ cg del policy
@@ -1761,6 +1762,7 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
+  $ cg remove provider
   $ cg provider remove
   $ cg provider rm
   $ cg del provider

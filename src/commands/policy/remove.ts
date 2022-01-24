@@ -6,6 +6,7 @@ export default class RemovePolicy extends OperationBaseCommand {
   static description = 'Remove currently installed policy pack'
 
   static aliases = [
+    'remove:policy',
     'policy:remove',
     'policy:rm',
     'del:policy',
