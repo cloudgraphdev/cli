@@ -1,4 +1,25 @@
 # [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-01-28)
+# [0.17.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.12...0.17.0) (2022-01-24)
+
+
+### Bug Fixes
+
+* Added missing aliases ([a9fbb03](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a9fbb036a42624ed3fbf64c14845455edd840d74))
+* Removed unused scripts from the package.json ([680f9dc](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/680f9dc208580c3dae3fe52400a0d30e6019a953))
+* Renamed plugin commands ([0b92db8](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0b92db82438e498923a32a75a49fe0142fa26833))
+
+
+### Features
+
+* Created operation base command ([8ee9093](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8ee9093cd960b665e1fed15df69349d222e231c7))
+* Improved error messages with plugin commands ([3747df9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3747df9ef59912f86a8217c56dedb3140938ce79))
+* Migrated add command ([4d83128](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4d83128b5074c4ab60640df4a38b7bcdb58ab580))
+* Migrated install command ([7890340](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7890340de81ba23f641f15ed5cad561d999490fa))
+* Migrated list command ([0ced854](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0ced85459dfdc5fdd80713af7d3b50154ad5a487))
+* Migrated remove command ([8a80b70](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8a80b70aca6aab1b3e3f1068d4475ba6f3693292))
+* Migrated update command ([1e4eec4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1e4eec4ca721491f72402b3f8ccce66d7306c782))
+* Reverted changes to keep upgrade all command ([cc95962](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cc95962207a33cefdebaaf99c78acee0077d3a28))
+
 ## [0.16.12](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.11...0.16.12) (2022-01-18)
 
 
