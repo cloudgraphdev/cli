@@ -18,7 +18,6 @@
   - chmod 700 ~/.ssh
   - echo "$GITHUB_SSH_KEY" | tr -d '\r' > ~/.ssh/github_autodeploy
   - chmod 600 ~/.ssh/github_autodeploy
-  - cat ~/.ssh/github_autodeploy
   - |
     {
       echo "Host github.com"
@@ -59,7 +58,6 @@ stages:
   - notify
 
 build:
-  image: node:16-alpine
   stage: build
   rules:
     - if: $CI_COMMIT_TAG
@@ -72,7 +70,6 @@ build:
     - yarn prepack
 
 lint:
-  image: node:16-alpine
   stage: test
   rules:
     - when: always
@@ -88,7 +85,6 @@ lint:
 #     - yarn test
 
 semantic release:
-  image: node:16-alpine
   stage: release
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_MESSAGE =~ /^chore\(release\)/'
@@ -105,13 +101,10 @@ semantic release:
     # Disable Husky for the git step of semantic release (handles all versions, env var name changed in v6)
     HUSKY_SKIP_HOOKS: 1
     HUSKY: 0
-  before_script:
-    - *configure-registry
   script:
     - npx semantic-release -r $CI_PROJECT_URL
 
 homebrew:
-  image: node:16-alpine
   stage: release
   rules:
     - if: $CI_COMMIT_BRANCH
@@ -160,7 +153,6 @@ homebrew:
   $SLACK_API_ENDPOINT
 
 notify:
-  image: alpine:latest
   stage: notify
   rules:
     - if: $CI_COMMIT_TAG
