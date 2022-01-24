@@ -116,8 +116,7 @@ async function updateCgFormula(brewDir) {
   console.log(files)
   const zipFile = files.find((file) => file.includes('tar.gz'))
   const pathToFile = path.join(pathToDist, zipFile)
-  const sha256 = '1d6869455526630c2e13718576e743ba09a1c288c8a56b7507df16c85a16d422'
-  console.log(sha256)
+  const sha256 = calculateSHA256(pathToFile)
   const url = `${CLI_ASSETS_URL}/cg-v${SHORT_VERSION}/${zipFile}`
 
   const templateReplaced = template
