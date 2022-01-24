@@ -185,13 +185,16 @@ async function updateHomebrew() {
   const git = async (args, opts = {}) => {
     await execa('git', ['-C', homebrewDir, ...args], opts)
   }
-
-  await git(['add', '.'])
-  await git(['config', '--local', 'core.pager', 'cat'])
-  await git(['diff', '--cached'], { stdio: 'inherit' })
-  await git(['commit', '-m', `CloudGraph v${SHORT_VERSION}`])
-  if (process.env.SKIP_GIT_PUSH === undefined) {
-    await git(['push', 'origin', 'main'])
+  try {
+    await git(['add', '.'])
+    await git(['config', '--local', 'core.pager', 'cat'])
+    await git(['diff', '--cached'], { stdio: 'inherit' })
+    await git(['commit', '-m', `CloudGraph v${SHORT_VERSION}`])
+    if (process.env.SKIP_GIT_PUSH === undefined) {
+      await git(['push', 'origin', 'main'])
+    }
+  } catch (e) {
+    console.log(e)
   }
 }
 
