@@ -14,22 +14,22 @@
   - NODE_ENV=cicd yarn install --frozen-lockfile --cache-folder .npm --prefer-offline
 
 .configure-ssh: &configure-ssh
-  - mkdir -p /root/.ssh
-  - chmod og-rwx /root/.ssh
-  - echo $GITHUB_SSH_KEY > /root/.ssh/github_autodeploy
-  - cat /root/.ssh/github_autodeploy
-  - chmod 0600 /root/.ssh/github_autodeploy
+  - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo "$GITHUB_SSH_KEY" | tr -d '\r' | ssh-add -
   - |
     {
       echo "Host github.com"
       echo "HostName github.com"
       echo "User git"
       echo "PreferredAuthentications publickey"
-      echo "IdentityFile /root/.ssh/github_autodeploy"
       echo "Port 22"
       echo "TCPKeepAlive yes"
       echo "IdentitiesOnly yes"
       echo "AddKeysToAgent yes"
+      echo "StrictHostKeyChecking no"
     } | tee -a /root/.ssh/config
   - chmod 0600 /root/.ssh/config
 
