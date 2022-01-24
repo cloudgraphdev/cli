@@ -1907,6 +1907,7 @@ DESCRIPTION
   Install providers based on the lock file
 
 ALIASES
+  $ cg remove provider
   $ cg provider remove
   $ cg provider rm
   $ cg del provider
