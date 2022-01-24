@@ -10,7 +10,7 @@ class Cg < Formula
 
   def install
     inreplace "bin/cg", /^CLIENT_HOME=/, "export CG_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
-    libexec.install Dir["*"]
+    libexec.install Dir["**"]
     bin.install_symlink libexec/"bin/cg"
 
   #   bash_completion.install libexec/"node_modules/@heroku-cli/plugin-autocomplete/autocomplete/brew/bash" => "heroku"
