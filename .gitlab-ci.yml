@@ -24,7 +24,7 @@
     echo "HostName github.com"
     echo "User git"
     echo "PreferredAuthentications publickey"
-    echo "IdentityFile /Users/ckoning/.ssh/github_rsa"
+    echo "IdentityFile /root/.ssh/github_rsa"
     echo "Port 22"
     echo "TCPKeepAlive yes"
     echo "IdentitiesOnly yes"
