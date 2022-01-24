@@ -12,6 +12,25 @@
       echo "\"//registry.npmjs.com/:_authToken\" \"${NPM_TOKEN}\""
     } | tee -a .yarnrc
   - NODE_ENV=cicd yarn install --frozen-lockfile --cache-folder .npm --prefer-offline
+
+.configure-ssh: &configure-ssh
+- mkdir -p /root/.ssh
+- chmod og-rwx /root/.ssh
+- echo $GITHUB_SSH_KEY > /root/.ssh/github_rsa
+- chmod 0600 /root/.ssh/github_rsa
+- |
+  {
+    echo "Host github.com"
+    echo "HostName github.com"
+    echo "User git"
+    echo "PreferredAuthentications publickey"
+    echo "IdentityFile /Users/ckoning/.ssh/github_rsa"
+    echo "Port 22"
+    echo "TCPKeepAlive yes"
+    echo "IdentitiesOnly yes"
+  } | tee -a /root/.ssh/config
+- chmod 0600 /root/.ssh/config
+
 default:
   image: node:16-alpine
   before_script:
@@ -108,6 +127,7 @@ homebrew:
     GIT_COMMITTER_EMAIL: 'no-reply@loudcloud.dev'
   before_script:
     - *configure-registry
+    - *configure-ssh
     - mkdir -p /root/.aws
     - |
       cat << EOF > /root/.aws/config
