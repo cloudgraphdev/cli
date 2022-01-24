@@ -139,7 +139,7 @@
     "version": "oclif readme && git add README.md",
     "lint": "eslint --config .eslintrc.json --ext .js,.ts ./",
     "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./",
-    "release": "node release/scripts/homebrew.js"
+    "homebrew": "node release/scripts/homebrew.js"
   },
   "husky": {
     "hooks": {
