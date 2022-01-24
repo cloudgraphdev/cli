@@ -126,6 +126,7 @@ homebrew:
       aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
       EOF
   script:
+    - yarn build
     - yarn homebrew
 
 .curlcmd: &curlcmd >
