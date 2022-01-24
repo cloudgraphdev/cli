@@ -14,22 +14,24 @@
   - NODE_ENV=cicd yarn install --frozen-lockfile --cache-folder .npm --prefer-offline
 
 .configure-ssh: &configure-ssh
-- mkdir -p /root/.ssh
-- chmod og-rwx /root/.ssh
-- echo $GITHUB_SSH_KEY > /root/.ssh/github_rsa
-- chmod 0600 /root/.ssh/github_rsa
-- |
-  {
-    echo "Host github.com"
-    echo "HostName github.com"
-    echo "User git"
-    echo "PreferredAuthentications publickey"
-    echo "IdentityFile /root/.ssh/github_rsa"
-    echo "Port 22"
-    echo "TCPKeepAlive yes"
-    echo "IdentitiesOnly yes"
-  } | tee -a /root/.ssh/config
-- chmod 0600 /root/.ssh/config
+  - mkdir -p /root/.ssh
+  - chmod og-rwx /root/.ssh
+  - echo $GITHUB_SSH_KEY > /root/.ssh/github_autodeploy
+  - cat /root/.ssh/github_autodeploy
+  - chmod 0600 /root/.ssh/github_autodeploy
+  - |
+    {
+      echo "Host github.com"
+      echo "HostName github.com"
+      echo "User git"
+      echo "PreferredAuthentications publickey"
+      echo "IdentityFile /root/.ssh/github_autodeploy"
+      echo "Port 22"
+      echo "TCPKeepAlive yes"
+      echo "IdentitiesOnly yes"
+      echo "AddKeysToAgent yes"
+    } | tee -a /root/.ssh/config
+  - chmod 0600 /root/.ssh/config
 
 default:
   image: node:16-alpine
