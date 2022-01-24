@@ -377,7 +377,7 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cloudgraph/sdk@^0.10.4":
+"@cloudgraph/sdk@0.10.4":
   version "0.10.4"
   resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.10.4.tgz#9bc4d8ef74934b92fa1d4b4cfefd107d1cffd3c2"
   integrity sha512-bcUiReutpllmPnt8OqySh09nMm9/lHHSAMUwvvP19RJkAf5y4hcHxGfj4Ls0Fv50FjUhAc5AZwAF8MPNk3MrRw==
@@ -832,7 +832,7 @@
 
 "@npmcli/map-workspaces@^1.0.2", "@npmcli/map-workspaces@^1.0.4":
   version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@npmcli/map-workspaces/-/map-workspaces-1.0.4.tgz#915708b55afa25e20bc2c14a766c124c2c5d4cab"
+  resolved "https://registry.npmjs.org/@npmcli/map-workspaces/-/map-workspaces-1.0.4.tgz"
   integrity sha512-wVR8QxhyXsFcD/cORtJwGQodeeaDf0OxcHie8ema4VgFeqwYkFsDPnSrIRSytX8xR6nKPAH89WnwTcaU608b/Q==
   dependencies:
     "@npmcli/name-from-folder" "^1.0.1"

@@ -1,6 +1,6 @@
 import Command from '../base'
 
-export default class Add extends Command {
+export default class PolicyIndex extends Command {
   static description =
     'Commands to manage policy pack modules, run $ cg policy for more info.'
 

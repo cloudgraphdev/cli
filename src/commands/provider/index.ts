@@ -1,6 +1,6 @@
 import Command from '../base'
 
-export default class Add extends Command {
+export default class ProviderIndex extends Command {
   static description =
     'Commands to manage provider modules, run $ cg provider for more info.'
 

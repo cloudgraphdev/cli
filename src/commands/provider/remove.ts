@@ -1,14 +1,18 @@
 import { PluginType } from '@cloudgraph/sdk'
-import { isEmpty } from 'lodash'
-import chalk from 'chalk'
-import { flags } from '@oclif/command'
 
-import Command from '../base'
+import OperationBaseCommand from '../operation'
 
-export default class Remove extends Command {
+export default class RemoveProvider extends OperationBaseCommand {
   static description = 'Remove currently installed provider'
 
-  static aliases = ['remove', 'rm', 'del', 'provider:rm', 'provider:del']
+  static aliases = [
+    'remove:provider',
+    'provider:remove',
+    'provider:rm',
+    'del:provider',
+    'rm:provider',
+    'del:provider',
+  ]
 
   static examples = [
     '$ cg provider delete',
@@ -20,44 +24,21 @@ export default class Remove extends Command {
 
   static hidden = false
 
-  static flags = {
-    'no-save': flags.boolean({
-      default: false,
-      description: 'Set to not alter lock file, just delete plugin',
-    }),
-    ...Command.flags,
-  }
-
-  static args = Command.args
-
   async run(): Promise<void> {
-    const {
-      argv,
-      flags: { 'no-save': noSave },
-    } = this.parse(Remove)
-    const allProviders = argv
-    const manager = this.getPluginManager(PluginType.Provider)
-    const lockFile = manager.getLockFile()
-    if (isEmpty(lockFile?.provider)) {
-      this.logger.info('No providers found, have you installed any?')
-      this.exit()
-    }
-    for (const key of allProviders) {
-      try {
-        this.logger.startSpinner(`Removing ${chalk.italic.green(key)} provider`)
+    try {
+      const {
+        manager,
+        noSave = false,
+        plugins: pluginsRemoved = [],
+      } = await this.remove(PluginType.Provider)
 
-        await manager.removePlugin(key)
-
-        this.logger.successSpinner(
-          `${chalk.italic.green(key)} provider removed successfully`
-        )
-
-        if (!noSave) {
+      for (const key of pluginsRemoved) {
+        if (manager && !noSave) {
           manager.removeFromLockFile(key)
         }
-      } catch (error) {
-        this.logger.stopSpinner()
       }
+    } catch (error) {
+      this.logger.stopSpinner()
     }
   }
 }

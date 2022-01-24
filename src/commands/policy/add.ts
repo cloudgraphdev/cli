@@ -1,8 +1,11 @@
 import { PluginType } from '@cloudgraph/sdk'
-import Command from '../base'
 
-export default class Add extends Command {
+import OperationBaseCommand from '../operation'
+
+export default class AddPolicy extends OperationBaseCommand {
   static description = 'Add new policy packs'
+
+  static aliases = ['add:policy']
 
   static examples = [
     '$ cg policy add aws-cis-1.2.0',
@@ -13,31 +16,27 @@ export default class Add extends Command {
 
   static hidden = false
 
-  static flags = {
-    ...Command.flags,
-  }
-
-  static args = Command.args
-
   async run(): Promise<void> {
-    const { argv } = this.parse(Add)
-    const allPolicyPacks = argv
-    const manager = this.getPluginManager(PluginType.PolicyPack)
-    for (let key of allPolicyPacks) {
-      let version = 'latest'
-      if (key.includes('@')) {
-        [key, version] = key.split('@')
+    try {
+      const installedPolicies = await this.add(PluginType.PolicyPack)
+
+      for (const installedPolicy of installedPolicies) {
+        const {
+          key,
+          plugin: { default: { provider } } = { default: { provider: '' } },
+        } = installedPolicy
+
+        // Save policy to CG config file
+        const config = this.getCGConfig()
+        if (config && config[provider]) {
+          config[provider].policies = config[provider].policies
+            ? [...new Set([...config[provider].policies, key])]
+            : [key]
+          this.saveCloudGraphConfigFile(config)
+        }
       }
-      const {
-        default: { provider },
-      } = await manager.getPlugin(key, version)
-      const config = this.getCGConfig()
-      if (config && config[provider]) {
-        config[provider].policies = config[provider].policies
-          ? [...new Set([...config[provider].policies, key])]
-          : [key]
-        this.saveCloudGraphConfigFile(config)
-      }
+    } catch (error) {
+      this.logger.debug(error)
     }
   }
 }

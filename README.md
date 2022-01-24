@@ -1339,6 +1339,7 @@ There are some common errors you may see when running CloudGraph that are usuall
 * [`cg scan [PROVIDER]`](#cg-scan-provider)
 * [`cg serve [PROVIDER]`](#cg-serve-provider)
 * [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+* [`cg update [PROVIDER]`](#cg-update-provider)
 
 ## `cg help [COMMAND]`
 
@@ -1479,8 +1480,12 @@ OPTIONS
   -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg add policy
 
 EXAMPLES
   $ cg policy add aws-cis-1.2.0
@@ -1506,8 +1511,12 @@ OPTIONS
   -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg install policy
 
 EXAMPLE
   $ cg policy install
@@ -1532,8 +1541,14 @@ OPTIONS
   -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg ls policy
+  $ cg list policy
+  $ cg ls policy
 
 EXAMPLES
   $ cg policy list
@@ -1563,6 +1578,14 @@ OPTIONS
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
+ALIASES
+  $ cg remove policy
+  $ cg policy remove
+  $ cg policy rm
+  $ cg del policy
+  $ cg rm policy
+  $ cg del policy
+
 EXAMPLES
   $ cg policy delete
   $ cg policy delete aws-cis-1.2.0
@@ -1588,13 +1611,14 @@ OPTIONS
   -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 EXAMPLES
   $ cg policy update
   $ cg policy update aws-cis-1.2.0
-  $cg policy update aws-cis-1.2.0@0.12.0
+  $ cg policy update aws-cis-1.2.0@0.12.0
 ```
 
 _See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.12/src/commands/policy/update.ts)_
@@ -1639,11 +1663,12 @@ OPTIONS
   -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
-  $ cg add
+  $ cg add provider
 
 EXAMPLES
   $ cg provider add aws
@@ -1669,11 +1694,12 @@ OPTIONS
   -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
-  $ cg install
+  $ cg install provider
 
 EXAMPLE
   $ cg provider install
@@ -1698,13 +1724,14 @@ OPTIONS
   -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
-  $ cg provider ls
-  $ cg list
-  $ cg ls
+  $ cg ls provider
+  $ cg list provider
+  $ cg ls provider
 
 EXAMPLES
   $ cg provider list
@@ -1735,11 +1762,12 @@ OPTIONS
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
-  $ cg remove
-  $ cg rm
-  $ cg del
+  $ cg remove provider
+  $ cg provider remove
   $ cg provider rm
-  $ cg provider del
+  $ cg del provider
+  $ cg rm provider
+  $ cg del provider
 
 EXAMPLES
   $ cg provider delete
@@ -1766,16 +1794,14 @@ OPTIONS
   -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
   --dev                                 Turn on developer mode
   --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
   --no-serve                            Set to not serve a query engine
   --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
-
-ALIASES
-  $ cg update
 
 EXAMPLES
   $ cg provider update
   $ cg provider update aws
-  $cg provider update aws@0.12.0
+  $ cg provider update aws@0.12.0
 ```
 
 _See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.12/src/commands/provider/update.ts)_
@@ -1852,4 +1878,34 @@ EXAMPLES
 ```
 
 _See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.12/src/commands/teardown.ts)_
+
+## `cg update [PROVIDER]`
+
+Upgrade currently installed plugins.
+
+```
+USAGE
+  $ cg update [PROVIDER]
+
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
+
+ALIASES
+  $ cg update
+
+EXAMPLE
+  $ cg update
+```
+
+_See code: [src/commands/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.16.12/src/commands/update.ts)_
 <!-- commandsstop -->

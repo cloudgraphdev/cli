@@ -1,3 +1,5 @@
+import { PluginType } from '@cloudgraph/sdk'
+
 export default {
   MAX_RETRY_ATTEMPS: 3,
   MAX_BACKOFF_DELAY: 10000,
@@ -12,3 +14,14 @@ export const DEFAULT_CONFIG = {
 
 export const DGRAPH_CONTAINER_LABEL = 'cloudgraph-cli-dgraph-standalone'
 export const DGRAPH_DOCKER_IMAGE_NAME = 'dgraph/standalone:v21.03.1'
+
+export const messages = {
+  [PluginType.PolicyPack]: {
+    singular: 'Policy Pack',
+    plural: 'policy packs',
+  },
+  [PluginType.Provider]: {
+    singular: 'Provider',
+    plural: 'providers',
+  },
+}

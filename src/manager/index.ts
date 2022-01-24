@@ -148,21 +148,6 @@ export class Manager {
     return pluginInfo.version
   }
 
-  getLockFile(): any {
-    const lockPath = path.join(
-      this.cliConfig.configDir,
-      '.cloud-graph.lock.json'
-    )
-    try {
-      const lockFile = cosmiconfigSync('cloud-graph').load(lockPath)
-      return lockFile?.config ?? {}
-    } catch (error: any) {
-      this.logger.info('No lock file found for Cloud Graph')
-      this.logger.debug(error)
-      return {}
-    }
-  }
-
   async checkRequiredVersion(importPath: string): Promise<boolean> {
     const pluginInfo = await import(`${importPath}/package.json`)
     const pluginVersion = pluginInfo?.version
