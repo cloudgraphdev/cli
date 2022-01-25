@@ -1,5 +1,5 @@
 ---
-.install-packages: &install-packaages
+.install-packages: &install-packages
   - apk --quiet --no-progress --update --no-cache add git openssh curl
 
 .configure-registry: &configure-registry
