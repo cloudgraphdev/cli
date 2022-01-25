@@ -1,6 +1,8 @@
 ---
+.install-packages: &install-packaages
+  - apk --quiet --no-progress --update --no-cache add git openssh curl
+
 .configure-registry: &configure-registry
-  - apk --quiet --no-progress --update --no-cache add git openssh
   - |
     {
       echo "//registry.npmjs.com/:_authToken=${NPM_TOKEN}"
@@ -36,6 +38,7 @@
 default:
   image: node:16-alpine
   before_script:
+    - *install-packages
     - *configure-registry
   cache:
     key: ${CI_COMMIT_REF_SLUG}
@@ -122,6 +125,7 @@ homebrew:
     GIT_COMMITTER_NAME: 'AutoCloud Deploy Bot'
     GIT_COMMITTER_EMAIL: 'no-reply@loudcloud.dev'
   before_script:
+    - *install-packages
     - *configure-registry
     - *configure-ssh
     - mkdir -p /root/.aws
