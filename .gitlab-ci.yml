@@ -1,6 +1,7 @@
 ---
 .install-packages: &install-packages
   - apk --quiet --no-progress --update --no-cache add git openssh curl
+  - ln -s /usr/bin/sha256sum /usr/bin/shasum
 
 .configure-registry: &configure-registry
   - |
