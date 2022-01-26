@@ -109,6 +109,7 @@ semantic release:
     - npx semantic-release -r $CI_PROJECT_URL
 
 homebrew:
+  image: node:16
   stage: release
   rules:
     - if: $CI_COMMIT_BRANCH
@@ -126,7 +127,7 @@ homebrew:
     GIT_COMMITTER_NAME: 'AutoCloud Deploy Bot'
     GIT_COMMITTER_EMAIL: 'no-reply@loudcloud.dev'
   before_script:
-    - *install-packages
+    # - *install-packages
     - *configure-registry
     - *configure-ssh
     - mkdir -p /root/.aws
