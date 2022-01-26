@@ -78,9 +78,7 @@ async function uploadToS3(file) {
       }
     });
     fileStream.on('open', () => {
-      const creds = {accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY}
-      console.log(creds)
-      const S3 = new AWS.S3({ credentials: creds })
+      const S3 = new AWS.S3()
       S3.putObject({
         Bucket: PJSON.oclif.update.s3.bucket,
         Key: `cg-v${SHORT_VERSION}/${file}`,
