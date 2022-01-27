@@ -1,3 +1,10 @@
+# [0.17.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.1...0.17.0-alpha.2) (2022-01-27)
+
+
+### Bug Fixes
+
+* Update CG to use Oclif core and space for the `topicSeparator` ([9fcc0ed](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9fcc0edf2c504b02619d9105cb44352bef3ca5b5))
+
 # [0.17.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.9-alpha.1...0.17.0-alpha.1) (2022-01-19)
 
 
