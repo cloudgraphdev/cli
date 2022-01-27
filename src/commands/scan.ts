@@ -6,9 +6,9 @@ import { range } from 'lodash'
 
 import Command from './base'
 import { fileUtils } from '../utils'
-import { processConnectionsBetweenEntities } from '../utils/data'
 import DgraphEngine from '../storage/dgraph'
 import { scanReport } from '../reports'
+import { loadAllData, processConnectionsBetweenEntities } from '../utils/data'
 
 export default class Scan extends Command {
   static description =
@@ -112,10 +112,9 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client, schemasMap, serviceKey } = await this.getProviderClient(
-        provider
-      )
-      if (!client) {
+      const { client: providerClient, schemasMap, serviceKey } =
+        await this.getProviderClient(provider)
+      if (!providerClient) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
         continue // eslint-disable-line no-continue
@@ -142,7 +141,9 @@ export default class Scan extends Command {
             })
 
             // Get the Plugin Manager
-            const pluginManager = this.getPluginManager(cloudGraphPlugin[key])
+            const pluginManager = this.getPluginManager(
+              cloudGraphPlugin[key]
+            )
 
             // Configure
             await PluginInstance.configure(pluginManager)
@@ -167,7 +168,7 @@ export default class Scan extends Command {
           provider
         )}`
       )
-      const providerData = await client.getData({
+      const providerData = await providerClient.getData({
         opts,
       })
       this.logger.successSpinner(
@@ -180,7 +181,7 @@ export default class Scan extends Command {
           provider
         )}`
       )
-      const providerSchema: string = client.getSchema()
+      const providerSchema: string = providerClient.getSchema()
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
         continue // eslint-disable-line no-continue
@@ -231,18 +232,16 @@ export default class Scan extends Command {
         this.exit()
       }
 
-      this.logger.startSpinner(
-        `Making service connections for ${chalk.italic.green(provider)}`
-      )
-      processConnectionsBetweenEntities({
-        provider,
-        providerData,
-        storageEngine,
-        storageRunning,
-        schemaMap: schemasMap,
-      })
-      this.logger.successSpinner(
-        `Connections made successfully for ${chalk.italic.green(provider)}`
+      loadAllData(
+        providerClient,
+        {
+          provider,
+          providerData,
+          storageEngine,
+          storageRunning,
+          schemaMap: schemasMap,
+        },
+        this.logger
       )
     }
 

@@ -3,6 +3,7 @@ import {
   StorageEngineConfig,
   StorageEngine,
   GraphQLInputData,
+  GraphQLQueryData
 } from '@cloudgraph/sdk'
 
 import DGraphClientWrapper from './base'
@@ -151,11 +152,12 @@ export default class DgraphEngine
    * Add Service Mutation to axiosPromises Array
    */
   push(data: GraphQLInputData): void {
-    const { query, connectedData } = data
-    const queryData = {
+    const { query, input, patch } = data
+    const queryData: GraphQLQueryData = {
       query,
       variables: {
-        input: connectedData,
+        input,
+        patch,
       },
     }
     this.axiosPromises.push(() =>
