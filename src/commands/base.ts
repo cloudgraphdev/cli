@@ -159,7 +159,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       )
       try {
         await openBrowser(
-          `http://localhost:${availablePort}/${this.getQueryEngine()}`
+          `http://localhost:${availablePort}/${await this.getQueryEngine()}`
         )
       } catch (error) {
         this.logger.warn(
@@ -247,7 +247,7 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
       }
       const client = new Client({
         logger: this.logger,
-        provider: this.buildProviderConfig(provider),
+        provider: await this.buildProviderConfig(provider),
       })
       this.providers[provider] = { client, schemasMap, serviceKey }
       return { client, schemasMap, serviceKey }
