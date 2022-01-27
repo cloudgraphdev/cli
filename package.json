@@ -15,7 +15,7 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/sdk": "^0.10.4",
+    "@cloudgraph/sdk": "0.10.4",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
     "@oclif/core": "^1.1.2",
@@ -46,8 +46,7 @@
   },
   "devDependencies": {
     "@autocloud/eslint-config": "^0.1.0",
-    "@oclif/dev-cli": "^1",
-    "@oclif/test": "^1.2.8",
+    "@oclif/test": "^2",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/gitlab": "^6.2.2",
