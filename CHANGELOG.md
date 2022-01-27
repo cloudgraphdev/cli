@@ -41,6 +41,13 @@
 * **scan-report:** ignore label service ([efb5f3f](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/efb5f3feb3a009f219b0e7a2becbf72c79c1242b))
 
 ## [0.20.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.1...0.20.2) (2022-02-16)
+# [0.17.0-alpha.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.2...0.17.0-alpha.3) (2022-01-27)
+
+
+### Bug Fixes
+
+* update reame file ([dde9901](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/dde99017d5fa984294329706e5a64255c76d7006))
+
 # [0.17.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.1...0.17.0-alpha.2) (2022-01-27)
 
 
