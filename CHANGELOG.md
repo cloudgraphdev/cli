@@ -1,3 +1,10 @@
+# [0.18.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0...0.18.0) (2022-01-27)
+
+
+### Features
+
+* add additional connections mutation to insert edges between existing entities ([9313b4a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9313b4a4198ed3ef46f5947450db8068b5e035d6))
+
 # [0.17.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.12...0.17.0) (2022-01-24)
 
 
