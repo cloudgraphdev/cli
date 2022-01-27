@@ -161,7 +161,7 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
       )
       try {
         await openBrowser(
-          `http://localhost:${availablePort}/${this.getQueryEngine()}`
+          `http://localhost:${availablePort}/${await this.getQueryEngine()}`
         )
       } catch (error) {
         this.logger.warn(
@@ -249,7 +249,7 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
       }
       const client = new Client({
         logger: this.logger,
-        provider: this.buildProviderConfig(provider),
+        provider: await this.buildProviderConfig(provider),
       })
       this.providers[provider] = { client, schemasMap, serviceKey }
       return { client, schemasMap, serviceKey }

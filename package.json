@@ -47,8 +47,7 @@
   },
   "devDependencies": {
     "@autocloud/eslint-config": "^0.1.0",
-    "@oclif/dev-cli": "^1",
-    "@oclif/test": "^1.2.8",
+    "@oclif/test": "^2",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/gitlab": "^6.2.2",
