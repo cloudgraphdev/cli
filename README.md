@@ -1804,7 +1804,7 @@ DESCRIPTION
   Update currently installed policy packs
 
 ALIASES
-  $ cg add provider
+  $ cg add:provider
 
 EXAMPLES
   $ cg policy update
@@ -1870,9 +1870,9 @@ DESCRIPTION
   Add new providers
 
 ALIASES
-  $ cg ls provider
-  $ cg list provider
-  $ cg ls provider
+  $ cg ls:provider
+  $ cg list:provider
+  $ cg ls:provider
 
 EXAMPLES
   $ cg provider add aws
@@ -1907,12 +1907,12 @@ DESCRIPTION
   Install providers based on the lock file
 
 ALIASES
-  $ cg remove provider
-  $ cg provider remove
-  $ cg provider rm
-  $ cg del provider
-  $ cg rm provider
-  $ cg del provider
+  $ cg remove:provider
+  $ cg provider:remove
+  $ cg provider:rm
+  $ cg del:provider
+  $ cg rm:provider
+  $ cg del:provider
 
 EXAMPLES
   $ cg provider install
