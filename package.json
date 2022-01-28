@@ -18,7 +18,7 @@
     "@cloudgraph/sdk": "0.10.4",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
-    "@oclif/core": "^1.1.2",
+    "@oclif/core": "^1.2.0",
     "@oclif/plugin-help": "^5.1.10",
     "@oclif/plugin-plugins": "^2.0.12",
     "@types/lodash": "^4.14.175",
