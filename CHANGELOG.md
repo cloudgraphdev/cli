@@ -1,3 +1,10 @@
+## [0.18.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.18.0...0.18.1) (2022-01-28)
+
+
+### Bug Fixes
+
+* **deps:** update sdk dep ([90821bd](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/90821bd5471966c0b5a55f3e770a9630c1dabadb))
+
 # [0.18.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0...0.18.0) (2022-01-27)
 
 
