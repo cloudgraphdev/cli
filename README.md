@@ -1401,7 +1401,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.3/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -1433,7 +1433,7 @@ EXAMPLES
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.3/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1467,7 +1467,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.3/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/load.ts)_
 
 ## `cg plugins`
 
@@ -1642,7 +1642,7 @@ DESCRIPTION
   Commands to manage policy pack modules, run $ cg policy for more info.
 ```
 
-_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.3/src/commands/policy/index.ts)_
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/policy/index.ts)_
 
 ## `cg policy add [PROVIDER]`
 
@@ -1834,7 +1834,7 @@ DESCRIPTION
   Commands to manage provider modules, run $ cg provider for more info.
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.3/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/provider/index.ts)_
 
 ## `cg provider add [PROVIDER]`
 
@@ -2056,7 +2056,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.3/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -2088,7 +2088,7 @@ EXAMPLES
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.3/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 
@@ -2110,5 +2110,5 @@ EXAMPLES
   $ cg teardown --delete-image
 ```
 
-_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.3/src/commands/teardown.ts)_
+_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/teardown.ts)_
 <!-- commandsstop -->

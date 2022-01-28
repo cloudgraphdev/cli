@@ -1,3 +1,10 @@
+# [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-01-28)
+
+
+### Bug Fixes
+
+* update oclif version ([3359aed](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3359aede2bf1a53863145a987fa996dbfac2fbba))
+
 # [0.17.0-alpha.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.2...0.17.0-alpha.3) (2022-01-27)
 
 
