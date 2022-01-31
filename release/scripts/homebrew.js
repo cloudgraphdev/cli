@@ -83,6 +83,7 @@ async function uploadToS3(file) {
         callback: (err) => {
           if (err) {
             console.log('No credentials found for profile autocloud-iac')
+            console.log(err)
           }
         },
       })
