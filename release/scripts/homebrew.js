@@ -18,10 +18,7 @@ const DIST_DIR = path.join(CLI_DIR, 'dist')
 const PJSON = require(path.join(CLI_DIR, 'package.json'))
 const NODE_VERSION = PJSON.oclif.update.node.version
 const SHORT_VERSION = PJSON.version
-const pathToDist = path.join(
-  DIST_DIR,
-  `cg-v${SHORT_VERSION}`
-)
+const pathToDist = path.join(DIST_DIR, `cg-v${SHORT_VERSION}`)
 async function getText(url) {
   return new Promise((resolve, reject) => {
     https
@@ -70,45 +67,74 @@ async function uploadToS3(file) {
   console.log(`Uploading ${file} to S3`)
   await new Promise((resolve, reject) => {
     const pathToFile = path.join(pathToDist, file)
-    const fileStream = fs.createReadStream(pathToFile);
-    fileStream.on('error', (err) => {
-      if (err) { 
+    const fileStream = fs.createReadStream(pathToFile)
+    fileStream.on('error', err => {
+      if (err) {
         reject(err)
         throw err
       }
-    });
+    })
     fileStream.on('open', () => {
       const credentials = new AWS.SharedIniFileCredentials({
         profile: 'autocloud-iac',
-        callback: (err) => {
+        callback: err => {
           if (err) {
             console.log('No credentials found for profile autocloud-iac')
             console.log(err)
           }
         },
       })
-      console.log(credentials)
-      const S3 = new AWS.S3({ credentials: AWS.config.credentials })
-      S3.putObject({
-        Bucket: PJSON.oclif.update.s3.bucket,
-        Key: `cg-v${SHORT_VERSION}/${file}`,
-        Body: fileStream,
-        ServerSideEncryption: "AES256",
-        ACL: "bucket-owner-full-control"
-      }, (err) => {
-        if (err) { 
-          reject(err)
-          throw err
+      sts = new AWS.STS()
+      const { roleArn } = credentials
+      const options = {
+        RoleSessionName: 'CloudGraph-IAC',
+        RoleArn: roleArn,
+      }
+      console.log(options)
+      sts.assumeRole(options, (err, data) => {
+        if (err) {
+          console.log(`No valid credentials found for roleARN: ${roleArn}`)
+          console.log(err)
+          resolve()
+        } else {
+          // successful response
+          console.log('successfully got access keys from role')
+          const {
+            AccessKeyId: accessKeyId,
+            SecretAccessKey: secretAccessKey,
+            SessionToken: sessionToken,
+          } = data.Credentials
+          const creds = {
+            accessKeyId,
+            secretAccessKey,
+            sessionToken,
+          }
+          const S3 = new AWS.S3({ credentials: creds })
+          S3.putObject(
+            {
+              Bucket: PJSON.oclif.update.s3.bucket,
+              Key: `cg-v${SHORT_VERSION}/${file}`,
+              Body: fileStream,
+              ServerSideEncryption: 'AES256',
+              ACL: 'bucket-owner-full-control',
+            },
+            err => {
+              if (err) {
+                reject(err)
+                throw err
+              }
+            }
+          )
+          resolve()
         }
-      });
-      resolve()
+      })
     })
   })
 }
 
 function getFilesByOS(os) {
   const files = fs.readdirSync(pathToDist)
-  return files.filter((file) => file.includes(os) && !file.includes('.xz'))
+  return files.filter(file => file.includes(os) && !file.includes('.xz'))
 }
 
 const ROOT = path.join(__dirname, '..')
@@ -122,7 +148,7 @@ async function updateCgFormula(brewDir) {
   const template = fs.readFileSync(templatePath).toString('utf-8')
   const files = getFilesByOS('darwin-x64')
   console.log(files)
-  const zipFile = files.find((file) => file.includes('tar.gz'))
+  const zipFile = files.find(file => file.includes('tar.gz'))
   const pathToFile = path.join(pathToDist, zipFile)
   const sha256 = calculateSHA256(pathToFile)
   const url = `${CLI_ASSETS_URL}/cg-v${SHORT_VERSION}/${zipFile}`
@@ -134,7 +160,7 @@ async function updateCgFormula(brewDir) {
 
   fs.writeFileSync(path.join(brewDir, 'cg.rb'), templateReplaced)
   if (process.env.WRITE_TO_S3 === undefined) {
-    files.forEach(async (file) => {
+    files.forEach(async file => {
       await uploadToS3(file)
     })
   }
@@ -176,7 +202,9 @@ async function updateHomebrew() {
 
   // await setupGit()
 
-  console.log(`cloning https://github.com/cloudgraphdev/homebrew-tap to ${homebrewDir}`)
+  console.log(
+    `cloning https://github.com/cloudgraphdev/homebrew-tap to ${homebrewDir}`
+  )
   await execa('git', [
     'clone',
     'git@github.com:cloudgraphdev/homebrew-tap.git',
