@@ -78,8 +78,16 @@ async function uploadToS3(file) {
       }
     });
     fileStream.on('open', () => {
-      console.log(AWS.config.credentials)
-      const S3 = new AWS.S3({ credentials: AWS.config.credentials })
+      const credentials = new AWS.SharedIniFileCredentials({
+        profile: 'autocloud-iac',
+        callback: (err) => {
+          if (err) {
+            this.logger.error(`No credentials found for profile ${profile}`)
+          }
+        },
+      })
+      console.log(credentials)
+      const S3 = new AWS.S3({ credentials: credentials })
       S3.putObject({
         Bucket: PJSON.oclif.update.s3.bucket,
         Key: `cg-v${SHORT_VERSION}/${file}`,
