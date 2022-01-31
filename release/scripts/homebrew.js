@@ -88,7 +88,7 @@ async function uploadToS3(file) {
         },
       })
       console.log(credentials)
-      const S3 = new AWS.S3({ credentials: credentials })
+      const S3 = new AWS.S3({ credentials: AWS.config.credentials })
       S3.putObject({
         Bucket: PJSON.oclif.update.s3.bucket,
         Key: `cg-v${SHORT_VERSION}/${file}`,
