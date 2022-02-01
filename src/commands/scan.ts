@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import { cloudGraphPlugin, Opts, pluginMap } from '@cloudgraph/sdk'
+import { Opts, pluginMap, PluginType, StorageEngine } from '@cloudgraph/sdk'
 import { range } from 'lodash'
 
 import Command from './base'
@@ -31,6 +31,66 @@ export default class Scan extends Command {
 
   static args = Command.args
 
+  private async plugins({
+    storage: { isRunning, engine },
+    flags,
+  }: {
+    storage: {
+      isRunning: boolean
+      engine: StorageEngine
+    }
+    flags: {
+      [flag: string]: any
+    }
+  }): Promise<void> {
+    const config = this.getCGConfig('cloudGraph')
+    const { plugins = {} } = config
+    for (const pluginType in plugins) {
+      if (pluginType) {
+        try {
+          // Get Plugin Interface
+          const Plugin = pluginMap[pluginType]
+
+          // Execute Plugins by Provider
+          for (const provider in this.providers) {
+            if (provider) {
+              const { schemasMap, serviceKey } = this.providers[provider]
+
+              // Initialize
+              const PluginInstance = new Plugin({
+                config,
+                provider: {
+                  name: provider,
+                  schemasMap,
+                  serviceKey,
+                },
+                flags: flags as { [flag: string]: any },
+                logger: this.logger,
+              })
+
+              // Get the Plugin Manager
+              const pluginManager = this.getPluginManager(
+                pluginType as PluginType
+              )
+
+              // Configure
+              await PluginInstance.configure(pluginManager, plugins[pluginType])
+
+              // Execute plugins
+              await PluginInstance.execute({
+                storageRunning: isRunning,
+                storageEngine: engine,
+                processConnectionsBetweenEntities,
+              })
+            }
+          }
+        } catch (error) {
+          this.logger.warn('Plugin not supported by CG')
+        }
+      }
+    }
+  }
+
   async run() {
     const { argv, flags } = this.parse(Scan)
     const { dev: devMode } = flags as {
@@ -39,7 +99,6 @@ export default class Scan extends Command {
 
     const { dataDir } = this.config
     const opts: Opts = { logger: this.logger, debug: true, devMode }
-    const configuredPlugins = []
     let allProviders = argv
 
     // Run dgraph health check
@@ -112,49 +171,18 @@ export default class Scan extends Command {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
       )
-      const { client: providerClient, schemasMap, serviceKey } =
-        await this.getProviderClient(provider)
+
+      const providerPlugin = await this.getProviderClient(provider)
+      const { client: providerClient, schemasMap } = providerPlugin
+
       if (!providerClient) {
         failedProviderList.push(provider)
         this.logger.warn(`No valid client found for ${provider}, skipping...`)
         continue // eslint-disable-line no-continue
       }
       const config = this.getCGConfig(provider)
+      this.providers[provider] = providerPlugin
 
-      // Configure installed plugins
-      for (const key in config) {
-        if (cloudGraphPlugin[key]) {
-          try {
-            // Get Plugin Interface
-            const Plugin = pluginMap[cloudGraphPlugin[key]]
-
-            // Initialize
-            const PluginInstance = new Plugin({
-              config,
-              provider: {
-                name: provider,
-                schemasMap,
-                serviceKey,
-              },
-              flags: flags as { [flag: string]: any },
-              logger: this.logger,
-            })
-
-            // Get the Plugin Manager
-            const pluginManager = this.getPluginManager(
-              cloudGraphPlugin[key]
-            )
-
-            // Configure
-            await PluginInstance.configure(pluginManager)
-
-            // Add to Configured Plugins list
-            configuredPlugins.push(PluginInstance)
-          } catch (error) {
-            this.logger.warn('Plugin not supported by CG')
-          }
-        }
-      }
       this.logger.debug(config)
       if (!config) {
         failedProviderList.push(provider)
@@ -262,16 +290,16 @@ export default class Scan extends Command {
       await storageEngine.run()
 
       this.logger.successSpinner('Data insertion into Dgraph complete')
-
-      // Execute plugins
-      for (const plugin of configuredPlugins) {
-        await plugin.execute({
-          storageRunning,
-          storageEngine,
-          processConnectionsBetweenEntities,
-        })
-      }
     }
+
+    await this.plugins({
+      flags: flags as { [flag: string]: any },
+      storage: {
+        isRunning: storageRunning,
+        engine: storageEngine,
+      },
+    })
+
     scanReport.print()
 
     this.logger.success(
