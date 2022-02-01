@@ -197,6 +197,7 @@ export default class Init extends Command {
     if (cloudGraphConfig) {
       configResult.cloudGraph = cloudGraphConfig
     }
+    configResult.cloudGraph.plugins = {}
     this.saveCloudGraphConfigFile(configResult)
     this.logger.success(
       `Your config has been successfully stored at ${chalk.italic.green(
