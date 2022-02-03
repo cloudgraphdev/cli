@@ -1,3 +1,29 @@
+# [0.19.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.18.2...0.19.0) (2022-02-03)
+
+
+### Bug Fixes
+
+* **brew:** Add try/catch to brew script ([49bba1e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/49bba1ee7b9fa8db201b11456687603e48ddce10))
+* **brew:** await sha ([9ac979a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9ac979a42427280a20f7ce73544f5df908c7982e))
+* **brew:** update aws to use sts to grab creds ([7a29c2d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7a29c2d407f5499b4aad3ac413612d18fe452eff))
+* **brew:** update ci and brew func for aws ([96c87a5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/96c87a53a949999b5fc2b0e95b10d3b5353bec90))
+* **brew:** update gitlab ci and update upgrade message ([4141ade](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4141ade942e1d1bd7903b9f55da93417ddd2a3a9))
+* **brew:** update gitlab ci for homebrew ([4e91e40](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4e91e4009d8ced864871d870ce21a4436d6d4adc))
+* **brew:** update gitlab ci to call build before homebrew ([5983f86](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5983f86a33057f1dd2971b3cb451f56cb5398e14))
+* **brew:** update hashing code ([1d5f02a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1d5f02ad38d37b55eb50c4510d9911c9b99a47d7))
+* **brew:** update logger func ([f937538](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f9375380fa08ca4535ee0d31f879ae5d0e9520a1))
+* **brew:** update logger func again ([08e46e9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/08e46e9ef4888249049c79c7307a63c98fb4ecbf))
+* **brew:** update s3 call to use creds in the system ([1c36e1b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1c36e1b277c5bde3758c83504d2fed859a65c6c3))
+* **brew:** update s3 function to grab aws creds by profile ([897e325](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/897e325a180af79c352fa1018dedb0a3813fd232))
+* **brew:** updates from PR review. remove unneeded error throw and unused code ([9c11296](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9c11296beb8fb59c422eb3b321f2d97d35493498))
+* **brew:** work on getting aws creds to validate ([566f199](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/566f1999a7930fccfea55a2a0f6e5417d5f688de))
+* **deploy:** update gitlab ci for aws config ([8423d08](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8423d081f60b3561828cff4d5d16e2876d8cf589))
+
+
+### Features
+
+* **release:** first work on homebrew setup ([5bb3d16](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5bb3d161dfab3fd079a27b8e58ecfadb97765f85))
+
 ## [0.18.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.18.1...0.18.2) (2022-02-01)
 
 
