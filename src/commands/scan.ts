@@ -290,15 +290,15 @@ export default class Scan extends Command {
       await storageEngine.run()
 
       this.logger.successSpinner('Data insertion into Dgraph complete')
-    }
 
-    await this.plugins({
-      flags: flags as { [flag: string]: any },
-      storage: {
-        isRunning: storageRunning,
-        engine: storageEngine,
-      },
-    })
+      await this.plugins({
+        flags: flags as { [flag: string]: any },
+        storage: {
+          isRunning: storageRunning,
+          engine: storageEngine,
+        },
+      })
+    }
 
     scanReport.print()
 
