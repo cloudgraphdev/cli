@@ -11,7 +11,6 @@ const { pipeline } = require('stream')
 const crypto = require('crypto')
 const AWS = require('aws-sdk')
 
-// const { createReadStream } = fs
 const NODE_JS_BASE = 'https://nodejs.org/download/release'
 const CLI_DIR = path.join(__dirname, '..', '..')
 const DIST_DIR = path.join(CLI_DIR, 'dist')
@@ -71,7 +70,6 @@ async function uploadToS3(file) {
     fileStream.on('error', err => {
       if (err) {
         reject(err)
-        throw err
       }
     })
     fileStream.on('open', () => {
@@ -121,7 +119,6 @@ async function uploadToS3(file) {
             err => {
               if (err) {
                 reject(err)
-                throw err
               }
             }
           )
@@ -147,7 +144,6 @@ async function updateCgFormula(brewDir) {
   const templatePath = path.join(TEMPLATES, 'cg.rb')
   const template = fs.readFileSync(templatePath).toString('utf-8')
   const files = getFilesByOS('darwin-x64')
-  console.log(files)
   const zipFile = files.find(file => file.includes('tar.gz'))
   const pathToFile = path.join(pathToDist, zipFile)
   const sha256 = await calculateSHA256(pathToFile)
@@ -229,6 +225,7 @@ async function updateHomebrew() {
       await git(['push', 'origin', 'main'])
     }
   } catch (e) {
+    console.log('Error attempting to update git repo')
     console.log(e)
   }
 }
