@@ -151,14 +151,24 @@ CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming so
 
 # Install
 
+<!-- install -->
+
 **System Requirements**
 
-- Node 14+
 - Docker
 
-Use this command to install and update CloudGraph to the latest version.
+There are 2 ways to install the CloudGraph CLI
 
-<!-- install -->
+### Homebrew (Recommended)
+
+You can install CloudGraph using homebrew with the following command:
+`brew install cloudgraphdev/tap/cg`
+
+### NPM
+
+- Requires Node 16+
+
+Use this command to install and update CloudGraph to the latest version.
 
 ```bash
 npm i -g @cloudgraph/cli
