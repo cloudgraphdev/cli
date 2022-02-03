@@ -159,7 +159,7 @@ CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming so
 
 There are 2 ways to install the CloudGraph CLI
 
-### Hombrew (Recommended)
+### Homebrew (Recommended)
 
 You can install CloudGraph using homebrew with the following command:
 `brew install cloudgraphdev/tap/cg`
