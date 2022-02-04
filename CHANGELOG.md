@@ -1,3 +1,11 @@
+# [0.20.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.19.0...0.20.0) (2022-02-04)
+
+
+### Features
+
+* Refactored Plugins execution after inserted scanned data ([db0c731](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/db0c731451762b0e4defcf5d549abe409fb598f6))
+* Updated policy commands to support new plugin structure ([606609d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/606609d1a8678bf198a807e34b8f232856170fc6))
+
 # [0.19.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.18.2...0.19.0) (2022-02-03)
 
 
