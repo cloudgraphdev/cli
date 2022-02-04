@@ -1,4 +1,5 @@
-import { PluginType } from '@cloudgraph/sdk'
+import { ConfiguredPlugin, PluginType } from '@cloudgraph/sdk'
+import isEmpty from 'lodash/isEmpty'
 
 import OperationBaseCommand from '../operation'
 
@@ -36,16 +37,20 @@ export default class RemovePolicy extends OperationBaseCommand {
         if (manager && !noSave) {
           manager.removeFromLockFile(key)
 
-          const [provider] = key.split('-')
           const config = this.getCGConfig()
+          if (config) {
+            const configuredPolicies =
+              config.cloudGraph.plugins[PluginType.PolicyPack] || []
 
-          if (config[provider]) {
-            config[provider].policies = [
-              ...config[provider].policies.filter(
-                (policy: string) => policy !== key
-              ),
-            ]
-            this.saveCloudGraphConfigFile(config)
+            if (!isEmpty(configuredPolicies)) {
+              // Remove policy from Policy Pack Plugin array
+              config.cloudGraph.plugins[PluginType.PolicyPack] =
+                configuredPolicies.filter(
+                  (p: ConfiguredPlugin) => p.name !== key
+                )
+
+              this.saveCloudGraphConfigFile(config)
+            }
           }
         }
       }

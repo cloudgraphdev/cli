@@ -1,4 +1,5 @@
 import { PluginType } from '@cloudgraph/sdk'
+import { isEmpty, uniqBy } from 'lodash'
 
 import OperationBaseCommand from '../operation'
 
@@ -28,10 +29,32 @@ export default class AddPolicy extends OperationBaseCommand {
 
         // Save policy to CG config file
         const config = this.getCGConfig()
-        if (config && config[provider]) {
-          config[provider].policies = config[provider].policies
-            ? [...new Set([...config[provider].policies, key])]
-            : [key]
+        if (config) {
+          let configuredPolicies =
+            config.cloudGraph.plugins[PluginType.PolicyPack] || []
+
+          if (isEmpty(configuredPolicies)) {
+            // Set new Policy Pack Plugin array
+            configuredPolicies = [
+              {
+                name: key,
+                providers: [provider],
+              },
+            ]
+          } else {
+            // Add policy to Policy Pack Plugin array
+            configuredPolicies = [
+              ...configuredPolicies,
+              {
+                name: key,
+                providers: [provider],
+              },
+            ]
+          }
+          config.cloudGraph.plugins[PluginType.PolicyPack] = uniqBy(
+            configuredPolicies,
+            'name'
+          )
           this.saveCloudGraphConfigFile(config)
         }
       }
