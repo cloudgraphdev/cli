@@ -1,4 +1,11 @@
 # [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-01-28)
+## [0.20.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.0...0.20.1) (2022-02-10)
+
+
+### Bug Fixes
+
+* Updated SDK to latest version ([9e0c04b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9e0c04b157a38d65131158494ff1d80bd6200ecd))
+
 # [0.20.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.19.0...0.20.0) (2022-02-04)
 
 
