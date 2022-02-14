@@ -984,9 +984,7 @@
     "walk-up-path" "^1.0.0"
 
 "@npmcli/arborist@^4.0.0", "@npmcli/arborist@^4.2.1":
-  "integrity" "sha512-d1aDSql/JrCRRc3g6R6bXk94Gx9ggf25qaMTEc6KCEdIghr2oL+zkr/hQMWcSuBPPynx4yNA9EcZ3uFosvMp+Q=="
-  "resolved" "https://registry.npmjs.org/@npmcli/arborist/-/arborist-4.3.0.tgz"
-  "version" "4.3.0"
+  "version" "4.2.1"
   dependencies:
     "@isaacs/string-locale-compare" "^1.1.0"
     "@npmcli/installed-package-contents" "^1.0.7"
@@ -1007,7 +1005,7 @@
     "npm-install-checks" "^4.0.0"
     "npm-package-arg" "^8.1.5"
     "npm-pick-manifest" "^6.1.0"
-    "npm-registry-fetch" "^12.0.1"
+    "npm-registry-fetch" "^11.0.0"
     "pacote" "^12.0.2"
     "parse-conflict-json" "^2.0.1"
     "proc-log" "^1.0.0"
@@ -8720,7 +8718,7 @@
   "resolved" "https://registry.npmjs.org/natural-orderby/-/natural-orderby-2.0.3.tgz"
   "version" "2.0.3"
 
-"negotiator@^0.6.2", "negotiator@0.6.2":
+"negotiator@^0.6.2", "negotiator@^0.6.3", "negotiator@0.6.2":
   "integrity" "sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw=="
   "resolved" "https://registry.npmjs.org/negotiator/-/negotiator-0.6.2.tgz"
   "version" "0.6.2"
@@ -11891,6 +11889,9 @@
   "version" "3.1.5"
   dependencies:
     "is-typedarray" "^1.0.0"
+
+"typedarray-to-buffer@^4.0.0":
+  "version" "4.0.0"
 
 "typescript@>=2.7", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", "typescript@>=3.8 <5.0", "typescript@4.3.5":
   "integrity" "sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA=="
