@@ -1,5 +1,121 @@
 # [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-01-28)
 
+## [0.16.9-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9-alpha.1) (2022-01-13)
+
+## [0.16.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.10...0.16.11) (2022-01-17)
+
+
+### Bug Fixes
+
+* Fixed display scan results for apigatewaystage service ([128c261](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/128c2617f88bdf52a2b6884c0764ff286d2ca269))
+
+## [0.16.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.9...0.16.10) (2022-01-17)
+
+
+### Bug Fixes
+
+* Moved scripts to root folder ([005bc09](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/005bc096f23046fcbbc78636b1647f632d678bb9))
+* Preserved scripts folder during build ([ca15db3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ca15db3fecdf8ccf4b4d5cce67057cda2b6e36fc))
+
+## [0.16.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.8...0.16.9) (2022-01-12)
+
+### Bug Fixes
+
+* Updated SDK to latest version ([9e0c04b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9e0c04b157a38d65131158494ff1d80bd6200ecd))
+
+# [0.20.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.19.0...0.20.0) (2022-02-04)
+
+
+### Features
+
+* Refactored Plugins execution after inserted scanned data ([db0c731](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/db0c731451762b0e4defcf5d549abe409fb598f6))
+* Updated policy commands to support new plugin structure ([606609d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/606609d1a8678bf198a807e34b8f232856170fc6))
+
+# [0.19.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.18.2...0.19.0) (2022-02-03)
+
+
+### Bug Fixes
+
+* **brew:** Add try/catch to brew script ([49bba1e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/49bba1ee7b9fa8db201b11456687603e48ddce10))
+* **brew:** await sha ([9ac979a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9ac979a42427280a20f7ce73544f5df908c7982e))
+* **brew:** update aws to use sts to grab creds ([7a29c2d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7a29c2d407f5499b4aad3ac413612d18fe452eff))
+* **brew:** update ci and brew func for aws ([96c87a5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/96c87a53a949999b5fc2b0e95b10d3b5353bec90))
+* **brew:** update gitlab ci and update upgrade message ([4141ade](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4141ade942e1d1bd7903b9f55da93417ddd2a3a9))
+* **brew:** update gitlab ci for homebrew ([4e91e40](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4e91e4009d8ced864871d870ce21a4436d6d4adc))
+* **brew:** update gitlab ci to call build before homebrew ([5983f86](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5983f86a33057f1dd2971b3cb451f56cb5398e14))
+* **brew:** update hashing code ([1d5f02a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1d5f02ad38d37b55eb50c4510d9911c9b99a47d7))
+* **brew:** update logger func ([f937538](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f9375380fa08ca4535ee0d31f879ae5d0e9520a1))
+* **brew:** update logger func again ([08e46e9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/08e46e9ef4888249049c79c7307a63c98fb4ecbf))
+* **brew:** update s3 call to use creds in the system ([1c36e1b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1c36e1b277c5bde3758c83504d2fed859a65c6c3))
+* **brew:** update s3 function to grab aws creds by profile ([897e325](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/897e325a180af79c352fa1018dedb0a3813fd232))
+* **brew:** updates from PR review. remove unneeded error throw and unused code ([9c11296](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9c11296beb8fb59c422eb3b321f2d97d35493498))
+* **brew:** work on getting aws creds to validate ([566f199](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/566f1999a7930fccfea55a2a0f6e5417d5f688de))
+* **deploy:** update gitlab ci for aws config ([8423d08](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8423d081f60b3561828cff4d5d16e2876d8cf589))
+
+
+### Features
+
+* **release:** first work on homebrew setup ([5bb3d16](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5bb3d161dfab3fd079a27b8e58ecfadb97765f85))
+
+## [0.18.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.18.1...0.18.2) (2022-02-01)
+
+
+### Bug Fixes
+
+* **deps:** update sdk dep ([71b113c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/71b113c8b772b6235679685db27ac971b497ed40))
+
+## [0.18.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.18.0...0.18.1) (2022-01-28)
+
+
+### Bug Fixes
+
+* **deps:** update sdk dep ([90821bd](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/90821bd5471966c0b5a55f3e770a9630c1dabadb))
+
+# [0.18.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0...0.18.0) (2022-01-27)
+
+
+### Features
+
+* add additional connections mutation to insert edges between existing entities ([9313b4a](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/9313b4a4198ed3ef46f5947450db8068b5e035d6))
+
+# [0.17.0](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.12...0.17.0) (2022-01-24)
+
+
+### Bug Fixes
+
+* Added missing aliases ([a9fbb03](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a9fbb036a42624ed3fbf64c14845455edd840d74))
+* Removed unused scripts from the package.json ([680f9dc](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/680f9dc208580c3dae3fe52400a0d30e6019a953))
+* Renamed plugin commands ([0b92db8](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0b92db82438e498923a32a75a49fe0142fa26833))
+
+
+### Features
+
+* Created operation base command ([8ee9093](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8ee9093cd960b665e1fed15df69349d222e231c7))
+* Improved error messages with plugin commands ([3747df9](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3747df9ef59912f86a8217c56dedb3140938ce79))
+* Migrated add command ([4d83128](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/4d83128b5074c4ab60640df4a38b7bcdb58ab580))
+* Migrated install command ([7890340](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7890340de81ba23f641f15ed5cad561d999490fa))
+* Migrated list command ([0ced854](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0ced85459dfdc5fdd80713af7d3b50154ad5a487))
+* Migrated remove command ([8a80b70](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8a80b70aca6aab1b3e3f1068d4475ba6f3693292))
+* Migrated update command ([1e4eec4](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1e4eec4ca721491f72402b3f8ccce66d7306c782))
+* Reverted changes to keep upgrade all command ([cc95962](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/cc95962207a33cefdebaaf99c78acee0077d3a28))
+
+## [0.16.12](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.11...0.16.12) (2022-01-18)
+
+
+### Bug Fixes
+
+* Removed schema util from CLI ([f38fb60](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f38fb6052a7643597f710d7cb02b9be71ab23f55))
+* Updated sdk to the latest version ([a0f8c74](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a0f8c74fcf881d6be5c8f66aff3160bc75a13ab0))
+
+## [0.16.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.10...0.16.11) (2022-01-17)
+
+
+### Bug Fixes
+
+* Fixed display scan results for apigatewaystage service ([128c261](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/128c2617f88bdf52a2b6884c0764ff286d2ca269))
+
+## [0.16.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.16.9...0.16.10) (2022-01-17)
+
 
 ### Bug Fixes
 

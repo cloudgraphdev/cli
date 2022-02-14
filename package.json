@@ -15,10 +15,10 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/sdk": "0.10.4",
+    "@cloudgraph/sdk": "0.14.0",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
-    "@oclif/core": "^1.2.0",
+    "@oclif/core": "^1.3.4",
     "@oclif/plugin-help": "^5.1.10",
     "@oclif/plugin-plugins": "^2.0.12",
     "@types/lodash": "^4.14.175",
@@ -40,6 +40,7 @@
     "live-plugin-manager": "0.15.1",
     "lodash": "^4.17.21",
     "npm": "^8.1.2",
+    "oclif": "^2.3.0",
     "open": "^8.2.1",
     "semver": "^7.3.5",
     "tslib": "^1"
@@ -63,6 +64,7 @@
     "@types/pino": "^6.3.8",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
+    "aws-sdk": "^2.1060.0",
     "chai": "^4.3.4",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
@@ -75,7 +77,8 @@
     "jest": "^27.1.0",
     "jest-diff": "^27.1.0",
     "lint-staged": "^11.1.1",
-    "oclif": "^2",
+    "mkdirp": "^1.0.4",
+    "rimraf": "^3.0.2",
     "semantic-release": "^17.4.4",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
@@ -108,15 +111,23 @@
     ],
     "additionalVersionFlags": [
       "-v"
-    ]
+    ],
+    "update": {
+      "s3": {
+        "bucket": "cloudgraph-production-cli-assets"
+      },
+      "node": {
+        "version": "16.0.0"
+      }
+    }
   },
   "repository": "github:cloudgraphdev/cli",
   "scripts": {
-    "build": "yarn prepack",
+    "build": "yarn prepack && oclif pack -t linux-x64,linux-arm,darwin-x64,darwin-arm64 && yarn postpack",
     "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc.json",
-    "prepack": "rm -rf lib && tsc -b && oclif manifest && oclif readme && yarn cpx 'src/scripts/*' lib/scripts",
+    "prepack": "rm -rf lib && npx tsc -b --force && oclif manifest && oclif readme && yarn cpx 'src/scripts/*' lib/scripts",
     "run:init": "cross-env NODE_ENV=development ./bin/run init",
     "run:init:aws": "cross-env NODE_ENV=development ./bin/run init aws",
     "run:load": "cross-env NODE_ENV=development ./bin/run load",
@@ -125,21 +136,15 @@
     "run:scan:aws": "cross-env NODE_ENV=development ./bin/run scan aws",
     "run:launch": "cross-env NODE_ENV=development ./bin/run launch",
     "run:teardown": "cross-env NODE_ENV=development ./bin/run teardown",
-    "run:provider:install": "cross-env NODE_ENV=test ./bin/run provider install",
-    "run:provider:add": "cross-env NODE_ENV=test ./bin/run provider add",
-    "run:provider:remove": "cross-env NODE_ENV=test ./bin/run provider remove",
-    "run:provider:list": "cross-env NODE_ENV=test ./bin/run provider list",
-    "run:provider:update": "cross-env NODE_ENV=test ./bin/run provider update",
-    "run:policy:install": "cross-env NODE_ENV=test ./bin/run policy install",
-    "run:policy:add": "cross-env NODE_ENV=test ./bin/run policy add",
-    "run:policy:remove": "cross-env NODE_ENV=test ./bin/run policy remove",
-    "run:policy:list": "cross-env NODE_ENV=test ./bin/run policy list",
-    "run:policy:update": "cross-env NODE_ENV=test ./bin/run policy update",
+    "run:update": "cross-env NODE_ENV=test ./bin/run update",
+    "run:provider": "cross-env NODE_ENV=test ./bin/run provider",
+    "run:policy": "cross-env NODE_ENV=test ./bin/run policy",
     "test": "cross-env CG_DEBUG=-1 NODE_ENV=test jest --coverage=true --detectOpenHandles --runInBand --forceExit",
     "test:debug": "cross-env CG_DEBUG=5 NODE_ENV=test jest --coverage=false --detectOpenHandles --runInBand --forceExit",
     "version": "oclif readme && git add README.md",
     "lint": "eslint --config .eslintrc.json --ext .js,.ts ./",
-    "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./"
+    "lint:fix": "eslint --fix --config .eslintrc.json --ext .js,.ts ./",
+    "homebrew": "node release/scripts/homebrew.js"
   },
   "husky": {
     "hooks": {

@@ -28,6 +28,14 @@
     },
     "versionLimit": 10,
     "queryEngine": "playground",
-    "port": "5555"
+    "port": "5555",
+    "plugins": {
+      "policyPack": [
+        {
+          "name": "aws-cis-1.2",
+          "providers": ["aws"]
+        }
+      ]
+    }
   }
 }

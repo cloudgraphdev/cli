@@ -90,7 +90,9 @@ export default abstract class BaseCommand extends Command {
       printBoxMessage(`Update for ${chalk.italic.green(
         '@cloudgraph/cli'
       )} is available: ${this.config.version} -> ${cliLatestVersion}. \n
-Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
+you can update based on how you installed CG \n
+NPM: ${chalk.italic.green('npm i -g @cloudgraph/cli')} \n
+homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     }
     const configDir = this.getCGConfigKey('directory') ?? 'cg'
     this.versionDirectory = directory ?? configDir
@@ -350,5 +352,17 @@ Run ${chalk.italic.green('npm i -g @cloudgraph/cli')} to install`)
     // add any custom logic to handle errors from the command
     // or simply return the parent class error handling
     return super.catch(err)
+  }
+
+  getLockFile(): any {
+    const lockPath = path.join(this.config.configDir, '.cloud-graph.lock.json')
+    try {
+      const lockFile = cosmiconfigSync('cloud-graph').load(lockPath)
+      return lockFile?.config ?? {}
+    } catch (error: any) {
+      this.logger.info('No lock file found for Cloud Graph')
+      this.logger.debug(error)
+      return {}
+    }
   }
 }

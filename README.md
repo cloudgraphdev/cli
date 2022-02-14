@@ -151,14 +151,24 @@ CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming so
 
 # Install
 
+<!-- install -->
+
 **System Requirements**
 
-- Node 14+
 - Docker
 
-Use this command to install and update CloudGraph to the latest version.
+There are 2 ways to install the CloudGraph CLI
 
-<!-- install -->
+### Homebrew (Recommended)
+
+You can install CloudGraph using homebrew with the following command:
+`brew install cloudgraphdev/tap/cg`
+
+### NPM
+
+- Requires Node 16+
+
+Use this command to install and update CloudGraph to the latest version.
 
 ```bash
 npm i -g @cloudgraph/cli
@@ -1345,6 +1355,7 @@ There are some common errors you may see when running CloudGraph that are usuall
 * [`cg scan [PROVIDER]`](#cg-scan-provider)
 * [`cg serve [PROVIDER]`](#cg-serve-provider)
 * [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+* [`cg update [PROVIDER]`](#cg-update-provider)
 
 ## `cg help [COMMAND]`
 
@@ -1364,7 +1375,7 @@ DESCRIPTION
   Display help for cg.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.10/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.11/src/commands/help.ts)_
 
 ## `cg init [PROVIDER]`
 
@@ -1487,7 +1498,7 @@ EXAMPLES
   $ cg plugins
 ```
 
-_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.0.12/src/commands/plugins/index.ts)_
+_See code: [@oclif/plugin-plugins](https://github.com/oclif/plugin-plugins/blob/v2.1.0/src/commands/plugins/index.ts)_
 
 ## `cg plugins:inspect PLUGIN...`
 
@@ -1650,8 +1661,8 @@ Add new policy packs
 
 ```
 USAGE
-  $ cg policy add [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
   -P, --policies=<value>       Policy Packs to execute during scan
@@ -1664,11 +1675,15 @@ FLAGS
                                <options: dgraph>
   --dev                        Turn on developer mode
   --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
   --no-serve                   Set to not serve a query engine
   --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
 
 DESCRIPTION
   Add new policy packs
+
+ALIASES
+  $ cg add policy
 
 EXAMPLES
   $ cg policy add aws-cis-1.2.0
@@ -1682,8 +1697,8 @@ Install policy packs based on the lock file
 
 ```
 USAGE
-  $ cg policy install [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
   -P, --policies=<value>       Policy Packs to execute during scan
@@ -1696,11 +1711,15 @@ FLAGS
                                <options: dgraph>
   --dev                        Turn on developer mode
   --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
   --no-serve                   Set to not serve a query engine
   --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
 
 DESCRIPTION
   Install policy packs based on the lock file
+
+ALIASES
+  $ cg install policy
 
 EXAMPLES
   $ cg policy install
@@ -1712,8 +1731,8 @@ List currently installed policy packs and versions
 
 ```
 USAGE
-  $ cg policy list [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
   -P, --policies=<value>       Policy Packs to execute during scan
@@ -1726,11 +1745,17 @@ FLAGS
                                <options: dgraph>
   --dev                        Turn on developer mode
   --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
   --no-serve                   Set to not serve a query engine
   --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
 
 DESCRIPTION
   List currently installed policy packs and versions
+
+ALIASES
+  $ cg ls policy
+  $ cg list policy
+  $ cg ls policy
 
 EXAMPLES
   $ cg policy list
@@ -1765,6 +1790,14 @@ FLAGS
 DESCRIPTION
   Remove currently installed policy pack
 
+ALIASES
+  $ cg remove policy
+  $ cg policy remove
+  $ cg policy rm
+  $ cg del policy
+  $ cg rm policy
+  $ cg del policy
+
 EXAMPLES
   $ cg policy delete
 
@@ -1779,8 +1812,8 @@ Update currently installed policy packs
 
 ```
 USAGE
-  $ cg policy update [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
   -P, --policies=<value>       Policy Packs to execute during scan
@@ -1793,6 +1826,7 @@ FLAGS
                                <options: dgraph>
   --dev                        Turn on developer mode
   --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
   --no-serve                   Set to not serve a query engine
   --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
 
@@ -1804,7 +1838,7 @@ EXAMPLES
 
   $ cg policy update aws-cis-1.2.0
 
-  $cg policy update aws-cis-1.2.0@0.12.0
+  $ cg policy update aws-cis-1.2.0@0.12.0
 ```
 
 ## `cg provider [PROVIDER]`
@@ -1842,8 +1876,8 @@ Add new providers
 
 ```
 USAGE
-  $ cg provider add [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
   -P, --policies=<value>       Policy Packs to execute during scan
@@ -1856,6 +1890,7 @@ FLAGS
                                <options: dgraph>
   --dev                        Turn on developer mode
   --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
   --no-serve                   Set to not serve a query engine
   --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
 
@@ -1863,7 +1898,7 @@ DESCRIPTION
   Add new providers
 
 ALIASES
-  $ cg add
+  $ cg add provider
 
 EXAMPLES
   $ cg provider add aws
@@ -1877,8 +1912,8 @@ Install providers based on the lock file
 
 ```
 USAGE
-  $ cg provider install [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
   -P, --policies=<value>       Policy Packs to execute during scan
@@ -1891,6 +1926,7 @@ FLAGS
                                <options: dgraph>
   --dev                        Turn on developer mode
   --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
   --no-serve                   Set to not serve a query engine
   --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
 
@@ -1898,7 +1934,7 @@ DESCRIPTION
   Install providers based on the lock file
 
 ALIASES
-  $ cg install
+  $ cg install provider
 
 EXAMPLES
   $ cg provider install
@@ -1910,8 +1946,8 @@ List currently installed providers and versions
 
 ```
 USAGE
-  $ cg provider list [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
   -P, --policies=<value>       Policy Packs to execute during scan
@@ -1924,6 +1960,7 @@ FLAGS
                                <options: dgraph>
   --dev                        Turn on developer mode
   --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
   --no-serve                   Set to not serve a query engine
   --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
 
@@ -1931,9 +1968,9 @@ DESCRIPTION
   List currently installed providers and versions
 
 ALIASES
-  $ cg provider ls
-  $ cg list
-  $ cg ls
+  $ cg ls provider
+  $ cg list provider
+  $ cg ls provider
 
 EXAMPLES
   $ cg provider list
@@ -1969,11 +2006,12 @@ DESCRIPTION
   Remove currently installed provider
 
 ALIASES
-  $ cg remove
-  $ cg rm
-  $ cg del
+  $ cg remove provider
+  $ cg provider remove
   $ cg provider rm
-  $ cg provider del
+  $ cg del provider
+  $ cg rm provider
+  $ cg del provider
 
 EXAMPLES
   $ cg provider delete
@@ -1989,8 +2027,8 @@ Update currently installed providers
 
 ```
 USAGE
-  $ cg provider update [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
   -P, --policies=<value>       Policy Packs to execute during scan
@@ -2003,21 +2041,19 @@ FLAGS
                                <options: dgraph>
   --dev                        Turn on developer mode
   --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
   --no-serve                   Set to not serve a query engine
   --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
 
 DESCRIPTION
   Update currently installed providers
 
-ALIASES
-  $ cg update
-
 EXAMPLES
   $ cg provider update
 
   $ cg provider update aws
 
-  $cg provider update aws@0.12.0
+  $ cg provider update aws@0.12.0
 ```
 
 ## `cg scan [PROVIDER]`
@@ -2111,4 +2147,40 @@ EXAMPLES
 ```
 
 _See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/teardown.ts)_
+
+## `cg update [PROVIDER]`
+
+Upgrade currently installed plugins.
+
+```
+USAGE
+  $ cg update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+
+FLAGS
+  -P, --policies=<value>       Policy Packs to execute during scan
+  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=<value>           Set port to serve query engine
+  -q, --query-engine=<option>  Query engine to launch
+                               <options: playground|altair>
+  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
+                               <options: dgraph>
+  --dev                        Turn on developer mode
+  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
+  --no-save                    Set to not alter lock file, just delete plugin
+  --no-serve                   Set to not serve a query engine
+  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
+
+DESCRIPTION
+  Upgrade currently installed plugins.
+
+ALIASES
+  $ cg update
+
+EXAMPLES
+  $ cg update
+```
+
+_See code: [src/commands/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.17.0-alpha.4/src/commands/update.ts)_
 <!-- commandsstop -->

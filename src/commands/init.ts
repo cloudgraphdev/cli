@@ -1,4 +1,7 @@
-import { StorageEngineConnectionConfig } from '@cloudgraph/sdk'
+import {
+  ConfiguredPlugin,
+  StorageEngineConnectionConfig,
+} from '@cloudgraph/sdk'
 import { Flags as CommandFlags } from '@oclif/core'
 import fs from 'fs'
 import path from 'path'
@@ -65,6 +68,15 @@ export default class Init extends Command {
     return client.configure()
   }
 
+  getPluginConfig(): {
+    plugins: { [pluginType: string]: ConfiguredPlugin[] }
+  } {
+    const plugins = this.getCGConfigKey('plugins')
+    return {
+      plugins: plugins ?? {},
+    }
+  }
+
   async askForDGraphConfig(overwrite = false): Promise<{
     versionLimit: string
     storageConfig: StorageEngineConnectionConfig
@@ -121,6 +133,7 @@ export default class Init extends Command {
 
   async getCloudGraphConfig(overwrite = false): Promise<CloudGraphConfig> {
     return {
+      ...this.getPluginConfig(),
       ...(await this.askForDGraphConfig(overwrite)),
       ...(await this.askForQueryEngineConfig(overwrite)),
     }
