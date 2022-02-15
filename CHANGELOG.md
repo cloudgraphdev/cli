@@ -1,3 +1,10 @@
+# [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-02-15)
+
+
+### Bug Fixes
+
+* Oclif core to working in development mode ([b94c951](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b94c9515e49399a07fe125d51dceaf72c01dadd5))
+
 # [0.17.0-alpha.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.2...0.17.0-alpha.3) (2022-02-14)
 
 
