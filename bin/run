@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('@oclif/core').run().then(require('@oclif/core/flush')).catch(require('@oclif/core/handle'))
