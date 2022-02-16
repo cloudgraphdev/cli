@@ -31,8 +31,7 @@ export default class AddPolicy extends OperationBaseCommand {
         const config = this.getCGConfig()
         if (config) {
           let configuredPolicies =
-            config.cloudGraph.plugins[PluginType.PolicyPack] || []
-
+            config.cloudGraph.plugins?.[PluginType.PolicyPack] || []
           if (isEmpty(configuredPolicies)) {
             // Set new Policy Pack Plugin array
             configuredPolicies = [
@@ -50,6 +49,9 @@ export default class AddPolicy extends OperationBaseCommand {
                 providers: [provider],
               },
             ]
+          }
+          if (!config.cloudGraph.plugin) {
+            config.cloudGraph.plugins = {}
           }
           config.cloudGraph.plugins[PluginType.PolicyPack] = uniqBy(
             configuredPolicies,
