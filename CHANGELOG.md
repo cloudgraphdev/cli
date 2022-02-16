@@ -41,6 +41,13 @@
 * **scan-report:** ignore label service ([efb5f3f](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/efb5f3feb3a009f219b0e7a2becbf72c79c1242b))
 
 ## [0.20.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.1...0.20.2) (2022-02-16)
+# [0.17.0-alpha.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.4...0.17.0-alpha.5) (2022-02-16)
+
+
+### Bug Fixes
+
+* oclif core dev mode ([debd20e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/debd20ee4da0e30043ae621173ede8e57b8e960b))
+
 # [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-02-15)
 
 
