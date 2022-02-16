@@ -40,7 +40,7 @@ export default class RemovePolicy extends OperationBaseCommand {
           const config = this.getCGConfig()
           if (config) {
             const configuredPolicies =
-              config.cloudGraph.plugins[PluginType.PolicyPack] || []
+              config.cloudGraph.plugins?.[PluginType.PolicyPack] || []
 
             if (!isEmpty(configuredPolicies)) {
               // Remove policy from Policy Pack Plugin array
