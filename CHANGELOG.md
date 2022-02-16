@@ -1,3 +1,10 @@
+## [0.20.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.1...0.20.2) (2022-02-16)
+
+
+### Bug Fixes
+
+* **plugin:** fix plugin add and remove commands for case where there is no plugins block in config ([3d7265c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/3d7265ca5556abadabab8f0481075168e879a78c))
+
 ## [0.20.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.0...0.20.1) (2022-02-10)
 
 
