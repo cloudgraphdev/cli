@@ -1,3 +1,10 @@
+# [0.17.0-alpha.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.4...0.17.0-alpha.5) (2022-02-16)
+
+
+### Bug Fixes
+
+* oclif core dev mode ([debd20e](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/debd20ee4da0e30043ae621173ede8e57b8e960b))
+
 # [0.17.0-alpha.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.17.0-alpha.3...0.17.0-alpha.4) (2022-02-15)
 
 
