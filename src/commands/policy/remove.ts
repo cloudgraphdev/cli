@@ -12,7 +12,6 @@ export default class RemovePolicy extends OperationBaseCommand {
     'policy:rm',
     'del:policy',
     'rm:policy',
-    'del:policy',
   ]
 
   static examples = [

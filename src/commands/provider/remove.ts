@@ -11,7 +11,6 @@ export default class RemoveProvider extends OperationBaseCommand {
     'provider:rm',
     'del:provider',
     'rm:provider',
-    'del:provider',
   ]
 
   static examples = [
