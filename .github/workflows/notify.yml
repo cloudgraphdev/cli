@@ -1,0 +1,21 @@
+name: notify
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: |
+          GIT_COMMIT_TILE=$(git log -1 --pretty=format:"%s")
+          curl -X POST --data-urlencode "payload={\"attachments\":[{\"fallback\":\"$GIT_AUTHOR_NAME released new $REPO_NAME version of $GITHUB_REF_NAME\",\"color\":\"good\",\"title\":\"Version $GITHUB_REF_NAME of $REPO_NAME released\",\"title_link\":\"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/$GITHUB_REF_NAME\",\"fields\":[{\"title\":\"Tag\",\"value\":\"<$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/commits/$GITHUB_REF_NAME|$GITHUB_REF_NAME>\",\"short\":true},{\"title\":\"Commit\",\"value\":\"<$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/tree/$GITHUB_REF_NAME|$GIT_COMMIT_TILE>\",\"short\":true}],\"footer\":\"$REPO_NAME\",\"ts\":\"$( date +%s )\"}]}" $SLACK_WEBHOOK
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          GIT_AUTHOR_NAME: 'AutoCloud Deploy Bot'
+          SLACK_WEBHOOK: ${{secrets.slack_webhook}}
