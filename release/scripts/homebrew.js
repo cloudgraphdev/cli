@@ -93,7 +93,7 @@ async function uploadToS3(file) {
         if (err) {
           console.log(`No valid credentials found for roleARN: ${roleArn}`)
           console.log(err)
-          resolve()
+          reject(err)
         } else {
           // successful response
           console.log('successfully got access keys from role')
@@ -210,7 +210,7 @@ async function updateHomebrew() {
 
   console.log('updating local git...')
   await updateCgNodeFormula(homebrewDir)
-  await updateCgFormula(homebrewDir)
+  await updateCgFormula(homebrewDir).catch((err) => { throw new Error(err) })
 
   // run in git in cloned cloudgraph/homebrew-tap git directory
   const git = async (args, opts = {}) => {
