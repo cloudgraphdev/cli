@@ -1,3 +1,10 @@
+## [0.20.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.2...0.20.3) (2022-02-18)
+
+
+### Bug Fixes
+
+* **scan-report:** ignore label service ([efb5f3f](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/efb5f3feb3a009f219b0e7a2becbf72c79c1242b))
+
 ## [0.20.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.1...0.20.2) (2022-02-16)
 
 
