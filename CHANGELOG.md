@@ -1,3 +1,10 @@
+## [0.20.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.3...0.20.4) (2022-02-19)
+
+
+### Bug Fixes
+
+* **readme:** update readme as well as homebrew script ([6386017](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/638601795c0fea3a9b942b07afa18eb51a0ade2f))
+
 ## [0.20.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.2...0.20.3) (2022-02-18)
 
 
