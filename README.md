@@ -185,17 +185,24 @@ npm i -g @cloudgraph/cli
 You can then add the providers you want (links to provider repos: [AWS](https://github.com/cloudgraphdev/cloudgraph-provider-aws), [Azure](https://github.com/cloudgraphdev/cloudgraph-provider-azure), [GCP](https://github.com/cloudgraphdev/cloudgraph-provider-gcp), [K8s](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)):
 
 ```bash
-cg provider add aws
-cg provider add azure
-cg provider add gcp
-cg provider add k8s
+cg init aws
+cg init azure
+cg init gcp
+cg init k8s
+```
+
+You can also add as many as you want all at once
+
+```bash
+cg init aws azure gcp k8s
 ```
 
 And add in compliance policy packs to supplement your data with instant security insights:
 
 ```bash
-# Currently we support AWS CIS 1.2, but Azure and GCP are coming soon.
+# Currently we support AWS CIS 1.2 and GCP CIS 1.2 but Azure and K8s are coming soon.
 cg policy add aws-cis-1.2.0
+cg policy add gcp-cis-1.2.0
 ```
 
 You can find a list of currently supported policy packs in the [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
