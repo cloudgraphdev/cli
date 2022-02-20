@@ -14,7 +14,7 @@ CloudGraph is the free open-source universal **GraphQL API and Cloud Security 
 - Free and effortless *compliance checks* (i.e. CIS 1.2)
 - *Type-Safe asset inventories* for all of your resources in all of your cloud environments
 - Automatically generated documentation and query validation - know if your query is valid before you send it!
-- Full resource data metadata including the *relationships* between resources so you can understand utilization
+- Full resource data including *relationships* between resources so you can understand context
 - Historical snapshots of your data over time
 - A single endpoint to query all of your cloud data at once (i.e. get AWS + GCP data in the same query, or compare AWS stage with AWS prod)
 - Enhanced billing data (AWS only)
