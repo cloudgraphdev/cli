@@ -9,7 +9,19 @@
 <br />
 <br />
 
-The universal **GraphQL** API for **AWS**, **Azure**, **GCP**, and **K8s** - query resources, relationships and insight data to solve security, compliance, asset inventory, and billing challenges. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+CloudGraph is the free open-source universal **GraphQL API and Cloud Security Posture Management (CSPM) tool for AWS, Azure, GCP, and K8s**. With CloudGraph you get:
+
+- Free and effortless *compliance checks* (i.e. CIS 1.2)
+- *Type-Safe asset inventories* for all of your resources in all of your cloud environments
+- Automatically generated documentation and query validation - know if your query is valid before you send it!
+- Full resource data metadata including the *relationships* between resources so you can understand utilization
+- Historical snapshots of your data over time
+- A single endpoint to query all of your cloud data at once (i.e. get AWS + GCP data in the same query, or compare AWS stage with AWS prod)
+- Enhanced billing data (AWS only)
+- Enhanced CloudWatch data (AWS EC2 only)
+
+Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+
 <br />
 
 🌐 [Website](https://www.cloudgraph.dev)
@@ -44,7 +56,6 @@ The universal **GraphQL** API for **AWS**, **Azure**, **GCP**, and **K8s** - que
 * [How It Works](#how-it-works)
 * [Authentication and Permissions](#authentication-and-permissions)
 * [Install](#install)
-* [Currently we support AWS CIS 1.2 and GCP CIS 1.2 but Azure and K8s are coming soon.](#currently-we-support-aws-cis-12-and-gcp-cis-12-but-azure-and-k8s-are-coming-soon)
 * [Quick Start](#quick-start)
 * [Loading Previous Versions](#loading-previous-versions)
 * [Supported Services](#supported-services)
