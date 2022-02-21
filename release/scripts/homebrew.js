@@ -74,10 +74,10 @@ async function uploadToS3(file) {
     })
     fileStream.on('open', () => {
       const credentials = new AWS.SharedIniFileCredentials({
-        profile: 'autocloud-iac',
+        profile: 'cloudgraph-iac',
         callback: err => {
           if (err) {
-            console.log('No credentials found for profile autocloud-iac')
+            console.log('No credentials found for profile cloudgraph-iac')
             console.log(err)
           }
         },
