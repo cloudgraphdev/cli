@@ -1,3 +1,10 @@
+## [0.20.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.5...0.20.6) (2022-02-21)
+
+
+### Bug Fixes
+
+* **brew:** update brew pipeline before script with correct aws file locations ([8866570](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/8866570fde67cb05e82cdea01cce647a7e0f0041))
+
 ## [0.20.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.4...0.20.5) (2022-02-21)
 
 
