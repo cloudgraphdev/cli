@@ -1,3 +1,10 @@
+## [0.20.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.6...0.20.7) (2022-02-21)
+
+
+### Bug Fixes
+
+* **brew:** update brew script to use correct profile ([f417eb3](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f417eb3503545a2d9c3712e7927a8e10aa5b9157))
+
 ## [0.20.6](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.5...0.20.6) (2022-02-21)
 
 
