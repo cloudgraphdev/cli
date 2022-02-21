@@ -1,3 +1,10 @@
+## [0.20.5](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.4...0.20.5) (2022-02-21)
+
+
+### Bug Fixes
+
+* **brew:** update brew pipeline to use node profile and correct iac acct ([667eb43](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/667eb43ce3dd4893987d843e6af464852f6749ea))
+
 ## [0.20.4](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.3...0.20.4) (2022-02-19)
 
 
