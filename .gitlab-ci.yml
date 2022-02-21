@@ -130,25 +130,25 @@ homebrew:
     # - *install-packages
     - *configure-registry
     - *configure-ssh
-    - mkdir -p /root/.aws
+    - mkdir -p /home/node/.aws
     - |
-      cat << EOF > /root/.aws/config
+      cat << EOF > /home/node/.aws/config
       [default]
       region=us-east-1
       output=json
 
-      [profile autocloud-iac]
+      [profile cloudgraph-iac]
       role_arn = ${AWS_ROLE_ARN}
       source_profile = default
       EOF
     - |
-      cat << EOF > /root/.aws/credentials
+      cat << EOF > /home/node/.aws/credentials
       [default]
       aws_access_key_id = ${AWS_ACCESS_KEY_ID}
       aws_secret_access_key = ${AWS_SECRET_ACCESS_KEY}
       EOF
     - export AWS_SDK_LOAD_CONFIG=true
-    - export AWS_PROFILE=autocloud-iac
+    - export AWS_PROFILE=cloudgraph-iac
   script:
     - yarn build
     - yarn homebrew
