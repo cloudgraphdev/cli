@@ -1,9 +1,26 @@
 ## [0.20.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.7...0.20.8) (2022-02-22)
+# [0.21.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.7...0.21.0-alpha.1) (2022-02-21)
 
 
 ### Bug Fixes
 
 * spelling ([b7ba7b5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b7ba7b55f3aa85927d218b225d9060ac41ecc24e))
+* oclif core dev mode ([a5c2d56](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/a5c2d567f62848c4d536f5374d3ee30361f8860d))
+* Oclif core to working in development mode ([89572ca](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/89572ca7fb3fe65cb674a6aa68d8fcb4493999e8))
+* **brew:** update gitlab ci for homebrew ([31e3843](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/31e3843de58066c53b58d0b96ee89ba55f39f035))
+* **brew:** update gitlab ci to call build before homebrew ([44f6c90](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/44f6c907bac71cca910674fd1c47bec2d85aa5d6))
+* Moved scripts to root folder ([7fede9b](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7fede9b4d6f9d6d47e105c423425f2a3f0fdb123))
+* Update CG to use Oclif core and space for the `topicSeparator` ([f688bb2](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f688bb2556a6c59b6bdb303515dc32be1cd1e0b3))
+* update oclif version ([1396c69](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/1396c692db47653a7c5cb50d5d12884bb26a4189))
+
+
+### Features
+
+* Refactored Plugins execution after inserted scanned data ([7e3adc0](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/7e3adc082ba1a1e76a800887d18572b5c7aa5935))
+* **release:** first work on homebrew setup ([726186c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/726186c301038b191ad4e67470ee35182fd3b160))
+* Migrated add command ([ec7cf8c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ec7cf8cca532bb19db66a2923bf3487e03418c2b))
+* Reverted changes to keep upgrade all command ([acc9ca0](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/acc9ca076351079dcb884c6ddb6e3969e8913dc9))
+* Update CG to use Oclif core and space for the topicSeparator ([55e7b41](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/55e7b41b2de5c218b761ce306b65e36181c1e4b9))
 
 ## [0.20.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.6...0.20.7) (2022-02-21)
 # [0.21.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.2...0.21.0-alpha.1) (2022-02-21)
