@@ -1,3 +1,10 @@
+## [0.20.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.7...0.20.8) (2022-02-22)
+
+
+### Bug Fixes
+
+* spelling ([b7ba7b5](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/b7ba7b55f3aa85927d218b225d9060ac41ecc24e))
+
 ## [0.20.7](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.6...0.20.7) (2022-02-21)
 
 
