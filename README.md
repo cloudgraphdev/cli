@@ -1445,7 +1445,7 @@ EXAMPLES
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1479,7 +1479,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/load.ts)_
 
 ## `cg policy [PROVIDER]`
 
@@ -1508,7 +1508,7 @@ DESCRIPTION
   Commands to manage policy pack modules, run $ cg policy for more info.
 ```
 
-_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/policy/index.ts)_
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/policy/index.ts)_
 
 ## `cg policy add [PROVIDER]`
 
@@ -1546,7 +1546,9 @@ EXAMPLES
   $ cg policy add aws-cis-1.2.0@0.12.0
 ```
 
-## `cg policy install [PROVIDER]`
+_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/policy/add.ts)_
+
+## `cg policy:install [PROVIDER]`
 
 Install policy packs based on the lock file
 
@@ -1580,7 +1582,9 @@ EXAMPLES
   $ cg policy install
 ```
 
-## `cg policy list [PROVIDER]`
+_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/policy/install.ts)_
+
+## `cg policy:list [PROVIDER]`
 
 List currently installed policy packs and versions
 
@@ -1617,7 +1621,9 @@ EXAMPLES
   $ cg policy list aws
 ```
 
-## `cg policy remove [PROVIDER]`
+_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/policy/list.ts)_
+
+## `cg policy:remove [PROVIDER]`
 
 Remove currently installed policy pack
 
@@ -1659,7 +1665,9 @@ EXAMPLES
   $ cg policy delete aws-cis-1.2.0 --no-save
 ```
 
-## `cg policy update [PROVIDER]`
+_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/policy/remove.ts)_
+
+## `cg policy:update [PROVIDER]`
 
 Update currently installed policy packs
 
@@ -1694,6 +1702,8 @@ EXAMPLES
   $ cg policy update aws-cis-1.2.0@0.12.0
 ```
 
+_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/policy/update.ts)_
+
 ## `cg provider [PROVIDER]`
 
 Commands to manage provider modules, run $ cg provider for more info.
@@ -1721,7 +1731,7 @@ DESCRIPTION
   Commands to manage provider modules, run $ cg provider for more info.
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/provider/index.ts)_
 
 ## `cg provider add [PROVIDER]`
 
@@ -1759,7 +1769,9 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
-## `cg provider install [PROVIDER]`
+_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/provider/add.ts)_
+
+## `cg provider:install [PROVIDER]`
 
 Install providers based on the lock file
 
@@ -1793,7 +1805,9 @@ EXAMPLES
   $ cg provider install
 ```
 
-## `cg provider list [PROVIDER]`
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/provider/install.ts)_
+
+## `cg provider:list [PROVIDER]`
 
 List currently installed providers and versions
 
@@ -1830,7 +1844,9 @@ EXAMPLES
   $ cg provider list aws
 ```
 
-## `cg provider remove [PROVIDER]`
+_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/provider/list.ts)_
+
+## `cg provider:remove [PROVIDER]`
 
 Remove currently installed provider
 
@@ -1872,7 +1888,9 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
-## `cg provider update [PROVIDER]`
+_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/provider/remove.ts)_
+
+## `cg provider:update [PROVIDER]`
 
 Update currently installed providers
 
@@ -1906,6 +1924,8 @@ EXAMPLES
 
   $ cg provider update aws@0.12.0
 ```
+
+_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/provider/update.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -1943,7 +1963,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -1975,7 +1995,7 @@ EXAMPLES
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.9/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 
