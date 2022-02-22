@@ -1,7 +1,7 @@
 {
   "name": "@cloudgraph/cli",
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
-  "version": "0.21.0-alpha.2",
+  "version": "0.20.8",
   "author": "AutoCloud",
   "license": "MPL-2.0",
   "publishConfig": {
