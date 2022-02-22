@@ -1,4 +1,12 @@
 ## [0.20.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.7...0.20.8) (2022-02-22)
+# [0.21.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.21.0-alpha.1...0.21.0-alpha.2) (2022-02-22)
+
+
+### Bug Fixes
+
+* **Semantic-release:** fix semantic version ([f36e074](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/f36e074ec1ac5a02cb4edecd98416ec1fe9f6e50))
+* **Version:** alpha version ([ca1e339](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/ca1e33980e085b9716a51afc9168f64ccca31754))
+
 # [0.21.0-alpha.1](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.7...0.21.0-alpha.1) (2022-02-22)
 
 
