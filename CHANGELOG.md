@@ -1,3 +1,10 @@
+## [0.20.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.8...0.20.9) (2022-02-22)
+
+
+### Bug Fixes
+
+* **deps:** update node eng requirement to 16 ([d43f18c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/d43f18cdbf701d5df81ac321d9d950d67459bd29))
+
 ## [0.20.8](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.7...0.20.8) (2022-02-22)
 
 
