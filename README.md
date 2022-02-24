@@ -11,10 +11,10 @@
 
 CloudGraph is the free open-source universal **GraphQL API and Cloud Security Posture Management (CSPM) tool for AWS, Azure, GCP, and K8s**. With CloudGraph you get:
 
-- Free and effortless *compliance checks* (i.e. CIS 1.2)
-- *Type-Safe asset inventories* for all of your resources in all of your cloud environments
+- Free and effortless _compliance checks_ (i.e. CIS 1.2)
+- _Type-Safe asset inventories_ for all of your resources in all of your cloud environments
 - Automatically generated documentation and query validation - know if your query is valid before you send it!
-- Full resource data including *relationships* between resources so you can understand context
+- Full resource data including _relationships_ between resources so you can understand context
 - Historical snapshots of your data over time
 - A single endpoint to query all of your cloud data at once (i.e. get AWS + GCP data in the same query, or compare AWS stage with AWS prod)
 - Enhanced billing data (AWS only)
@@ -51,24 +51,25 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 ![Twitter Follow](https://img.shields.io/twitter/follow/AutoCloudDev?style=social)
 
 <!-- toc -->
-* [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
-* [Why CloudGraph](#why-cloudgraph)
-* [How It Works](#how-it-works)
-* [Authentication and Permissions](#authentication-and-permissions)
-* [Install](#install)
-* [Currently we support AWS CIS 1.2, GCP CIS 1.2, and Azure CIS 1.3.1 but more (pci, NIST, K8S NSA_CISA) are coming soon.](#currently-we-support-aws-cis-12-gcp-cis-12-and-azure-cis-131-but-more-pci-nist-k8s-nsa_cisa-are-coming-soon)
-* [Quick Start](#quick-start)
-* [Loading Previous Versions](#loading-previous-versions)
-* [Supported Services](#supported-services)
-* [Example Queries](#example-queries)
-* [Query Tools](#query-tools)
-* [Community](#community)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Deployment Options](#deployment-options)
-* [Hosted Version](#hosted-version)
-* [Debugging](#debugging)
-* [Common Errors](#common-errors)
-* [Commands](#commands)
+
+- [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
+- [Why CloudGraph](#why-cloudgraph)
+- [How It Works](#how-it-works)
+- [Authentication and Permissions](#authentication-and-permissions)
+- [Install](#install)
+- [Currently we support AWS CIS 1.2, GCP CIS 1.2, and Azure CIS 1.3.1 but more (pci, NIST, K8S NSA_CISA) are coming soon.](#currently-we-support-aws-cis-12-gcp-cis-12-and-azure-cis-131-but-more-pci-nist-k8s-nsa_cisa-are-coming-soon)
+- [Quick Start](#quick-start)
+- [Loading Previous Versions](#loading-previous-versions)
+- [Supported Services](#supported-services)
+- [Example Queries](#example-queries)
+- [Query Tools](#query-tools)
+- [Community](#community)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Deployment Options](#deployment-options)
+- [Hosted Version](#hosted-version)
+- [Debugging](#debugging)
+- [Common Errors](#common-errors)
+- [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -615,10 +616,14 @@ Use the CloudGraph Policy Pack for AWS CIS 1.2 to query all of your CIS findings
 ```graphql
 query {
   queryawsCISFindings {
-    ruleId
-    description
+    id
+    resourceId
     result
-    severity
+    rule {
+      id
+      description
+      severity
+    }
   }
 }
 ```
@@ -631,16 +636,24 @@ If you want to query several different compliance findings for a given provider 
 query {
   queryawsFindings {
     CISFindings {
-      severity
-      description
-      ruleId
+      id
+      resourceId
       result
+      rule {
+        id
+        description
+        severity
+      }
     }
     AutoCloudFindings {
-      severity
-      description
-      ruleId
+      id
+      resourceId
       result
+      rule {
+        id
+        description
+        severity
+      }
     }
   }
 }
@@ -653,10 +666,14 @@ For each CIS rule, get the resources that the rule is associated with, in this c
 ```graphql
 query {
   queryawsCISFindings {
-    ruleId
-    description
+    id
+    resourceId
     result
-    severity
+    rule {
+      id
+      description
+      severity
+    }
     iamUser {
       id
       arn
@@ -675,10 +692,14 @@ query {
   getawsIamUser(id: "123456789") {
     name
     CISFindings {
-      severity
-      description
-      ruleId
+      id
+      resourceId
       result
+      rule {
+        id
+        description
+        severity
+      }
     }
   }
 }
@@ -1350,26 +1371,27 @@ There are some common errors you may see when running CloudGraph that are usuall
 # Commands
 
 <!-- commands -->
-* [`cg help [COMMAND]`](#cg-help-command)
-* [`cg init [PROVIDER]`](#cg-init-provider)
-* [`cg launch [PROVIDER]`](#cg-launch-provider)
-* [`cg load [PROVIDER]`](#cg-load-provider)
-* [`cg policy [PROVIDER]`](#cg-policy-provider)
-* [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
-* [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
-* [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
-* [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
-* [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
-* [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
-* [`cg scan [PROVIDER]`](#cg-scan-provider)
-* [`cg serve [PROVIDER]`](#cg-serve-provider)
-* [`cg teardown [PROVIDER]`](#cg-teardown-provider)
-* [`cg update [PROVIDER]`](#cg-update-provider)
+
+- [`cg help [COMMAND]`](#cg-help-command)
+- [`cg init [PROVIDER]`](#cg-init-provider)
+- [`cg launch [PROVIDER]`](#cg-launch-provider)
+- [`cg load [PROVIDER]`](#cg-load-provider)
+- [`cg policy [PROVIDER]`](#cg-policy-provider)
+- [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
+- [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
+- [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
+- [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
+- [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
+- [`cg provider [PROVIDER]`](#cg-provider-provider)
+- [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
+- [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
+- [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
+- [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
+- [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+- [`cg scan [PROVIDER]`](#cg-scan-provider)
+- [`cg serve [PROVIDER]`](#cg-serve-provider)
+- [`cg teardown [PROVIDER]`](#cg-teardown-provider)
+- [`cg update [PROVIDER]`](#cg-update-provider)
 
 ## `cg help [COMMAND]`
 
@@ -2071,4 +2093,5 @@ EXAMPLES
 ```
 
 _See code: [src/commands/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.10/src/commands/update.ts)_
+
 <!-- commandsstop -->
