@@ -63,16 +63,27 @@ export function makeDirIfNotExists(dir: string): void {
   }
 }
 
+export function buildFixedPath(dir: string, provider?: string): string {
+  const dirArray = provider?.replace(/\\/g, '/').includes('/')
+    ? provider?.replace(/\\/g, '/').split('/')
+    : []
+  return path.normalize(
+    `${dir}/${dirArray.slice(0, dirArray.length - 1).join('/')}`
+  )
+}
+
 export function writeGraphqlSchemaToFile(
   dirPath: string,
   schema: string,
   provider?: string
 ): void {
-  makeDirIfNotExists(dirPath)
+  makeDirIfNotExists(buildFixedPath(dirPath, provider))
   fs.writeFileSync(
-    path.join(
-      dirPath,
-      provider ? `/${provider}_schema.graphql` : '/schema.graphql'
+    path.normalize(
+      path.join(
+        dirPath,
+        provider ? `/${provider}_schema.graphql` : '/schema.graphql'
+      )
     ),
     schema
   )
