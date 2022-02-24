@@ -1,3 +1,10 @@
+## [0.20.10](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.9...0.20.10) (2022-02-24)
+
+
+### Bug Fixes
+
+* Custom provider with forward slash in name ([dbe4f8d](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/dbe4f8d7c8672cb1bcbe123ac9216ca7f331e229))
+
 ## [0.20.9](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.8...0.20.9) (2022-02-22)
 
 
