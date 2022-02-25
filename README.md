@@ -215,7 +215,7 @@ And add in compliance policy packs to supplement your data with instant security
 # Currently we support AWS CIS 1.2, GCP CIS 1.2, and Azure CIS 1.3.1 but more (pci, NIST, K8S NSA_CISA) are coming soon.
 cg policy add aws-cis-1.2.0
 cg policy add gcp-cis-1.2.0
-cg policy add aws-cis-1.3.1
+cg policy add azure-cis-1.3.1
 ```
 
 You can find a list of currently supported policy packs in the [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
