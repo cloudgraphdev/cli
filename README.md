@@ -51,24 +51,24 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 ![Twitter Follow](https://img.shields.io/twitter/follow/AutoCloudDev?style=social)
 
 <!-- toc -->
-* [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
-* [Why CloudGraph](#why-cloudgraph)
-* [How It Works](#how-it-works)
-* [Authentication and Permissions](#authentication-and-permissions)
-* [Install](#install)
-* [Currently we support AWS CIS 1.2, GCP CIS 1.2, and Azure CIS 1.3.1 but more (pci, NIST, K8S NSA_CISA) are coming soon.](#currently-we-support-aws-cis-12-gcp-cis-12-and-azure-cis-131-but-more-pci-nist-k8s-nsa_cisa-are-coming-soon)
-* [Quick Start](#quick-start)
-* [Loading Previous Versions](#loading-previous-versions)
-* [Supported Services](#supported-services)
-* [Example Queries](#example-queries)
-* [Query Tools](#query-tools)
-* [Community](#community)
-* [Contribution Guidelines](#contribution-guidelines)
-* [Deployment Options](#deployment-options)
-* [Hosted Version](#hosted-version)
-* [Debugging](#debugging)
-* [Common Errors](#common-errors)
-* [Commands](#commands)
+
+- [Amazing companies using CloudGraph\*\*](#amazing-companies-using-cloudgraph)
+- [Why CloudGraph](#why-cloudgraph)
+- [How It Works](#how-it-works)
+- [Authentication and Permissions](#authentication-and-permissions)
+- [Install](#install)
+- [Quick Start](#quick-start)
+- [Loading Previous Versions](#loading-previous-versions)
+- [Supported Services](#supported-services)
+- [Example Queries](#example-queries)
+- [Query Tools](#query-tools)
+- [Community](#community)
+- [Contribution Guidelines](#contribution-guidelines)
+- [Deployment Options](#deployment-options)
+- [Hosted Version](#hosted-version)
+- [Debugging](#debugging)
+- [Common Errors](#common-errors)
+- [Commands](#commands)
 <!-- tocstop -->
 
 <br />
@@ -212,7 +212,6 @@ cg init aws azure gcp k8s
 And add in compliance policy packs to supplement your data with instant security insights:
 
 ```bash
-# Currently we support AWS CIS 1.2 and GCP CIS 1.2 but Azure and K8s are coming soon.
 cg policy add aws-cis-1.2.0
 cg policy add gcp-cis-1.2.0
 cg policy add azure-cis-1.3.1
