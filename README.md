@@ -57,7 +57,6 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 - [How It Works](#how-it-works)
 - [Authentication and Permissions](#authentication-and-permissions)
 - [Install](#install)
-- [Currently we support AWS CIS 1.2, GCP CIS 1.2, and Azure CIS 1.3.1 but more (pci, NIST, K8S NSA_CISA) are coming soon.](#currently-we-support-aws-cis-12-gcp-cis-12-and-azure-cis-131-but-more-pci-nist-k8s-nsa_cisa-are-coming-soon)
 - [Quick Start](#quick-start)
 - [Loading Previous Versions](#loading-previous-versions)
 - [Supported Services](#supported-services)
@@ -1398,16 +1397,13 @@ Display help for cg.
 
 ```
 USAGE
-  $ cg help [COMMAND] [-n]
+  $ cg help [COMMAND]
 
 ARGUMENTS
   COMMAND  Command to show help for.
 
-FLAGS
-  -n, --nested-commands  Include all nested commands in the output.
-
-DESCRIPTION
-  Display help for cg.
+OPTIONS
+  --all  see all commands in CLI
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.11/src/commands/help.ts)_
@@ -1418,32 +1414,24 @@ Set initial configuration for providers
 
 ```
 USAGE
-  $ cg init [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>] [-r]
+  $ cg init [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
   -r, --resources
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Set initial configuration for providers
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 EXAMPLES
   $ cg init
-
   $ cg init aws [Initialize AWS provider]
-
   $ cg init aws -r [Specify resources to crawl]
 ```
 
@@ -1455,27 +1443,21 @@ Launch an instance of Dgraph to store data
 
 ```
 USAGE
-  $ cg launch [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg launch [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
-DESCRIPTION
-  Launch an instance of Dgraph to store data
-
-EXAMPLES
+EXAMPLE
   $ cg launch
 ```
 
@@ -1487,29 +1469,22 @@ Load a specific version of your CloudGraph data
 
 ```
 USAGE
-  $ cg load [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg load [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Load a specific version of your CloudGraph data
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 EXAMPLES
   $ cg load [Load data for all providers configured]
-
   $ cg load aws [Load data for AWS]
 ```
 
@@ -1521,25 +1496,19 @@ Commands to manage policy pack modules, run $ cg policy for more info.
 
 ```
 USAGE
-  $ cg policy [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Commands to manage policy pack modules, run $ cg policy for more info.
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
 _See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.10/src/commands/policy/index.ts)_
@@ -1550,33 +1519,26 @@ Add new policy packs
 
 ```
 USAGE
-  $ cg policy add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy:add [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Add new policy packs
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg add policy
 
 EXAMPLES
   $ cg policy add aws-cis-1.2.0
-
   $ cg policy add aws-cis-1.2.0@0.12.0
 ```
 
@@ -1588,31 +1550,25 @@ Install policy packs based on the lock file
 
 ```
 USAGE
-  $ cg policy install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy:install [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Install policy packs based on the lock file
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg install policy
 
-EXAMPLES
+EXAMPLE
   $ cg policy install
 ```
 
@@ -1624,26 +1580,20 @@ List currently installed policy packs and versions
 
 ```
 USAGE
-  $ cg policy list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy:list [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  List currently installed policy packs and versions
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg ls policy
@@ -1651,7 +1601,6 @@ ALIASES
 
 EXAMPLES
   $ cg policy list
-
   $ cg policy list aws
 ```
 
@@ -1663,26 +1612,20 @@ Remove currently installed policy pack
 
 ```
 USAGE
-  $ cg policy remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy:remove [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Remove currently installed policy pack
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg remove policy
@@ -1693,9 +1636,7 @@ ALIASES
 
 EXAMPLES
   $ cg policy delete
-
   $ cg policy delete aws-cis-1.2.0
-
   $ cg policy delete aws-cis-1.2.0 --no-save
 ```
 
@@ -1707,32 +1648,24 @@ Update currently installed policy packs
 
 ```
 USAGE
-  $ cg policy update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg policy:update [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Update currently installed policy packs
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 EXAMPLES
   $ cg policy update
-
   $ cg policy update aws-cis-1.2.0
-
   $ cg policy update aws-cis-1.2.0@0.12.0
 ```
 
@@ -1744,25 +1677,19 @@ Commands to manage provider modules, run $ cg provider for more info.
 
 ```
 USAGE
-  $ cg provider [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Commands to manage provider modules, run $ cg provider for more info.
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 ```
 
 _See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.10/src/commands/provider/index.ts)_
@@ -1773,33 +1700,26 @@ Add new providers
 
 ```
 USAGE
-  $ cg provider add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider:add [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Add new providers
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg add provider
 
 EXAMPLES
   $ cg provider add aws
-
   $ cg provider add aws@0.12.0
 ```
 
@@ -1811,31 +1731,25 @@ Install providers based on the lock file
 
 ```
 USAGE
-  $ cg provider install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider:install [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Install providers based on the lock file
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg install provider
 
-EXAMPLES
+EXAMPLE
   $ cg provider install
 ```
 
@@ -1847,26 +1761,20 @@ List currently installed providers and versions
 
 ```
 USAGE
-  $ cg provider list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider:list [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  List currently installed providers and versions
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg ls provider
@@ -1874,7 +1782,6 @@ ALIASES
 
 EXAMPLES
   $ cg provider list
-
   $ cg provider list aws
 ```
 
@@ -1886,26 +1793,20 @@ Remove currently installed provider
 
 ```
 USAGE
-  $ cg provider remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider:remove [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Remove currently installed provider
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg remove provider
@@ -1916,9 +1817,7 @@ ALIASES
 
 EXAMPLES
   $ cg provider delete
-
   $ cg provider delete aws
-
   $ cg provider delete aws --no-save
 ```
 
@@ -1930,32 +1829,24 @@ Update currently installed providers
 
 ```
 USAGE
-  $ cg provider update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg provider:update [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Update currently installed providers
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 EXAMPLES
   $ cg provider update
-
   $ cg provider update aws
-
   $ cg provider update aws@0.12.0
 ```
 
@@ -1967,33 +1858,24 @@ Scan one or multiple providers data to be queried through Dgraph
 
 ```
 USAGE
-  $ cg scan [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg scan [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Scan one or multiple providers data to be queried through Dgraph
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 EXAMPLES
   $ cg scan
-
   $ cg scan aws
-
   $ cg scan aws --dgraph http://localhost:1000 [Save data in dgraph running on port 1000]
-
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
@@ -2005,27 +1887,21 @@ Serve a GraphQL query tool to query your CloudGraph data.
 
 ```
 USAGE
-  $ cg serve [PROVIDER] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p <value>]
-    [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg serve [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
-DESCRIPTION
-  Serve a GraphQL query tool to query your CloudGraph data.
-
-EXAMPLES
+EXAMPLE
   $ cg serve
 ```
 
@@ -2037,17 +1913,13 @@ Stops the Dgraph Docker container.
 
 ```
 USAGE
-  $ cg teardown [PROVIDER] [--delete-image]
+  $ cg teardown [PROVIDER]
 
-FLAGS
+OPTIONS
   --delete-image  Remove dgraph docker image after stopping it
-
-DESCRIPTION
-  Stops the Dgraph Docker container.
 
 EXAMPLES
   $ cg teardown
-
   $ cg teardown --delete-image
 ```
 
@@ -2059,31 +1931,25 @@ Upgrade currently installed plugins.
 
 ```
 USAGE
-  $ cg update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
-    <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
+  $ cg update [PROVIDER]
 
-FLAGS
-  -P, --policies=<value>       Policy Packs to execute during scan
-  -d, --dgraph=<value>         Set where dgraph is running (default localhost:8997)
-  -l, --version-limit=<value>  Limit the amount of version folders stored on the filesystem (default 10)
-  -p, --port=<value>           Set port to serve query engine
-  -q, --query-engine=<option>  Query engine to launch
-                               <options: playground|altair>
-  -s, --storage=<option>       Select a storage engine to use. Currently only supports Dgraph
-                               <options: dgraph>
-  --dev                        Turn on developer mode
-  --directory=<value>          Set the folder where CloudGraph will store data. (default cg)
-  --no-save                    Set to not alter lock file, just delete plugin
-  --no-serve                   Set to not serve a query engine
-  --use-roles                  Set to true to use roleARNs instead of profiles for AWS credentials
-
-DESCRIPTION
-  Upgrade currently installed plugins.
+OPTIONS
+  -P, --policies=policies               Policy Packs to execute during scan
+  -d, --dgraph=dgraph                   Set where dgraph is running (default localhost:8997)
+  -l, --version-limit=version-limit     Limit the amount of version folders stored on the filesystem (default 10)
+  -p, --port=port                       Set port to serve query engine
+  -q, --query-engine=playground|altair  Query engine to launch
+  -s, --storage=dgraph                  Select a storage engine to use. Currently only supports Dgraph
+  --dev                                 Turn on developer mode
+  --directory=directory                 Set the folder where CloudGraph will store data. (default cg)
+  --no-save                             Set to not alter lock file, just delete plugin
+  --no-serve                            Set to not serve a query engine
+  --use-roles                           Set to true to use roleARNs instead of profiles for AWS credentials
 
 ALIASES
   $ cg update
 
-EXAMPLES
+EXAMPLE
   $ cg update
 ```
 
