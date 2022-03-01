@@ -19,8 +19,8 @@ export class RulesReport {
     ruleDescription: string
     results: RuleFinding[]
   }): void {
-    for (const { resourceId, ruleId, result } of results) {
-      const tableName = `${policyPack}-${ruleId}`
+    for (const { resourceId, id, result } of results) {
+      const tableName = `${policyPack}-${id}`
       if (!this.tables[tableName]) {
         this.tables[tableName] = new Table({ style: { head: [], border: [] } })
         this.tables[tableName].push(
