@@ -1,3 +1,10 @@
+## [0.20.12](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.11...0.20.12) (2022-03-01)
+
+
+### Bug Fixes
+
+* Deleted codeblock comment that creates a new toc item ([637505c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/637505c3c09b82ffdab10d6eb52dd9c058441756))
+
 ## [0.20.11](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.10...0.20.11) (2022-03-01)
 
 
