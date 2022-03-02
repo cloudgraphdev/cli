@@ -1,3 +1,10 @@
+# [0.21.0-alpha.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.21.0-alpha.2...0.21.0-alpha.3) (2022-03-02)
+
+
+### Bug Fixes
+
+* **test triggered version:** on alpha ([0995b1c](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/0995b1c468f89e02c58386fa7cc4a02e9a2e71bd))
+
 # [0.21.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.21.0-alpha.1...0.21.0-alpha.2) (2022-03-02)
 
 
