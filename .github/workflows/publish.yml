@@ -3,18 +3,20 @@
 
 name: publish
 
+
 on:
-  label:
+  pull_request_target:
     types:
-      - created
-  push:
+      - closed
     branches:
-      - master
+      - main
       - alpha
       - beta
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.event.pull_request_target.merged == true
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -34,6 +36,7 @@ jobs:
   publish:
     needs: test
     runs-on: ubuntu-latest
+    if: github.event.pull_request_target.merged == true
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
