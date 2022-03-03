@@ -1,13 +1,12 @@
 ---
 branches:
-  - name: master
-    channel: latest
+  - name: main
   - name: beta
     channel: beta
-    prerelease: true
+    prerelease: beta
   - name: alpha
     channel: alpha
-    prerelease: true
+    prerelease: alpha
 plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
@@ -19,10 +18,10 @@ plugins:
       - package.json
   - - "@semantic-release/npm"
     - npmPublish: true
-  - "@semantic-release/gitlab"
+  - "@semantic-release/github"
 verifyConditions:
   - "@semantic-release/changelog"
-  - "@semantic-release/gitlab"
+  - "@semantic-release/github"
   - "@semantic-release/npm"
 prepare:
   - "@semantic-release/changelog"
@@ -30,7 +29,7 @@ prepare:
   - - "@semantic-release/git"
     - message: "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
 publish:
-  - "@semantic-release/gitlab"
+  - "@semantic-release/github"
   - "@semantic-release/npm"
 success: false
 fail: false
