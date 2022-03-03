@@ -9,7 +9,7 @@ on:
     types:
       - closed
     branches:
-      - main
+      - master
       - alpha
       - beta
 

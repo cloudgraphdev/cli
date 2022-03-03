@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [synchronize, opened, reopened, edited, synchronize]
     branches:
-      - main
+      - master
       - beta
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run : |
-          if [ "$TARGET_BRANCH" == "main" ] && [ "$SOURCE_BRANCH" == "beta" ]; then
+          if [ "$TARGET_BRANCH" == "master" ] && [ "$SOURCE_BRANCH" == "beta" ]; then
               echo "Merge from $SOURCE_BRANCH to $TARGET_BRANCH is valid"
               exit 0
           elif [ "$TARGET_BRANCH" == "beta" ] && [ "$SOURCE_BRANCH" == "alpha" ]; then
