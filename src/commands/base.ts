@@ -94,7 +94,8 @@ export default abstract class BaseCommand extends Command {
       )} is available: ${this.config.version} -> ${cliLatestVersion}. \n
 you can update based on how you installed CG \n
 NPM: ${chalk.italic.green('npm i -g @cloudgraph/cli')} \n
-homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
+homebrew: 1. ${chalk.italic.green('brew update')} \n
+          2. ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     }
     const configDir = this.getCGConfigKey('directory') ?? 'cg'
     this.versionDirectory = directory ?? configDir

@@ -5,6 +5,7 @@
 class Cg < Formula
   desc "Query your cloud and SaaS data with GraphQL"
   homepage "https://cloudgraph.dev"
+  version "__VERSION__"
   url "__CLI_DOWNLOAD_URL__"
   sha256 "__TARBALL_HASH__"
 
