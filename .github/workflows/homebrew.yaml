@@ -1,0 +1,43 @@
+name: homebrew
+
+on:
+  pull_request_target:
+    types:
+      - closed
+    branches:
+      - master
+
+jobs:
+  pr-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir -p /home/node/.aws
+      - run: |
+          cat << EOF > /home/node/.aws/config
+          [default]
+          region=us-east-1
+          output=json
+          
+          [profile cloudgraph-iac]
+          role_arn = $AWS_ROLE_ARN
+          source_profile = default
+          EOF
+      - run: |
+          cat << EOF > /home/node/.aws/credentials
+          [default]
+          aws_access_key_id = $AWS_ACCESS_KEY_ID
+          aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+          EOF
+      - run: yarn build
+      - run: yarn homebrew
+        env:
+          AWS_SHARED_CREDENTIALS_FILE: /home/node/.aws/credentials
+          AWS_CONFIG_FILE: /home/node/.aws/config
+          AWS_SDK_LOAD_CONFIG: true
+          AWS_PROFILE: cloudgraph-iac
+          AWS_ACCESS_KEY_ID: ${{secrets.aws_access_key_id}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.aws_secret_access_key}}
+          AWS_ROLE_ARN: ${{secrets.aws_role_arn}}         
+      
+      
