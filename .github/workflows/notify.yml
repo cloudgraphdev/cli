@@ -18,4 +18,4 @@ jobs:
         env:
           REPO_NAME: ${{ github.event.repository.name }}
           GIT_AUTHOR_NAME: 'AutoCloud Deploy Bot'
-          SLACK_WEBHOOK: ${{secrets.slack_webhook}}
+          SLACK_WEBHOOK: ${{secrets.slack_api_endpoint}}
