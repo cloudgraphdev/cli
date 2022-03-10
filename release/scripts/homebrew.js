@@ -150,6 +150,7 @@ async function updateCgFormula(brewDir) {
   const url = `${CLI_ASSETS_URL}/cg-v${SHORT_VERSION}/${zipFile}`
 
   const templateReplaced = template
+    .replace('__VERSION__', SHORT_VERSION)
     .replace('__CLI_DOWNLOAD_URL__', url)
     .replace('__TARBALL_HASH__', sha256)
     .replace('__NODE_VERSION__', NODE_VERSION)
@@ -210,7 +211,9 @@ async function updateHomebrew() {
 
   console.log('updating local git...')
   await updateCgNodeFormula(homebrewDir)
-  await updateCgFormula(homebrewDir).catch((err) => { throw new Error(err) })
+  await updateCgFormula(homebrewDir).catch(err => {
+    throw new Error(err)
+  })
 
   // run in git in cloned cloudgraph/homebrew-tap git directory
   const git = async (args, opts = {}) => {
