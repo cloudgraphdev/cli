@@ -9,7 +9,19 @@
 <br />
 <br />
 
-The universal **GraphQL** API for **AWS**, **Azure**, **GCP**, and **K8s** - query resources, relationships and insight data to solve security, compliance, asset inventory, and billing challenges. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+CloudGraph is the free open-source universal **GraphQL API and Cloud Security Posture Management (CSPM) tool for AWS, Azure, GCP, and K8s**. With CloudGraph you get:
+
+- Free and effortless _compliance checks_ (i.e. CIS 1.2)
+- _Type-Safe asset inventories_ for all of your resources in all of your cloud environments
+- Automatically generated documentation and query validation - know if your query is valid before you send it!
+- Full resource data including _relationships_ between resources so you can understand context
+- Historical snapshots of your data over time
+- A single endpoint to query all of your cloud data at once (i.e. get AWS + GCP data in the same query, or compare AWS stage with AWS prod)
+- Enhanced billing data (AWS only)
+- Enhanced CloudWatch data (AWS EC2 only)
+
+Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with love by the team at ❤️ [AutoCloud](https://www.autocloud.dev/) ❤️
+
 <br />
 
 🌐 [Website](https://www.cloudgraph.dev)
@@ -44,7 +56,6 @@ The universal **GraphQL** API for **AWS**, **Azure**, **GCP**, and **K8s** - que
 * [How It Works](#how-it-works)
 * [Authentication and Permissions](#authentication-and-permissions)
 * [Install](#install)
-* [Currently we support AWS CIS 1.2 and GCP CIS 1.2 but Azure and K8s are coming soon.](#currently-we-support-aws-cis-12-and-gcp-cis-12-but-azure-and-k8s-are-coming-soon)
 * [Quick Start](#quick-start)
 * [Loading Previous Versions](#loading-previous-versions)
 * [Supported Services](#supported-services)
@@ -200,9 +211,9 @@ cg init aws azure gcp k8s
 And add in compliance policy packs to supplement your data with instant security insights:
 
 ```bash
-# Currently we support AWS CIS 1.2 and GCP CIS 1.2 but Azure and K8s are coming soon.
 cg policy add aws-cis-1.2.0
 cg policy add gcp-cis-1.2.0
+cg policy add azure-cis-1.3.1
 ```
 
 You can find a list of currently supported policy packs in the [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
@@ -602,10 +613,14 @@ Use the CloudGraph Policy Pack for AWS CIS 1.2 to query all of your CIS findings
 ```graphql
 query {
   queryawsCISFindings {
-    ruleId
-    description
+    id
+    resourceId
     result
-    severity
+    rule {
+      id
+      description
+      severity
+    }
   }
 }
 ```
@@ -618,16 +633,24 @@ If you want to query several different compliance findings for a given provider 
 query {
   queryawsFindings {
     CISFindings {
-      severity
-      description
-      ruleId
+      id
+      resourceId
       result
+      rule {
+        id
+        description
+        severity
+      }
     }
     AutoCloudFindings {
-      severity
-      description
-      ruleId
+      id
+      resourceId
       result
+      rule {
+        id
+        description
+        severity
+      }
     }
   }
 }
@@ -640,10 +663,14 @@ For each CIS rule, get the resources that the rule is associated with, in this c
 ```graphql
 query {
   queryawsCISFindings {
-    ruleId
-    description
+    id
+    resourceId
     result
-    severity
+    rule {
+      id
+      description
+      severity
+    }
     iamUser {
       id
       arn
@@ -662,10 +689,14 @@ query {
   getawsIamUser(id: "123456789") {
     name
     CISFindings {
-      severity
-      description
-      ruleId
+      id
+      resourceId
       result
+      rule {
+        id
+        description
+        severity
+      }
     }
   }
 }
@@ -1445,7 +1476,7 @@ EXAMPLES
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.1/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1479,7 +1510,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.1/src/commands/load.ts)_
 
 ## `cg policy [PROVIDER]`
 
@@ -1508,7 +1539,7 @@ DESCRIPTION
   Commands to manage policy pack modules, run $ cg policy for more info.
 ```
 
-_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/policy/index.ts)_
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.1/src/commands/policy/index.ts)_
 
 ## `cg policy add [PROVIDER]`
 
@@ -1546,7 +1577,9 @@ EXAMPLES
   $ cg policy add aws-cis-1.2.0@0.12.0
 ```
 
-## `cg policy install [PROVIDER]`
+_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/add.ts)_
+
+## `cg policy:install [PROVIDER]`
 
 Install policy packs based on the lock file
 
@@ -1580,7 +1613,9 @@ EXAMPLES
   $ cg policy install
 ```
 
-## `cg policy list [PROVIDER]`
+_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/install.ts)_
+
+## `cg policy:list [PROVIDER]`
 
 List currently installed policy packs and versions
 
@@ -1617,7 +1652,9 @@ EXAMPLES
   $ cg policy list aws
 ```
 
-## `cg policy remove [PROVIDER]`
+_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/list.ts)_
+
+## `cg policy:remove [PROVIDER]`
 
 Remove currently installed policy pack
 
@@ -1659,7 +1696,9 @@ EXAMPLES
   $ cg policy delete aws-cis-1.2.0 --no-save
 ```
 
-## `cg policy update [PROVIDER]`
+_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/remove.ts)_
+
+## `cg policy:update [PROVIDER]`
 
 Update currently installed policy packs
 
@@ -1694,6 +1733,8 @@ EXAMPLES
   $ cg policy update aws-cis-1.2.0@0.12.0
 ```
 
+_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/update.ts)_
+
 ## `cg provider [PROVIDER]`
 
 Commands to manage provider modules, run $ cg provider for more info.
@@ -1721,7 +1762,7 @@ DESCRIPTION
   Commands to manage provider modules, run $ cg provider for more info.
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.1/src/commands/provider/index.ts)_
 
 ## `cg provider add [PROVIDER]`
 
@@ -1759,7 +1800,9 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
-## `cg provider install [PROVIDER]`
+_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/add.ts)_
+
+## `cg provider:install [PROVIDER]`
 
 Install providers based on the lock file
 
@@ -1793,7 +1836,9 @@ EXAMPLES
   $ cg provider install
 ```
 
-## `cg provider list [PROVIDER]`
+_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/install.ts)_
+
+## `cg provider:list [PROVIDER]`
 
 List currently installed providers and versions
 
@@ -1830,7 +1875,9 @@ EXAMPLES
   $ cg provider list aws
 ```
 
-## `cg provider remove [PROVIDER]`
+_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/list.ts)_
+
+## `cg provider:remove [PROVIDER]`
 
 Remove currently installed provider
 
@@ -1872,7 +1919,9 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
-## `cg provider update [PROVIDER]`
+_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/remove.ts)_
+
+## `cg provider:update [PROVIDER]`
 
 Update currently installed providers
 
@@ -1906,6 +1955,8 @@ EXAMPLES
 
   $ cg provider update aws@0.12.0
 ```
+
+_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/update.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -1943,7 +1994,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.1/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -1975,7 +2026,7 @@ EXAMPLES
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.3/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.1/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 

@@ -8,7 +8,7 @@
 # [0.21.0-alpha.2](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.21.0-alpha.1...0.21.0-alpha.2) (2022-03-02)
 
 
-### Bug Fixes
+### Features
 
 * **version:** on alpha ([5b0c755](https://gitlab.com/auto-cloud/cloudgraph/cli/commit/5b0c755a9c59366ae9700dd3845cf2f3ef54f97f))
 
