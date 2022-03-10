@@ -40,4 +40,3 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{secrets.aws_secret_access_key}}
           AWS_ROLE_ARN: ${{secrets.aws_role_arn}}         
       
-      
