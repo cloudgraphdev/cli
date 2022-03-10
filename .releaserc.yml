@@ -19,10 +19,10 @@ plugins:
       - package.json
   - - "@semantic-release/npm"
     - npmPublish: true
-  - "@semantic-release/gitlab"
+  - "@semantic-release/github"
 verifyConditions:
   - "@semantic-release/changelog"
-  - "@semantic-release/gitlab"
+  - "@semantic-release/github"
   - "@semantic-release/npm"
 prepare:
   - "@semantic-release/changelog"
@@ -30,7 +30,7 @@ prepare:
   - - "@semantic-release/git"
     - message: "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
 publish:
-  - "@semantic-release/gitlab"
+  - "@semantic-release/github"
   - "@semantic-release/npm"
 success: false
 fail: false
