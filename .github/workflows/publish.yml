@@ -17,6 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
+        registry-url: 'https://registry.npmjs.org'
         with:
           node-version: 16
 
@@ -47,7 +48,7 @@ jobs:
         run: npx semantic-release -r $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          GITHUB_TOKEN: ${{secrets.gh_token}}
+          GITHUB_TOKEN: ${{secrets.gh_secret}}
           GIT_AUTHOR_NAME: 'AutoCloud Deploy Bot'
           GIT_AUTHOR_EMAIL: 'no-reply@autocloud.dev'
           GIT_COMMITTER_NAME: 'AutoCloud Deploy Bot'
