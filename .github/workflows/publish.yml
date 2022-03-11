@@ -16,7 +16,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.pull_request_target.merged == true
+    if: github.event.pull_request.merged == true
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -25,7 +25,9 @@ jobs:
       - run: yarn prepack
 
   test:
+    needs: build 
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -35,9 +37,9 @@ jobs:
       - run: yarn lint
 
   publish:
-    needs: test
+    needs: [build,test]
     runs-on: ubuntu-latest
-    if: github.event.pull_request_target.merged == true
+    if: github.event.pull_request.merged == true
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
