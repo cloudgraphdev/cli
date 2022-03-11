@@ -46,9 +46,6 @@ jobs:
 
       - name: Test
         run: yarn lint
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
 
       - name: Publish 
         run: npx semantic-release -r $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
