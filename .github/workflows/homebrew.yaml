@@ -12,8 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: mkdir -p /home/node/.aws
-      - run: |
+
+      - name: Mkdir .aws
+        run: mkdir -p /home/node/.aws
+
+      - name: Set .aws/config
+        run: |
           cat << EOF > /home/node/.aws/config
           [default]
           region=us-east-1
@@ -23,20 +27,45 @@ jobs:
           role_arn = $AWS_ROLE_ARN
           source_profile = default
           EOF
-      - run: |
+      - name: Set .aws/credentials
+        run: |
           cat << EOF > /home/node/.aws/credentials
           [default]
           aws_access_key_id = $AWS_ACCESS_KEY_ID
           aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
           EOF
-      - run: yarn build
-      - run: yarn homebrew
+      - name: Get cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+  
+      - name: Restoring cache
+        id: npm-cache
+        uses: actions/cache@v2
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install Packages
+        if: steps.npm-cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile --cache-folder .npm --prefer-offline
+
+      - name: Build
+        run: yarn build
+
+      - name: Homebrew        
+        run: yarn homebrew
         env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
           AWS_SHARED_CREDENTIALS_FILE: /home/node/.aws/credentials
           AWS_CONFIG_FILE: /home/node/.aws/config
           AWS_SDK_LOAD_CONFIG: true
           AWS_PROFILE: cloudgraph-iac
           AWS_ACCESS_KEY_ID: ${{secrets.aws_access_key_id}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.aws_secret_access_key}}
-          AWS_ROLE_ARN: ${{secrets.aws_role_arn}}         
+          AWS_ROLE_ARN: ${{secrets.aws_role_arn}}
+          NODE_ENV: 'cicd'         
       
