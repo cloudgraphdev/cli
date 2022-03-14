@@ -1,3 +1,35 @@
+# [0.21.0-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.20.8...0.21.0-alpha.1) (2022-03-14)
+
+
+### Bug Fixes
+
+* Custom provider with forward slash in name ([bdaf774](https://github.com/cloudgraphdev/cli/commit/bdaf774a42a5e12b3a826db8a9b688b0d1aa12a9))
+* Deleted codeblock comment that creates a new toc item ([9d55e75](https://github.com/cloudgraphdev/cli/commit/9d55e75b8e6093f53d77c921a478ca992b5edb58))
+* Updated SDK version ([43ee803](https://github.com/cloudgraphdev/cli/commit/43ee8033721ca015b5484148386b34c8650368b5))
+* **brew:** update gitlab ci for homebrew ([5acc9c8](https://github.com/cloudgraphdev/cli/commit/5acc9c8cffe3de2e0e6d93f26bc459d51661ddd4))
+* **brew:** update gitlab ci to call build before homebrew ([ef389d4](https://github.com/cloudgraphdev/cli/commit/ef389d438fe6990eaebfc28bd34ff844808d3625))
+* **create new version:** on alpha ([8ac247a](https://github.com/cloudgraphdev/cli/commit/8ac247a8110594e26caac203310a40478aab4b44))
+* **deps:** update node eng requirement to 16 ([d200cb1](https://github.com/cloudgraphdev/cli/commit/d200cb1e097b39b982f2e03f9a37f87d0e1c9ef7))
+* **Semantic-release:** fix semantic version ([ab2c73b](https://github.com/cloudgraphdev/cli/commit/ab2c73bebe05814ce08e1a7669e202d7f6f5b8d4))
+* **test triggered version:** on alpha ([0995b1c](https://github.com/cloudgraphdev/cli/commit/0995b1c468f89e02c58386fa7cc4a02e9a2e71bd))
+* **version:** on alpha ([5b0c755](https://github.com/cloudgraphdev/cli/commit/5b0c755a9c59366ae9700dd3845cf2f3ef54f97f))
+* **Version:** alpha version ([cb5f2a3](https://github.com/cloudgraphdev/cli/commit/cb5f2a3672b28c8fd09e5ebd6b924fd31602725c))
+* Moved scripts to root folder ([dc72630](https://github.com/cloudgraphdev/cli/commit/dc726306cb749c75b277b497db697b7367ddd5fe))
+* oclif core dev mode ([25e818e](https://github.com/cloudgraphdev/cli/commit/25e818eb55f00a0da86b4b28f126020a3f652dc4))
+* Oclif core to working in development mode ([90f64de](https://github.com/cloudgraphdev/cli/commit/90f64def426f736aac2f5f6c74b32d19d8b97f93))
+* Update CG to use Oclif core and space for the `topicSeparator` ([4a61cb1](https://github.com/cloudgraphdev/cli/commit/4a61cb11ae3c3ed480fc6b829d3f23f6a202b7d8))
+* update oclif version ([d39043e](https://github.com/cloudgraphdev/cli/commit/d39043e99dbcde79e8d827483ce474bd3f948960))
+
+
+### Features
+
+* Migrated add command ([1c69637](https://github.com/cloudgraphdev/cli/commit/1c69637b5bca5650e5c1264e2f93bdc53e7f9158))
+* Refactored Plugins execution after inserted scanned data ([2382fc1](https://github.com/cloudgraphdev/cli/commit/2382fc146db41c1f834c8012e0f3df33c98b7c68))
+* Reverted changes to keep upgrade all command ([f2bb020](https://github.com/cloudgraphdev/cli/commit/f2bb020c71cd41ba56989234d2241ec79046fdc1))
+* Update CG to use Oclif core and space for the topicSeparator ([e306595](https://github.com/cloudgraphdev/cli/commit/e306595a26ec96e60125dba6fa43f334c4eaaa70))
+* **release:** first work on homebrew setup ([ada8c19](https://github.com/cloudgraphdev/cli/commit/ada8c196d990bdf01318f85ffba0c64ad271702f))
+* Update CG to use Oclif core and space for the topicSeparator ([7a45074](https://github.com/cloudgraphdev/cli/commit/7a450742ce61aab0885d58ba6d774e47b9f6d9f5))
+
 # [0.21.0-alpha.3](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.21.0-alpha.2...0.21.0-alpha.3) (2022-03-02)
 
 
