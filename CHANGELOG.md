@@ -1,3 +1,10 @@
+# [0.21.0-alpha.4](https://github.com/cloudgraphdev/cli/compare/0.21.0-alpha.3...0.21.0-alpha.4) (2022-03-15)
+
+
+### Bug Fixes
+
+* **brew:** update brew script with version key, update brew install dirs ([8d79abb](https://github.com/cloudgraphdev/cli/commit/8d79abb9f8cee442ff5e912dd457101b9d2fc817))
+
 ## [0.20.12](https://gitlab.com/auto-cloud/cloudgraph/cli/compare/0.20.11...0.20.12) (2022-03-01)
 
 
