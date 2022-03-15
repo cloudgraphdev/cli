@@ -1,0 +1,56 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: publish
+
+
+on:
+  push:
+    branches:
+      - master
+      - alpha
+      - beta
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Get cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+  
+      - name: Restoring cache
+        uses: actions/cache@v2
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install Packages
+        run: yarn install --frozen-lockfile --cache-folder .npm --prefer-offline
+
+      - name: Build
+        run: yarn prepack
+
+      - name: Test
+        run: yarn lint
+
+      - name: Publish 
+        run: npx semantic-release -r $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          GITHUB_TOKEN: ${{secrets.gh_token}}
+          GIT_AUTHOR_NAME: 'autocloud-deploy-bot'
+          GIT_AUTHOR_EMAIL: 'no-reply@autocloud.dev'
+          GIT_COMMITTER_NAME: 'autocloud-deploy-bot'
+          GIT_COMMITTER_EMAIL: 'no-reply@autocloud.dev'
+          NODE_ENV: 'cicd'
