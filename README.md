@@ -1373,17 +1373,17 @@ There are some common errors you may see when running CloudGraph that are usuall
 * [`cg launch [PROVIDER]`](#cg-launch-provider)
 * [`cg load [PROVIDER]`](#cg-load-provider)
 * [`cg policy [PROVIDER]`](#cg-policy-provider)
-* [`cg policy:add [PROVIDER]`](#cg-policyadd-provider)
-* [`cg policy:install [PROVIDER]`](#cg-policyinstall-provider)
-* [`cg policy:list [PROVIDER]`](#cg-policylist-provider)
-* [`cg policy:remove [PROVIDER]`](#cg-policyremove-provider)
-* [`cg policy:update [PROVIDER]`](#cg-policyupdate-provider)
+* [`cg policy add [PROVIDER]`](#cg-policy-add-provider)
+* [`cg policy install [PROVIDER]`](#cg-policy-install-provider)
+* [`cg policy list [PROVIDER]`](#cg-policy-list-provider)
+* [`cg policy remove [PROVIDER]`](#cg-policy-remove-provider)
+* [`cg policy update [PROVIDER]`](#cg-policy-update-provider)
 * [`cg provider [PROVIDER]`](#cg-provider-provider)
-* [`cg provider:add [PROVIDER]`](#cg-provideradd-provider)
-* [`cg provider:install [PROVIDER]`](#cg-providerinstall-provider)
-* [`cg provider:list [PROVIDER]`](#cg-providerlist-provider)
-* [`cg provider:remove [PROVIDER]`](#cg-providerremove-provider)
-* [`cg provider:update [PROVIDER]`](#cg-providerupdate-provider)
+* [`cg provider add [PROVIDER]`](#cg-provider-add-provider)
+* [`cg provider install [PROVIDER]`](#cg-provider-install-provider)
+* [`cg provider list [PROVIDER]`](#cg-provider-list-provider)
+* [`cg provider remove [PROVIDER]`](#cg-provider-remove-provider)
+* [`cg provider update [PROVIDER]`](#cg-provider-update-provider)
 * [`cg scan [PROVIDER]`](#cg-scan-provider)
 * [`cg serve [PROVIDER]`](#cg-serve-provider)
 * [`cg teardown [PROVIDER]`](#cg-teardown-provider)
@@ -1391,23 +1391,23 @@ There are some common errors you may see when running CloudGraph that are usuall
 
 ## `cg help [COMMAND]`
 
-display help for cg
+Display help for cg.
 
 ```
 USAGE
-  $ cg help [COMMAND] [--all]
+  $ cg help [COMMAND] [-n]
 
 ARGUMENTS
-  COMMAND  command to show help for
+  COMMAND  Command to show help for.
 
 FLAGS
-  --all  see all commands in CLI
+  -n, --nested-commands  Include all nested commands in the output.
 
 DESCRIPTION
-  display help for cg
+  Display help for cg.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.17/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v5.1.12/src/commands/help.ts)_
 
 ## `cg init [PROVIDER]`
 
@@ -1444,7 +1444,7 @@ EXAMPLES
   $ cg init aws -r [Specify resources to crawl]
 ```
 
-_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/init.ts)_
 
 ## `cg launch [PROVIDER]`
 
@@ -1476,7 +1476,7 @@ EXAMPLES
   $ cg launch
 ```
 
-_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/launch.ts)_
+_See code: [src/commands/launch.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/launch.ts)_
 
 ## `cg load [PROVIDER]`
 
@@ -1510,7 +1510,7 @@ EXAMPLES
   $ cg load aws [Load data for AWS]
 ```
 
-_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/load.ts)_
+_See code: [src/commands/load.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/load.ts)_
 
 ## `cg policy [PROVIDER]`
 
@@ -1539,15 +1539,15 @@ DESCRIPTION
   Commands to manage policy pack modules, run $ cg policy for more info.
 ```
 
-_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/index.ts)_
+_See code: [src/commands/policy/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/policy/index.ts)_
 
-## `cg policy:add [PROVIDER]`
+## `cg policy add [PROVIDER]`
 
 Add new policy packs
 
 ```
 USAGE
-  $ cg policy:add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1569,7 +1569,7 @@ DESCRIPTION
   Add new policy packs
 
 ALIASES
-  $ cg add:policy
+  $ cg add policy
 
 EXAMPLES
   $ cg policy add aws-cis-1.2.0
@@ -1577,15 +1577,13 @@ EXAMPLES
   $ cg policy add aws-cis-1.2.0@0.12.0
 ```
 
-_See code: [src/commands/policy/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/add.ts)_
-
-## `cg policy:install [PROVIDER]`
+## `cg policy install [PROVIDER]`
 
 Install policy packs based on the lock file
 
 ```
 USAGE
-  $ cg policy:install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1607,21 +1605,19 @@ DESCRIPTION
   Install policy packs based on the lock file
 
 ALIASES
-  $ cg install:policy
+  $ cg install policy
 
 EXAMPLES
   $ cg policy install
 ```
 
-_See code: [src/commands/policy/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/install.ts)_
-
-## `cg policy:list [PROVIDER]`
+## `cg policy list [PROVIDER]`
 
 List currently installed policy packs and versions
 
 ```
 USAGE
-  $ cg policy:list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1643,9 +1639,8 @@ DESCRIPTION
   List currently installed policy packs and versions
 
 ALIASES
-  $ cg ls:policy
-  $ cg list:policy
-  $ cg ls:policy
+  $ cg ls policy
+  $ cg list policy
 
 EXAMPLES
   $ cg policy list
@@ -1653,15 +1648,13 @@ EXAMPLES
   $ cg policy list aws
 ```
 
-_See code: [src/commands/policy/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/list.ts)_
-
-## `cg policy:remove [PROVIDER]`
+## `cg policy remove [PROVIDER]`
 
 Remove currently installed policy pack
 
 ```
 USAGE
-  $ cg policy:remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1683,12 +1676,11 @@ DESCRIPTION
   Remove currently installed policy pack
 
 ALIASES
-  $ cg remove:policy
-  $ cg policy:remove
-  $ cg policy:rm
-  $ cg del:policy
-  $ cg rm:policy
-  $ cg del:policy
+  $ cg remove policy
+  $ cg policy remove
+  $ cg policy rm
+  $ cg del policy
+  $ cg rm policy
 
 EXAMPLES
   $ cg policy delete
@@ -1698,15 +1690,13 @@ EXAMPLES
   $ cg policy delete aws-cis-1.2.0 --no-save
 ```
 
-_See code: [src/commands/policy/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/remove.ts)_
-
-## `cg policy:update [PROVIDER]`
+## `cg policy update [PROVIDER]`
 
 Update currently installed policy packs
 
 ```
 USAGE
-  $ cg policy:update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg policy update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1735,8 +1725,6 @@ EXAMPLES
   $ cg policy update aws-cis-1.2.0@0.12.0
 ```
 
-_See code: [src/commands/policy/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/policy/update.ts)_
-
 ## `cg provider [PROVIDER]`
 
 Commands to manage provider modules, run $ cg provider for more info.
@@ -1764,15 +1752,15 @@ DESCRIPTION
   Commands to manage provider modules, run $ cg provider for more info.
 ```
 
-_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/index.ts)_
+_See code: [src/commands/provider/index.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/provider/index.ts)_
 
-## `cg provider:add [PROVIDER]`
+## `cg provider add [PROVIDER]`
 
 Add new providers
 
 ```
 USAGE
-  $ cg provider:add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider add [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1794,7 +1782,7 @@ DESCRIPTION
   Add new providers
 
 ALIASES
-  $ cg add:provider
+  $ cg add provider
 
 EXAMPLES
   $ cg provider add aws
@@ -1802,15 +1790,13 @@ EXAMPLES
   $ cg provider add aws@0.12.0
 ```
 
-_See code: [src/commands/provider/add.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/add.ts)_
-
-## `cg provider:install [PROVIDER]`
+## `cg provider install [PROVIDER]`
 
 Install providers based on the lock file
 
 ```
 USAGE
-  $ cg provider:install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider install [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1832,21 +1818,19 @@ DESCRIPTION
   Install providers based on the lock file
 
 ALIASES
-  $ cg install:provider
+  $ cg install provider
 
 EXAMPLES
   $ cg provider install
 ```
 
-_See code: [src/commands/provider/install.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/install.ts)_
-
-## `cg provider:list [PROVIDER]`
+## `cg provider list [PROVIDER]`
 
 List currently installed providers and versions
 
 ```
 USAGE
-  $ cg provider:list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider list [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1868,9 +1852,8 @@ DESCRIPTION
   List currently installed providers and versions
 
 ALIASES
-  $ cg ls:provider
-  $ cg list:provider
-  $ cg ls:provider
+  $ cg ls provider
+  $ cg list provider
 
 EXAMPLES
   $ cg provider list
@@ -1878,15 +1861,13 @@ EXAMPLES
   $ cg provider list aws
 ```
 
-_See code: [src/commands/provider/list.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/list.ts)_
-
-## `cg provider:remove [PROVIDER]`
+## `cg provider remove [PROVIDER]`
 
 Remove currently installed provider
 
 ```
 USAGE
-  $ cg provider:remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider remove [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1908,12 +1889,11 @@ DESCRIPTION
   Remove currently installed provider
 
 ALIASES
-  $ cg remove:provider
-  $ cg provider:remove
-  $ cg provider:rm
-  $ cg del:provider
-  $ cg rm:provider
-  $ cg del:provider
+  $ cg remove provider
+  $ cg provider remove
+  $ cg provider rm
+  $ cg del provider
+  $ cg rm provider
 
 EXAMPLES
   $ cg provider delete
@@ -1923,15 +1903,13 @@ EXAMPLES
   $ cg provider delete aws --no-save
 ```
 
-_See code: [src/commands/provider/remove.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/remove.ts)_
-
-## `cg provider:update [PROVIDER]`
+## `cg provider update [PROVIDER]`
 
 Update currently installed providers
 
 ```
 USAGE
-  $ cg provider:update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
+  $ cg provider update [PROVIDER] [--no-save] [--dev] [-d <value>] [-s dgraph] [--directory <value>] [--no-serve] [-p
     <value>] [-q playground|altair] [-l <value>] [--use-roles] [-P <value>]
 
 FLAGS
@@ -1959,8 +1937,6 @@ EXAMPLES
 
   $ cg provider update aws@0.12.0
 ```
-
-_See code: [src/commands/provider/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/provider/update.ts)_
 
 ## `cg scan [PROVIDER]`
 
@@ -1998,7 +1974,7 @@ EXAMPLES
   $ cg scan aws --no-serve [Do not start the query engine]
 ```
 
-_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/scan.ts)_
+_See code: [src/commands/scan.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/scan.ts)_
 
 ## `cg serve [PROVIDER]`
 
@@ -2030,7 +2006,7 @@ EXAMPLES
   $ cg serve
 ```
 
-_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/serve.ts)_
+_See code: [src/commands/serve.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/serve.ts)_
 
 ## `cg teardown [PROVIDER]`
 
@@ -2052,7 +2028,7 @@ EXAMPLES
   $ cg teardown --delete-image
 ```
 
-_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/teardown.ts)_
+_See code: [src/commands/teardown.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/teardown.ts)_
 
 ## `cg update [PROVIDER]`
 
@@ -2088,5 +2064,5 @@ EXAMPLES
   $ cg update
 ```
 
-_See code: [src/commands/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.20.12/src/commands/update.ts)_
+_See code: [src/commands/update.ts](https://github.com/cloudgraphdev/cli/blob/v0.21.0-alpha.5/src/commands/update.ts)_
 <!-- commandsstop -->

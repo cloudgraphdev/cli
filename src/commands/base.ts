@@ -1,5 +1,4 @@
-import Command from '@oclif/command'
-import { Input } from '@oclif/parser'
+import { Command, Interfaces } from '@oclif/core'
 import CloudGraph, {
   Logger,
   StorageEngine,
@@ -69,8 +68,8 @@ export default abstract class BaseCommand extends Command {
     // Initialize the logger and storage engine
     const {
       flags: { storage = 'dgraph', directory },
-    } = this.parse(
-      this.constructor as Input<{
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{
         dev: boolean
         storage: string
         directory: string
@@ -79,14 +78,14 @@ export default abstract class BaseCommand extends Command {
 
     this.storageEngine = new EngineMap[storage]({
       type: storage,
-      ...this.getConnectionSettings(),
+      ...(await this.getConnectionSettings()),
       logger: this.logger,
     })
     const config = this.getCGConfig('cloudGraph')
     if (!config) {
       printWelcomeMessage()
     }
-    const manager = this.getPluginManager(PluginType.Provider)
+    const manager = await this.getPluginManager(PluginType.Provider)
     const cliLatestVersion = await manager.queryRemoteVersion('@cloudgraph/cli')
     if (gt(cliLatestVersion, this.config.version)) {
       printBoxMessage(`Update for ${chalk.italic.green(
@@ -94,7 +93,8 @@ export default abstract class BaseCommand extends Command {
       )} is available: ${this.config.version} -> ${cliLatestVersion}. \n
 you can update based on how you installed CG \n
 NPM: ${chalk.italic.green('npm i -g @cloudgraph/cli')} \n
-homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
+homebrew: 1. ${chalk.italic.green('brew update')} \n
+          2. ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     }
     const configDir = this.getCGConfigKey('directory') ?? 'cg'
     this.versionDirectory = directory ?? configDir
@@ -109,26 +109,30 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     return undefined
   }
 
-  getStorageEngine(): StorageEngine {
+  async getStorageEngine(): Promise<StorageEngine> {
     if (this.storageEngine) {
       return this.storageEngine
     }
     const {
       flags: { storage = 'dgraph' },
-    } = this.parse(this.constructor as Input<{ dev: boolean; storage: string }>)
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{ dev: boolean; storage: string }>
+    )
     const engine = new EngineMap[storage]({
       type: storage,
-      ...this.getConnectionSettings(),
+      ...(await this.getConnectionSettings()),
       logger: this.logger,
     })
     this.storageEngine = engine
     return engine
   }
 
-  getQueryEngine(): string {
+  async getQueryEngine(): Promise<string> {
     const {
       flags: { 'query-engine': queryEngine },
-    } = this.parse(this.constructor as Input<{ 'query-engine': string }>)
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{ 'query-engine': string }>
+    )
     const configEngine = this.getCGConfigKey('queryEngine') ?? 'playground'
     return queryEngine ?? configEngine
   }
@@ -136,8 +140,8 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
   async startQueryEngine(): Promise<void> {
     const {
       flags: { port, 'no-serve': noServe },
-    } = this.parse(
-      this.constructor as Input<{ port: string; 'no-serve': string }>
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{ port: string; 'no-serve': string }>
     )
     if (!noServe) {
       const configPort = this.getCGConfigKey('port') ?? 5555
@@ -149,7 +153,9 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
         )
       }
       const queryEngine = new QueryEngine(availablePort)
-      await queryEngine.startServer(this.getHost(this.getConnectionSettings()))
+      await queryEngine.startServer(
+        this.getHost(await this.getConnectionSettings())
+      )
       this.logger.success(
         `Serving query engine at ${chalk.underline.green(
           `http://localhost:${availablePort}`
@@ -157,7 +163,7 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
       )
       try {
         await openBrowser(
-          `http://localhost:${availablePort}/${this.getQueryEngine()}`
+          `http://localhost:${availablePort}/${await this.getQueryEngine()}`
         )
       } catch (error) {
         this.logger.warn(
@@ -167,13 +173,13 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     }
   }
 
-  getConnectionSettings(
+  async getConnectionSettings(
     showInitialStatus = true
-  ): StorageEngineConnectionConfig {
+  ): Promise<StorageEngineConnectionConfig> {
     const {
       flags: { dgraph: dgraphHost, storage = 'dgraph' },
-    } = this.parse(
-      this.constructor as Input<{
+    } = await this.parse(
+      this.constructor as Interfaces.Input<{
         dev: boolean
         dgraph: string
         storage: string
@@ -209,10 +215,10 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     return `${config.scheme}://${config.host}:${config.port}`
   }
 
-  getPluginManager(pluginType: PluginType): Manager {
+  async getPluginManager(pluginType: PluginType): Promise<Manager> {
     const {
       flags: { dev: devMode },
-    } = this.parse(this.constructor as Input<{ dev: boolean }>)
+    } = await this.parse(this.constructor as Interfaces.Input<{ dev: boolean }>)
 
     this.manager = new Manager({
       logger: this.logger,
@@ -228,7 +234,7 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     provider: string
   ): Promise<{ client: any; schemasMap?: SchemaMap; serviceKey?: string }> {
     try {
-      const manager = this.getPluginManager(PluginType.Provider)
+      const manager = await this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
         return this.providers[provider]
       }
@@ -245,7 +251,7 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
       }
       const client = new Client({
         logger: this.logger,
-        provider: this.buildProviderConfig(provider),
+        provider: await this.buildProviderConfig(provider),
       })
       this.providers[provider] = { client, schemasMap, serviceKey }
       return { client, schemasMap, serviceKey }
@@ -267,7 +273,7 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     policyPack: string
   }): Promise<any> {
     try {
-      const manager = this.getPluginManager(PluginType.PolicyPack)
+      const manager = await this.getPluginManager(PluginType.PolicyPack)
       if (this.policyPacks[policyPack]) {
         return this.policyPacks[policyPack]
       }
@@ -320,8 +326,10 @@ homebrew: ${chalk.italic.green('brew upgrade cloudgraphdev/tap/cg')}`)
     }
   }
 
-  buildProviderConfig(provider: string): any {
-    const { flags } = this.parse(this.constructor as Input<any>)
+  async buildProviderConfig(provider: string): Promise<any> {
+    const { flags } = await this.parse(
+      this.constructor as Interfaces.Input<any>
+    )
     const providerConfig = this.getCGConfig(provider) ?? {}
     return {
       ...providerConfig,

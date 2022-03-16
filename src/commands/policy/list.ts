@@ -5,7 +5,7 @@ import OperationBaseCommand from '../operation'
 export default class ListPolicy extends OperationBaseCommand {
   static description = 'List currently installed policy packs and versions'
 
-  static aliases = ['ls:policy', 'list:policy', 'ls:policy']
+  static aliases = ['ls:policy', 'list:policy']
 
   static examples = ['$ cg policy list', '$ cg policy list aws']
 
