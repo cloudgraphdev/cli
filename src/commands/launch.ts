@@ -52,7 +52,7 @@ export default class Launch extends Command {
         connectionConfig: {
           port = getDefaultStorageEngineConnectionConfig().port,
         },
-      } = this.getStorageEngine() as DgraphEngine
+      } = await this.getStorageEngine() as DgraphEngine
       output = await execCommand(
         `docker run -d -p 8995:5080 -p 8996:6080 -p ${port}:8080 -p 8998:9080 -p 8999:8000 --label ${
           DGRAPH_CONTAINER_LABEL
@@ -64,7 +64,7 @@ export default class Launch extends Command {
 
   // eslint-disable-next-line no-warning-comments
   // TODO: convert this func to handle any storage provider
-  async run() {
+  async run() : Promise<void> {
     // const {flags: {debug, dev: devMode}} = this.parse(Launch)
     // eslint-disable-next-line no-warning-comments
     // TODO: not a huge fan of this pattern, rework how to do debug and devmode tasks (specifically how to use in providers)
@@ -159,7 +159,7 @@ export default class Launch extends Command {
     // TODO: smaller sleep time and exponential backoff for ~5 tries
     await sleep(10000)
     try {
-      const storageEngine = this.getStorageEngine()
+      const storageEngine = await this.getStorageEngine()
       const running = await storageEngine.healthCheck(false)
       if (running) {
         this.logger.successSpinner('Dgraph health check passed')
@@ -172,7 +172,7 @@ export default class Launch extends Command {
     }
     this.logger.success(
       `Access your dgraph instance at ${chalk.underline.green(
-        this.getHost((this.getStorageEngine() as DgraphEngine).connectionConfig)
+        this.getHost((await this.getStorageEngine() as DgraphEngine).connectionConfig)
       )}`
     )
     this.logger.info(

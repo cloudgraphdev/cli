@@ -2,11 +2,10 @@
 import Command from './base'
 
 export default class Serve extends Command {
-  static description = 'Serve a GraphQL query tool to query your CloudGraph data.';
+  static description =
+    'Serve a GraphQL query tool to query your CloudGraph data.'
 
-  static examples = [
-    '$ cg serve',
-  ];
+  static examples = ['$ cg serve']
 
   static strict = false
 
@@ -14,12 +13,12 @@ export default class Serve extends Command {
 
   static flags = {
     ...Command.flags,
-  };
+  }
 
   static args = Command.args
 
   async run(): Promise<void> {
-    const storageEngine = this.getStorageEngine()
+    const storageEngine = await this.getStorageEngine()
     const storageRunning = await storageEngine.healthCheck()
     if (!storageRunning) {
       const msg = `Storage engine check at ${storageEngine.host} FAILED canceling SERVE`

@@ -1,3 +1,3 @@
-import { run } from '@oclif/command'
+import { run } from '@oclif/core'
 
 export default run

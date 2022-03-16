@@ -1,6 +1,6 @@
 import { Logger, PluginModule, PluginType } from '@cloudgraph/sdk'
 import { cosmiconfigSync } from 'cosmiconfig'
-import { IConfig } from '@oclif/config'
+import { Config } from '@oclif/core'
 import path from 'path'
 import chalk from 'chalk'
 import fs from 'fs'
@@ -13,7 +13,7 @@ export class Manager {
   constructor(config: {
     logger: Logger
     devMode: boolean
-    cliConfig: IConfig
+    cliConfig: Config
     pluginType: PluginType
   }) {
     this.pluginManager = new NpmManager()
@@ -26,7 +26,7 @@ export class Manager {
 
   plugins: Record<string, any>
 
-  cliConfig: IConfig
+  cliConfig: Config
 
   logger: Logger
 

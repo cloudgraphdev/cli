@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-require('@oclif/command').run()
-.then(require('@oclif/command/flush'))
-.catch(require('@oclif/errors/handle'))
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('@oclif/core').run().then(require('@oclif/core/flush')).catch(require('@oclif/core/handle'))
+
