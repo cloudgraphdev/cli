@@ -1,8 +1,11 @@
 import { existsSync, rmdirSync, unlinkSync } from 'fs'
 import * as path from 'path'
 import CloudGraph from '@cloudgraph/sdk'
-import oclifParse, { parse as oclifParser } from '@oclif/parser'
-import { Config as ConfigCommandClass } from '@oclif/config'
+import {
+  Config as ConfigCommandClass,
+  Parser as oclifParser,
+  Interfaces,
+} from '@oclif/core'
 import { Config } from 'cosmiconfig/dist/types'
 import { cosmiconfigSync } from 'cosmiconfig'
 
@@ -107,15 +110,20 @@ export const saveTestCloudGraphConfigFile = async (
   InitCommand.saveCloudGraphConfigFile(configFileMock)
 }
 
-export const parseArgv = (
+export const parseArgv = async (
   InitClass: InitCommandClass
-): oclifParse.Output<
-  any,
-  {
-    [name: string]: string
-  }
+): Promise<
+  Interfaces.ParserOutput<
+    any,
+    {
+      [name: string]: string
+    }
+  >
 > => {
-  return oclifParser(InitClass.argv, { context: this, ...InitClass.ctor })
+  return oclifParser.parse(
+    InitClass.argv,
+    InitClass.ctor as Interfaces.Input<Interfaces.FlagOutput>
+  )
 }
 
 export const flagTestHelper = async (
@@ -129,7 +137,7 @@ export const flagTestHelper = async (
   const flagEntry = `--${flag}${flagInputConcatString}`
   debug && logger.debug(`Full flag arg to test: '${flagEntry}'`)
   const Init = await getInitCommand([flagEntry])
-  const { flags } = parseArgv(Init)
+  const { flags } = await parseArgv(Init)
   debug && logger.debug(`Parsed result: ${flags[flag]}`)
   expect(flags[flag]).toBe(flagInput ?? true)
 }
