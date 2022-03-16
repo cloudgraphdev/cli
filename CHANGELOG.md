@@ -1,3 +1,10 @@
+# [0.21.0-alpha.5](https://github.com/cloudgraphdev/cli/compare/0.21.0-alpha.4...0.21.0-alpha.5) (2022-03-16)
+
+
+### Features
+
+* Update CG to use Oclif core and space for the `topicSeparator` ([8b1e7e8](https://github.com/cloudgraphdev/cli/commit/8b1e7e853a5cbd92b47abe7773283b44a7a03b35))
+
 # [0.21.0-alpha.4](https://github.com/cloudgraphdev/cli/compare/0.21.0-alpha.3...0.21.0-alpha.4) (2022-03-15)
 
 
