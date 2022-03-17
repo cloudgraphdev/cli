@@ -20,11 +20,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Mkdir .aws
-        run: sudo mkdir -p /home/node/.aws
+        run: mkdir -p ~/.aws
 
       - name: Set .aws/config
         run: |
-          cat << EOF > /home/node/.aws/config
+          cat << EOF > ~/.aws/config
           [default]
           region=us-east-1
           output=json
@@ -35,7 +35,7 @@ jobs:
           EOF
       - name: Set .aws/credentials
         run: |
-          cat << EOF > /home/node/.aws/credentials
+          cat << EOF > ~/.aws/credentials
           [default]
           aws_access_key_id = $AWS_ACCESS_KEY_ID
           aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
@@ -66,8 +66,8 @@ jobs:
         run: yarn homebrew
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          AWS_SHARED_CREDENTIALS_FILE: /home/node/.aws/credentials
-          AWS_CONFIG_FILE: /home/node/.aws/config
+          AWS_SHARED_CREDENTIALS_FILE: ~/.aws/credentials
+          AWS_CONFIG_FILE: ~/.aws/config
           AWS_SDK_LOAD_CONFIG: true
           AWS_PROFILE: cloudgraph-iac
           AWS_ACCESS_KEY_ID: ${{secrets.aws_access_key_id}}
