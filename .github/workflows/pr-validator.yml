@@ -1,0 +1,30 @@
+name: pr-validator
+
+on:
+  pull_request:
+    types: [synchronize, opened, reopened, edited]
+    branches:
+      - master
+      - beta
+
+jobs:
+  pr-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run : |
+          if [ "$TARGET_BRANCH" == "master" ] && [ "$SOURCE_BRANCH" == "beta" ]; then
+              echo "Merge from $SOURCE_BRANCH to $TARGET_BRANCH is valid"
+              exit 0
+          elif [ "$TARGET_BRANCH" == "beta" ] && [ "$SOURCE_BRANCH" == "alpha" ]; then
+              echo "Merge from $SOURCE_BRANCH to $TARGET_BRANCH is valid"
+              exit 0
+          else
+              echo "You cannot merge from $SOURCE_BRANCH to $TARGET_BRANCH"
+              exit 1
+          fi
+        env:
+          SOURCE_BRANCH: ${{ github.head_ref }}
+          TARGET_BRANCH: ${{ github.base_ref }}         
+      
+      

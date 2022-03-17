@@ -1,7 +1,7 @@
 {
   "name": "@cloudgraph/cli",
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
-  "version": "0.20.12",
+  "version": "0.21.0-beta.1",
   "author": "AutoCloud",
   "license": "MPL-2.0",
   "publishConfig": {
@@ -15,13 +15,11 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/sdk": "^0.14.2",
+    "@cloudgraph/sdk": "^0.15.0",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
-    "@oclif/command": "^1",
-    "@oclif/config": "^1",
-    "@oclif/plugin-help": "3.2.17",
-    "@tiagonapoli/oclif-plugin-spaced-commands": "^1.0.1",
+    "@oclif/core": "^1.6.0",
+    "@oclif/plugin-help": "^5.1.12",
     "@types/lodash": "^4.14.175",
     "altair-express-middleware": "^4.0.8",
     "axios": "^0.21.1",
@@ -38,18 +36,16 @@
     "graphql-tools": "^8.2.0",
     "inquirer": "^8.1.1",
     "jsonpath": "^1.1.1",
-    "live-plugin-manager": "0.15.1",
     "lodash": "^4.17.21",
     "npm": "^8.1.2",
-    "oclif": "^2.3.0",
+    "oclif": "^2.6.0",
     "open": "^8.2.1",
     "semver": "^7.3.5",
     "tslib": "^1"
   },
   "devDependencies": {
     "@autocloud/eslint-config": "^0.1.0",
-    "@oclif/dev-cli": "^1",
-    "@oclif/test": "^1.2.8",
+    "@oclif/test": "^2.1.0",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/gitlab": "^6.2.2",
@@ -64,6 +60,7 @@
     "@types/node": "^14",
     "@types/npm": "^7.19.0",
     "@types/pino": "^6.3.8",
+    "@types/semver": "^7.3.9",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "aws-sdk": "^2.1060.0",
@@ -104,8 +101,14 @@
     "bin": "cg",
     "dirname": "cloudgraph",
     "plugins": [
-      "@oclif/plugin-help",
-      "@tiagonapoli/oclif-plugin-spaced-commands"
+      "@oclif/plugin-help"
+    ],
+    "topicSeparator": " ",
+    "additionalHelpFlags": [
+      "-h"
+    ],
+    "additionalVersionFlags": [
+      "-v"
     ],
     "update": {
       "s3": {
@@ -118,22 +121,22 @@
   },
   "repository": "github:cloudgraphdev/cli",
   "scripts": {
-    "build": "yarn prepack && oclif-dev pack -t linux-x64,linux-arm,darwin-x64,darwin-arm64 && yarn postpack",
+    "build": "yarn prepack && oclif pack -t linux-x64,linux-arm,darwin-x64,darwin-arm64 && yarn postpack",
     "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc.json",
-    "prepack": "rm -rf lib && npx tsc -b --force && oclif-dev manifest && oclif-dev readme && yarn cpx 'src/scripts/*' lib/scripts",
-    "run:init": "cross-env NODE_ENV=development ./bin/run init",
-    "run:init:aws": "cross-env NODE_ENV=development ./bin/run init aws",
-    "run:load": "cross-env NODE_ENV=development ./bin/run load",
-    "run:load:aws": "cross-env NODE_ENV=development ./bin/run load aws",
-    "run:scan": "cross-env NODE_ENV=development ./bin/run scan",
-    "run:scan:aws": "cross-env NODE_ENV=development ./bin/run scan aws",
-    "run:launch": "cross-env NODE_ENV=development ./bin/run launch",
-    "run:teardown": "cross-env NODE_ENV=development ./bin/run teardown",
-    "run:update": "cross-env NODE_ENV=test ./bin/run update",
-    "run:provider": "cross-env NODE_ENV=test ./bin/run provider",
-    "run:policy": "cross-env NODE_ENV=test ./bin/run policy",
+    "prepack": "rm -rf lib && npx tsc -b --force && oclif manifest && oclif readme && yarn cpx 'src/scripts/*' lib/scripts",
+    "run:init": "cross-env NODE_ENV=development ./bin/dev init",
+    "run:init:aws": "cross-env NODE_ENV=development ./bin/dev init aws",
+    "run:load": "cross-env NODE_ENV=development ./bin/dev load",
+    "run:load:aws": "cross-env NODE_ENV=development ./bin/dev load aws",
+    "run:scan": "cross-env NODE_ENV=development ./bin/dev scan",
+    "run:scan:aws": "cross-env NODE_ENV=development ./bin/dev scan aws",
+    "run:launch": "cross-env NODE_ENV=development ./bin/dev launch",
+    "run:teardown": "cross-env NODE_ENV=development ./bin/dev teardown",
+    "run:update": "cross-env NODE_ENV=test ./bin/dev update",
+    "run:provider": "cross-env NODE_ENV=test ./bin/dev provider",
+    "run:policy": "cross-env NODE_ENV=test ./bin/dev policy",
     "test": "cross-env CG_DEBUG=-1 NODE_ENV=test jest --coverage=true --detectOpenHandles --runInBand --forceExit",
     "test:debug": "cross-env CG_DEBUG=5 NODE_ENV=test jest --coverage=false --detectOpenHandles --runInBand --forceExit",
     "version": "oclif readme && git add README.md",

@@ -1,5 +1,5 @@
 import { PluginType } from '@cloudgraph/sdk'
-import { flags } from '@oclif/command'
+import { Flags as flags } from '@oclif/core'
 import { isEmpty, pickBy } from 'lodash'
 import chalk from 'chalk'
 
@@ -34,9 +34,9 @@ export default abstract class OperationBaseCommand extends Command {
       plugin: any
     }[]
   > {
-    const { argv } = this.parse(OperationBaseCommand)
+    const { argv } = await this.parse(OperationBaseCommand)
     const allPlugins = argv
-    const manager = this.getPluginManager(type)
+    const manager = await this.getPluginManager(type)
     const addedPlugins = []
 
     if (isEmpty(allPlugins)) {
@@ -70,7 +70,7 @@ export default abstract class OperationBaseCommand extends Command {
   }
 
   async installPlugin(type: PluginType): Promise<void> {
-    const manager = this.getPluginManager(type)
+    const manager = await this.getPluginManager(type)
     const lockFile = this.getLockFile()
     if (isEmpty(lockFile?.[type])) {
       this.logger.info(
@@ -91,9 +91,9 @@ export default abstract class OperationBaseCommand extends Command {
     const {
       argv,
       flags: { 'no-save': noSave },
-    } = this.parse(OperationBaseCommand)
+    } = await this.parse(OperationBaseCommand)
     const allPlugins = argv
-    const manager = this.getPluginManager(type)
+    const manager = await this.getPluginManager(type)
     const lockFile = this.getLockFile()
     const plugins = []
 
@@ -136,9 +136,9 @@ export default abstract class OperationBaseCommand extends Command {
   }
 
   async update(type: PluginType): Promise<void> {
-    const { argv } = this.parse(OperationBaseCommand)
+    const { argv } = await this.parse(OperationBaseCommand)
     const allPlugins = argv
-    const manager = this.getPluginManager(type)
+    const manager = await this.getPluginManager(type)
     const lockFile = this.getLockFile()
 
     if (isEmpty(lockFile?.[type])) {
@@ -206,7 +206,7 @@ export default abstract class OperationBaseCommand extends Command {
   }
 
   async list(type: PluginType): Promise<void> {
-    const { argv } = this.parse(OperationBaseCommand)
+    const { argv } = await this.parse(OperationBaseCommand)
     const allPlugins = argv
     const lockFile = this.getLockFile()
     if (isEmpty(lockFile?.[type])) {
@@ -218,7 +218,7 @@ export default abstract class OperationBaseCommand extends Command {
     const pluginsToList =
       allPlugins.length >= 1
         ? pickBy(lockFile?.[type], (_, key) => {
-            return allPlugins.includes(key)
+            return allPlugins.some(p => key.includes(p))
           })
         : lockFile?.[type] || {}
     for (const [key, value] of Object.entries(pluginsToList)) {
