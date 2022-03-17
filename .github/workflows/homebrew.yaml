@@ -16,7 +16,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Mkdir .aws
-        run: mkdir -p /home/node/.aws
+        run: sudo mkdir -p /home/node/.aws
 
       - name: Set .aws/config
         run: |
