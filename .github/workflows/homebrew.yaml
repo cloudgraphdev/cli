@@ -42,9 +42,8 @@ jobs:
           echo "::set-output name=dir::$(npm config get cache)"
   
       - name: Restoring cache
-        id: npm-cache
-        uses: actions/cache@v2
         id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
         with:
           path: ${{ steps.npm-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
