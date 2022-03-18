@@ -25,7 +25,13 @@ enum statusKeyWords {
   connections = 'connections',
 }
 
-const servicesToIgnore = [/^tag$/, /^label$/, /^billing$/, /Findings$/]
+const servicesToIgnore = [
+  /^account$/,
+  /^tag$/,
+  /^label$/,
+  /^billing$/,
+  /Findings$/,
+]
 
 // TODO: come back and add tests once testing strategy is determined
 export class ScanReport {
