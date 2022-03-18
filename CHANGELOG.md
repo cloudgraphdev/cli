@@ -1,3 +1,10 @@
+# [0.21.0-alpha.7](https://github.com/cloudgraphdev/cli/compare/0.21.0-alpha.6...0.21.0-alpha.7) (2022-03-18)
+
+
+### Bug Fixes
+
+* Update oclif version to fix Aliases issue ([4e9e911](https://github.com/cloudgraphdev/cli/commit/4e9e911822af1b7928e48630e90795c03c1404ef))
+
 # [0.21.0-alpha.6](https://github.com/cloudgraphdev/cli/compare/0.21.0-alpha.5...0.21.0-alpha.6) (2022-03-18)
 
 
