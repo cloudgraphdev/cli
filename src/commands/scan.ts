@@ -260,6 +260,8 @@ export default class Scan extends Command {
         this.exit()
       }
 
+      console.log('test')
+
       loadAllData(
         providerClient,
         {
