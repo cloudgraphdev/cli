@@ -1,3 +1,10 @@
+# [0.21.0-alpha.6](https://github.com/cloudgraphdev/cli/compare/0.21.0-alpha.5...0.21.0-alpha.6) (2022-03-18)
+
+
+### Bug Fixes
+
+* Removed account from scan report ([a6aa4a1](https://github.com/cloudgraphdev/cli/commit/a6aa4a11b29a0b46f5831c99b1c4100002853811))
+
 # [0.21.0-alpha.5](https://github.com/cloudgraphdev/cli/compare/0.21.0-alpha.4...0.21.0-alpha.5) (2022-03-16)
 
 
