@@ -12,10 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-          token: ${{secrets.gh_token}}
       - run : |
           if [ "$TARGET_BRANCH" == "master" ] && [ "$SOURCE_BRANCH" == "beta" ]; then
               echo "Merge from $SOURCE_BRANCH to $TARGET_BRANCH is valid"
