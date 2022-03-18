@@ -1,3 +1,15 @@
+# [0.21.0](https://github.com/cloudgraphdev/cli/compare/0.20.12...0.21.0) (2022-03-18)
+
+
+### Bug Fixes
+
+* **brew:** update brew script with version key, update brew install dirs ([8d79abb](https://github.com/cloudgraphdev/cli/commit/8d79abb9f8cee442ff5e912dd457101b9d2fc817))
+
+
+### Features
+
+* Update CG to use Oclif core and space for the `topicSeparator` ([8b1e7e8](https://github.com/cloudgraphdev/cli/commit/8b1e7e853a5cbd92b47abe7773283b44a7a03b35))
+
 # [0.21.0-beta.1](https://github.com/cloudgraphdev/cli/compare/0.20.12...0.21.0-beta.1) (2022-03-16)
 
 
