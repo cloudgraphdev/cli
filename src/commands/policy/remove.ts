@@ -15,9 +15,9 @@ export default class RemovePolicy extends OperationBaseCommand {
   ]
 
   static examples = [
-    '$ cg policy delete',
-    '$ cg policy delete aws-cis-1.2.0',
-    '$ cg policy delete aws-cis-1.2.0 --no-save',
+    '$ cg policy remove',
+    '$ cg policy remove aws-cis-1.2.0',
+    '$ cg policy remove aws-cis-1.2.0 --no-save',
   ]
 
   static strict = false
