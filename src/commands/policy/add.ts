@@ -1,21 +1,8 @@
 import { PluginType } from '@cloudgraph/sdk'
 import { isEmpty, uniqBy } from 'lodash'
+import { DEFAULT_CG_CONFIG } from '../../utils/constants'
 
 import OperationBaseCommand from '../operation'
-
-const defaultCGConfig = {
-  cloudGraph: {
-    plugins: {},
-    storageConfig: {
-      host: 'localhost',
-      port: '8997',
-      scheme: 'http',
-    },
-    versionLimit: 10,
-    queryEngine: 'playground',
-    port: '5555',
-  },
-}
 
 export default class AddPolicy extends OperationBaseCommand {
   static description = 'Add new policy packs'
@@ -42,7 +29,7 @@ export default class AddPolicy extends OperationBaseCommand {
         } = installedPolicy
 
         // Save policy to CG config file
-        const config = this.getCGConfig() || defaultCGConfig
+        const config = this.getCGConfig() || DEFAULT_CG_CONFIG
         let configuredPolicies =
           config.cloudGraph.plugins?.[PluginType.PolicyPack] || []
         if (isEmpty(configuredPolicies)) {
