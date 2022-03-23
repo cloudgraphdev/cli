@@ -1,3 +1,11 @@
+## [0.21.2](https://github.com/cloudgraphdev/cli/compare/0.21.1...0.21.2) (2022-03-23)
+
+
+### Bug Fixes
+
+* **deps:** update deps to pin version for node-jq and oclif packages. Fix build command for tarballs ([2d08023](https://github.com/cloudgraphdev/cli/commit/2d080237eeb500abb116441c371cf898d65052de))
+* rename delete command examples to remove ([e332b59](https://github.com/cloudgraphdev/cli/commit/e332b59019c68730d487b88b2bc831b11f548be1))
+
 ## [0.21.2-beta.1](https://github.com/cloudgraphdev/cli/compare/0.21.1...0.21.2-beta.1) (2022-03-23)
 
 
