@@ -379,10 +379,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cloudgraph/sdk@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.17.0.tgz#7b12f7241867633fb0bb99fc8dd511e5da8c1e76"
-  integrity sha512-rMqZp9Ixq1QNKfMSOdfLN2UteTTUJVHjFCKaTxLtSYSyhTEnRSW9dqpbMdEzyCP+w1OXwfPes28JGXdfTNzkUw==
+"@cloudgraph/sdk@^0.18.1":
+  version "0.18.1"
+  resolved "https://registry.yarnpkg.com/@cloudgraph/sdk/-/sdk-0.18.1.tgz#568a780f4185600f3c5f427427148699681181f3"
+  integrity sha512-74aHorS3e5K/BoesyKSR+XJI11SZaQvWK4+rX2EJuKxAvPbKOwJqc3FFIGnomvmTKroyBdHDAlNuBti765TJvQ==
   dependencies:
     "@graphql-tools/load-files" "^6.5.3"
     "@graphql-tools/merge" "^8.2.1"
@@ -392,7 +392,7 @@
     inquirer "^8.1.2"
     jsonpath "^1.1.1"
     lodash "^4.17.21"
-    node-jq "^2.1.0"
+    node-jq "2.1.0"
     ora "^5.4.1"
 
 "@cspotcode/source-map-consumer@0.8.0":
@@ -972,10 +972,10 @@
     supports-color "^8.1.1"
     tslib "^2"
 
-"@oclif/core@^1.0.8", "@oclif/core@^1.2.1", "@oclif/core@^1.3.0", "@oclif/core@^1.3.1", "@oclif/core@^1.3.6":
-  version "1.6.0"
-  resolved "https://registry.npmjs.org/@oclif/core/-/core-1.6.0.tgz"
-  integrity sha512-JHerjgRd29EtUVpDIrzohq2XdxJfgmZVGHAFlf75QVhLGFaleopZAQNBXkHkxG//kGib0LhyVGW7azcFKzr1eQ==
+"@oclif/core@1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.6.1.tgz#8300132782fd5845e3f08026f2fbd95917e8c2dd"
+  integrity sha512-qB33YT3JUc7oH3Mtoov8yRETdMiQKsQNdoB2ozRq8JOCxtqI2f0XiQ6eqes3GpeMZKucl4mmonws5LYraLdQlg==
   dependencies:
     "@oclif/linewrap" "^1.0.0"
     "@oclif/screen" "^3.0.2"
@@ -1007,10 +1007,10 @@
     widest-line "^3.1.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/core@^1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-1.6.1.tgz#8300132782fd5845e3f08026f2fbd95917e8c2dd"
-  integrity sha512-qB33YT3JUc7oH3Mtoov8yRETdMiQKsQNdoB2ozRq8JOCxtqI2f0XiQ6eqes3GpeMZKucl4mmonws5LYraLdQlg==
+"@oclif/core@^1.0.8", "@oclif/core@^1.2.1", "@oclif/core@^1.3.0", "@oclif/core@^1.3.1", "@oclif/core@^1.3.6":
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/@oclif/core/-/core-1.6.0.tgz"
+  integrity sha512-JHerjgRd29EtUVpDIrzohq2XdxJfgmZVGHAFlf75QVhLGFaleopZAQNBXkHkxG//kGib0LhyVGW7azcFKzr1eQ==
   dependencies:
     "@oclif/linewrap" "^1.0.0"
     "@oclif/screen" "^3.0.2"
@@ -8028,9 +8028,9 @@ node-int64@^0.4.0:
   resolved "https://registry.npmjs.org/node-int64/-/node-int64-0.4.0.tgz"
   integrity sha1-h6kGXNs1XTGC2PlM4RGIuCXGijs=
 
-node-jq@^2.1.0:
+node-jq@2.1.0:
   version "2.1.0"
-  resolved "https://registry.npmjs.org/node-jq/-/node-jq-2.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/node-jq/-/node-jq-2.1.0.tgz#4530cb1fd767bf05b643f0bddc2769c2ced847e0"
   integrity sha512-4wv/W8rejWADH1Jqz+O2hCaZEFTIBp7EOcYo7orFcK9t11DtVQBBQHrN89MiGenk5HzrAMrZluOo5PQ0fP/AoQ==
   dependencies:
     "@semantic-release/changelog" "^6.0.1"
@@ -8501,9 +8501,9 @@ object.values@^1.1.5:
     define-properties "^1.1.3"
     es-abstract "^1.19.1"
 
-oclif@^2.6.0:
+oclif@2.6.0:
   version "2.6.0"
-  resolved "https://registry.npmjs.org/oclif/-/oclif-2.6.0.tgz"
+  resolved "https://registry.yarnpkg.com/oclif/-/oclif-2.6.0.tgz#d62375f43d830654c8ae4f51f7146903adb928f4"
   integrity sha512-MWjSimZ/+BVeKWOehg+p8cUOoU6l64GG1L73L2tWq/JIALaewUQ8TaoEjhhV80b2lQIOBucm19PfSFnCUiUsOQ==
   dependencies:
     "@oclif/core" "^1.3.0"
