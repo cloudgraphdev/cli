@@ -1,3 +1,10 @@
+## [0.21.2-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.21.1...0.21.2-alpha.1) (2022-03-23)
+
+
+### Bug Fixes
+
+* rename delete command examples to remove ([e332b59](https://github.com/cloudgraphdev/cli/commit/e332b59019c68730d487b88b2bc831b11f548be1))
+
 ## [0.21.1](https://github.com/cloudgraphdev/cli/compare/0.21.0...0.21.1) (2022-03-18)
 
 
