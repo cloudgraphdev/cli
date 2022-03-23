@@ -14,9 +14,9 @@ export default class RemoveProvider extends OperationBaseCommand {
   ]
 
   static examples = [
-    '$ cg provider delete',
-    '$ cg provider delete aws',
-    '$ cg provider delete aws --no-save',
+    '$ cg provider remove',
+    '$ cg provider remove aws',
+    '$ cg provider remove aws --no-save',
   ]
 
   static strict = false

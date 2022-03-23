@@ -1,7 +1,7 @@
 {
   "name": "@cloudgraph/cli",
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
-  "version": "0.21.1",
+  "version": "0.21.2-beta.1",
   "author": "AutoCloud",
   "license": "MPL-2.0",
   "publishConfig": {
@@ -15,10 +15,10 @@
   },
   "bugs": "https://github.com/cloudgraphdev/cli/issues",
   "dependencies": {
-    "@cloudgraph/sdk": "^0.17.0",
+    "@cloudgraph/sdk": "^0.18.1",
     "@graphql-tools/load-files": "^6.3.2",
     "@graphql-tools/merge": "^8.2.0",
-    "@oclif/core": "^1.6.1",
+    "@oclif/core": "1.6.1",
     "@oclif/plugin-help": "^5.1.12",
     "@types/lodash": "^4.14.175",
     "altair-express-middleware": "^4.0.8",
@@ -38,7 +38,7 @@
     "jsonpath": "^1.1.1",
     "lodash": "^4.17.21",
     "npm": "^8.1.2",
-    "oclif": "^2.6.0",
+    "oclif": "2.6.0",
     "open": "^8.2.1",
     "semver": "^7.3.5",
     "tslib": "^1"
@@ -121,7 +121,7 @@
   },
   "repository": "github:cloudgraphdev/cli",
   "scripts": {
-    "build": "yarn prepack && oclif pack -t linux-x64,linux-arm,darwin-x64,darwin-arm64 && yarn postpack",
+    "build": "yarn prepack && oclif pack tarballs -t linux-x64,linux-arm,darwin-x64,darwin-arm64 && yarn postpack",
     "launch": "./bin/run launch",
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc.json",
