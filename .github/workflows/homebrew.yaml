@@ -12,9 +12,6 @@ jobs:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       AWS_SDK_LOAD_CONFIG: true
       AWS_PROFILE: cloudgraph-iac
-      AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-      AWS_ROLE_ARN: ${{secrets.AWS_ROLE_ARN}}
       NODE_ENV: "cicd"
     steps:
       - uses: actions/checkout@v3
