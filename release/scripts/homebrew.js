@@ -17,7 +17,6 @@ const DIST_DIR = path.join(CLI_DIR, 'dist')
 const PJSON = require(path.join(CLI_DIR, 'package.json'))
 const NODE_VERSION = PJSON.oclif.update.node.version
 const SHORT_VERSION = PJSON.version
-const pathToDist = path.join(DIST_DIR, `cg-v${SHORT_VERSION}`)
 async function getText(url) {
   return new Promise((resolve, reject) => {
     https
@@ -65,7 +64,7 @@ async function calculateSHA256(fileName) {
 async function uploadToS3(file) {
   console.log(`Uploading ${file} to S3`)
   await new Promise((resolve, reject) => {
-    const pathToFile = path.join(pathToDist, file)
+    const pathToFile = path.join(DIST_DIR, file)
     const fileStream = fs.createReadStream(pathToFile)
     fileStream.on('error', err => {
       if (err) {
@@ -130,7 +129,7 @@ async function uploadToS3(file) {
 }
 
 function getFilesByOS(os) {
-  const files = fs.readdirSync(pathToDist)
+  const files = fs.readdirSync(DIST_DIR)
   return files.filter(file => file.includes(os) && !file.includes('.xz'))
 }
 
@@ -145,7 +144,7 @@ async function updateCgFormula(brewDir) {
   const template = fs.readFileSync(templatePath).toString('utf-8')
   const files = getFilesByOS('darwin-x64')
   const zipFile = files.find(file => file.includes('tar.gz'))
-  const pathToFile = path.join(pathToDist, zipFile)
+  const pathToFile = path.join(DIST_DIR, zipFile)
   const sha256 = await calculateSHA256(pathToFile)
   const url = `${CLI_ASSETS_URL}/cg-v${SHORT_VERSION}/${zipFile}`
 
