@@ -186,18 +186,11 @@ async function updateCgNodeFormula(brewDir) {
   console.log(`done updating cg-node Formula in ${formulaPath}`)
 }
 
-async function setupGit() {
-  const githubSetupPath = path.join(__dirname, '_github_setup')
-  await execa(githubSetupPath)
-}
-
 async function updateHomebrew() {
   const tmp = path.join(__dirname, 'tmp')
   const homebrewDir = path.join(tmp, 'homebrew-tap')
   mkdirp.sync(tmp)
   rm.sync(homebrewDir)
-
-  // await setupGit()
 
   console.log(
     `cloning https://github.com/cloudgraphdev/homebrew-tap to ${homebrewDir}`
