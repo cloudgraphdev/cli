@@ -8,16 +8,21 @@ on:
 jobs:
   homebrew:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      AWS_SDK_LOAD_CONFIG: true
+      AWS_PROFILE: cloudgraph-iac
+      NODE_ENV: "cicd"
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           persist-credentials: false
-          token: ${{secrets.gh_token}}
+          token: ${{secrets.GH_TOKEN}}
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
 
       - name: Mkdir .aws
         run: mkdir -p ~/.aws
@@ -30,21 +35,22 @@ jobs:
           output=json
           
           [profile cloudgraph-iac]
-          role_arn = $AWS_ROLE_ARN
+          role_arn = ${{ secrets.AWS_ROLE_ARN }}
           source_profile = default
           EOF
       - name: Set .aws/credentials
         run: |
           cat << EOF > ~/.aws/credentials
           [default]
-          aws_access_key_id = $AWS_ACCESS_KEY_ID
-          aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+          aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key =  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           EOF
+
       - name: Get cache directory
         id: npm-cache-dir
         run: |
           echo "::set-output name=dir::$(npm config get cache)"
-  
+
       - name: Restoring cache
         id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
         uses: actions/cache@v2
@@ -61,14 +67,21 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Homebrew        
-        run: yarn homebrew
+      - name: Add SSH key
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-          AWS_SDK_LOAD_CONFIG: true
-          AWS_PROFILE: cloudgraph-iac
-          AWS_ACCESS_KEY_ID: ${{secrets.aws_access_key_id}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.aws_secret_access_key}}
-          AWS_ROLE_ARN: ${{secrets.aws_role_arn}}
-          NODE_ENV: 'cicd'         
-      
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          echo "${{ secrets.AUTODEPLOY_SSH_KEY }}" > ~/.ssh/github_actions
+          chmod 600 ~/.ssh/github_actions
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add ~/.ssh/github_actions
+
+      - name: Homebrew
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          git config --global user.email "no-reply@autocloud.dev"
+          git config --global user.name "autocloud-deploy-bot"
+          yarn homebrew
