@@ -80,7 +80,8 @@ jobs:
 
       - name: Homebrew
         env:
-          GH_ACTIONS: "true"
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
+          git config --global user.email "no-reply@autocloud.dev"
+          git config --global user.name "autocloud-deploy-bot"
           yarn homebrew
