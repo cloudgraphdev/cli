@@ -3,7 +3,7 @@ name: homebrew
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   homebrew:
@@ -35,7 +35,7 @@ jobs:
           [default]
           region=us-east-1
           output=json
-          
+
           [profile cloudgraph-iac]
           role_arn = ${{ secrets.AWS_ROLE_ARN }}
           source_profile = default
