@@ -44,8 +44,8 @@ jobs:
       - name: Build
         run: yarn prepack
 
-      - name: Test
-        run: yarn lint
+      # - name: Test
+      #   run: yarn lint
 
       - name: Publish
         run: npx semantic-release
