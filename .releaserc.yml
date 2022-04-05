@@ -1,13 +1,13 @@
 ---
 branches:
-  - name: master
-    channel: latest
-  - name: beta
-    channel: beta
-    prerelease: true
   - name: alpha
     channel: alpha
     prerelease: true
+  - name: beta
+    channel: beta
+    prerelease: true
+  - name: main
+
 plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"

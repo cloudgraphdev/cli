@@ -1,10 +1,11 @@
+---
 name: pr-validator
 
 on:
   pull_request:
     types: [synchronize, opened, reopened, edited]
     branches:
-      - master
+      - main
       - beta
 
 jobs:
@@ -12,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run : |
-          if [ "$TARGET_BRANCH" == "master" ] && [ "$SOURCE_BRANCH" == "beta" ]; then
+      - run: |
+          if [ "$TARGET_BRANCH" == "main" ] && [ "$SOURCE_BRANCH" == "beta" ]; then
               echo "Merge from $SOURCE_BRANCH to $TARGET_BRANCH is valid"
               exit 0
           elif [ "$TARGET_BRANCH" == "beta" ] && [ "$SOURCE_BRANCH" == "alpha" ]; then
@@ -25,6 +26,4 @@ jobs:
           fi
         env:
           SOURCE_BRANCH: ${{ github.head_ref }}
-          TARGET_BRANCH: ${{ github.base_ref }}         
-      
-      
+          TARGET_BRANCH: ${{ github.base_ref }}
