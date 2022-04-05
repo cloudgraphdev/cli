@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
 
       - name: Get cache directory
         id: npm-cache-dir
@@ -45,13 +45,13 @@ jobs:
       - name: Test
         run: yarn lint
 
-      - name: Publish 
+      - name: Publish
         run: npx semantic-release -r $GITHUB_SERVER_URL/$GITHUB_REPOSITORY
         env:
+          NODE_ENV: "cicd"
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
           GITHUB_TOKEN: ${{secrets.gh_token}}
-          GIT_AUTHOR_NAME: 'autocloud-deploy-bot'
-          GIT_AUTHOR_EMAIL: 'no-reply@autocloud.dev'
-          GIT_COMMITTER_NAME: 'autocloud-deploy-bot'
-          GIT_COMMITTER_EMAIL: 'no-reply@autocloud.dev'
-          NODE_ENV: 'cicd'
+          GIT_AUTHOR_NAME: "autocloud-deploy-bot"
+          GIT_AUTHOR_EMAIL: "no-reply@autocloud.dev"
+          GIT_COMMITTER_NAME: "autocloud-deploy-bot"
+          GIT_COMMITTER_EMAIL: "no-reply@autocloud.dev"
