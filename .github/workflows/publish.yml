@@ -23,21 +23,23 @@ jobs:
           registry-url: "https://registry.npmjs.org"
 
       - name: Get cache directory
-        id: npm-cache-dir
+        id: yarn-cache-dir
         run: |
-          echo "::set-output name=dir::$(npm config get cache)"
-  
+          echo "::set-output name=dir::$(yarn cache dir)"
+
       - name: Restoring cache
-        uses: actions/cache@v2
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` ==> if: steps.yarn-cache.outputs.cache-hit != 'true'
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: ${{ steps.yarn-cache-dir.outputs.dir }}
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
       - name: Install Packages
-        run: yarn install --frozen-lockfile --cache-folder .npm --prefer-offline
+        # NOTE: The --ignore-scripts flag is required to prevent leakage of NPM_TOKEN value
+        # See https://github.com/actions/setup-node/blob/main/docs/advanced-usage.md#use-private-packages
+        run: yarn install --frozen-lockfile --prefer-offline --ignore-scripts
 
       - name: Build
         run: yarn prepack
