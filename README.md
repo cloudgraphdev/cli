@@ -1,8 +1,8 @@
 <br />
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png">
-    <img alt="CloudGraph" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/logo.png" width="75%" style="display: block; margin: auto" />
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/logo.png">
+    <img alt="CloudGraph" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/logo.png" width="75%" style="display: block; margin: auto" />
   </a>
 </p>
 
@@ -28,7 +28,7 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 
 💻 [Documentation](https://docs.cloudgraph.dev)
 
-💰 [Get paid to build CloudGraph providers](https://github.com/cloudgraphdev/cli/blob/master/CONTRIBUTING.md)
+💰 [Get paid to build CloudGraph providers](https://github.com/cloudgraphdev/cli/blob/main/CONTRIBUTING.md)
 
 <br />
 
@@ -36,7 +36,7 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 [![Version](https://img.shields.io/npm/v/@cloudgraph/cli.svg)](https://npmjs.org/package/@cloudgraph/cli)
 ![node-current](https://img.shields.io/node/v/@cloudgraph/cli)
 [![Downloads/week](https://img.shields.io/npm/dw/@cloudgraph/cli.svg)](https://npmjs.org/package/@cloudgraph/cli)
-[![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/master/package.json)
+[![License](https://img.shields.io/npm/l/@cloudgraph/cli.svg)](https://github.com/cloudgraphdev/cli/blob/main/package.json)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/cloudgraphdev/cli)
 ![GitHub contributors](https://img.shields.io/github/contributors/cloudgraphdev/cli)
 ![GitHub issues](https://img.shields.io/github/issues/cloudgraphdev/cli)
@@ -85,7 +85,7 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 - [McKinsey](https://www.mckinsey.com/)
 - [Pulumi](https://www.pulumi.com/)
 - [Siemens](https://www.siemens.com/)
-- [MasterCard](https://www.mastercard.us/en-us.html)
+- [mainCard](https://www.maincard.us/en-us.html)
 
 \*\* usage does not imply endorsement
 
@@ -107,7 +107,7 @@ Anyone familiar with the CSPs knows that service APIs are almost always split in
 
 <br />
 
-While a masterpiece of datacenter architecture, this choice of hundreds of services and configuration options put the burden of knowledge on how to properly use these services squarely on us engineers. As a result, we find ourselves having to constantly stay up to date and learn about all the service offerings or new changes. This takes a significant amount of time and mental energy. As developers, it can be difficult, time-consuming, and frustrating to use the AWS CLI to make 5 different API calls to describe, as an example, an AWS ECS cluster, its services, task definitions, tasks, container definitions, etc. We often find ourselves lost in documentation and having to use half a dozen of APIs to get answers to questions like "What exactly is running in this VPC?"
+While a mainpiece of datacenter architecture, this choice of hundreds of services and configuration options put the burden of knowledge on how to properly use these services squarely on us engineers. As a result, we find ourselves having to constantly stay up to date and learn about all the service offerings or new changes. This takes a significant amount of time and mental energy. As developers, it can be difficult, time-consuming, and frustrating to use the AWS CLI to make 5 different API calls to describe, as an example, an AWS ECS cluster, its services, task definitions, tasks, container definitions, etc. We often find ourselves lost in documentation and having to use half a dozen of APIs to get answers to questions like "What exactly is running in this VPC?"
 
 <br />
 
@@ -130,8 +130,8 @@ Wouldn't it be great if we as DevOps/Cloud engineers had a simpler way to get ou
 It is for these reasons that we built CloudGraph, the GraphQL API for everything cloud. CloudGraph extracts, normalizes, processes, and enriches your cloud data allowing you to access deep insights across multiple providers effortlessly. Check out our blog post [The GraphQL API for everything](https://www.autocloud.dev/blog/the-graphql-api-for-all-clouds) to learn more.
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQueries.gif">
-    <img alt="example queries" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/exampleQueries.gif" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/exampleQueries.gif">
+    <img alt="example queries" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/exampleQueries.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -186,8 +186,8 @@ npm i -g @cloudgraph/cli
 ```
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/install.gif">
-    <img alt="install" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/install.gif" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/install.gif">
+    <img alt="install" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/install.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -237,8 +237,8 @@ cg init
 1. This initializes CloudGraph's configuration. This command will ask you a series of questions about what providers you are using and how you would like CloudGraph configured.
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.gif">
-    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/init.gif" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/init.gif">
+    <img alt="init" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/init.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -257,8 +257,8 @@ cg launch
 2. This command launches an instance of [Dgraph](https://dgraph.io/), the graphdb CloudGraph uses to store data under the hood. Note that there are 2 ways to launch an instance. **BOTH** of these require [Docker](https://www.docker.com/) to be installed and running. The preferred solution is to use our `cg launch` convenience command.
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.gif">
-    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/launch.gif" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/launch.gif">
+    <img alt="launch" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/launch.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -282,8 +282,8 @@ cg scan
 3. Scan for cloud infrastructure for all configured providers. This command will reach out and read all of the metadata on your cloud infrastructure. Note that it is **completely normal** to see warnings and errors while the `cg scan` command runs, these are usually caused by permissions issues. That said, if you encounter any problematic errors running CloudGraph you can prepend `CG_DEBUG=5` to the beginning of your command as in, `CG_DEBUG=5 cg scan`. This will print out the verbose logs with more information and save the output to `cg-debug.log`. Please share your logs with us either by opening an [issue on GitHub](https://github.com/cloudgraphdev/cli/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc) or let us know in our [Slack Workspace](https://join.slack.com/t/cloudgraph-workspace/shared_invite/zt-ytjemoz7-yKWwElynDp1eHAAB55sbpg).
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.gif">
-    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/scan.gif" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/scan.gif">
+    <img alt="scan" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/scan.gif" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -330,8 +330,8 @@ CloudGraph stores as many previous versions of your data as you configured in th
 <br />
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png">
-    <img alt="load" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/load.png" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/load.png">
+    <img alt="load" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/load.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1276,8 +1276,8 @@ GraphQL playground has a fluid and engaging UX that is great for querying a Grap
 <br />
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png">
-    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlPlayground.png" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/gqlPlayground.png">
+    <img alt="gqlPlayground" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/gqlPlayground.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1290,8 +1290,8 @@ Altair is another great GraphQL query tool that packs a ton of [features](https:
 <br />
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png">
-    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/gqlAltair.png" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/gqlAltair.png">
+    <img alt="gqlAltair" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/gqlAltair.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1304,8 +1304,8 @@ GraphQL Voyager is an awesome way to explore the schema(s) for your CG providers
 <br />
 
 <p align="center">
-  <a href="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png">
-    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/voyager.png" width="95%" style="display: block; margin: auto"/>
+  <a href="https://github.com/cloudgraphdev/cli/raw/main/docs/images/voyager.png">
+    <img alt="voyager" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/voyager.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
@@ -1323,7 +1323,7 @@ Comments, questions, or feedback? Please [Join Our Slack Workspace](https://join
 
 # Contribution Guidelines
 
-If you're interested in contributing to CloudGraph please check out our [Contribution Guidelines](https://github.com/cloudgraphdev/cli/blob/master/CONTRIBUTING.md).
+If you're interested in contributing to CloudGraph please check out our [Contribution Guidelines](https://github.com/cloudgraphdev/cli/blob/main/CONTRIBUTING.md).
 
 <br />
 
@@ -1341,7 +1341,7 @@ Interested in a fully managed SaaS/self hosted version of CloudGraph that has bu
 
 <p align="center">
   <a href="https://www.autocloud.dev">
-    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/master/docs/images/autoCloud.png" width="95%" style="display: block; margin: auto"/>
+    <img alt="autocloud" src="https://github.com/cloudgraphdev/cli/raw/main/docs/images/autoCloud.png" width="95%" style="display: block; margin: auto"/>
   </a>
 </p>
 
