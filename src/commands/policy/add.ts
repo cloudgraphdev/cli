@@ -1,5 +1,6 @@
 import { PluginType } from '@cloudgraph/sdk'
 import { isEmpty, uniqBy } from 'lodash'
+import { DEFAULT_CG_CONFIG } from '../../utils/constants'
 
 import OperationBaseCommand from '../operation'
 
@@ -28,37 +29,35 @@ export default class AddPolicy extends OperationBaseCommand {
         } = installedPolicy
 
         // Save policy to CG config file
-        const config = this.getCGConfig()
-        if (config) {
-          let configuredPolicies =
-            config.cloudGraph.plugins?.[PluginType.PolicyPack] || []
-          if (isEmpty(configuredPolicies)) {
-            // Set new Policy Pack Plugin array
-            configuredPolicies = [
-              {
-                name: key,
-                providers: [provider],
-              },
-            ]
-          } else {
-            // Add policy to Policy Pack Plugin array
-            configuredPolicies = [
-              ...configuredPolicies,
-              {
-                name: key,
-                providers: [provider],
-              },
-            ]
-          }
-          if (!config.cloudGraph.plugin) {
-            config.cloudGraph.plugins = {}
-          }
-          config.cloudGraph.plugins[PluginType.PolicyPack] = uniqBy(
-            configuredPolicies,
-            'name'
-          )
-          this.saveCloudGraphConfigFile(config)
+        const config = this.getCGConfig() || DEFAULT_CG_CONFIG
+        let configuredPolicies =
+          config.cloudGraph.plugins?.[PluginType.PolicyPack] || []
+        if (isEmpty(configuredPolicies)) {
+          // Set new Policy Pack Plugin array
+          configuredPolicies = [
+            {
+              name: key,
+              providers: [provider],
+            },
+          ]
+        } else {
+          // Add policy to Policy Pack Plugin array
+          configuredPolicies = [
+            ...configuredPolicies,
+            {
+              name: key,
+              providers: [provider],
+            },
+          ]
         }
+        if (!config.cloudGraph.plugin) {
+          config.cloudGraph.plugins = {}
+        }
+        config.cloudGraph.plugins[PluginType.PolicyPack] = uniqBy(
+          configuredPolicies,
+          'name'
+        )
+        this.saveCloudGraphConfigFile(config)
       }
     } catch (error) {
       this.logger.debug(error)

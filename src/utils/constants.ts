@@ -25,3 +25,13 @@ export const messages = {
     plural: 'providers',
   },
 }
+
+export const DEFAULT_CG_CONFIG = {
+  cloudGraph: {
+    plugins: {},
+    storageConfig: DEFAULT_CONFIG,
+    versionLimit: 10,
+    queryEngine: 'playground',
+    port: '5555',
+  },
+}
