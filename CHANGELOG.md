@@ -1,3 +1,10 @@
+## [0.21.3](https://github.com/cloudgraphdev/cli/compare/0.21.2...0.21.3) (2022-04-06)
+
+
+### Bug Fixes
+
+* Handle add policy without a cg config file ([4813b16](https://github.com/cloudgraphdev/cli/commit/4813b1605717e30fcfa6689f044b74e029fe0427))
+
 ## [0.21.3-beta.1](https://github.com/cloudgraphdev/cli/compare/0.21.2...0.21.3-beta.1) (2022-04-06)
 
 
