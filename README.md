@@ -85,7 +85,7 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 - [McKinsey](https://www.mckinsey.com/)
 - [Pulumi](https://www.pulumi.com/)
 - [Siemens](https://www.siemens.com/)
-- [mainCard](https://www.maincard.us/en-us.html)
+- [MasterCard](https://www.mastercard.us/en-us.html)
 
 \*\* usage does not imply endorsement
 
@@ -107,7 +107,7 @@ Anyone familiar with the CSPs knows that service APIs are almost always split in
 
 <br />
 
-While a mainpiece of datacenter architecture, this choice of hundreds of services and configuration options put the burden of knowledge on how to properly use these services squarely on us engineers. As a result, we find ourselves having to constantly stay up to date and learn about all the service offerings or new changes. This takes a significant amount of time and mental energy. As developers, it can be difficult, time-consuming, and frustrating to use the AWS CLI to make 5 different API calls to describe, as an example, an AWS ECS cluster, its services, task definitions, tasks, container definitions, etc. We often find ourselves lost in documentation and having to use half a dozen of APIs to get answers to questions like "What exactly is running in this VPC?"
+While a masterpiece of datacenter architecture, this choice of hundreds of services and configuration options put the burden of knowledge on how to properly use these services squarely on us engineers. As a result, we find ourselves having to constantly stay up to date and learn about all the service offerings or new changes. This takes a significant amount of time and mental energy. As developers, it can be difficult, time-consuming, and frustrating to use the AWS CLI to make 5 different API calls to describe, as an example, an AWS ECS cluster, its services, task definitions, tasks, container definitions, etc. We often find ourselves lost in documentation and having to use half a dozen of APIs to get answers to questions like "What exactly is running in this VPC?"
 
 <br />
 
