@@ -1,3 +1,10 @@
+## [0.21.3-alpha.2](https://github.com/cloudgraphdev/cli/compare/0.21.3-alpha.1...0.21.3-alpha.2) (2022-04-13)
+
+
+### Bug Fixes
+
+* Update scan/load output of query engine location to be accurate ([af74605](https://github.com/cloudgraphdev/cli/commit/af746059eab95ec8163fc4d14c9e2d7321e84e46))
+
 ## [0.21.3-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.21.2...0.21.3-alpha.1) (2022-04-06)
 
 
