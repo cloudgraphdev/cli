@@ -1,3 +1,18 @@
+## [0.21.4-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.21.3...0.21.4-alpha.1) (2022-04-14)
+
+
+### Bug Fixes
+
+* **rebase:** fastforward alpha to main ([a2416f4](https://github.com/cloudgraphdev/cli/commit/a2416f4a4c83836c0f65aa4f7ed22026f35bceba))
+* Update scan/load output of query engine location to be accurate ([af74605](https://github.com/cloudgraphdev/cli/commit/af746059eab95ec8163fc4d14c9e2d7321e84e46))
+
+## [0.21.3](https://github.com/cloudgraphdev/cli/compare/0.21.2...0.21.3) (2022-04-06)
+
+
+### Bug Fixes
+
+* Handle add policy without a cg config file ([4813b16](https://github.com/cloudgraphdev/cli/commit/4813b1605717e30fcfa6689f044b74e029fe0427))
+
 ## [0.21.3-beta.1](https://github.com/cloudgraphdev/cli/compare/0.21.2...0.21.3-beta.1) (2022-04-06)
 
 
