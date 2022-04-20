@@ -1,7 +1,7 @@
 {
   "name": "@cloudgraph/cli",
   "description": "Scan your cloud infrastructure data and query it with GraphQL",
-  "version": "0.21.4-alpha.1",
+  "version": "0.21.3",
   "author": "AutoCloud",
   "license": "MPL-2.0",
   "publishConfig": {
@@ -126,6 +126,7 @@
     "postpack": "rm -f oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc.json",
     "prepack": "rm -rf lib && npx tsc -b --force && oclif manifest && oclif readme && yarn cpx 'src/scripts/*' lib/scripts",
+    "run:set": "cross-env NODE_ENV=development ./bin/dev set",
     "run:init": "cross-env NODE_ENV=development ./bin/dev init",
     "run:init:aws": "cross-env NODE_ENV=development ./bin/dev init aws",
     "run:load": "cross-env NODE_ENV=development ./bin/dev load",
