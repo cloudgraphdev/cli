@@ -156,15 +156,18 @@ homebrew: 1. ${chalk.italic.green('brew update')} \n
       await queryEngine.startServer(
         this.getHost(await this.getConnectionSettings())
       )
-      const queryEngineUrl = `http://localhost:${availablePort}/${await this.getQueryEngine()}`
       this.logger.success(
-        `Serving query engine at ${chalk.underline.green(queryEngineUrl)}`
+        `Serving query engine at ${chalk.underline.green(
+          `http://localhost:${availablePort}`
+        )}`
       )
       try {
-        await openBrowser(queryEngineUrl)
+        await openBrowser(
+          `http://localhost:${availablePort}/${await this.getQueryEngine()}`
+        )
       } catch (error) {
         this.logger.warn(
-          `Could not open a browser tab with query engine, open manually at ${queryEngineUrl}`
+          `Could not open a browser tab with query engine, open manually at http://localhost:${availablePort}`
         )
       }
     }
@@ -227,9 +230,15 @@ homebrew: 1. ${chalk.italic.green('brew update')} \n
     return this.manager
   }
 
-  async getProviderClient(
-    provider: string
-  ): Promise<{ client: any; schemasMap?: SchemaMap; serviceKey?: string }> {
+  async getProviderClient(provider: string): Promise<{
+    client: any
+    schemasMap?: SchemaMap
+    serviceKey?: string
+    services?: SchemaMap
+    serviceProperties?: {
+      [key: string]: { field: string; defaultValue: any }[]
+    }
+  }> {
     try {
       const manager = await this.getPluginManager(PluginType.Provider)
       if (this.providers[provider]) {
@@ -237,7 +246,7 @@ homebrew: 1. ${chalk.italic.green('brew update')} \n
       }
       const {
         default: Client,
-        enums: { schemasMap },
+        enums: { schemasMap, services, serviceProperties },
         serviceKey,
       } = (await manager.getPlugin(provider)) ?? {}
       if (!Client || !(Client instanceof Function)) {
@@ -251,7 +260,7 @@ homebrew: 1. ${chalk.italic.green('brew update')} \n
         provider: await this.buildProviderConfig(provider),
       })
       this.providers[provider] = { client, schemasMap, serviceKey }
-      return { client, schemasMap, serviceKey }
+      return { client, schemasMap, serviceKey, services, serviceProperties }
     } catch (error: any) {
       this.logger.error(error)
       this.logger.warn(
