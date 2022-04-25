@@ -3,8 +3,9 @@ import {
   StorageEngineConfig,
   StorageEngine,
   GraphQLInputData,
-  GraphQLQueryData
+  GraphQLQueryData,
 } from '@cloudgraph/sdk'
+import { isEmpty } from 'lodash'
 
 import DGraphClientWrapper from './base'
 import {
@@ -12,6 +13,7 @@ import {
   processGQLExecutionResult,
   UPDATE_SCHEMA_QUERY,
 } from './utils'
+import { fileUtils, sleep } from '../../utils'
 
 export default class DgraphEngine
   extends DGraphClientWrapper
@@ -80,11 +82,15 @@ export default class DgraphEngine
     })
   }
 
-  async setSchema(schemas: string[]): Promise<void> {
+  async setSchema(
+    schemas: string[],
+    config?: { overwrite: string }
+  ): Promise<void> {
+    const schema = schemas.join()
     const data = {
       query: UPDATE_SCHEMA_QUERY,
       variables: {
-        schema: schemas.join(),
+        schema,
       },
     }
     try {
@@ -99,8 +105,16 @@ export default class DgraphEngine
             resData,
             errors,
           })
+
+          if (isEmpty(errors) && config?.overwrite) {
+            fileUtils.writeGraphqlSchemaToFile(
+              `${config.overwrite}/cg/schema.graphql`,
+              schema
+            )
+          }
         })
         .catch(error => Promise.reject(error))
+      sleep(3)
     } catch (error: any) {
       const {
         response: { data: resData, errors },
@@ -181,8 +195,7 @@ export default class DgraphEngine
   /**
    * Executes mutations sequentially into Dgraph
    */
-  async run(dropData = true): Promise<void> {
-    dropData && (await this.dropData())
+  async run(): Promise<void> {
     for (const mutation of this.axiosPromises) {
       try {
         await mutation()
