@@ -107,10 +107,7 @@ export default class DgraphEngine
           })
 
           if (isEmpty(errors) && config?.overwrite) {
-            fileUtils.writeGraphqlSchemaToFile(
-              `${config.overwrite}/cg/schema.graphql`,
-              schema
-            )
+            fileUtils.writeGraphqlSchemaToFile(`${config.overwrite}/cg`, schema)
           }
         })
         .catch(error => Promise.reject(error))
