@@ -156,18 +156,15 @@ homebrew: 1. ${chalk.italic.green('brew update')} \n
       await queryEngine.startServer(
         this.getHost(await this.getConnectionSettings())
       )
+      const queryEngineUrl = `http://localhost:${availablePort}/${await this.getQueryEngine()}`
       this.logger.success(
-        `Serving query engine at ${chalk.underline.green(
-          `http://localhost:${availablePort}`
-        )}`
+        `Serving query engine at ${chalk.underline.green(queryEngineUrl)}`
       )
       try {
-        await openBrowser(
-          `http://localhost:${availablePort}/${await this.getQueryEngine()}`
-        )
+        await openBrowser(queryEngineUrl)
       } catch (error) {
         this.logger.warn(
-          `Could not open a browser tab with query engine, open manually at http://localhost:${availablePort}`
+          `Could not open a browser tab with query engine, open manually at ${queryEngineUrl}`
         )
       }
     }
