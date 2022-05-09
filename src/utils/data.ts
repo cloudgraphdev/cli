@@ -7,6 +7,7 @@ import CloudGraph, {
   ServiceConnection,
   Client,
   Logger,
+  EntityMutations,
 } from '@cloudgraph/sdk'
 
 import { scanReport, scanDataType, scanResult } from '../reports'
@@ -133,9 +134,11 @@ export const processConnectionsBetweenEntities = ({
 
     if (storageRunning) {
       // Add service mutation to promises array
+      const query: string =
+        (mutation as EntityMutations)?.upsert || (mutation as string)
       storageEngine.push({
         query:
-          mutation ||
+          query ||
           (provider &&
             generateMutation({ type: 'add', provider, entity, schemaMap })) ||
           '',
@@ -165,10 +168,16 @@ export function insertEntitiesAndConnections({
         return getConnectedEntity(service, providerData, name)
       })
       if (storageRunning) {
-        const query =
-          mutation ||
-          generateMutation({ type: 'add', provider, entity, schemaMap })
-        storageEngine.push({ query, input: connectedData, name })
+        const query: string =
+          (mutation as EntityMutations)?.upsert || (mutation as string)
+        storageEngine.push({
+          query:
+            query ||
+            generateMutation({ type: 'add', provider, entity, schemaMap }) ||
+            '',
+          input: connectedData,
+          name,
+        })
       }
     } catch (error) {
       logger.debug(error)
