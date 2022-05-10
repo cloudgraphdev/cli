@@ -1,3 +1,10 @@
+# [0.22.0-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.21.4...0.22.0-alpha.1) (2022-05-10)
+
+
+### Features
+
+* **tencent:** add tencent in provider list ([f4ade5b](https://github.com/cloudgraphdev/cli/commit/f4ade5b3dbf6343e7595afb2ee8ecf5c7dbb412b))
+
 ## [0.21.4](https://github.com/cloudgraphdev/cli/compare/0.21.3...0.21.4) (2022-04-27)
 
 
