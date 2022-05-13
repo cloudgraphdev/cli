@@ -11,7 +11,7 @@
 
 CloudGraph is the free open-source universal **GraphQL API and Cloud Security Posture Management (CSPM) tool for AWS, Azure, GCP, and K8s**. With CloudGraph you get:
 
-- Free and effortless _compliance checks_ (i.e. CIS 1.2)
+- Free and effortless _compliance checks_ (i.e. Azure CIS 1.3.1, GCP CIS 1.2, AWS CIS 1.2, AWS CIS 1.3, AWS CIS 1.4, AWS PCI 3.2.1, AWS NIST 800-53 Rev. 4)
 - _Type-Safe asset inventories_ for all of your resources in all of your cloud environments
 - Automatically generated documentation and query validation - know if your query is valid before you send it!
 - Full resource data including _relationships_ between resources so you can understand context
@@ -211,9 +211,11 @@ cg init aws azure gcp k8s
 And add in compliance policy packs to supplement your data with instant security insights:
 
 ```bash
-cg policy add aws-cis-1.2.0
 cg policy add gcp-cis-1.2.0
 cg policy add azure-cis-1.3.1
+cg policy add aws-cis-1.2.0
+cg policy add aws-pci-dss-3.2.1
+cg policy add aws-nist-800-53-rev4
 ```
 
 You can find a list of currently supported policy packs in the [Policy Packs repo](https://github.com/cloudgraphdev/cloudgraph-policy-packs)
