@@ -1,3 +1,18 @@
+# [0.22.0-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.21.4...0.22.0-alpha.1) (2022-05-10)
+
+
+### Features
+
+* **tencent:** add tencent in provider list ([f4ade5b](https://github.com/cloudgraphdev/cli/commit/f4ade5b3dbf6343e7595afb2ee8ecf5c7dbb412b))
+
+## [0.21.4](https://github.com/cloudgraphdev/cli/compare/0.21.3...0.21.4) (2022-04-27)
+
+
+### Bug Fixes
+
+* **rebase:** fastforward alpha to main ([a2416f4](https://github.com/cloudgraphdev/cli/commit/a2416f4a4c83836c0f65aa4f7ed22026f35bceba))
+* Update scan/load output of query engine location to be accurate ([af74605](https://github.com/cloudgraphdev/cli/commit/af746059eab95ec8163fc4d14c9e2d7321e84e46))
+
 ## [0.21.4-beta.1](https://github.com/cloudgraphdev/cli/compare/0.21.3...0.21.4-beta.1) (2022-04-14)
 
 
