@@ -149,7 +149,7 @@ Under the hood, CloudGraph reaches out to your cloud provider(s), sucks up all o
 
 # Authentication and Permissions
 
-CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming soon). CloudGraph needs read permissions in order to ingest your data. To keep things easy you can use the same permissions that we use internally when we run CloudGraph to power AutoCloud. Here are the auth guides and details for how to generate credentials for each provider (feel free to leave out AutoCloud specific configuration):
+CloudGraph currently supports AWS, Azure, GCP, K8s, and Tencent (several others coming soon). CloudGraph needs read permissions in order to ingest your data. To keep things easy you can use the same permissions that we use internally when we run CloudGraph to power AutoCloud. Here are the auth guides and details for how to generate credentials for each provider (feel free to leave out AutoCloud specific configuration):
 
 <br />
 
@@ -157,6 +157,7 @@ CloudGraph currently supports AWS, Azure, GCP, and K8s (several others coming so
 - [Azure Docs](https://docs.autocloud.dev/azure-subscription)
 - [GCP Docs](https://docs.autocloud.dev/gcp-project)
 - [K8s Docs](https://github.com/cloudgraphdev/cloudgraph-provider-kubernetes)
+- [Tencent Docs](https://github.com/cloudgraphdev/cloudgraph-provider-tencent)
 
 <br />
 
@@ -193,19 +194,20 @@ npm i -g @cloudgraph/cli
 
 <br/>
 
-You can then add the providers you want (links to provider repos: [AWS](https://github.com/cloudgraphdev/cloudgraph-provider-aws), [Azure](https://github.com/cloudgraphdev/cloudgraph-provider-azure), [GCP](https://github.com/cloudgraphdev/cloudgraph-provider-gcp), [K8s](https://github.com/cloudgraphdev/cloudgraph-provider-k8s)):
+You can then add the providers you want (links to provider repos: [AWS](https://github.com/cloudgraphdev/cloudgraph-provider-aws), [Azure](https://github.com/cloudgraphdev/cloudgraph-provider-azure), [GCP](https://github.com/cloudgraphdev/cloudgraph-provider-gcp), [K8s](https://github.com/cloudgraphdev/cloudgraph-provider-k8s), [Tencent Docs](https://github.com/cloudgraphdev/cloudgraph-provider-tencent)):
 
 ```bash
 cg init aws
 cg init azure
 cg init gcp
 cg init k8s
+cg init tencent
 ```
 
 You can also add as many as you want all at once
 
 ```bash
-cg init aws azure gcp k8s
+cg init aws azure gcp k8s tencent
 ```
 
 And add in compliance policy packs to supplement your data with instant security insights:
@@ -213,6 +215,8 @@ And add in compliance policy packs to supplement your data with instant security
 ```bash
 cg policy add gcp-cis-1.2.0
 cg policy add azure-cis-1.3.1
+cg policy add aws-cis-1.2.0
+cg policy add aws-cis-1.3.0
 cg policy add aws-cis-1.2.0
 cg policy add aws-pci-dss-3.2.1
 cg policy add aws-nist-800-53-rev4
