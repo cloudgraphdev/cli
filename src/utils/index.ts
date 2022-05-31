@@ -150,8 +150,19 @@ export function deleteFolder(dirPath: string): void {
   fs.rmSync(dirPath, { recursive: true })
 }
 
+export const getStoredSchema = (dirPath: string): string => {
+  try {
+    const schemaPath = path.normalize(`${dirPath}/cg/schema.graphql`)
+    const schema = fs.readFileSync(schemaPath, 'utf8')
+    return schema
+  } catch (error) {
+    // Return an empty string if a schema was not found
+    return ''
+  }
+}
+
 export const sleep = (ms: number): Promise<void> =>
-  new Promise(resolve => setTimeout(resolve, ms))
+  new Promise(resolve => setTimeout(resolve, ms * 1000))
 
 export const calculateBackoff = (n: number): number => {
   const temp = Math.min(
@@ -248,3 +259,6 @@ export const getNextPort = async (port: number): Promise<string> => {
   const availablePort = await detect(port)
   return String(availablePort)
 }
+
+export const cleanString = (dirtyString: string): string =>
+  dirtyString.replace(/(\r\n|\n|\r)/gm, '').replace(/\s+/g, '')

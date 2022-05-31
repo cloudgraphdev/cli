@@ -29,6 +29,7 @@ const servicesToIgnore = [
   /^account$/,
   /^tag$/,
   /^label$/,
+  /ruleMetadata$/,
   /^billing$/,
   /Findings$/,
 ]
