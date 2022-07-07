@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import { Opts, pluginMap, PluginType, StorageEngine } from '@cloudgraph/sdk'
+import { Opts, pluginMap, PluginType, ProviderData, StorageEngine } from '@cloudgraph/sdk'
 import { range } from 'lodash'
 
 import Command from './base'
@@ -34,6 +34,7 @@ export default class Scan extends Command {
   private async plugins({
     storage: { isRunning, engine },
     flags,
+    providerData,
   }: {
     storage: {
       isRunning: boolean
@@ -42,6 +43,7 @@ export default class Scan extends Command {
     flags: {
       [flag: string]: any
     }
+    providerData: ProviderData
   }): Promise<void> {
     const config = this.getCGConfig('cloudGraph')
     const { plugins = {} } = config
@@ -80,6 +82,7 @@ export default class Scan extends Command {
               await PluginInstance.execute({
                 storageRunning: isRunning,
                 storageEngine: engine,
+                providerData,
                 processConnectionsBetweenEntities,
               })
             }
@@ -167,6 +170,7 @@ export default class Scan extends Command {
      * loop through providers and attempt to scan each of them
      */
     const failedProviderList: string[] = []
+    const allProviderData: ProviderData = { entities: [], connections: {} }
     for (const provider of allProviders) {
       this.logger.info(
         `Beginning ${chalk.italic.green('SCAN')} for ${provider}`
@@ -202,6 +206,10 @@ export default class Scan extends Command {
       this.logger.successSpinner(
         `${chalk.italic.green(provider)} data scanned successfully`
       )
+
+      // Merge all providers data
+      allProviderData.entities.push(...providerData.entities)
+      Object.assign(allProviderData.connections, providerData.connections)
 
       // Handle schema, write provider and combined schema to file and store in Dgraph if running
       this.logger.startSpinner(
@@ -297,6 +305,7 @@ export default class Scan extends Command {
           isRunning: storageRunning,
           engine: storageEngine,
         },
+        providerData: allProviderData
       })
     }
 

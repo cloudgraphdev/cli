@@ -135,7 +135,7 @@ export const processConnectionsBetweenEntities = ({
       // Add service mutation to promises array
       storageEngine.push({
         query:
-          mutation ||
+          mutation?.toString()  ||
           (provider &&
             generateMutation({ type: 'add', provider, entity, schemaMap })) ||
           '',
@@ -166,7 +166,7 @@ export function insertEntitiesAndConnections({
       })
       if (storageRunning) {
         const query =
-          mutation ||
+          mutation?.toString() ||
           generateMutation({ type: 'add', provider, entity, schemaMap })
         storageEngine.push({ query, input: connectedData, name })
       }
