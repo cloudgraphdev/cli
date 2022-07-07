@@ -1,3 +1,11 @@
+# [0.23.0-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.22.0...0.23.0-alpha.1) (2022-07-07)
+
+
+### Features
+
+* adapt CLI to pass data instead of queries ([1244617](https://github.com/cloudgraphdev/cli/commit/1244617f21abb7ae0686b16487c246b51be8dd21))
+* update sdk version ([fc6ad87](https://github.com/cloudgraphdev/cli/commit/fc6ad873761d02cf9e5961e4713ac027d99d0bb0))
+
 # [0.22.0](https://github.com/cloudgraphdev/cli/compare/0.21.4...0.22.0) (2022-05-27)
 
 
