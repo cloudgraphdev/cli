@@ -1,3 +1,19 @@
+## [0.23.1-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.23.0...0.23.1-alpha.1) (2022-07-18)
+
+
+### Bug Fixes
+
+* Updated sdk version ([19c63e2](https://github.com/cloudgraphdev/cli/commit/19c63e2b8db44377f7b3d6a226bcf5a7c68bd5e2))
+* Updated yarn.lock sdk version ([63d5487](https://github.com/cloudgraphdev/cli/commit/63d54877724f6a046c99446ff42383ab783e8466))
+
+# [0.23.0](https://github.com/cloudgraphdev/cli/compare/0.22.0...0.23.0) (2022-07-07)
+
+
+### Features
+
+* adapt CLI to pass data instead of queries ([1244617](https://github.com/cloudgraphdev/cli/commit/1244617f21abb7ae0686b16487c246b51be8dd21))
+* update sdk version ([fc6ad87](https://github.com/cloudgraphdev/cli/commit/fc6ad873761d02cf9e5961e4713ac027d99d0bb0))
+
 # [0.23.0-beta.1](https://github.com/cloudgraphdev/cli/compare/0.22.0...0.23.0-beta.1) (2022-07-07)
 
 
