@@ -31,6 +31,7 @@ const servicesToIgnore = [
   /^label$/,
   /^billing$/,
   /Findings$/,
+  /^subscription$/,
 ]
 
 // TODO: come back and add tests once testing strategy is determined
