@@ -1,3 +1,10 @@
+# [0.24.0](https://github.com/cloudgraphdev/cli/compare/0.23.1...0.24.0) (2022-08-05)
+
+
+### Features
+
+* exclude subscription from scan report ([47a398c](https://github.com/cloudgraphdev/cli/commit/47a398c16af7f6ddf2b9078fc5eeaaa8aea27bb6))
+
 # [0.24.0-beta.1](https://github.com/cloudgraphdev/cli/compare/0.23.1...0.24.0-beta.1) (2022-08-05)
 
 
