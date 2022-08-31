@@ -5,7 +5,7 @@ import { Opts, pluginMap, PluginType, ProviderData, StorageEngine } from '@cloud
 import { range } from 'lodash'
 
 import Command from './base'
-import { fileUtils } from '../utils'
+import { cleanString, fileUtils, getStoredSchema } from '../utils'
 import DgraphEngine from '../storage/dgraph'
 import { scanReport } from '../reports'
 import { loadAllData, processConnectionsBetweenEntities } from '../utils/data'
@@ -92,6 +92,14 @@ export default class Scan extends Command {
         }
       }
     }
+  }
+
+  // Indicates when schema has new changes
+  private schemaHasChange(oldSchema: string, newSchema: string): boolean {
+    return !!Buffer.compare(
+      Buffer.from(cleanString(oldSchema), 'utf8'),
+      Buffer.from(cleanString(newSchema), 'utf8')
+    )
   }
 
   async run(): Promise<void> {
@@ -235,8 +243,14 @@ export default class Scan extends Command {
             if (storageEngine instanceof DgraphEngine) {
               await storageEngine.validateSchema(schema, dataFolder)
             }
-            await storageEngine.dropAll() // Delete schema before change it
-            await storageEngine.setSchema(schema)
+
+            const currentSchema = getStoredSchema(dataDir)
+
+            // Only drops and changes data when the schema changes
+            if (this.schemaHasChange(currentSchema, schema.join())) {
+              await storageEngine.dropAll() // Delete schema before change it
+              await storageEngine.setSchema(schema, { overwrite: dataDir })
+            }
           } catch (error: any) {
             this.logger.error(
               `There was an issue pushing schema for providers: ${allProviders.join(
