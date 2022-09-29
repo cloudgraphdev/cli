@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import { Opts, pluginMap, PluginType, ProviderData, StorageEngine } from '@cloudgraph/sdk'
 import { range } from 'lodash'
+import { print } from 'graphql'
 
 import Command from './base'
 import { fileUtils } from '../utils'
@@ -217,7 +218,7 @@ export default class Scan extends Command {
           provider
         )}`
       )
-      const providerSchema: string = providerClient.getSchema()
+      const providerSchema: string = print(providerClient.getSchema())
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
         continue // eslint-disable-line no-continue
