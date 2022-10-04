@@ -1,7 +1,13 @@
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
-import { Opts, pluginMap, PluginType, ProviderData, StorageEngine } from '@cloudgraph/sdk'
+import {
+  Opts,
+  pluginMap,
+  PluginType,
+  ProviderData,
+  StorageEngine,
+} from '@cloudgraph/sdk'
 import { range } from 'lodash'
 import { print } from 'graphql'
 
@@ -218,7 +224,11 @@ export default class Scan extends Command {
           provider
         )}`
       )
-      const providerSchema: string = print(providerClient.getSchema())
+
+      const rawSchema = providerClient.getSchema()
+      const providerSchema: string =
+        typeof rawSchema === 'object' ? print(rawSchema) : rawSchema
+
       if (!providerSchema) {
         this.logger.warn(`No schema found for ${provider}, moving on`)
         continue // eslint-disable-line no-continue
@@ -306,7 +316,7 @@ export default class Scan extends Command {
           isRunning: storageRunning,
           engine: storageEngine,
         },
-        providerData: allProviderData
+        providerData: allProviderData,
       })
     }
 
