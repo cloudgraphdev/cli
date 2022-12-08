@@ -1,3 +1,12 @@
+# [0.25.0-beta.1](https://github.com/cloudgraphdev/cli/compare/0.24.0...0.25.0-beta.1) (2022-12-08)
+
+
+### Features
+
+* **cli:** convert ASTNode to string since now providers return raw schemas instead of strings ([55e6468](https://github.com/cloudgraphdev/cli/commit/55e646870e222c90a6218e2701d53ffe864a5c99))
+* **cli:** handle provider schema type ([074b03e](https://github.com/cloudgraphdev/cli/commit/074b03ef1d1d7e23ccb01c234050741311aee9d6))
+* **cli:** Updated sdk version ([1f02b6c](https://github.com/cloudgraphdev/cli/commit/1f02b6c743bca6cbbdba982c5980b174ca2624be))
+
 # [0.25.0-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.24.0...0.25.0-alpha.1) (2022-12-08)
 
 
