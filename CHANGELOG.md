@@ -1,3 +1,17 @@
+## [0.25.1-beta.1](https://github.com/cloudgraphdev/cli/compare/0.25.0...0.25.1-beta.1) (2022-12-13)
+
+
+### Bug Fixes
+
+* **dgraph:** update dgraph version to latest ([6f75da7](https://github.com/cloudgraphdev/cli/commit/6f75da704169418b88ef1bca13692cc066235a76))
+
+## [0.25.1-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.25.0...0.25.1-alpha.1) (2022-12-13)
+
+
+### Bug Fixes
+
+* **dgraph:** update dgraph version to latest ([6f75da7](https://github.com/cloudgraphdev/cli/commit/6f75da704169418b88ef1bca13692cc066235a76))
+
 # [0.25.0](https://github.com/cloudgraphdev/cli/compare/0.24.0...0.25.0) (2022-12-08)
 
 
