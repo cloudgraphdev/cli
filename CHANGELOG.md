@@ -1,3 +1,10 @@
+## [0.25.2-alpha.1](https://github.com/cloudgraphdev/cli/compare/0.25.1...0.25.2-alpha.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* **dgraph:** remove the dropping of dgraph schema for now ([bacca46](https://github.com/cloudgraphdev/cli/commit/bacca460cff9a1bbd147ba866cfd4cb682824204))
+
 ## [0.25.1](https://github.com/cloudgraphdev/cli/compare/0.25.0...0.25.1) (2022-12-13)
 
 
