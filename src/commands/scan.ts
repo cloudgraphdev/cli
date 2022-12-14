@@ -246,7 +246,7 @@ export default class Scan extends Command {
             if (storageEngine instanceof DgraphEngine) {
               await storageEngine.validateSchema(schema, dataFolder)
             }
-            await storageEngine.dropAll() // Delete schema before change it
+            // await storageEngine.dropAll() // Delete schema before change it
             await storageEngine.setSchema(schema)
           } catch (error: any) {
             this.logger.error(
