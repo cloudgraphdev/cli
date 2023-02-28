@@ -91,7 +91,7 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 
 # Why CloudGraph
 
-AWS, Azure, and GPC have done a wonderful job of building solutions that let engineers like us create systems to power our increasingly interconnected world. Over the last 15 years, products such as EC2, S3, RDS, and Lambda have fundamentally changed how we think about computing, storage, and databasing.
+AWS, Azure, and GCP have done a wonderful job of building solutions that let engineers like us create systems to power our increasingly interconnected world. Over the last 15 years, products such as EC2, S3, RDS, and Lambda have fundamentally changed how we think about computing, storage, and databasing.
 
 <br />
 
