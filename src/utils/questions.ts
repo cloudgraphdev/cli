@@ -50,7 +50,7 @@ export const queryEngineConfigQuestions: ListQuestion[] = [
         short: 'GraphQL Playground',
       },
       {
-        name: 'Altair GraphQL Client (https://altair.sirmuel.design/)',
+        name: 'Altair GraphQL Client (https://altairgraphql.dev)',
         value: 'altair',
         short: 'Altair GraphQL Client',
       },
