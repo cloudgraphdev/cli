@@ -28,8 +28,6 @@ Cloud Graph lets you **Know your cloud** in 5 minutes. Built and maintained with
 
 💻 [Documentation](https://docs.cloudgraph.dev)
 
-💰 [Get paid to build CloudGraph providers](https://github.com/cloudgraphdev/cli/blob/main/CONTRIBUTING.md)
-
 <br />
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)

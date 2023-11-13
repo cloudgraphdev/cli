@@ -4,8 +4,6 @@
 
 <!-- toc -->
 
-- [Paid contributions](#paid-contributions)
-
 - [Creating A new provider](#creating-a-new-provider)
 
 - [Adding A new entity to an existing provider](#Adding-a-new-entity-to-an-existing-provider)
